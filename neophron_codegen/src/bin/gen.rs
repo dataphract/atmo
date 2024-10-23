@@ -1,6 +1,6 @@
 use std::{fs::File, io::Write, process::exit};
 
-use bluemorpho_codegen::Gen;
+use neophron_codegen::Gen;
 use walkdir::WalkDir;
 
 fn main() {

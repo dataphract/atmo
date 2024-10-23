@@ -1,15 +1,15 @@
 [package]
-name = "bluemorpho"
+name = "neophron"
 version = "0.1.0"
 edition = "2021"
 
 [workspace]
 members = [
-    "bluemorpho_codegen",
+    "neophron_codegen",
 ]
 
 [workspace.dependencies]
-bluemorpho = { path = "." }
+neophron = { path = "." }
 cid = "0.11.1"
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.132"

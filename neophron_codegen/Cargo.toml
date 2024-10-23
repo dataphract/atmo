@@ -1,10 +1,10 @@
 [package]
-name = "bluemorpho_codegen"
+name = "neophron_codegen"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bluemorpho = { workspace = true }
+neophron = { workspace = true }
 heck = "0.5.0"
 proc-macro2 = "1.0.88"
 quote = "1.0.37"

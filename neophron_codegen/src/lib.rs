@@ -1,6 +1,6 @@
 use std::collections::{BTreeMap, HashSet};
 
-use bluemorpho::{
+use neophron::{
     lexicon::{Object, Schema, StringFormat},
     nsid::Nsid,
     Lexicon,
@@ -88,9 +88,8 @@ impl Gen {
                 };
 
                 match schema {
-                    Schema::Boolean(b) => {
-                        panic!()
-                    }
+                    Schema::Boolean(b) => panic!(),
+
                     Schema::Object(o) => {
                         let typename = quote::format_ident!("{}", name.to_pascal_case());
 
@@ -247,19 +246,19 @@ pub fn emit_struct_field(prop_name: &str, schema: &Schema) -> TokenStream {
     }
 }
 
-fn emit_string_type(s: &bluemorpho::lexicon::String) -> TokenStream {
+fn emit_string_type(s: &neophron::lexicon::String) -> TokenStream {
     let Some(format) = &s.format else {
         return quote! { std::string::String };
     };
 
     match format {
-        StringFormat::Datetime => quote! { bluemorpho::datetime::DateTimeString },
-        StringFormat::Did => quote! { bluemorpho::did::Did },
-        StringFormat::Handle => quote! { bluemorpho::handle::Handle },
+        StringFormat::Datetime => quote! { neophron::datetime::DateTimeString },
+        StringFormat::Did => quote! { neophron::did::Did },
+        StringFormat::Handle => quote! { neophron::handle::Handle },
         StringFormat::Language => quote! { std::string::String },
-        StringFormat::Nsid => quote! { bluemorpho::nsid::Nsid },
-        StringFormat::RecordKey => quote! { bluemorpho::rkey::RecordKey },
-        StringFormat::Tid => quote! { bluemorpho::tid::Tid },
+        StringFormat::Nsid => quote! { neophron::nsid::Nsid },
+        StringFormat::RecordKey => quote! { neophron::rkey::RecordKey },
+        StringFormat::Tid => quote! { neophron::tid::Tid },
         _ => {
             eprintln!("string format `{format:?}` not handled yet");
             quote! { std::string::String }
