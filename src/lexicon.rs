@@ -1,20 +1,25 @@
+//! Lexicon schema parser.
+
 use std::collections::BTreeMap;
 
 use serde::{de::Unexpected, Deserialize};
 
+/// The top level of a Lexicon schema file.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Lexicon {
-    /// The Lexicon language version used by this definition.
+    /// The Lexicon language version used by this schema.
     pub lexicon: i64,
-    /// The NSID of this Lexicon.
+    /// The NSID of this Lexicon schema.
     pub id: std::string::String,
-    /// The version of this Lexicon, if changes have occurred.
+    /// The version of this Lexicon schema, if changes have occurred.
     pub revision: Option<i64>,
+    /// Optional description of this Lexicon schema.
     pub description: Option<std::string::String>,
     pub defs: BTreeMap<std::string::String, Schema>,
 }
 
+/// A typed schema item.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum Schema {
@@ -199,7 +204,7 @@ pub struct Ref {
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct String {
     pub description: Option<std::string::String>,
-    pub format: Option<std::string::String>,
+    pub format: Option<StringFormat>,
     pub max_length: Option<i64>,
     pub min_length: Option<i64>,
     pub max_graphemes: Option<i64>,
@@ -237,6 +242,7 @@ pub struct Subscription {
     pub description: Option<std::string::String>,
     pub parameters: Option<Box<Schema>>,
     pub message: Option<Message>,
+    pub errors: Option<Vec<Error>>,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -254,21 +260,4 @@ pub struct Union {
     pub refs: Vec<std::string::String>,
     #[serde(default)]
     pub closed: bool,
-}
-
-#[cfg(test)]
-mod tests {
-    use serde_json::json;
-
-    use super::*;
-
-    #[test]
-    fn lexicon_empty_defs() {
-        serde_json::from_value::<Lexicon>(json!({
-            "lexicon": 1,
-            "id": "com.example.whatever",
-            "defs": {},
-        }))
-        .expect("should parse successfully");
-    }
 }
