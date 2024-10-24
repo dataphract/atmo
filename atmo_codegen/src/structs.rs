@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use heck::{ToPascalCase, ToSnakeCase};
-use neophron::lexicon::{FieldSchema, Object};
+use atmo::lexicon::{FieldSchema, Object};
 use proc_macro2::{Span, TokenStream};
 use quote::{quote, ToTokens};
 

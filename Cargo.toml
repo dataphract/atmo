@@ -1,15 +1,15 @@
 [package]
-name = "neophron"
+name = "atmo"
 version = "0.1.0"
 edition = "2021"
 
 [workspace]
 members = [
-    "neophron_codegen",
+    "atmo_codegen",
 ]
 
 [workspace.dependencies]
-neophron = { path = "." }
+atmo = { path = "." }
 cid = "0.11.1"
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.132"
@@ -20,3 +20,5 @@ cid = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 serde_path_to_error = "0.1.16"
+multibase = "0.9.1"
+multihash-derive = "0.9.1"

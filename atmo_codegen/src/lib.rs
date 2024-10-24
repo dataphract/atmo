@@ -3,13 +3,13 @@ use std::{
     str::FromStr,
 };
 
-use heck::ToSnakeCase;
-use module::{ModulePath, Modules};
-use neophron::{
+use atmo::{
     lexicon::{Schema, StringFormat},
     nsid::Nsid,
     Lexicon,
 };
+use heck::ToSnakeCase;
+use module::{ModulePath, Modules};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
@@ -18,7 +18,7 @@ mod structs;
 mod unions;
 
 fn crate_name() -> syn::Ident {
-    quote::format_ident!("neophron")
+    quote::format_ident!("atmo")
 }
 
 /// ATProto bindings generator.
@@ -119,7 +119,7 @@ pub enum Item {
     Nsid(Nsid),
 }
 
-pub fn emit_string_type(s: &neophron::lexicon::String) -> TokenStream {
+pub fn emit_string_type(s: &atmo::lexicon::String) -> TokenStream {
     let Some(format) = &s.format else {
         return quote! { std::string::String };
     };
@@ -127,6 +127,7 @@ pub fn emit_string_type(s: &neophron::lexicon::String) -> TokenStream {
     let crate_ = crate_name();
 
     match format {
+        StringFormat::AtUri => quote! { #crate_::at_uri::AtUri },
         StringFormat::Datetime => quote! { #crate_::datetime::DateTimeString },
         StringFormat::Did => quote! { #crate_::did::Did },
         StringFormat::Handle => quote! { #crate_::handle::Handle },

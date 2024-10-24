@@ -3,6 +3,7 @@ use std::ops::RangeInclusive;
 pub use lexicon::Lexicon;
 
 pub mod at_uri;
+pub mod cid;
 pub mod datetime;
 pub mod did;
 pub mod error;
