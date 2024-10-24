@@ -5,9 +5,12 @@ pub use lexicon::Lexicon;
 pub mod at_uri;
 pub mod datetime;
 pub mod did;
+pub mod error;
 pub mod handle;
 pub mod lexicon;
 pub mod nsid;
+pub mod nullable;
+mod parse;
 pub mod rkey;
 pub mod tid;
 

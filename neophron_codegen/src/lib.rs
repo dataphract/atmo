@@ -1,19 +1,34 @@
-use std::collections::{BTreeMap, HashSet};
+use std::{
+    collections::{BTreeMap, HashSet},
+    str::FromStr,
+};
 
+use heck::ToSnakeCase;
+use module::{ModulePath, Modules};
 use neophron::{
-    lexicon::{Object, Schema, StringFormat},
+    lexicon::{Schema, StringFormat},
     nsid::Nsid,
     Lexicon,
 };
-use heck::{ToPascalCase, ToSnakeCase};
-use proc_macro2::{Span, TokenStream};
+use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
+
+mod module;
+mod structs;
+mod unions;
+
+fn crate_name() -> syn::Ident {
+    quote::format_ident!("neophron")
+}
 
 /// ATProto bindings generator.
 #[derive(Default)]
 pub struct Gen {
+    // Input Lexicon schemae.
     lexicons: BTreeMap<Nsid, Lexicon>,
+    // Map from fully-qualified Lexicon NSIDs to schema items.
     namespaces: BTreeMap<String, HashSet<Item>>,
+    definitions: BTreeMap<Nsid, ()>,
 }
 
 impl Gen {
@@ -25,7 +40,7 @@ impl Gen {
         let mut des = serde_json::Deserializer::from_str(source);
         let lex: Lexicon = serde_path_to_error::deserialize(&mut des).unwrap();
 
-        let nsid = Nsid::new(lex.id.clone()).unwrap();
+        let nsid = Nsid::from_str(lex.id.as_str()).unwrap();
 
         let (parent, _) = nsid.as_str().rsplit_once('.').unwrap();
 
@@ -54,73 +69,44 @@ impl Gen {
             eprintln!("{name}: {} items", items.len());
         }
 
+        let mut modules = Modules::default();
+
         for (nsid, lex) in &self.lexicons {
             for (name, schema) in &lex.defs {
-                let fqn = if name == "main" {
-                    format!("{nsid}")
-                } else {
-                    format!("{nsid}#{name}")
-                };
-
-                let mut module_path = String::new();
+                let mut module_path = ModulePath::new();
                 for segment in nsid.segments() {
-                    module_path.push_str("::");
-                    module_path.push_str(&segment.to_snake_case());
+                    module_path.push(segment.to_snake_case());
                 }
+
+                modules.ensure_exists(module_path);
 
                 let def_path = name.to_snake_case();
 
-                let params = match schema {
-                    Schema::Procedure(p) => p.parameters.as_ref(),
-                    Schema::Query(q) => q.parameters.as_ref(),
-                    _ => None,
-                };
-
-                let input = match schema {
-                    Schema::Procedure(p) => p.input.as_ref(),
-                    _ => None,
-                };
-
-                let output = match schema {
-                    Schema::Procedure(p) => p.output.as_ref(),
-                    Schema::Query(q) => q.output.as_ref(),
-                    _ => None,
-                };
-
                 match schema {
-                    Schema::Boolean(b) => panic!(),
+                    Schema::Array(_) => {}
 
                     Schema::Object(o) => {
-                        let typename = quote::format_ident!("{}", name.to_pascal_case());
-
-                        let mut props = TokenStream::new();
-                        for (prop_name, prop_schema) in &o.properties {
-                            props.extend(emit_struct_field(prop_name, prop_schema));
-                        }
-
-                        let tokens = quote! {
-                            pub struct #typename {
-                                #props
-                            }
-                        };
-
+                        let tokens = crate::structs::emit_struct(name, o).into_token_stream();
                         println!("{tokens}");
                     }
 
                     Schema::Record(r) => {
-                        let tokens = emit_struct("Record", &r.record);
+                        //let tokens = emit_struct("Record", &r.record);
 
-                        println!("{tokens}");
+                        // println!("{tokens}");
                     }
 
-                    //Schema::Procedure(_) | Schema::Query(_) => {
-                    //println!(
-                    //"fn {module_path}::call({}) {}",
-                    //input.map(|_| "Input").unwrap_or(""),
-                    //output.map(|_| "-> Output").unwrap_or("")
-                    //);
-                    //}
-                    _ => (),
+                    Schema::Procedure(_) | Schema::Query(_) => (),
+
+                    Schema::String(s) => {
+                        eprintln!("{def_path}: {s:?}");
+                    }
+
+                    Schema::Subscription(_) => (),
+
+                    Schema::Token => (),
+
+                    s => panic!("unhandled top-level definition: {s:?}"),
                 }
             }
         }
@@ -133,132 +119,21 @@ pub enum Item {
     Nsid(Nsid),
 }
 
-pub fn emit_struct(name: &str, object: &Object) -> TokenStream {
-    let typename = quote::format_ident!("{}", name.to_pascal_case());
-
-    let mut props = TokenStream::new();
-    for (prop_name, prop_schema) in &object.properties {
-        props.extend(emit_struct_field(prop_name, prop_schema));
-    }
-
-    quote! {
-        pub struct #typename {
-            #props
-        }
-    }
-}
-
-pub fn emit_struct_field(prop_name: &str, schema: &Schema) -> TokenStream {
-    let mut desc = None;
-
-    // Rename fields if they would collide with Rust keywords.
-    let field_name = {
-        let name = prop_name.to_snake_case();
-
-        match name.as_str() {
-            "ref" => "ref_".into(),
-            "type" => "ty".into(),
-            _ => name,
-        }
-    };
-
-    let field_ident = syn::Ident::new(&field_name, Span::call_site());
-
-    let ty: TokenStream = match schema {
-        Schema::Array(a) => {
-            let elem_ty = match &*a.items {
-                Schema::CidLink => quote! { CidLink },
-                Schema::Ref(_) => quote! { () },
-                Schema::String(_) => quote! { String },
-                Schema::Union(_) => quote! { Union },
-                Schema::Unknown => quote! { Unknown },
-                x => panic!("unhandled array element type: {x:?}"),
-            };
-
-            quote! { Vec<#elem_ty> }
-        }
-
-        Schema::Blob(b) => quote::format_ident!("Blob").to_token_stream(),
-
-        Schema::Boolean(b) => {
-            desc = b.description.clone();
-            quote::format_ident!("bool").to_token_stream()
-        }
-
-        Schema::Bytes(b) => {
-            desc = b.description.clone();
-            quote! { Vec<u8> }
-        }
-
-        Schema::CidLink => {
-            eprintln!("cid-link not implemented yet");
-            quote! { () }
-        }
-
-        Schema::Integer(i) => {
-            // TODO: deranged
-            if i.minimum.is_some() || i.maximum.is_some() {
-                eprintln!("ranged integer support not implemented yet sorry lol");
-            }
-
-            quote! { i64 }
-        }
-
-        Schema::Null => panic!("struct field can't have null type"),
-        Schema::Object(_) => panic!("struct field can't define a new object type"),
-        Schema::Params(_) => panic!("struct field can't define a new params type"),
-        Schema::Procedure(_) => panic!("struct field can't define a procedure"),
-        Schema::Query(_) => panic!("struct field can't define a query"),
-        Schema::Record(_) => panic!("struct field can't define a record type"),
-
-        Schema::Ref(_) => {
-            eprintln!("Ref resolution not implemented yet");
-            quote! { () }
-        }
-
-        Schema::String(s) => emit_string_type(s),
-
-        Schema::Subscription(_) => panic!("struct field can't define a subscription type"),
-        Schema::Token => panic!("struct field can't define a token"),
-        Schema::Union(u) => {
-            eprintln!("unions not properly implemented yet");
-
-            eprintln!("union refs: {:?}", &u.refs);
-
-            quote! { () }
-        }
-
-        Schema::Unknown => {
-            eprintln!("unknown fields not properly implemented yet");
-            quote! { () }
-        }
-    };
-
-    let doc_attr = desc.map(|d| {
-        quote! {
-            #[doc = #d]
-        }
-    });
-
-    quote! {
-        #doc_attr
-        #field_ident: #ty,
-    }
-}
-
-fn emit_string_type(s: &neophron::lexicon::String) -> TokenStream {
+pub fn emit_string_type(s: &neophron::lexicon::String) -> TokenStream {
     let Some(format) = &s.format else {
         return quote! { std::string::String };
     };
 
+    let crate_ = crate_name();
+
     match format {
-        StringFormat::Datetime => quote! { neophron::datetime::DateTimeString },
-        StringFormat::Did => quote! { neophron::did::Did },
-        StringFormat::Handle => quote! { neophron::handle::Handle },
+        StringFormat::Datetime => quote! { #crate_::datetime::DateTimeString },
+        StringFormat::Did => quote! { #crate_::did::Did },
+        StringFormat::Handle => quote! { #crate_::handle::Handle },
         StringFormat::Language => quote! { std::string::String },
-        StringFormat::Nsid => quote! { neophron::nsid::Nsid },
-        StringFormat::RecordKey => quote! { neophron::rkey::RecordKey },
-        StringFormat::Tid => quote! { neophron::tid::Tid },
+        StringFormat::Nsid => quote! { #crate_::nsid::Nsid },
+        StringFormat::RecordKey => quote! { #crate_::rkey::RecordKey },
+        StringFormat::Tid => quote! { #crate_::tid::Tid },
         _ => {
             eprintln!("string format `{format:?}` not handled yet");
             quote! { std::string::String }

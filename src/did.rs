@@ -3,8 +3,8 @@ use crate::split_once;
 pub struct Did(String);
 
 impl Did {
-    pub fn new(did: String) -> Option<Did> {
-        is_valid_did(did.as_str()).then_some(Did(did))
+    pub fn new(did: &[u8]) -> Option<Did> {
+        is_valid_did(did).then(|| Did(String::from_utf8(did.into()).unwrap()))
     }
 
     pub fn as_str(&self) -> &str {
@@ -19,9 +19,7 @@ impl Did {
     }
 }
 
-fn is_valid_did(input: &str) -> bool {
-    let input = input.as_bytes();
-
+fn is_valid_did(input: &[u8]) -> bool {
     let Some(input) = input.strip_prefix(b"did:") else {
         return false;
     };
@@ -82,7 +80,7 @@ mod tests {
     macro_rules! valid {
         ($($input:literal),* $(,)?) => {
             $(
-                if Did::new($input.into()).is_none() {
+                if Did::new($input.as_bytes()).is_none() {
                     panic!("valid DID rejected: {}", $input);
                 }
             )*
@@ -92,7 +90,7 @@ mod tests {
     macro_rules! invalid {
         ($($input:literal),* $(,)?) => {
             $(
-                if Did::new($input.into()).is_some() {
+                if Did::new($input.as_bytes()).is_some() {
                     panic!("invalid DID accepted: {}", $input);
                 }
             )*

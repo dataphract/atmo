@@ -43,11 +43,27 @@ pub enum Schema {
     Unknown,
 }
 
+/// A typed schema item.
+#[derive(Clone, Debug, Deserialize)]
+#[serde(tag = "type", rename_all = "kebab-case")]
+pub enum FieldSchema {
+    Array(Array),
+    Blob(Blob),
+    Boolean(Boolean),
+    Bytes(Bytes),
+    CidLink,
+    Integer(Integer),
+    Ref(Ref),
+    String(String),
+    Union(Union),
+    Unknown,
+}
+
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Array {
     pub description: Option<std::string::String>,
-    pub items: Box<Schema>,
+    pub items: Box<FieldSchema>,
     pub min_length: Option<i64>,
     pub max_length: Option<i64>,
 }
@@ -97,7 +113,7 @@ pub struct Integer {
 #[serde(deny_unknown_fields)]
 pub struct Object {
     pub description: Option<std::string::String>,
-    pub properties: BTreeMap<std::string::String, Schema>,
+    pub properties: BTreeMap<std::string::String, FieldSchema>,
     #[serde(default)]
     pub required: Vec<std::string::String>,
     #[serde(default)]

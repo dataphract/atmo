@@ -7,20 +7,33 @@ pub struct RecordKey(String);
 impl FromStr for RecordKey {
     type Err = ParseRecordKeyError;
 
+    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if !LEN_RANGE.contains(&s.len()) {
-            return Err(ParseRecordKeyError::new());
-        }
-
-        if s == "." || s == ".." {
-            return Err(ParseRecordKeyError::new());
-        }
-
-        s.chars()
-            .all(|c| c.is_ascii_alphanumeric() || ".-_:~".contains(c))
+        is_valid_record_key(s.as_bytes())
             .then(|| RecordKey(s.into()))
             .ok_or_else(ParseRecordKeyError::new)
     }
+}
+
+impl TryFrom<&'_ [u8]> for RecordKey {
+    type Error = ParseRecordKeyError;
+
+    #[inline]
+    fn try_from(bytes: &'_ [u8]) -> Result<Self, Self::Error> {
+        is_valid_record_key(bytes)
+            .then(|| RecordKey(String::from_utf8(bytes.into()).unwrap()))
+            .ok_or_else(ParseRecordKeyError::new)
+    }
+}
+
+fn is_valid_record_key(bytes: &[u8]) -> bool {
+    LEN_RANGE.contains(&bytes.len())
+        && bytes != b"."
+        && bytes != b".."
+        && bytes
+            .iter()
+            .copied()
+            .all(|c| crate::parse::is_uri_unreserved(c) || c == b':')
 }
 
 #[derive(Debug)]
