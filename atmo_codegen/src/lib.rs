@@ -4,11 +4,8 @@ use std::{
     str::FromStr,
 };
 
-use atmo::{
-    lexicon::{FieldSchema, Object, Schema, StringFormat},
-    nsid::{self, FullReference, Nsid},
-    Lexicon,
-};
+use atmo::nsid::{self, FullReference, Nsid};
+use atmo_lexicon::{FieldSchema, Lexicon, Object, Schema, StringFormat};
 use enum_::{StringEnumDef, StringEnumVariant};
 use heck::{ToPascalCase, ToSnakeCase};
 use module::{Item, ItemPath, ModulePath, Output};
@@ -71,7 +68,7 @@ impl Gen {
         output: &mut Output,
         namespace: &Nsid,
         prop_name: &str,
-        s: &atmo::lexicon::String,
+        s: &atmo_lexicon::String,
     ) -> TokenStream {
         if let Some(format) = s.format {
             assert!(s.known_values.is_empty());
@@ -320,7 +317,7 @@ impl Gen {
                     Schema::Record(r) => continue,
                     Schema::Procedure(_) | Schema::Query(_) => continue,
                     Schema::String(s) => {
-                        let atmo::lexicon::String {
+                        let atmo_lexicon::String {
                             description,
                             format,
                             max_length,

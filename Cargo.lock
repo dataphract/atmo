@@ -20,6 +20,7 @@ name = "atmo_codegen"
 version = "0.1.0"
 dependencies = [
  "atmo",
+ "atmo_lexicon",
  "heck",
  "proc-macro2",
  "quote",
@@ -27,6 +28,13 @@ dependencies = [
  "serde_path_to_error",
  "syn 2.0.82",
  "walkdir",
+]
+
+[[package]]
+name = "atmo_lexicon"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

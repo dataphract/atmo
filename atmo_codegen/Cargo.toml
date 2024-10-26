@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 atmo = { workspace = true }
+atmo_lexicon.workspace = true
 heck = "0.5.0"
 proc-macro2 = "1.0.88"
 quote = "1.0.37"

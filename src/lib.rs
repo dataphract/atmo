@@ -2,7 +2,7 @@ use std::{ops::RangeInclusive, str::FromStr};
 
 use crate::error::ParseError;
 
-pub use crate::{cid::CidString, did::Did, handle::Handle, lexicon::Lexicon, nullable::Nullable};
+pub use crate::{cid::CidString, did::Did, handle::Handle, nullable::Nullable};
 
 pub mod at_uri;
 pub mod cid;
@@ -10,7 +10,6 @@ pub mod datetime;
 pub mod did;
 pub mod error;
 pub mod handle;
-pub mod lexicon;
 pub mod nsid;
 mod nullable;
 mod parse;

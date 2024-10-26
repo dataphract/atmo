@@ -1,7 +1,5 @@
-use atmo::{
-    lexicon::{FieldSchema, Object},
-    nsid,
-};
+use atmo::nsid;
+use atmo_lexicon::{FieldSchema, Object};
 use proc_macro2::{Span, TokenStream};
 use quote::{quote, ToTokens};
 
