@@ -4,6 +4,13 @@ const LEN_RANGE: RangeInclusive<usize> = 1..=512;
 
 pub struct RecordKey(String);
 
+impl RecordKey {
+    #[inline]
+    pub fn as_str(&self) -> &str {
+        self.0.as_str()
+    }
+}
+
 impl FromStr for RecordKey {
     type Err = ParseRecordKeyError;
 

@@ -1,4 +1,6 @@
-use crate::{is_valid_domain_segment, is_valid_tld};
+use std::str::FromStr;
+
+use crate::{error::ParseError, is_valid_domain_segment, is_valid_tld};
 
 const MAX_LEN: usize = 253;
 
@@ -6,37 +8,47 @@ pub struct Handle(String);
 
 impl Handle {
     pub fn new(handle: &str) -> Option<Handle> {
-        if handle.len() > MAX_LEN {
-            return None;
-        }
-
-        let bytes = handle.as_bytes();
-
-        let mut it = bytes.split(|&b| b == b'.').peekable();
-
-        let mut num_segments = 0;
-        while let Some(segment) = it.next() {
-            num_segments += 1;
-
-            let is_valid = match it.peek() {
-                Some(_) => is_valid_domain_segment(segment),
-                None => is_valid_tld(segment),
-            };
-
-            if !is_valid {
-                return None;
-            }
-        }
-
-        if num_segments < 2 {
-            return None;
-        }
-
         Some(Handle(handle.to_ascii_lowercase()))
     }
 
     pub fn as_str(&self) -> &str {
         self.0.as_str()
+    }
+}
+
+fn validate_handle(bytes: &[u8]) -> Result<(), ParseError> {
+    if bytes.len() > MAX_LEN {
+        return Err(ParseError::handle());
+    }
+
+    let mut it = bytes.split(|&b| b == b'.').peekable();
+
+    let mut num_segments = 0;
+    while let Some(segment) = it.next() {
+        num_segments += 1;
+
+        let is_valid = match it.peek() {
+            Some(_) => is_valid_domain_segment(segment),
+            None => is_valid_tld(segment),
+        };
+
+        if !is_valid {
+            return Err(ParseError::handle());
+        }
+    }
+
+    if num_segments < 2 {
+        return Err(ParseError::handle());
+    }
+
+    Ok(())
+}
+
+impl FromStr for Handle {
+    type Err = ParseError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        validate_handle(s.as_bytes()).map(|()| Handle(s.into()))
     }
 }
 

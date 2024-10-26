@@ -38,7 +38,7 @@ pub enum Schema {
     Ref(Ref),
     String(String),
     Subscription(Subscription),
-    Token,
+    Token(Token),
     Union(Union),
     Unknown,
 }
@@ -61,6 +61,7 @@ pub enum FieldSchema {
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[serde(deny_unknown_fields)]
 pub struct Array {
     pub description: Option<std::string::String>,
     pub items: Box<FieldSchema>,
@@ -70,6 +71,7 @@ pub struct Array {
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[serde(deny_unknown_fields)]
 pub struct Blob {
     pub description: Option<std::string::String>,
     pub accept: Option<Vec<std::string::String>>,
@@ -88,6 +90,7 @@ pub struct Boolean {
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[serde(deny_unknown_fields)]
 pub struct Bytes {
     pub description: Option<std::string::String>,
     pub min_length: Option<i64>,
@@ -236,7 +239,7 @@ pub struct String {
     pub const_value: Option<std::string::String>,
 }
 
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Copy, Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields, rename_all = "kebab-case")]
 pub enum StringFormat {
     AtIdentifier,
@@ -245,11 +248,11 @@ pub enum StringFormat {
     Datetime,
     Did,
     Handle,
-    Nsid,
-    Tid,
-    RecordKey,
-    Uri,
     Language,
+    Nsid,
+    RecordKey,
+    Tid,
+    Uri,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -267,6 +270,12 @@ pub struct Message {
     pub description: Option<std::string::String>,
     pub schema: Box<Schema>,
     pub errors: Option<Vec<Error>>,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Token {
+    pub description: Option<std::string::String>,
 }
 
 #[derive(Clone, Debug, Deserialize)]

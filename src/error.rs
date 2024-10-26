@@ -16,15 +16,51 @@ pub struct ParseError {
 }
 
 impl ParseError {
+    pub(crate) fn at_identifier() -> Self {
+        ParseError {
+            while_parsing: "AT-identifier",
+        }
+    }
+
     pub(crate) fn at_uri() -> Self {
         ParseError {
             while_parsing: "AT-URI",
         }
     }
 
+    pub(crate) fn datetime() -> Self {
+        ParseError {
+            while_parsing: "DateTime",
+        }
+    }
+
+    pub(crate) fn did() -> Self {
+        ParseError {
+            while_parsing: "DID",
+        }
+    }
+
+    pub(crate) fn handle() -> Self {
+        ParseError {
+            while_parsing: "Handle",
+        }
+    }
+
     pub(crate) fn nsid() -> Self {
         ParseError {
             while_parsing: "NSID",
+        }
+    }
+
+    pub(crate) fn nsid_fragment() -> Self {
+        ParseError {
+            while_parsing: "NSID fragment",
+        }
+    }
+
+    pub(crate) fn nsid_ref() -> Self {
+        ParseError {
+            while_parsing: "NSID reference",
         }
     }
 }

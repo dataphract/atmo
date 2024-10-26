@@ -1,4 +1,6 @@
-use crate::split_once;
+use std::str::FromStr;
+
+use crate::{error::ParseError, split_once};
 
 pub struct Did(String);
 
@@ -16,6 +18,16 @@ impl Did {
             .split(':')
             .nth(1)
             .expect("DID missing method, should have been validated already")
+    }
+}
+
+impl FromStr for Did {
+    type Err = ParseError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        is_valid_did(s.as_bytes())
+            .then(|| Did(s.into()))
+            .ok_or_else(ParseError::did)
     }
 }
 

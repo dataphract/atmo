@@ -2,9 +2,13 @@ use std::{cmp::Ordering, fmt, str::FromStr};
 
 use jiff::{fmt::strtime::BrokenDownTime, tz::Offset, Timestamp};
 
+use crate::error::ParseError;
+
 const SUBSEC_PRECISION: usize = 9;
 
 /// A parsed string representing a `DateTime`.
+///
+/// # Serialization and Deserialization
 ///
 /// This type allows lossless round-trip deserialization and serialization. Per the
 /// [ATProto specification](https://atproto.com/specs/lexicon#string-formats):
@@ -15,10 +19,14 @@ const SUBSEC_PRECISION: usize = 9;
 /// > _round-trip re-serialization._
 ///
 /// To that end, this type stores the original parsed string and exposes it via
-/// [`DateTimeString::as_str`]. It deliberately does not implement `Eq`, `Ord` or `Hash`, as the
-/// behavior of these trait implementations could be a source of confusion. Users wishing to compare
-/// or hash these values should do so by retrieving either the string representation or the
-/// timestamp representation.
+/// [`DateTimeString::as_str`].
+///
+/// # Comparison and Hashing
+///
+/// This type deliberately does not implement `Eq`, `Ord` or `Hash`, as the intended behavior of
+/// these trait implementations would be ambiguous (see above). Users wishing to compare or hash
+/// these values should do so by retrieving either the string representation or the timestamp
+/// representation as appropriate.
 #[derive(Clone, Debug)]
 pub struct DateTimeString {
     // Keep the original representation to allow round-tripping, hashing, etc.
@@ -33,17 +41,18 @@ impl DateTimeString {
         self.original.as_str()
     }
 
+    #[inline]
     pub fn timestamp(&self) -> jiff::Timestamp {
         self.parsed
     }
 }
 
 impl FromStr for DateTimeString {
-    type Err = ParseDateTimeError;
+    type Err = ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let original = s.to_owned();
-        let parsed = parse(s).ok_or(ParseDateTimeError { _dummy: () })?;
+        let parsed = parse(s).ok_or_else(ParseError::datetime)?;
 
         Ok(DateTimeString { original, parsed })
     }

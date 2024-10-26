@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 /// This type exists to make a distinction between missing values (represented by a normal Rust
 /// [`Option`]) and null values, as stipulated by the atproto data model:
 ///
-/// > _In the atproto data model there is a semantic difference between explicitly setting [a] map_
+/// > _In the atproto data model there is a semantic difference between explicitly setting \[a\] map_
 /// > _field to null and not including the field at all. Both JSON and CBOR have the same_
 /// > _distinction._
 ///
