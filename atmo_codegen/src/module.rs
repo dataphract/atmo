@@ -218,6 +218,12 @@ pub struct ItemPath {
     item_name: String,
 }
 
+impl ItemPath {
+    pub fn name(&self) -> &str {
+        self.item_name.as_str()
+    }
+}
+
 impl ToTokens for ItemPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let module_path = &self.module_path;

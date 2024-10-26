@@ -11,7 +11,7 @@ use atmo::{
 };
 use enum_::{StringEnumDef, StringEnumVariant};
 use heck::{ToPascalCase, ToSnakeCase};
-use module::{Item, ModulePath, Output};
+use module::{Item, ItemPath, ModulePath, Output};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use struct_::{Field, StructDef};
@@ -45,6 +45,25 @@ impl Gen {
 
         // Insert the new lexicon.
         self.lexicons.insert(nsid.clone(), lex);
+    }
+
+    fn resolve_ref(&self, namespace: &Nsid, r: nsid::Reference) -> Referent<'_> {
+        let (nsid, fragment) = match r {
+            nsid::Reference::Full(full) => (full.clone_nsid(), full.clone_fragment()),
+            nsid::Reference::Relative(fragment) => (namespace.clone(), Some(fragment)),
+        };
+
+        let name = fragment
+            .as_ref()
+            .and_then(|s| s.as_str().strip_prefix('#'))
+            .unwrap();
+
+        let schema = self.lexicons.get(&nsid).unwrap().defs.get(name).unwrap();
+
+        Referent {
+            path: ModulePath::from(nsid).item_path(name.to_pascal_case()),
+            schema,
+        }
     }
 
     fn emit_string_type(
@@ -137,29 +156,15 @@ impl Gen {
         }
 
         // If the value is a reference, resolve it.
-        //
-        // References can be absolute (NSID + fragment) or relative (fragment only).
-        let (nsid, fragment) = match nsid::Reference::from_str(value).unwrap() {
-            nsid::Reference::Full(full) => (full.clone_nsid(), full.clone_fragment()),
-            nsid::Reference::Relative(fragment) => (namespace.clone(), Some(fragment)),
-        };
+        let referent = self.resolve_ref(namespace, nsid::Reference::from_str(value).unwrap());
 
-        // The primary definition in a Lexicon schema, always named `main`, can be referred to
-        // without a fragment. If there's no fragment, fill in the name.
-        let name = fragment
-            .as_ref()
-            .and_then(|s| s.as_str().strip_prefix('#'))
-            .unwrap();
-
-        let referent = self.lexicons.get(&nsid).unwrap().defs.get(name).unwrap();
-
-        match referent {
+        match referent.schema {
             Schema::Token(t) => StringEnumVariant {
                 doc: t.description.clone(),
                 string_value: value.into(),
-                ident: quote::format_ident!("{}", name.to_pascal_case()),
+                ident: quote::format_ident!("{}", referent.path.name()),
             },
-            _ => panic!("unsupported string ref type: {referent:?}"),
+            _ => panic!("unsupported string ref type: {:?}", referent.schema),
         }
     }
 
@@ -261,7 +266,6 @@ impl Gen {
 
             FieldSchema::Ref(r) => {
                 let nsid_ref = nsid::Reference::from_str(&r.ref_).unwrap();
-                eprintln!("ref not resolved: {nsid_ref}");
                 quote! { () }
             }
 
@@ -364,4 +368,9 @@ pub fn string_format_type(format: StringFormat) -> TokenStream {
         StringFormat::Tid => quote! { #crate_::tid::Tid },
         StringFormat::Uri => quote! { url::Url },
     }
+}
+
+pub struct Referent<'a> {
+    path: ItemPath,
+    schema: &'a Schema,
 }
