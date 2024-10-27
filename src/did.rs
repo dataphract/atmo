@@ -1,5 +1,7 @@
 use std::str::FromStr;
 
+use serde::{de::Error as _, Deserialize, Serialize};
+
 use crate::{error::ParseError, split_once};
 
 pub struct Did(String);
@@ -28,6 +30,25 @@ impl FromStr for Did {
         is_valid_did(s.as_bytes())
             .then(|| Did(s.into()))
             .ok_or_else(ParseError::did)
+    }
+}
+
+impl<'de> Deserialize<'de> for Did {
+    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = <&str>::deserialize(des)?;
+        Did::from_str(s).map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for Did {
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.0.serialize(ser)
     }
 }
 

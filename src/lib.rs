@@ -1,12 +1,20 @@
 use std::{ops::RangeInclusive, str::FromStr};
 
+use serde::{de::Error as _, Deserialize, Serialize};
+
 use crate::error::ParseError;
 
-pub use crate::{blob::Blob, cid::CidString, did::Did, handle::Handle, nullable::Nullable};
+pub use crate::{
+    blob::Blob,
+    cid::{CidLink, CidString},
+    did::Did,
+    handle::Handle,
+    nullable::Nullable,
+};
 
 pub mod at_uri;
 mod blob;
-pub mod cid;
+mod cid;
 pub mod datetime;
 pub mod did;
 pub mod error;
@@ -16,6 +24,8 @@ mod nullable;
 mod parse;
 pub mod rkey;
 pub mod tid;
+
+pub(crate) const SEGMENT_LEN_RANGE: RangeInclusive<usize> = 1..=63;
 
 pub enum AtIdentifier {
     Did(Did),
@@ -33,7 +43,32 @@ impl FromStr for AtIdentifier {
     }
 }
 
-pub(crate) const SEGMENT_LEN_RANGE: RangeInclusive<usize> = 1..=63;
+impl<'de> Deserialize<'de> for AtIdentifier {
+    #[inline]
+    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = <&str>::deserialize(des)?;
+        AtIdentifier::from_str(s).map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for AtIdentifier {
+    #[inline]
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        match self {
+            AtIdentifier::Did(did) => did.serialize(ser),
+            AtIdentifier::Handle(handle) => handle.serialize(ser),
+        }
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct Unknown(String);
 
 // Taken from stdlib until slice::split_once is stable.
 #[inline]

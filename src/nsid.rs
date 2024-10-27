@@ -1,5 +1,7 @@
 use std::{fmt, str::FromStr};
 
+use serde::{de::Error as _, Deserialize, Serialize};
+
 use crate::{
     error::ParseError, is_valid_domain_segment, is_valid_nsid_name, is_valid_tld, SEGMENT_LEN_RANGE,
 };
@@ -42,6 +44,27 @@ impl TryFrom<&'_ [u8]> for Nsid {
     #[inline]
     fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
         validate_nsid(bytes).map(|()| Nsid(String::from_utf8(bytes.into()).unwrap()))
+    }
+}
+
+impl<'de> Deserialize<'de> for Nsid {
+    #[inline]
+    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = <&str>::deserialize(des)?;
+        Nsid::from_str(s).map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for Nsid {
+    #[inline]
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.0.serialize(ser)
     }
 }
 
@@ -168,7 +191,7 @@ impl FullReference {
 
     #[inline]
     fn has_fragment(&self) -> bool {
-        (self.frag_start < self.text.len())
+        self.frag_start < self.text.len()
     }
 
     pub fn clone_fragment(&self) -> Option<Fragment> {

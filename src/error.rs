@@ -1,16 +1,6 @@
 use std::fmt;
 
 #[derive(Debug)]
-pub struct Error {
-    kind: ErrorKind,
-}
-
-#[derive(Debug)]
-pub enum ErrorKind {
-    Parse(ParseError),
-}
-
-#[derive(Debug)]
 pub struct ParseError {
     while_parsing: &'static str,
 }
@@ -55,12 +45,6 @@ impl ParseError {
     pub(crate) fn nsid_fragment() -> Self {
         ParseError {
             while_parsing: "NSID fragment",
-        }
-    }
-
-    pub(crate) fn nsid_ref() -> Self {
-        ParseError {
-            while_parsing: "NSID reference",
         }
     }
 }

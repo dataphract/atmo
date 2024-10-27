@@ -1,6 +1,7 @@
 use std::{cmp::Ordering, fmt, str::FromStr};
 
 use jiff::{fmt::strtime::BrokenDownTime, tz::Offset, Timestamp};
+use serde::{de::Error, Deserialize, Serialize};
 
 use crate::error::ParseError;
 
@@ -55,6 +56,27 @@ impl FromStr for DateTimeString {
         let parsed = parse(s).ok_or_else(ParseError::datetime)?;
 
         Ok(DateTimeString { original, parsed })
+    }
+}
+
+impl<'de> Deserialize<'de> for DateTimeString {
+    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let original = String::deserialize(des)?;
+        let parsed = parse(&original).ok_or_else(|| D::Error::custom("invalid DateTime string"))?;
+
+        Ok(DateTimeString { original, parsed })
+    }
+}
+
+impl Serialize for DateTimeString {
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.original.serialize(ser)
     }
 }
 

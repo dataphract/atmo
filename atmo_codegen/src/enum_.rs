@@ -1,3 +1,5 @@
+use std::collections::{btree_map, BTreeMap, HashSet};
+
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
@@ -17,7 +19,7 @@ impl ToTokens for StringEnumDef {
 
         let other_variant = self.is_open.then(|| {
             quote! {
-                #[serde(other)]
+                #[serde(untagged)]
                 Other(String),
             }
         });
@@ -59,7 +61,7 @@ impl ToTokens for StringEnumVariant {
 pub struct UnionEnumDef {
     pub doc: Option<String>,
     pub ident: syn::Ident,
-    pub variants: Vec<UnionEnumVariant>,
+    pub variants: Vec<ItemPath>,
     pub is_open: bool,
 }
 
@@ -67,39 +69,48 @@ impl ToTokens for UnionEnumDef {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         let doc = self.doc.iter();
         let ident = &self.ident;
-        let variants = self.variants.iter();
+
+        // Resolve variant naming conflicts.
+        let mut variant_names = BTreeMap::new();
+        let mut num_ancestors = 0;
+
+        'another_ancestor: loop {
+            for v in &self.variants {
+                let variant_name = v.variant_name(num_ancestors);
+
+                let btree_map::Entry::Vacant(vacant) = variant_names.entry(variant_name.clone())
+                else {
+                    variant_names.clear();
+                    num_ancestors += 1;
+
+                    continue 'another_ancestor;
+                };
+
+                vacant.insert(v.clone());
+            }
+
+            break;
+        }
+
+        let variants = variant_names.iter().map(|(name, ty)| {
+            let ident = quote::format_ident!("{name}");
+            quote! { #ident(#ty) }
+        });
 
         let other_variant = self.is_open.then(|| {
             quote! {
                 #[serde(other)]
-                Other()
+                Other
             }
         });
 
         quote! {
             #(#[doc = #doc])*
+            #[derive(serde::Deserialize, serde::Serialize)]
             pub enum #ident {
                 #(#variants,)*
                 #other_variant
             }
-        }
-        .to_tokens(tokens)
-    }
-}
-
-#[derive(Debug, PartialEq, Eq)]
-pub struct UnionEnumVariant {
-    pub name: syn::Ident,
-    pub inner: ItemPath,
-}
-
-impl ToTokens for UnionEnumVariant {
-    fn to_tokens(&self, tokens: &mut TokenStream) {
-        let name = &self.name;
-        let inner = &self.inner;
-
-        quote! {
-            #name(#inner)
         }
         .to_tokens(tokens)
     }

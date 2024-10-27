@@ -1,5 +1,7 @@
 use std::str::FromStr;
 
+use serde::{de::Error as _, Deserialize, Serialize};
+
 use crate::{did::Did, error::ParseError, handle::Handle, nsid::Nsid, rkey::RecordKey};
 
 const MAX_LEN: usize = 8 * 1024;
@@ -85,6 +87,25 @@ impl FromStr for AtUri {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         AtUri::new(s.to_string()).ok_or_else(ParseError::at_uri)
+    }
+}
+
+impl<'de> Deserialize<'de> for AtUri {
+    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = <&str>::deserialize(des)?;
+        AtUri::from_str(s).map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for AtUri {
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.text.serialize(ser)
     }
 }
 

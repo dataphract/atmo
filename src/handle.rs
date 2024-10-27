@@ -1,5 +1,7 @@
 use std::str::FromStr;
 
+use serde::{de::Error as _, Deserialize, Serialize};
+
 use crate::{error::ParseError, is_valid_domain_segment, is_valid_tld};
 
 const MAX_LEN: usize = 253;
@@ -13,6 +15,27 @@ impl Handle {
 
     pub fn as_str(&self) -> &str {
         self.0.as_str()
+    }
+}
+
+impl<'de> Deserialize<'de> for Handle {
+    #[inline]
+    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = <&str>::deserialize(des)?;
+        Handle::from_str(s).map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for Handle {
+    #[inline]
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.0.serialize(ser)
     }
 }
 

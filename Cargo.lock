@@ -16,6 +16,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "atmo_api"
+version = "0.1.0"
+dependencies = [
+ "atmo",
+ "cid",
+ "jiff",
+ "serde",
+ "serde_json",
+ "url",
+]
+
+[[package]]
 name = "atmo_codegen"
 version = "0.1.0"
 dependencies = [

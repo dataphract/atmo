@@ -1,6 +1,4 @@
-use atmo::nsid;
-use atmo_lexicon::{FieldSchema, Object};
-use proc_macro2::{Span, TokenStream};
+use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
 #[derive(Debug)]
@@ -15,6 +13,7 @@ impl ToTokens for StructDef {
         let fields = self.fields.iter();
 
         quote! {
+            #[derive(serde::Deserialize, serde::Serialize)]
             pub struct #name {
                 #(#fields),*
             }

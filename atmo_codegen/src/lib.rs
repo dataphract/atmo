@@ -6,7 +6,7 @@ use std::{
 
 use atmo::nsid::{self, FullReference, Nsid};
 use atmo_lexicon::{FieldSchema, Lexicon, Object, Schema, StringFormat, Union};
-use enum_::{StringEnumDef, StringEnumVariant, UnionEnumDef, UnionEnumVariant};
+use enum_::{StringEnumDef, StringEnumVariant, UnionEnumDef};
 use heck::{ToPascalCase, ToSnakeCase};
 use module::{Item, ItemPath, ModulePath, Output};
 use proc_macro2::TokenStream;
@@ -55,7 +55,13 @@ impl Gen {
             .and_then(|s| s.as_str().strip_prefix('#'))
             .unwrap_or("main");
 
-        let schema = self.lexicons.get(&nsid).unwrap().defs.get(name).unwrap();
+        let schema = self
+            .lexicons
+            .get(&nsid)
+            .unwrap_or_else(|| panic!("error loading Lexicon for {nsid}"))
+            .defs
+            .get(name)
+            .unwrap();
 
         Referent {
             path: ModulePath::from(nsid).item_path(name.to_pascal_case()),
@@ -116,14 +122,16 @@ impl Gen {
         let module = output.get_or_create_mut(&mod_path);
 
         // Emit a definition for the string enum.
-        module.add_item(
-            type_name.clone(),
-            Item::StringEnum(StringEnumDef {
-                ident: type_ident,
-                variants,
-                is_open,
-            }),
-        );
+        module
+            .add_item(
+                type_name.clone(),
+                Item::StringEnum(StringEnumDef {
+                    ident: type_ident,
+                    variants,
+                    is_open,
+                }),
+            )
+            .unwrap();
 
         mod_path.item_path(type_name).into_token_stream()
     }
@@ -168,11 +176,7 @@ impl Gen {
             .map(|s| {
                 let r = nsid::Reference::from_str(s).unwrap();
                 let referent = self.resolve_ref(namespace, r);
-
-                let name = quote::format_ident!("{}", referent.path.name());
-                let inner = referent.path.clone();
-
-                UnionEnumVariant { name, inner }
+                referent.path.clone()
             })
             .collect();
 
@@ -225,13 +229,16 @@ impl Gen {
             fields.push(field);
         }
 
-        output.get_or_create_mut(&namespace.into()).add_item(
-            type_name,
-            Item::Struct(StructDef {
-                name: type_ident,
-                fields,
-            }),
-        );
+        output
+            .get_or_create_mut(&namespace.into())
+            .add_item(
+                type_name,
+                Item::Struct(StructDef {
+                    name: type_ident,
+                    fields,
+                }),
+            )
+            .unwrap();
     }
 
     fn emit_struct_field(
@@ -264,15 +271,17 @@ impl Gen {
         let inner_ty: TokenStream = match schema {
             FieldSchema::Array(a) => {
                 let elem_ty = match &*a.items {
-                    FieldSchema::CidLink => quote! { CidLink },
+                    FieldSchema::CidLink => quote! { atmo::CidLink },
                     FieldSchema::Ref(r) => {
                         let nsid_ref = nsid::Reference::from_str(&r.ref_).unwrap();
                         let referent = self.resolve_ref(namespace, nsid_ref);
                         referent.path.into_token_stream()
                     }
-                    FieldSchema::String(_) => quote! { String },
-                    FieldSchema::Union(_) => quote! { Union },
-                    FieldSchema::Unknown => quote! { Unknown },
+                    FieldSchema::String(_) => quote! { std::string::String },
+                    FieldSchema::Union(u) => self
+                        .emit_union(output, namespace, def_name, prop_name, u)
+                        .into_token_stream(),
+                    FieldSchema::Unknown => quote! { atmo::Unknown },
                     x => panic!("unhandled array element type: {x:?}"),
                 };
 
@@ -295,7 +304,7 @@ impl Gen {
                 quote! { Vec<u8> }
             }
 
-            FieldSchema::CidLink => quote! { #crate_::cid::CidLink },
+            FieldSchema::CidLink => quote! { #crate_::CidLink },
 
             FieldSchema::Integer(i) => {
                 // TODO: deranged
@@ -314,12 +323,9 @@ impl Gen {
 
             FieldSchema::String(s) => self.resolve_string_type(output, namespace, prop_name, s),
 
-            FieldSchema::Union(u) => {
-                eprintln!("unions not properly implemented yet");
-
-                self.emit_union(output, namespace, def_name, prop_name, u)
-                    .into_token_stream()
-            }
+            FieldSchema::Union(u) => self
+                .emit_union(output, namespace, def_name, prop_name, u)
+                .into_token_stream(),
 
             FieldSchema::Unknown => {
                 eprintln!("unknown fields not properly implemented yet");
@@ -341,7 +347,6 @@ impl Gen {
 
         for (nsid, lex) in self.lexicons.iter() {
             for (name, schema) in &lex.defs {
-                // println!("{nsid}#{name}");
                 let full = FullReference::from_str(&format!("{nsid}#{name}")).unwrap();
 
                 let mut module_path = ModulePath::new();
@@ -362,23 +367,8 @@ impl Gen {
                     Schema::Record(r) => continue,
                     Schema::Procedure(_) | Schema::Query(_) => continue,
                     Schema::String(s) => {
-                        let atmo_lexicon::String {
-                            description,
-                            format,
-                            max_length,
-                            min_length,
-                            max_graphemes,
-                            min_graphemes,
-                            known_values,
-                            enum_values,
-                            default,
-                            const_value,
-                        } = s;
-
-                        assert!(format.is_none());
-                        assert!(const_value.is_none());
-
-                        continue;
+                        // TODO(dp) this is hacky, make a dedicated method for strings in defs
+                        self.resolve_string_type(&mut output, nsid, name, s);
                     }
                     Schema::Subscription(_) => continue,
                     Schema::Token(_) => continue,
@@ -395,9 +385,9 @@ pub fn string_format_type(format: StringFormat) -> TokenStream {
     let crate_ = crate_name();
 
     match format {
-        StringFormat::AtIdentifier => quote! { #crate_::at_uri::AtIdentifier },
+        StringFormat::AtIdentifier => quote! { #crate_::AtIdentifier },
         StringFormat::AtUri => quote! { #crate_::at_uri::AtUri },
-        StringFormat::Cid => quote! { #crate_::cid::CidString },
+        StringFormat::Cid => quote! { #crate_::CidString },
         StringFormat::Datetime => quote! { #crate_::datetime::DateTimeString },
         StringFormat::Did => quote! { #crate_::did::Did },
         StringFormat::Handle => quote! { #crate_::handle::Handle },

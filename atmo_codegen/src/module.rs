@@ -4,7 +4,7 @@ use std::{
 };
 
 use atmo::nsid::Nsid;
-use heck::ToSnakeCase;
+use heck::{ToPascalCase, ToSnakeCase};
 use quote::{quote, ToTokens};
 
 use crate::{
@@ -113,7 +113,6 @@ impl Output {
     // There's probably a way to do this in-place (i.e. without returning a new TokenStream for each
     // module) but it really doesn't matter.
     fn emit_module(&self, path: &ModulePath) -> proc_macro2::TokenStream {
-        eprintln!("emit {path}");
         let module = self.modules.get(path).unwrap();
 
         let name = quote::format_ident!("{}", path.name());
@@ -210,6 +209,8 @@ impl ToTokens for ModulePath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let mut it = self.segments.iter().peekable();
 
+        quote! { crate :: }.to_tokens(tokens);
+
         while let Some(segment) = it.next() {
             quote::format_ident!("{segment}").to_tokens(tokens);
 
@@ -243,6 +244,33 @@ pub struct ItemPath {
 impl ItemPath {
     pub fn name(&self) -> &str {
         self.item_name.as_str()
+    }
+
+    /// Generates a name for a variant based on the names of the item and its ancestor modules.
+    pub fn variant_name(&self, num_ancestors: usize) -> String {
+        assert!(num_ancestors < self.module_path.segments.len());
+
+        let mut parts = Vec::new();
+
+        parts.push(self.name());
+        parts.extend(
+            self.module_path
+                .segments
+                .iter()
+                .rev()
+                .take(num_ancestors)
+                .map(String::as_str),
+        );
+
+        let mut name = String::new();
+
+        for part in parts.into_iter().rev() {
+            use std::fmt::Write;
+
+            write!(&mut name, "{part}_").unwrap();
+        }
+
+        name.to_pascal_case()
     }
 }
 

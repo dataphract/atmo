@@ -96,11 +96,6 @@ impl<'de> Deserialize<'de> for CidString {
     }
 }
 
-pub enum Codec {
-    Raw = 0x55,
-    DagCbor = 0x71,
-}
-
 #[cfg(test)]
 mod tests {
     use std::iter;
@@ -108,6 +103,12 @@ mod tests {
     use cid::multihash::Multihash;
 
     use super::*;
+
+    // TODO(dp): expose
+    enum Codec {
+        Raw = 0x55,
+        // DagCbor = 0x71,
+    }
 
     fn gen_cid_string(codec: Codec, base: multibase::Base) -> String {
         let mut bytes = Vec::new();
