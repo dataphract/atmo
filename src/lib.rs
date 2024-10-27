@@ -2,9 +2,10 @@ use std::{ops::RangeInclusive, str::FromStr};
 
 use crate::error::ParseError;
 
-pub use crate::{cid::CidString, did::Did, handle::Handle, nullable::Nullable};
+pub use crate::{blob::Blob, cid::CidString, did::Did, handle::Handle, nullable::Nullable};
 
 pub mod at_uri;
+mod blob;
 pub mod cid;
 pub mod datetime;
 pub mod did;

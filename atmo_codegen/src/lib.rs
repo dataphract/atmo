@@ -53,7 +53,7 @@ impl Gen {
         let name = fragment
             .as_ref()
             .and_then(|s| s.as_str().strip_prefix('#'))
-            .unwrap();
+            .unwrap_or("main");
 
         let schema = self.lexicons.get(&nsid).unwrap().defs.get(name).unwrap();
 
@@ -63,7 +63,7 @@ impl Gen {
         }
     }
 
-    fn emit_string_type(
+    fn resolve_string_type(
         &self,
         output: &mut Output,
         namespace: &Nsid,
@@ -79,68 +79,57 @@ impl Gen {
             return string_format_type(format);
         }
 
-        let type_name = prop_name.to_pascal_case();
-        let type_ident = quote::format_ident!("{type_name}");
-
         if !s.known_values.is_empty() {
             assert!(s.enum_values.is_none());
             assert!(s.const_value.is_none());
 
-            let variants = self
-                .emit_string_enum_variants(namespace, s.known_values.iter().map(String::as_str));
-
-            let mod_path = namespace.into();
-            let module = output.get_or_create_mut(&mod_path);
-
-            // Emit a definition for the string enum.
-            module.add_item(
-                type_name.clone(),
-                Item::StringEnum(StringEnumDef {
-                    ident: type_ident,
-                    variants,
-                    is_open: true,
-                }),
-            );
-
-            return mod_path.item_path(type_name).into_token_stream();
+            return self.emit_string_enum(output, namespace, prop_name, &s.known_values, true);
         }
 
         if let Some(enum_values) = &s.enum_values {
             assert!(s.const_value.is_none());
 
-            let variants =
-                self.emit_string_enum_variants(namespace, enum_values.iter().map(String::as_str));
-
-            let mod_path = namespace.into();
-            let module = output.get_or_create_mut(&mod_path);
-
-            module.add_item(
-                type_name.clone(),
-                Item::StringEnum(StringEnumDef {
-                    ident: type_ident,
-                    variants,
-                    is_open: false,
-                }),
-            );
-
-            return mod_path.item_path(type_name).into_token_stream();
+            return self.emit_string_enum(output, namespace, prop_name, enum_values, false);
         }
 
         quote! { std::string::String }
     }
 
-    fn emit_string_enum_variants<I>(&self, namespace: &Nsid, values: I) -> Vec<StringEnumVariant>
-    where
-        I: IntoIterator,
-        I::Item: Borrow<str>,
-    {
-        values
-            .into_iter()
-            .map(|v| self.emit_string_enum_variant(namespace, v.borrow()))
-            .collect()
+    /// Emits an enum definition for a set of known string values.
+    fn emit_string_enum(
+        &self,
+        output: &mut Output,
+        namespace: &Nsid,
+        prop_name: &str,
+        known_values: &[String],
+        is_open: bool,
+    ) -> TokenStream {
+        let type_name = prop_name.to_pascal_case();
+        let type_ident = quote::format_ident!("{type_name}");
+
+        let variants = known_values
+            .iter()
+            .map(|v| self.gen_string_enum_variant(namespace, v.borrow()))
+            .collect();
+
+        let mod_path = namespace.into();
+        let module = output.get_or_create_mut(&mod_path);
+
+        // Emit a definition for the string enum.
+        module.add_item(
+            type_name.clone(),
+            Item::StringEnum(StringEnumDef {
+                ident: type_ident,
+                variants,
+                is_open,
+            }),
+        );
+
+        mod_path.item_path(type_name).into_token_stream()
     }
 
-    fn emit_string_enum_variant(&self, namespace: &Nsid, value: &str) -> StringEnumVariant {
+    /// Generates a single variant for an enum of known string values.
+    fn gen_string_enum_variant(&self, namespace: &Nsid, value: &str) -> StringEnumVariant {
         let ident = quote::format_ident!("{}", value.to_pascal_case());
 
         // If the value isn't a reference, create a variant of the same name and return.
@@ -226,8 +215,9 @@ impl Gen {
                 let elem_ty = match &*a.items {
                     FieldSchema::CidLink => quote! { CidLink },
                     FieldSchema::Ref(r) => {
-                        eprintln!("unhandled ref: {}", r.ref_);
-                        quote! { () }
+                        let nsid_ref = nsid::Reference::from_str(&r.ref_).unwrap();
+                        let referent = self.resolve_ref(namespace, nsid_ref);
+                        referent.path.into_token_stream()
                     }
                     FieldSchema::String(_) => quote! { String },
                     FieldSchema::Union(_) => quote! { Union },
@@ -238,7 +228,11 @@ impl Gen {
                 quote! { Vec<#elem_ty> }
             }
 
-            FieldSchema::Blob(b) => quote::format_ident!("Blob").to_token_stream(),
+            FieldSchema::Blob(b) => {
+                desc = b.description.clone();
+                eprintln!("blob MIME type and size are not enforced");
+                quote! { atmo::Blob }
+            }
 
             FieldSchema::Boolean(b) => {
                 desc = b.description.clone();
@@ -263,10 +257,11 @@ impl Gen {
 
             FieldSchema::Ref(r) => {
                 let nsid_ref = nsid::Reference::from_str(&r.ref_).unwrap();
-                quote! { () }
+                let referent = self.resolve_ref(namespace, nsid_ref);
+                referent.path.into_token_stream()
             }
 
-            FieldSchema::String(s) => self.emit_string_type(output, namespace, prop_name, s),
+            FieldSchema::String(s) => self.resolve_string_type(output, namespace, prop_name, s),
 
             FieldSchema::Union(u) => {
                 eprintln!("unions not properly implemented yet");
