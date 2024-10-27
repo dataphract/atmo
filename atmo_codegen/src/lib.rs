@@ -5,8 +5,8 @@ use std::{
 };
 
 use atmo::nsid::{self, FullReference, Nsid};
-use atmo_lexicon::{FieldSchema, Lexicon, Object, Schema, StringFormat};
-use enum_::{StringEnumDef, StringEnumVariant};
+use atmo_lexicon::{FieldSchema, Lexicon, Object, Schema, StringFormat, Union};
+use enum_::{StringEnumDef, StringEnumVariant, UnionEnumDef, UnionEnumVariant};
 use heck::{ToPascalCase, ToSnakeCase};
 use module::{Item, ItemPath, ModulePath, Output};
 use proc_macro2::TokenStream;
@@ -154,6 +154,55 @@ impl Gen {
         }
     }
 
+    fn emit_union(
+        &self,
+        output: &mut Output,
+        namespace: &Nsid,
+        def_name: &str,
+        prop_name: &str,
+        schema: &Union,
+    ) -> ItemPath {
+        let variants = schema
+            .refs
+            .iter()
+            .map(|s| {
+                let r = nsid::Reference::from_str(s).unwrap();
+                let referent = self.resolve_ref(namespace, r);
+
+                let name = quote::format_ident!("{}", referent.path.name());
+                let inner = referent.path.clone();
+
+                UnionEnumVariant { name, inner }
+            })
+            .collect();
+
+        let module_path = namespace.into();
+        let module = output.get_or_create_mut(&module_path);
+
+        let mut type_name = prop_name.to_pascal_case();
+
+        if module.item_exists(&type_name) {
+            // Glue the def name on and hope that fixes the problem.
+            type_name = format!("{def_name}_{prop_name}").to_pascal_case();
+        }
+
+        let type_ident = quote::format_ident!("{type_name}");
+
+        module
+            .add_item(
+                type_name.clone(),
+                Item::UnionEnum(UnionEnumDef {
+                    doc: schema.description.clone(),
+                    ident: type_ident,
+                    variants,
+                    is_open: !schema.closed,
+                }),
+            )
+            .unwrap();
+
+        module_path.item_path(type_name)
+    }
+
     fn emit_struct(&self, output: &mut Output, namespace: &Nsid, name: &str, object: &Object) {
         // Convert name to PascalCase.
         let type_name = name.to_pascal_case();
@@ -167,6 +216,7 @@ impl Gen {
             let field = self.emit_struct_field(
                 output,
                 namespace,
+                name,
                 prop_name,
                 prop_schema,
                 required.contains(prop_name.as_str()),
@@ -188,6 +238,7 @@ impl Gen {
         &self,
         output: &mut Output,
         namespace: &Nsid,
+        def_name: &str,
         prop_name: &str,
         schema: &FieldSchema,
         required: bool,
@@ -266,9 +317,8 @@ impl Gen {
             FieldSchema::Union(u) => {
                 eprintln!("unions not properly implemented yet");
 
-                eprintln!("union refs: {:?}", &u.refs);
-
-                quote! { () }
+                self.emit_union(output, namespace, def_name, prop_name, u)
+                    .into_token_stream()
             }
 
             FieldSchema::Unknown => {

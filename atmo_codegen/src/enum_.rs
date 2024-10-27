@@ -1,6 +1,8 @@
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
+use crate::module::ItemPath;
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct StringEnumDef {
     pub ident: syn::Ident,
@@ -53,8 +55,9 @@ impl ToTokens for StringEnumVariant {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct UnionEnumDef {
+    pub doc: Option<String>,
     pub ident: syn::Ident,
     pub variants: Vec<UnionEnumVariant>,
     pub is_open: bool,
@@ -62,17 +65,19 @@ pub struct UnionEnumDef {
 
 impl ToTokens for UnionEnumDef {
     fn to_tokens(&self, tokens: &mut TokenStream) {
+        let doc = self.doc.iter();
         let ident = &self.ident;
         let variants = self.variants.iter();
 
         let other_variant = self.is_open.then(|| {
             quote! {
                 #[serde(other)]
-                Other(),
+                Other()
             }
         });
 
         quote! {
+            #(#[doc = #doc])*
             pub enum #ident {
                 #(#variants,)*
                 #other_variant
@@ -82,10 +87,10 @@ impl ToTokens for UnionEnumDef {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct UnionEnumVariant {
     pub name: syn::Ident,
-    pub inner: TokenStream,
+    pub inner: ItemPath,
 }
 
 impl ToTokens for UnionEnumVariant {
@@ -94,7 +99,7 @@ impl ToTokens for UnionEnumVariant {
         let inner = &self.inner;
 
         quote! {
-            #name(#inner),
+            #name(#inner)
         }
         .to_tokens(tokens)
     }

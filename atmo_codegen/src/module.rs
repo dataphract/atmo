@@ -22,11 +22,27 @@ pub struct Module {
 }
 
 impl Module {
-    pub fn add_item(&mut self, name: String, item: Item) {
+    pub fn item_exists(&self, name: &str) -> bool {
+        self.items.contains_key(name)
+    }
+
+    pub fn add_item(&mut self, name: String, item: Item) -> Result<(), NameCollision> {
         if let Some(existing) = self.items.get(&name) {
             match (existing, &item) {
                 (Item::StringEnum(s1), Item::StringEnum(s2)) => {
-                    assert_eq!(s1, s2, "item collision: {name}");
+                    if s1 != s2 {
+                        return Err(NameCollision);
+                    } else {
+                        return Ok(());
+                    }
+                }
+
+                (Item::UnionEnum(u1), Item::UnionEnum(u2)) => {
+                    if u1 != u2 {
+                        return Err(NameCollision);
+                    } else {
+                        return Ok(());
+                    }
                 }
                 _ => panic!("item collision: {name}"),
             }
@@ -35,8 +51,13 @@ impl Module {
         eprintln!("insert {}::{name}", self.path);
 
         self.items.insert(name, item);
+
+        Ok(())
     }
 }
+
+#[derive(Debug)]
+pub struct NameCollision;
 
 #[derive(Debug)]
 pub enum Item {
@@ -213,6 +234,7 @@ impl From<Nsid> for ModulePath {
     }
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ItemPath {
     module_path: ModulePath,
     item_name: String,
