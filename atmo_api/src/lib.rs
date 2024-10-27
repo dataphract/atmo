@@ -452,9 +452,9 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Media {
-                    ExternalMain(crate::app::bsky::embed::external::Main),
-                    ImagesMain(crate::app::bsky::embed::images::Main),
-                    VideoMain(crate::app::bsky::embed::video::Main),
+                    ExternalMain(std::boxed::Box<crate::app::bsky::embed::external::Main>),
+                    ImagesMain(std::boxed::Box<crate::app::bsky::embed::images::Main>),
+                    VideoMain(std::boxed::Box<crate::app::bsky::embed::video::Main>),
                     #[serde(other)]
                     Other,
                 }
@@ -465,9 +465,9 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum ViewMedia {
-                    ExternalView(crate::app::bsky::embed::external::View),
-                    ImagesView(crate::app::bsky::embed::images::View),
-                    VideoView(crate::app::bsky::embed::video::View),
+                    ExternalView(std::boxed::Box<crate::app::bsky::embed::external::View>),
+                    ImagesView(std::boxed::Box<crate::app::bsky::embed::images::View>),
+                    VideoView(std::boxed::Box<crate::app::bsky::embed::video::View>),
                     #[serde(other)]
                     Other,
                 }
@@ -673,7 +673,7 @@ pub mod app {
                 pub enum Replies {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    ThreadViewPost(crate::app::bsky::feed::defs::ThreadViewPost),
+                    ThreadViewPost(std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>),
                     #[serde(other)]
                     Other,
                 }
@@ -728,7 +728,7 @@ pub mod app {
                 pub enum ThreadViewPostParent {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    ThreadViewPost(crate::app::bsky::feed::defs::ThreadViewPost),
+                    ThreadViewPost(std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>),
                     #[serde(other)]
                     Other,
                 }

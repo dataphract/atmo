@@ -21,6 +21,10 @@ impl Nsid {
     pub fn segments(&self) -> impl DoubleEndedIterator<Item = &str> {
         self.0.split('.')
     }
+
+    pub fn with_fragment(&self, fragment: &Fragment) -> FullReference {
+        FullReference::from_str(&format!("{self}{fragment}")).unwrap()
+    }
 }
 
 impl fmt::Display for Nsid {

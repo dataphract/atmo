@@ -1,4 +1,4 @@
-use std::collections::{btree_map, BTreeMap, HashSet};
+use std::collections::{btree_map, BTreeMap};
 
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
@@ -61,7 +61,7 @@ impl ToTokens for StringEnumVariant {
 pub struct UnionEnumDef {
     pub doc: Option<String>,
     pub ident: syn::Ident,
-    pub variants: Vec<ItemPath>,
+    pub variants: Vec<UnionEnumVariant>,
     pub is_open: bool,
 }
 
@@ -76,7 +76,7 @@ impl ToTokens for UnionEnumDef {
 
         'another_ancestor: loop {
             for v in &self.variants {
-                let variant_name = v.variant_name(num_ancestors);
+                let variant_name = v.path.variant_name(num_ancestors);
 
                 let btree_map::Entry::Vacant(vacant) = variant_names.entry(variant_name.clone())
                 else {
@@ -86,15 +86,21 @@ impl ToTokens for UnionEnumDef {
                     continue 'another_ancestor;
                 };
 
-                vacant.insert(v.clone());
+                vacant.insert(v);
             }
 
             break;
         }
 
-        let variants = variant_names.iter().map(|(name, ty)| {
+        let variants = variant_names.iter().map(|(name, var)| {
             let ident = quote::format_ident!("{name}");
-            quote! { #ident(#ty) }
+            let ty = &var.path;
+
+            if var.needs_boxed {
+                quote! { #ident(std::boxed::Box<#ty>) }
+            } else {
+                quote! { #ident(#ty) }
+            }
         });
 
         let other_variant = self.is_open.then(|| {
@@ -114,4 +120,10 @@ impl ToTokens for UnionEnumDef {
         }
         .to_tokens(tokens)
     }
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct UnionEnumVariant {
+    pub path: ItemPath,
+    pub needs_boxed: bool,
 }

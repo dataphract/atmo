@@ -6,7 +6,7 @@ use std::{
 
 use atmo::nsid::{self, FullReference, Nsid};
 use atmo_lexicon::{FieldSchema, Lexicon, Object, Schema, StringFormat, Union};
-use enum_::{StringEnumDef, StringEnumVariant, UnionEnumDef};
+use enum_::{StringEnumDef, StringEnumVariant, UnionEnumDef, UnionEnumVariant};
 use heck::{ToPascalCase, ToSnakeCase};
 use module::{Item, ItemPath, ModulePath, Output};
 use proc_macro2::TokenStream;
@@ -64,6 +64,7 @@ impl Gen {
             .unwrap();
 
         Referent {
+            full: FullReference::from_str(&format!("{namespace}#{name}")).unwrap(),
             path: ModulePath::from(nsid).item_path(name.to_pascal_case()),
             schema,
         }
@@ -170,13 +171,24 @@ impl Gen {
         prop_name: &str,
         schema: &Union,
     ) -> ItemPath {
+        let full = FullReference::from_str(&format!("{namespace}#{def_name}")).unwrap();
+
         let variants = schema
             .refs
             .iter()
             .map(|s| {
                 let r = nsid::Reference::from_str(s).unwrap();
                 let referent = self.resolve_ref(namespace, r);
-                referent.path.clone()
+                let path = referent.path.clone();
+
+                // TODO(dp): this is fragile, needs to actually do a full walk of references
+                let needs_boxed = referent.full == full;
+                eprintln!(
+                    "{def_name}.{prop_name}: {} == {} : {needs_boxed}",
+                    referent.full, full
+                );
+
+                UnionEnumVariant { path, needs_boxed }
             })
             .collect();
 
@@ -403,6 +415,7 @@ pub fn string_format_type(format: StringFormat) -> TokenStream {
 }
 
 pub struct Referent<'a> {
+    full: FullReference,
     path: ItemPath,
     schema: &'a Schema,
 }
