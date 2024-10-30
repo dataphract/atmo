@@ -6,6 +6,7 @@ use crate::{error::ParseError, is_valid_domain_segment, is_valid_tld};
 
 const MAX_LEN: usize = 253;
 
+#[derive(Debug)]
 pub struct Handle(String);
 
 impl Handle {

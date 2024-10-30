@@ -9,6 +9,7 @@ use quote::{quote, ToTokens};
 
 use crate::{
     enum_::{StringEnumDef, UnionEnumDef},
+    rpc::RpcDef,
     struct_::StructDef,
 };
 
@@ -48,8 +49,6 @@ impl Module {
             }
         }
 
-        eprintln!("insert {}::{name}", self.path);
-
         self.items.insert(name, item);
 
         Ok(())
@@ -61,6 +60,7 @@ pub struct NameCollision;
 
 #[derive(Debug)]
 pub enum Item {
+    Rpc(RpcDef),
     Struct(StructDef),
     StringEnum(StringEnumDef),
     UnionEnum(UnionEnumDef),
@@ -69,6 +69,7 @@ pub enum Item {
 impl ToTokens for Item {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match self {
+            Item::Rpc(r) => r.to_tokens(tokens),
             Item::Struct(s) => s.to_tokens(tokens),
             Item::StringEnum(e) => e.to_tokens(tokens),
             Item::UnionEnum(e) => e.to_tokens(tokens),
@@ -77,12 +78,12 @@ impl ToTokens for Item {
 }
 
 #[derive(Default)]
-pub struct Output {
+pub struct Generated {
     // Flattened module tree, keyed by fully-qualified module path.
     modules: BTreeMap<ModulePath, Module>,
 }
 
-impl Output {
+impl Generated {
     pub fn get_or_create_mut(&mut self, path: &ModulePath) -> &mut Module {
         self.create_ancestors(path);
         self.create_only(path)
@@ -129,7 +130,7 @@ impl Output {
     }
 }
 
-impl IntoIterator for Output {
+impl IntoIterator for Generated {
     type Item = (ModulePath, Module);
 
     type IntoIter = <BTreeMap<ModulePath, Module> as IntoIterator>::IntoIter;
@@ -139,7 +140,7 @@ impl IntoIterator for Output {
     }
 }
 
-impl ToTokens for Output {
+impl ToTokens for Generated {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         for (path, module) in self.modules.iter() {
             if module.path.parent().is_some() {
@@ -232,6 +233,15 @@ impl From<&Nsid> for ModulePath {
 impl From<Nsid> for ModulePath {
     fn from(nsid: Nsid) -> Self {
         Self::from(&nsid)
+    }
+}
+
+impl FromIterator<String> for ModulePath {
+    #[inline]
+    fn from_iter<T: IntoIterator<Item = String>>(iter: T) -> Self {
+        ModulePath {
+            segments: Vec::from_iter(iter),
+        }
     }
 }
 

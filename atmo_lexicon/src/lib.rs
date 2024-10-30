@@ -31,7 +31,7 @@ pub enum Schema {
     Integer(Integer),
     Null,
     Object(Object),
-    Params(Params),
+    Params(Object),
     Procedure(Procedure),
     Query(Query),
     Record(Record),
@@ -151,14 +151,6 @@ pub struct Output {
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
-pub struct Params {
-    pub description: Option<std::string::String>,
-    pub required: Option<Vec<std::string::String>>,
-    pub properties: BTreeMap<std::string::String, Schema>,
-}
-
-#[derive(Clone, Debug, Deserialize)]
-#[serde(deny_unknown_fields)]
 pub struct Error {
     pub name: std::string::String,
     pub description: Option<std::string::String>,
@@ -168,7 +160,8 @@ pub struct Error {
 #[serde(deny_unknown_fields)]
 pub struct Procedure {
     pub description: Option<std::string::String>,
-    pub parameters: Option<Box<Schema>>,
+    #[serde(default, deserialize_with = "deserialize_params_schema")]
+    pub parameters: Option<Object>,
     pub output: Option<Output>,
     pub input: Option<Input>,
     pub errors: Option<Vec<Error>>,
@@ -178,9 +171,30 @@ pub struct Procedure {
 #[serde(deny_unknown_fields)]
 pub struct Query {
     pub description: Option<std::string::String>,
-    pub parameters: Option<Box<Schema>>,
+    #[serde(default, deserialize_with = "deserialize_params_schema")]
+    pub parameters: Option<Object>,
     pub output: Option<Output>,
     pub errors: Option<Vec<Error>>,
+}
+
+fn deserialize_params_schema<'de, D>(des: D) -> Result<Option<Object>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    use serde::de::Error;
+
+    let schema = match Option::<Schema>::deserialize(des)? {
+        Some(s) => s,
+        None => return Ok(None),
+    };
+
+    match schema {
+        Schema::Params(object) => Ok(Some(object)),
+        _ => Err(D::Error::invalid_value(
+            Unexpected::Enum,
+            &"a schema of type `params`",
+        )),
+    }
 }
 
 #[derive(Clone, Debug, Deserialize)]

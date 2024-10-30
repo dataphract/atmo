@@ -4,21 +4,27 @@ use std::{
     str::FromStr,
 };
 
-use atmo::nsid::{self, FullReference, Nsid};
-use atmo_lexicon::{FieldSchema, Lexicon, Object, Schema, StringFormat, Union};
+use atmo::nsid::{self, FullReference, Nsid, Reference};
+use atmo_lexicon::{
+    FieldSchema, Input, IoSchema, Lexicon, Object, Output, Schema, StringFormat, Union,
+};
 use enum_::{StringEnumDef, StringEnumVariant, UnionEnumDef, UnionEnumVariant};
 use heck::{ToPascalCase, ToSnakeCase};
-use module::{Item, ItemPath, ModulePath, Output};
+use module::{Generated, Item, ItemPath, ModulePath};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
+use rpc::{RpcDef, RpcType};
 use struct_::{Field, StructDef};
 
 mod enum_;
 mod module;
+mod rpc;
 mod struct_;
 mod unions;
 
-fn crate_name() -> syn::Ident {
+const APPLICATION_JSON: &str = "application/json";
+
+pub(crate) fn crate_name() -> syn::Ident {
     quote::format_ident!("atmo")
 }
 
@@ -44,6 +50,7 @@ impl Gen {
         self.lexicons.insert(nsid.clone(), lex);
     }
 
+    /// Resolves an `nsid::Reference` to a `Referent`.
     fn resolve_ref(&self, namespace: &Nsid, r: nsid::Reference) -> Referent<'_> {
         let (nsid, fragment) = match r {
             nsid::Reference::Full(full) => (full.clone_nsid(), full.clone_fragment()),
@@ -72,11 +79,11 @@ impl Gen {
 
     fn resolve_string_type(
         &self,
-        output: &mut Output,
+        generated: &mut Generated,
         namespace: &Nsid,
         prop_name: &str,
         s: &atmo_lexicon::String,
-    ) -> TokenStream {
+    ) -> Type {
         if let Some(format) = s.format {
             assert!(s.known_values.is_empty());
             assert!(s.enum_values.is_none());
@@ -90,27 +97,30 @@ impl Gen {
             assert!(s.enum_values.is_none());
             assert!(s.const_value.is_none());
 
-            return self.emit_string_enum(output, namespace, prop_name, &s.known_values, true);
+            let item =
+                self.emit_string_enum(generated, namespace, prop_name, &s.known_values, true);
+            return Type::Item(item);
         }
 
         if let Some(enum_values) = &s.enum_values {
             assert!(s.const_value.is_none());
 
-            return self.emit_string_enum(output, namespace, prop_name, enum_values, false);
+            let item = self.emit_string_enum(generated, namespace, prop_name, enum_values, false);
+            return Type::Item(item);
         }
 
-        quote! { std::string::String }
+        Type::String
     }
 
     /// Emits an enum definition for a set of known string values.
     fn emit_string_enum(
         &self,
-        output: &mut Output,
+        generated: &mut Generated,
         namespace: &Nsid,
         prop_name: &str,
         known_values: &[String],
         is_open: bool,
-    ) -> TokenStream {
+    ) -> ItemPath {
         let type_name = prop_name.to_pascal_case();
         let type_ident = quote::format_ident!("{type_name}");
 
@@ -120,7 +130,7 @@ impl Gen {
             .collect();
 
         let mod_path = namespace.into();
-        let module = output.get_or_create_mut(&mod_path);
+        let module = generated.get_or_create_mut(&mod_path);
 
         // Emit a definition for the string enum.
         module
@@ -134,7 +144,7 @@ impl Gen {
             )
             .unwrap();
 
-        mod_path.item_path(type_name).into_token_stream()
+        mod_path.item_path(type_name)
     }
 
     /// Generates a single variant for an enum of known string values.
@@ -165,7 +175,7 @@ impl Gen {
 
     fn emit_union(
         &self,
-        output: &mut Output,
+        generated: &mut Generated,
         namespace: &Nsid,
         def_name: &str,
         prop_name: &str,
@@ -181,7 +191,9 @@ impl Gen {
                 let referent = self.resolve_ref(namespace, r);
                 let path = referent.path.clone();
 
-                // TODO(dp): this is fragile, needs to actually do a full walk of references
+                // TODO(dp): this is fragile, needs to actually do a full walk of references. also
+                // boxes too eagerly -- there might be a Vec indirection, so need to keep track of
+                // that and avoid boxing if possible.
                 let needs_boxed = referent.full == full;
                 eprintln!(
                     "{def_name}.{prop_name}: {} == {} : {needs_boxed}",
@@ -193,7 +205,7 @@ impl Gen {
             .collect();
 
         let module_path = namespace.into();
-        let module = output.get_or_create_mut(&module_path);
+        let module = generated.get_or_create_mut(&module_path);
 
         let mut type_name = prop_name.to_pascal_case();
 
@@ -219,7 +231,13 @@ impl Gen {
         module_path.item_path(type_name)
     }
 
-    fn emit_struct(&self, output: &mut Output, namespace: &Nsid, name: &str, object: &Object) {
+    fn emit_struct(
+        &self,
+        generated: &mut Generated,
+        namespace: &Nsid,
+        name: &str,
+        object: &Object,
+    ) -> ItemPath {
         // Convert name to PascalCase.
         let type_name = name.to_pascal_case();
         let type_ident = quote::format_ident!("{type_name}");
@@ -230,7 +248,7 @@ impl Gen {
         let mut fields = Vec::new();
         for (prop_name, prop_schema) in &object.properties {
             let field = self.emit_struct_field(
-                output,
+                generated,
                 namespace,
                 name,
                 prop_name,
@@ -241,7 +259,9 @@ impl Gen {
             fields.push(field);
         }
 
-        output
+        let item_path = ModulePath::from(namespace).item_path(type_name.clone());
+
+        generated
             .get_or_create_mut(&namespace.into())
             .add_item(
                 type_name,
@@ -251,11 +271,13 @@ impl Gen {
                 }),
             )
             .unwrap();
+
+        item_path
     }
 
     fn emit_struct_field(
         &self,
-        output: &mut Output,
+        generated: &mut Generated,
         namespace: &Nsid,
         def_name: &str,
         prop_name: &str,
@@ -291,7 +313,7 @@ impl Gen {
                     }
                     FieldSchema::String(_) => quote! { std::string::String },
                     FieldSchema::Union(u) => self
-                        .emit_union(output, namespace, def_name, prop_name, u)
+                        .emit_union(generated, namespace, def_name, prop_name, u)
                         .into_token_stream(),
                     FieldSchema::Unknown => quote! { atmo::Unknown },
                     x => panic!("unhandled array element type: {x:?}"),
@@ -333,10 +355,12 @@ impl Gen {
                 referent.path.into_token_stream()
             }
 
-            FieldSchema::String(s) => self.resolve_string_type(output, namespace, prop_name, s),
+            FieldSchema::String(s) => self
+                .resolve_string_type(generated, namespace, prop_name, s)
+                .into_token_stream(),
 
             FieldSchema::Union(u) => self
-                .emit_union(output, namespace, def_name, prop_name, u)
+                .emit_union(generated, namespace, def_name, prop_name, u)
                 .into_token_stream(),
 
             FieldSchema::Unknown => {
@@ -354,8 +378,79 @@ impl Gen {
         }
     }
 
+    fn emit_rpc_io(
+        &self,
+        generated: &mut Generated,
+        namespace: &Nsid,
+        def_name: &str,
+        prop_name: &str,
+        schema: &IoSchema,
+    ) -> ItemPath {
+        match schema {
+            IoSchema::Object(o) => self.emit_struct(generated, namespace, prop_name, o),
+
+            IoSchema::Ref(r) => {
+                let reference = Reference::from_str(&r.ref_).unwrap();
+                let referent = self.resolve_ref(namespace, reference);
+                referent.path.clone()
+            }
+
+            IoSchema::Union(u) => self.emit_union(generated, namespace, def_name, prop_name, u),
+        }
+    }
+
+    /// Emits an RPC (query or procedure) and its input and output types.
+    ///
+    /// For an RPC with NSID `foo.bar.baz.qux`, the RPC type is emitted at `foo::bar::baz::Qux`, and
+    /// its I/O types are emitted at `foo::bar::baz::qux::{Params, Input, Output}`.
+    fn emit_rpc(
+        &self,
+        generated: &mut Generated,
+        namespace: &Nsid,
+        def_name: &str,
+        ty: RpcType,
+        params: Option<&Object>,
+        input_schema: Option<&Input>,
+        output_schema: Option<&Output>,
+    ) {
+        let params = params.map(|params| self.emit_struct(generated, namespace, "params", params));
+
+        let input = input_schema
+            .and_then(|input| input.schema.as_ref())
+            .map(|io| self.emit_rpc_io(generated, namespace, def_name, "input", io));
+
+        let (output, output_encoding) = match output_schema {
+            Some(o) => {
+                let output = o
+                    .schema
+                    .as_ref()
+                    .map(|io| self.emit_rpc_io(generated, namespace, def_name, "output", io));
+                (output, o.encoding.clone())
+            }
+            None => (None, "*/*".to_owned()),
+        };
+
+        let path = ModulePath::from(namespace);
+        let rpc_name = path.name().to_pascal_case();
+        let ident = quote::format_ident!("{rpc_name}");
+        let parent_path = path.parent().unwrap();
+
+        generated.get_or_create_mut(&parent_path).add_item(
+            rpc_name,
+            Item::Rpc(RpcDef {
+                ident,
+                ty,
+                nsid: namespace.clone(),
+                params,
+                input,
+                output,
+                output_encoding,
+            }),
+        );
+    }
+
     pub fn generate(self) {
-        let mut output = Output::default();
+        let mut generated = Generated::default();
 
         for (nsid, lex) in self.lexicons.iter() {
             for (name, schema) in &lex.defs {
@@ -366,7 +461,7 @@ impl Gen {
                     module_path.push(segment.to_snake_case());
                 }
 
-                output.get_or_create_mut(&full.clone_nsid().into());
+                generated.get_or_create_mut(&full.clone_nsid().into());
 
                 let def_path = name.to_snake_case();
 
@@ -375,42 +470,72 @@ impl Gen {
                         //println!("array def: {nsid}#{name} = {a:?}");
                         continue;
                     }
-                    Schema::Object(o) => self.emit_struct(&mut output, nsid, name, o),
+
+                    Schema::Object(o) => {
+                        self.emit_struct(&mut generated, nsid, name, o);
+                    }
+
                     Schema::Record(r) => continue,
-                    Schema::Procedure(_) | Schema::Query(_) => continue,
+
+                    Schema::Procedure(p) => {
+                        self.emit_rpc(
+                            &mut generated,
+                            nsid,
+                            name,
+                            RpcType::Procedure,
+                            p.parameters.as_ref(),
+                            p.input.as_ref(),
+                            p.output.as_ref(),
+                        );
+                    }
+
+                    Schema::Query(q) => {
+                        self.emit_rpc(
+                            &mut generated,
+                            nsid,
+                            name,
+                            RpcType::Procedure,
+                            q.parameters.as_ref(),
+                            None,
+                            q.output.as_ref(),
+                        );
+                    }
+
                     Schema::String(s) => {
                         // TODO(dp) this is hacky, make a dedicated method for strings in defs
-                        self.resolve_string_type(&mut output, nsid, name, s);
+                        self.resolve_string_type(&mut generated, nsid, name, s);
                     }
+
                     Schema::Subscription(_) => continue,
-                    Schema::Token(_) => continue,
+
+                    Schema::Token(_) => {
+                        // Don't need to generate a def, as these are only referenced by other definitions.
+                        //
+                        // TODO(dp): Might still be nice to generate constants, though?
+                        continue;
+                    }
                     s => panic!("unhandled top-level definition: {s:?}"),
                 };
             }
         }
 
-        println!("\n{}", output.to_token_stream());
+        println!("\n{}", generated.to_token_stream());
     }
 }
 
-pub fn string_format_type(format: StringFormat) -> TokenStream {
-    let crate_ = crate_name();
-
+pub fn string_format_type(format: StringFormat) -> Type {
     match format {
-        StringFormat::AtIdentifier => quote! { #crate_::AtIdentifier },
-        StringFormat::AtUri => quote! { #crate_::at_uri::AtUri },
-        StringFormat::Cid => quote! { #crate_::CidString },
-        StringFormat::Datetime => quote! { #crate_::datetime::DateTimeString },
-        StringFormat::Did => quote! { #crate_::did::Did },
-        StringFormat::Handle => quote! { #crate_::handle::Handle },
-        StringFormat::Language => {
-            eprintln!("string format `{format:?}` not handled yet");
-            quote! { std::string::String }
-        }
-        StringFormat::Nsid => quote! { #crate_::nsid::Nsid },
-        StringFormat::RecordKey => quote! { #crate_::rkey::RecordKey },
-        StringFormat::Tid => quote! { #crate_::tid::Tid },
-        StringFormat::Uri => quote! { url::Url },
+        StringFormat::AtIdentifier => Type::AtIdentifier,
+        StringFormat::AtUri => Type::AtUri,
+        StringFormat::Cid => Type::Cid,
+        StringFormat::Datetime => Type::Datetime,
+        StringFormat::Did => Type::Did,
+        StringFormat::Handle => Type::Handle,
+        StringFormat::Language => Type::Language,
+        StringFormat::Nsid => Type::Nsid,
+        StringFormat::RecordKey => Type::RecordKey,
+        StringFormat::Tid => Type::Tid,
+        StringFormat::Uri => Type::Url,
     }
 }
 
@@ -418,4 +543,62 @@ pub struct Referent<'a> {
     full: FullReference,
     path: ItemPath,
     schema: &'a Schema,
+}
+
+pub enum Type {
+    AtIdentifier,
+    AtUri,
+    Blob,
+    Cid,
+    Datetime,
+    Did,
+    Handle,
+    Item(ItemPath),
+    Language,
+    Nsid,
+    Nullable(Box<Type>),
+    Option(Box<Type>),
+    RecordKey,
+    String,
+    Tid,
+    Url,
+    Vec(Box<Type>),
+}
+
+impl ToTokens for Type {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
+        let crate_ = crate_name();
+
+        let quoted = match self {
+            Type::AtIdentifier => quote! { #crate_::AtIdentifier },
+            Type::AtUri => quote! { #crate_::AtUri },
+            Type::Blob => quote! { #crate_::Blob },
+            Type::Cid => quote! { #crate_::Cid },
+            Type::Datetime => quote! { #crate_::DateTimeString },
+            Type::Did => quote! { #crate_::Did },
+            Type::Handle => quote! { #crate_::Handle },
+            Type::Item(i) => {
+                i.to_tokens(tokens);
+                return;
+            }
+            Type::Language => quote! { #crate_::Language },
+            Type::Nsid => quote! { #crate_::Nsid },
+            Type::Nullable(t) => quote! { #crate_::Nullable<#t> },
+            Type::Option(t) => quote! { std::option::Option<#t> },
+            Type::RecordKey => quote! { #crate_::RecordKey },
+            Type::String => quote! { std::string::String },
+            Type::Tid => quote! { #crate_::Tid },
+            Type::Url => quote! { url::Url },
+            Type::Vec(t) => quote! { std::vec::Vec<#t> },
+        };
+
+        quoted.to_tokens(tokens);
+    }
+}
+
+impl From<ItemPath> for Type {
+    #[inline]
+    fn from(item: ItemPath) -> Self {
+        Type::Item(item)
+    }
 }

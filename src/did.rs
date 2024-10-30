@@ -4,6 +4,7 @@ use serde::{de::Error as _, Deserialize, Serialize};
 
 use crate::{error::ParseError, split_once};
 
+#[derive(Debug)]
 pub struct Did(String);
 
 impl Did {
