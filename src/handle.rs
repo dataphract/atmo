@@ -1,16 +1,17 @@
-use std::str::FromStr;
+use std::{ops::RangeInclusive, str::FromStr};
 
 use serde::{de::Error as _, Deserialize, Serialize};
 
 use crate::{error::ParseError, is_valid_domain_segment, is_valid_tld};
 
-const MAX_LEN: usize = 253;
+const LEN_RANGE: RangeInclusive<usize> = 1..=253;
 
 #[derive(Debug)]
 pub struct Handle(String);
 
 impl Handle {
     pub fn new(handle: &str) -> Option<Handle> {
+        validate_handle(handle.as_bytes()).ok()?;
         Some(Handle(handle.to_ascii_lowercase()))
     }
 
@@ -41,7 +42,7 @@ impl Serialize for Handle {
 }
 
 fn validate_handle(bytes: &[u8]) -> Result<(), ParseError> {
-    if bytes.len() > MAX_LEN {
+    if !LEN_RANGE.contains(&bytes.len()) {
         return Err(ParseError::handle());
     }
 

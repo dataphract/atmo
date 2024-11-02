@@ -1,84 +1,92 @@
-use std::str::FromStr;
+use std::{num::NonZeroU16, ops::RangeInclusive, str::FromStr};
 
 use serde::{de::Error as _, Deserialize, Serialize};
 
-use crate::{did::Did, error::ParseError, handle::Handle, nsid::Nsid, rkey::RecordKey};
+use crate::{
+    did::Did, error::ParseError, handle::Handle, nsid::Nsid, parse::subslice_range, rkey::RecordKey,
+};
 
-const MAX_LEN: usize = 8 * 1024;
+const LEN_RANGE: RangeInclusive<usize> = 1..=(8 * 1024);
 
 /// An AT-URI.
+///
+/// This type specifically represents the "restricted" AT-URI used by Lexicon, matching the pattern:
+///
+/// ```text
+/// "at://" AUTHORITY [ "/" COLLECTION [ "/" RKEY ] ]
+/// ```
 pub struct AtUri {
     // The full text of the AT-URI.
     text: String,
     // Start index of the path segment.
-    path_start: u16,
+    collection_start: Option<NonZeroU16>,
+    // Start index of the rkey segment.
+    rkey_start: Option<NonZeroU16>,
 }
 
 impl AtUri {
     const SCHEME: &[u8] = b"at://";
 
     pub fn new(uri: String) -> Option<AtUri> {
-        if uri.len() > MAX_LEN {
+        if !LEN_RANGE.contains(&uri.len()) {
             return None;
         }
 
         // Strip scheme.
-        let bytes = uri.as_bytes();
-        let bytes = bytes.strip_prefix(Self::SCHEME)?;
+        let all_bytes = uri.as_bytes();
+        let bytes = all_bytes.strip_prefix(Self::SCHEME)?;
 
-        let path_start = bytes.iter().position(|&c| c == b'/').unwrap_or(bytes.len());
-        let (authority, path) = bytes.split_at(path_start);
+        let mut it = bytes.split(|&c| c == b'/');
 
+        let authority = it.next()?;
         if authority.starts_with(b"did:") {
             Did::new(authority)?;
         } else {
             Handle::new(std::str::from_utf8(authority).unwrap())?;
         }
 
-        // First item is the empty string before the leading slash.
-        let mut components = path.split(|&c| c == b'/').skip(1);
-
-        let Some(collection) = components.next() else {
+        let Some(collection) = it.next() else {
             return Some(AtUri {
+                collection_start: None,
+                rkey_start: None,
                 text: uri,
-                path_start: path_start as u16,
             });
         };
-
-        if collection.is_empty() {
-            return None;
-        }
 
         Nsid::try_from(collection).ok()?;
 
-        let Some(rkey) = components.next() else {
+        let cr = subslice_range(all_bytes, collection).unwrap();
+        let collection_start = NonZeroU16::new(cr.start as u16);
+
+        let Some(rkey) = it.next() else {
             return Some(AtUri {
+                collection_start,
+                rkey_start: None,
                 text: uri,
-                path_start: path_start as u16,
             });
         };
 
-        if rkey.is_empty() {
-            return None;
-        }
+        let rr = subslice_range(all_bytes, rkey).unwrap();
+        let rkey_start = NonZeroU16::new(rr.start as u16);
 
         RecordKey::try_from(rkey).ok()?;
 
         Some(AtUri {
+            collection_start,
+            rkey_start,
             text: uri,
-            path_start: path_start as u16,
         })
     }
 
     pub fn authority(&self) -> &str {
         let start = Self::SCHEME.len();
-        let end = usize::from(self.path_start);
-        &self.text[start..end]
-    }
 
-    pub fn path(&self) -> Option<&str> {
-        let start = usize::from(self.path_start);
-        (start != self.text.len()).then_some(&self.text[start..])
+        let Some(coll_start) = self.collection_start else {
+            return &self.text[start..];
+        };
+
+        let end = usize::from(coll_start.get() - 1);
+        &self.text[start..end]
     }
 }
 
@@ -107,10 +115,6 @@ impl Serialize for AtUri {
     {
         self.text.serialize(ser)
     }
-}
-
-pub struct ParseAtUriError {
-    _dummy: (),
 }
 
 #[cfg(test)]
