@@ -21,7 +21,9 @@ checksum = "512761e0bb2578dd7380c6baaa0f4ce03e84f95e960231d1dec8bf4d7d6e2627"
 name = "atmo"
 version = "0.1.0"
 dependencies = [
+ "bytes",
  "cid",
+ "data-encoding",
  "http",
  "jiff",
  "reqwest",
@@ -38,6 +40,7 @@ version = "0.1.0"
 dependencies = [
  "atmo",
  "cid",
+ "http",
  "jiff",
  "serde",
  "serde_json",

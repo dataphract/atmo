@@ -5,15 +5,22 @@ use serde::{de::Error as _, Deserialize, Serialize};
 use crate::error::ParseError;
 
 pub use crate::{
+    at_uri::AtUri,
     blob::Blob,
     cid::{CidLink, CidString},
+    datetime::DateTimeString,
     did::Did,
     handle::Handle,
+    nsid::Nsid,
     nullable::Nullable,
+    rkey::RecordKey,
+    tid::Tid,
+    unknown::Unknown,
 };
 
 pub mod at_uri;
 mod blob;
+mod bytes;
 mod cid;
 pub mod datetime;
 pub mod did;
@@ -24,6 +31,7 @@ mod nullable;
 mod parse;
 pub mod rkey;
 pub mod tid;
+mod unknown;
 pub mod xrpc;
 
 pub(crate) const SEGMENT_LEN_RANGE: RangeInclusive<usize> = 1..=63;
@@ -67,9 +75,6 @@ impl Serialize for AtIdentifier {
         }
     }
 }
-
-#[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct Unknown(String);
 
 // Taken from stdlib until slice::split_once is stable.
 #[inline]

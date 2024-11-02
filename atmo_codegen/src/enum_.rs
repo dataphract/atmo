@@ -67,6 +67,7 @@ pub struct UnionEnumDef {
 
 impl ToTokens for UnionEnumDef {
     fn to_tokens(&self, tokens: &mut TokenStream) {
+        let crate_ = crate::crate_name();
         let doc = self.doc.iter();
         let ident = &self.ident;
 
@@ -105,8 +106,8 @@ impl ToTokens for UnionEnumDef {
 
         let other_variant = self.is_open.then(|| {
             quote! {
-                #[serde(other)]
-                Other
+                #[serde(untagged)]
+                Other(#crate_::Unknown)
             }
         });
 

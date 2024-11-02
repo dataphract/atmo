@@ -5,6 +5,7 @@ use std::{
 
 use atmo::nsid::Nsid;
 use heck::{ToPascalCase, ToSnakeCase};
+use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
 use crate::{
@@ -67,7 +68,7 @@ pub enum Item {
 }
 
 impl ToTokens for Item {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
         match self {
             Item::Rpc(r) => r.to_tokens(tokens),
             Item::Struct(s) => s.to_tokens(tokens),
@@ -113,8 +114,12 @@ impl Generated {
 
     // There's probably a way to do this in-place (i.e. without returning a new TokenStream for each
     // module) but it really doesn't matter.
-    fn emit_module(&self, path: &ModulePath) -> proc_macro2::TokenStream {
+    fn emit_module(&self, path: &ModulePath) -> TokenStream {
         let module = self.modules.get(path).unwrap();
+
+        if module.submodules.is_empty() && module.items.is_empty() {
+            return TokenStream::new();
+        }
 
         let name = quote::format_ident!("{}", path.name());
         let items = module.items.values();
@@ -141,7 +146,7 @@ impl IntoIterator for Generated {
 }
 
 impl ToTokens for Generated {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
         for (path, module) in self.modules.iter() {
             if module.path.parent().is_some() {
                 continue;
@@ -207,7 +212,7 @@ impl fmt::Display for ModulePath {
 }
 
 impl ToTokens for ModulePath {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
         let mut it = self.segments.iter().peekable();
 
         quote! { crate :: }.to_tokens(tokens);
@@ -252,8 +257,14 @@ pub struct ItemPath {
 }
 
 impl ItemPath {
+    #[inline]
     pub fn name(&self) -> &str {
         self.item_name.as_str()
+    }
+
+    #[inline]
+    pub fn module_path(&self) -> &ModulePath {
+        &self.module_path
     }
 
     /// Generates a name for a variant based on the names of the item and its ancestor modules.
@@ -285,7 +296,7 @@ impl ItemPath {
 }
 
 impl ToTokens for ItemPath {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
         let module_path = &self.module_path;
         let item_name = quote::format_ident!("{}", &self.item_name);
 

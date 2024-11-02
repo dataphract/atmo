@@ -18,6 +18,10 @@ impl Nsid {
         self.0.as_str()
     }
 
+    pub fn name(&self) -> &str {
+        self.segments().next_back().unwrap()
+    }
+
     pub fn segments(&self) -> impl DoubleEndedIterator<Item = &str> {
         self.0.split('.')
     }
