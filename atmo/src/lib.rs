@@ -81,16 +81,7 @@ where
     pub async fn send(self) -> Result<R::Output, reqwest::Error> {
         let resp = self.builder.send().await?;
 
-        if let Some(c) = resp.headers().get(header::CONTENT_TYPE) {
-            println!("content-type: {}", c.to_str().unwrap());
-        }
-
-        println!("status: {}", resp.status().as_u16());
-
-        let text = resp.text().await.unwrap();
-        println!("body text: {text}");
-
-        let out: R::Output = serde_json::from_str(&text).unwrap();
+        let out: R::Output = resp.json().await?;
 
         Ok(out)
     }
