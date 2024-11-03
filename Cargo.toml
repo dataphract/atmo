@@ -6,12 +6,18 @@ members = [
     "atmo_codegen",
     "atmo_core",
     "atmo_lexicon",
+
+    "examples/session",
 ]
 
 [workspace.dependencies]
+# Workspace crates.
+atmo = { path = "atmo" }
+atmo_api = { path = "atmo_api" }
 atmo_core = { path = "atmo_core" }
 atmo_lexicon = { path = "atmo_lexicon" }
 
+# Workspace crate dependencies.
 bytes = "1.8.0"
 cid = "0.11.1"
 data-encoding = "2.6.0"
@@ -22,3 +28,5 @@ serde_json = "1.0.132"
 serde_ipld_dagcbor = "0.6.1"
 url = { version = "2.5.2", features = ["serde"] }
 
+# Example dependencies.
+tokio = "1.41.0"

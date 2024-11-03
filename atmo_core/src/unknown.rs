@@ -2,7 +2,7 @@ use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
 use crate::Nsid;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Unknown {
     #[serde(default, rename = "$type")]
     ty: Option<Nsid>,

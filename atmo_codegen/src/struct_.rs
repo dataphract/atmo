@@ -1,3 +1,5 @@
+use std::iter;
+
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
@@ -28,6 +30,7 @@ impl ToTokens for StructDef {
 pub struct Field {
     pub doc: Option<String>,
     pub name: syn::Ident,
+    pub rename: String,
     pub optional: bool,
     pub nullable: bool,
     pub inner_ty: Type,
@@ -39,6 +42,7 @@ impl ToTokens for Field {
 
         let doc_attr = self.doc.clone().map(FieldAttr::Doc);
         let serde_default = self.optional.then_some(FieldAttr::SerdeDefault);
+        let serde_rename = FieldAttr::SerdeRename(self.rename.clone());
         let serde_skip_none = self.optional.then_some(FieldAttr::SerdeSkipNone);
         let serde_with = match self.inner_ty {
             Type::Bytes => {
@@ -55,6 +59,7 @@ impl ToTokens for Field {
         let attrs = doc_attr
             .iter()
             .chain(serde_default.as_ref())
+            .chain(iter::once(&serde_rename))
             .chain(serde_skip_none.as_ref())
             .chain(serde_with.as_ref());
 
@@ -79,6 +84,7 @@ impl ToTokens for Field {
 enum FieldAttr {
     Doc(String),
     SerdeDefault,
+    SerdeRename(String),
     SerdeSkipNone,
     SerdeWith(String),
 }
@@ -88,6 +94,7 @@ impl ToTokens for FieldAttr {
         let tt = match self {
             FieldAttr::Doc(s) => quote! { #[doc = #s] },
             FieldAttr::SerdeDefault => quote! { #[serde(default)] },
+            FieldAttr::SerdeRename(s) => quote! { #[serde(rename = #s)] },
             FieldAttr::SerdeSkipNone => {
                 quote! { #[serde(skip_serializing_if = "std::option::Option::is_none")] }
             }

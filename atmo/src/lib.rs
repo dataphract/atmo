@@ -1,3 +1,13 @@
+use std::marker::PhantomData;
+
+use atmo_core::xrpc::Request;
+use http::header;
+use serde::{de::DeserializeOwned, Serialize};
+use url::Url;
+
+pub use atmo_api as api;
+pub use atmo_core as core;
+
 pub struct XrpcClient {
     inner: reqwest::Client,
 }
@@ -77,7 +87,10 @@ where
 
         println!("status: {}", resp.status().as_u16());
 
-        let out: R::Output = resp.json().await?;
+        let text = resp.text().await.unwrap();
+        println!("body text: {text}");
+
+        let out: R::Output = serde_json::from_str(&text).unwrap();
 
         Ok(out)
     }

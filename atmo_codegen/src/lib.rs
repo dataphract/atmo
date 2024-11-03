@@ -455,7 +455,7 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
                         referent.path.into()
                     }
                     FieldSchema::String(_) => Type::String,
-                    FieldSchema::Union(u) => self.emit_union(&full, prop_name, u).into(),
+                    FieldSchema::Union(u) => self.emit_union(full, prop_name, u).into(),
                     FieldSchema::Unknown => Type::Unknown,
                     x => panic!("unhandled array element type: {x:?}"),
                 };
@@ -497,22 +497,21 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
                 // TODO(dp): This is a hack. If the array element type has a name (e.g. it's a union
                 // or struct) then the ref will resolve to the element type instead of the array, so
                 // we need to manually resolve it to an array.
-                let ty = match referent.schema {
+                match referent.schema {
                     Schema::Array(_) => Type::Vec(Box::new(referent.path.into())),
                     _ => referent.path.into(),
-                };
-
-                ty
+                }
             }
 
             FieldSchema::String(s) => self.resolve_string_type(prop_name, s),
-            FieldSchema::Union(u) => self.emit_union(&full, prop_name, u).into(),
+            FieldSchema::Union(u) => self.emit_union(full, prop_name, u).into(),
             FieldSchema::Unknown => Type::Unknown,
         };
 
         Field {
             doc: desc,
             name: field_ident,
+            rename: prop_name.into(),
             optional: !required,
             nullable,
             inner_ty,
