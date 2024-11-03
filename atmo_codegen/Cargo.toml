@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-atmo = { workspace = true }
+atmo_core = { workspace = true }
 atmo_lexicon.workspace = true
 heck = "0.5.0"
 proc-macro2 = "1.0.88"

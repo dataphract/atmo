@@ -86,7 +86,7 @@ use std::{
     str::FromStr,
 };
 
-use atmo::nsid::{self, FullReference, Nsid, Reference};
+use atmo_core::nsid::{self, FullReference, Nsid, Reference};
 use atmo_lexicon::{
     FieldSchema, Input, IoSchema, Lexicon, Object, Output, Schema, StringFormat, Union,
 };
@@ -107,7 +107,7 @@ mod unions;
 const APPLICATION_JSON: &str = "application/json";
 
 pub(crate) fn crate_name() -> syn::Ident {
-    quote::format_ident!("atmo")
+    quote::format_ident!("atmo_core")
 }
 
 /// ATProto bindings generator.

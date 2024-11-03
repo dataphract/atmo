@@ -1,4 +1,4 @@
-use atmo::nsid::Nsid;
+use atmo_core::nsid::Nsid;
 use quote::{quote, ToTokens};
 
 use crate::module::ItemPath;
@@ -23,19 +23,19 @@ impl ToTokens for RpcDef {
             .params
             .as_ref()
             .map(|p| p.into_token_stream())
-            .unwrap_or(quote! { atmo::xrpc::NoParams });
+            .unwrap_or(quote! { #crate_::xrpc::NoParams });
 
         let input = self
             .input
             .as_ref()
             .map(|i| i.into_token_stream())
-            .unwrap_or(quote! { atmo::xrpc::NoInput });
+            .unwrap_or(quote! { #crate_::xrpc::NoInput });
 
         let output = self
             .output
             .as_ref()
             .map(|o| o.into_token_stream())
-            .unwrap_or(quote! { atmo::xrpc::NoOutput });
+            .unwrap_or(quote! { #crate_::xrpc::NoOutput });
 
         let method = match self.ty {
             RpcType::Query => quote! { http::Method::GET },

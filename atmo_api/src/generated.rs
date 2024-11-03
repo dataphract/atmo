@@ -2,9 +2,9 @@ pub mod app {
     pub mod bsky {
         pub mod actor {
             pub struct GetPreferences;
-            impl atmo::xrpc::Request for GetPreferences {
+            impl atmo_core::xrpc::Request for GetPreferences {
                 type Params = crate::app::bsky::actor::get_preferences::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::get_preferences::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -20,9 +20,9 @@ pub mod app {
                 }
             }
             pub struct GetProfile;
-            impl atmo::xrpc::Request for GetProfile {
+            impl atmo_core::xrpc::Request for GetProfile {
                 type Params = crate::app::bsky::actor::get_profile::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::defs::ProfileViewDetailed;
                 #[inline]
                 fn method() -> http::Method {
@@ -38,9 +38,9 @@ pub mod app {
                 }
             }
             pub struct GetProfiles;
-            impl atmo::xrpc::Request for GetProfiles {
+            impl atmo_core::xrpc::Request for GetProfiles {
                 type Params = crate::app::bsky::actor::get_profiles::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::get_profiles::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -56,9 +56,9 @@ pub mod app {
                 }
             }
             pub struct GetSuggestions;
-            impl atmo::xrpc::Request for GetSuggestions {
+            impl atmo_core::xrpc::Request for GetSuggestions {
                 type Params = crate::app::bsky::actor::get_suggestions::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::get_suggestions::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -74,10 +74,10 @@ pub mod app {
                 }
             }
             pub struct PutPreferences;
-            impl atmo::xrpc::Request for PutPreferences {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for PutPreferences {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::actor::put_preferences::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -92,9 +92,9 @@ pub mod app {
                 }
             }
             pub struct SearchActors;
-            impl atmo::xrpc::Request for SearchActors {
+            impl atmo_core::xrpc::Request for SearchActors {
                 type Params = crate::app::bsky::actor::search_actors::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::search_actors::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -110,9 +110,9 @@ pub mod app {
                 }
             }
             pub struct SearchActorsTypeahead;
-            impl atmo::xrpc::Request for SearchActorsTypeahead {
+            impl atmo_core::xrpc::Request for SearchActorsTypeahead {
                 type Params = crate::app::bsky::actor::search_actors_typeahead::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::search_actors_typeahead::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -175,7 +175,7 @@ pub mod app {
                     pub label: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub labeler_did: std::option::Option<atmo::Did>,
+                    pub labeler_did: std::option::Option<atmo_core::Did>,
                     pub visibility: crate::app::bsky::actor::defs::Visibility,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
@@ -216,7 +216,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerPrefItem {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelersPref {
@@ -230,7 +230,7 @@ pub mod app {
                         std::option::Option<crate::app::bsky::actor::defs::ActorTarget>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub expires_at: std::option::Option<atmo::DateTimeString>,
+                    pub expires_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub id: std::option::Option<std::string::String>,
@@ -258,14 +258,14 @@ pub mod app {
                     pub data: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub expires_at: std::option::Option<atmo::DateTimeString>,
+                    pub expires_at: std::option::Option<atmo_core::DateTimeString>,
                     pub id: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct PersonalDetailsPref {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub birth_date: std::option::Option<atmo::DateTimeString>,
+                    pub birth_date: std::option::Option<atmo_core::DateTimeString>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Preferences {
@@ -282,7 +282,7 @@ pub mod app {
                     SavedFeedsPrefV2(crate::app::bsky::actor::defs::SavedFeedsPrefV2),
                     ThreadViewPref(crate::app::bsky::actor::defs::ThreadViewPref),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileAssociated {
@@ -318,18 +318,18 @@ pub mod app {
                     pub avatar: std::option::Option<url::Url>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub indexed_at: std::option::Option<atmo::DateTimeString>,
+                    pub indexed_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -349,12 +349,12 @@ pub mod app {
                     pub avatar: std::option::Option<url::Url>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo::DateTimeString>,
-                    pub did: atmo::Did,
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -377,11 +377,11 @@ pub mod app {
                     pub banner: std::option::Option<url::Url>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
@@ -391,10 +391,10 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub follows_count: std::option::Option<i64>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub indexed_at: std::option::Option<atmo::DateTimeString>,
+                    pub indexed_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_via_starter_pack:
@@ -473,17 +473,17 @@ pub mod app {
                     pub blocked_by: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub blocking: std::option::Option<atmo::AtUri>,
+                    pub blocking: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blocking_by_list:
                         std::option::Option<crate::app::bsky::graph::defs::ListViewBasic>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub followed_by: std::option::Option<atmo::AtUri>,
+                    pub followed_by: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub following: std::option::Option<atmo::AtUri>,
+                    pub following: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub known_followers:
@@ -521,7 +521,7 @@ pub mod app {
             pub mod get_profile {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod get_profiles {
@@ -631,7 +631,7 @@ pub mod app {
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub captions:
                     std::option::Option<std::vec::Vec<crate::app::bsky::embed::video::Caption>>,
-                pub video: atmo::Blob,
+                pub video: atmo_core::Blob,
             }
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
@@ -646,7 +646,7 @@ pub mod app {
                     pub description: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub thumb: std::option::Option<atmo::Blob>,
+                    pub thumb: std::option::Option<atmo_core::Blob>,
                     pub title: std::string::String,
                     pub uri: url::Url,
                 }
@@ -672,7 +672,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub aspect_ratio:
                         std::option::Option<crate::app::bsky::embed::defs::AspectRatio>,
-                    pub image: atmo::Blob,
+                    pub image: atmo_core::Blob,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
@@ -698,7 +698,7 @@ pub mod app {
                     RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
                     VideoView(crate::app::bsky::embed::video::View),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Record {
@@ -711,7 +711,7 @@ pub mod app {
                     ViewNotFound(crate::app::bsky::embed::record::ViewNotFound),
                     ViewRecord(crate::app::bsky::embed::record::ViewRecord),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
@@ -721,27 +721,27 @@ pub mod app {
                 pub struct ViewBlocked {
                     pub author: crate::app::bsky::feed::defs::BlockedAuthor,
                     pub blocked: bool,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewDetached {
                     pub detached: bool,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewNotFound {
                     pub not_found: bool,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewRecord {
                     pub author: crate::app::bsky::actor::defs::ProfileViewBasic,
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embeds:
                         std::option::Option<std::vec::Vec<crate::app::bsky::embed::record::Embeds>>,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -758,8 +758,8 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub repost_count: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
-                    pub value: atmo::Unknown,
+                    pub uri: atmo_core::AtUri,
+                    pub value: atmo_core::Unknown,
                 }
             }
             pub mod record_with_media {
@@ -769,7 +769,7 @@ pub mod app {
                     Images(crate::app::bsky::embed::Images),
                     Video(crate::app::bsky::embed::Video),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
@@ -782,13 +782,13 @@ pub mod app {
                     ImagesView(crate::app::bsky::embed::images::View),
                     VideoView(crate::app::bsky::embed::video::View),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod video {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Caption {
-                    pub file: atmo::Blob,
+                    pub file: atmo_core::Blob,
                     pub lang: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
@@ -800,7 +800,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub aspect_ratio:
                         std::option::Option<crate::app::bsky::embed::defs::AspectRatio>,
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub playlist: url::Url,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -810,9 +810,9 @@ pub mod app {
         }
         pub mod feed {
             pub struct DescribeFeedGenerator;
-            impl atmo::xrpc::Request for DescribeFeedGenerator {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for DescribeFeedGenerator {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::describe_feed_generator::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -828,9 +828,9 @@ pub mod app {
                 }
             }
             pub struct GetActorFeeds;
-            impl atmo::xrpc::Request for GetActorFeeds {
+            impl atmo_core::xrpc::Request for GetActorFeeds {
                 type Params = crate::app::bsky::feed::get_actor_feeds::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_actor_feeds::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -846,9 +846,9 @@ pub mod app {
                 }
             }
             pub struct GetActorLikes;
-            impl atmo::xrpc::Request for GetActorLikes {
+            impl atmo_core::xrpc::Request for GetActorLikes {
                 type Params = crate::app::bsky::feed::get_actor_likes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_actor_likes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -864,9 +864,9 @@ pub mod app {
                 }
             }
             pub struct GetAuthorFeed;
-            impl atmo::xrpc::Request for GetAuthorFeed {
+            impl atmo_core::xrpc::Request for GetAuthorFeed {
                 type Params = crate::app::bsky::feed::get_author_feed::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_author_feed::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -882,9 +882,9 @@ pub mod app {
                 }
             }
             pub struct GetFeed;
-            impl atmo::xrpc::Request for GetFeed {
+            impl atmo_core::xrpc::Request for GetFeed {
                 type Params = crate::app::bsky::feed::get_feed::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -900,9 +900,9 @@ pub mod app {
                 }
             }
             pub struct GetFeedGenerator;
-            impl atmo::xrpc::Request for GetFeedGenerator {
+            impl atmo_core::xrpc::Request for GetFeedGenerator {
                 type Params = crate::app::bsky::feed::get_feed_generator::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed_generator::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -918,9 +918,9 @@ pub mod app {
                 }
             }
             pub struct GetFeedGenerators;
-            impl atmo::xrpc::Request for GetFeedGenerators {
+            impl atmo_core::xrpc::Request for GetFeedGenerators {
                 type Params = crate::app::bsky::feed::get_feed_generators::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed_generators::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -936,9 +936,9 @@ pub mod app {
                 }
             }
             pub struct GetFeedSkeleton;
-            impl atmo::xrpc::Request for GetFeedSkeleton {
+            impl atmo_core::xrpc::Request for GetFeedSkeleton {
                 type Params = crate::app::bsky::feed::get_feed_skeleton::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed_skeleton::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -954,9 +954,9 @@ pub mod app {
                 }
             }
             pub struct GetLikes;
-            impl atmo::xrpc::Request for GetLikes {
+            impl atmo_core::xrpc::Request for GetLikes {
                 type Params = crate::app::bsky::feed::get_likes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_likes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -972,9 +972,9 @@ pub mod app {
                 }
             }
             pub struct GetListFeed;
-            impl atmo::xrpc::Request for GetListFeed {
+            impl atmo_core::xrpc::Request for GetListFeed {
                 type Params = crate::app::bsky::feed::get_list_feed::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_list_feed::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -990,9 +990,9 @@ pub mod app {
                 }
             }
             pub struct GetPostThread;
-            impl atmo::xrpc::Request for GetPostThread {
+            impl atmo_core::xrpc::Request for GetPostThread {
                 type Params = crate::app::bsky::feed::get_post_thread::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_post_thread::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1008,9 +1008,9 @@ pub mod app {
                 }
             }
             pub struct GetPosts;
-            impl atmo::xrpc::Request for GetPosts {
+            impl atmo_core::xrpc::Request for GetPosts {
                 type Params = crate::app::bsky::feed::get_posts::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_posts::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1026,9 +1026,9 @@ pub mod app {
                 }
             }
             pub struct GetQuotes;
-            impl atmo::xrpc::Request for GetQuotes {
+            impl atmo_core::xrpc::Request for GetQuotes {
                 type Params = crate::app::bsky::feed::get_quotes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_quotes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1044,9 +1044,9 @@ pub mod app {
                 }
             }
             pub struct GetRepostedBy;
-            impl atmo::xrpc::Request for GetRepostedBy {
+            impl atmo_core::xrpc::Request for GetRepostedBy {
                 type Params = crate::app::bsky::feed::get_reposted_by::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_reposted_by::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1062,9 +1062,9 @@ pub mod app {
                 }
             }
             pub struct GetSuggestedFeeds;
-            impl atmo::xrpc::Request for GetSuggestedFeeds {
+            impl atmo_core::xrpc::Request for GetSuggestedFeeds {
                 type Params = crate::app::bsky::feed::get_suggested_feeds::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_suggested_feeds::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1080,9 +1080,9 @@ pub mod app {
                 }
             }
             pub struct GetTimeline;
-            impl atmo::xrpc::Request for GetTimeline {
+            impl atmo_core::xrpc::Request for GetTimeline {
                 type Params = crate::app::bsky::feed::get_timeline::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_timeline::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1098,9 +1098,9 @@ pub mod app {
                 }
             }
             pub struct SearchPosts;
-            impl atmo::xrpc::Request for SearchPosts {
+            impl atmo_core::xrpc::Request for SearchPosts {
                 type Params = crate::app::bsky::feed::search_posts::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::search_posts::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1116,8 +1116,8 @@ pub mod app {
                 }
             }
             pub struct SendInteractions;
-            impl atmo::xrpc::Request for SendInteractions {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for SendInteractions {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::feed::send_interactions::Input;
                 type Output = crate::app::bsky::feed::send_interactions::Output;
                 #[inline]
@@ -1136,7 +1136,7 @@ pub mod app {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct BlockedAuthor {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
@@ -1145,7 +1145,7 @@ pub mod app {
                 pub struct BlockedPost {
                     pub author: crate::app::bsky::feed::defs::BlockedAuthor,
                     pub blocked: bool,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Embed {
@@ -1155,7 +1155,7 @@ pub mod app {
                     RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
                     VideoView(crate::app::bsky::embed::video::View),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Event {
@@ -1219,7 +1219,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1228,9 +1228,9 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description_facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub display_name: std::string::String,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -1238,7 +1238,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
@@ -1248,7 +1248,7 @@ pub mod app {
                 pub struct GeneratorViewerState {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub like: std::option::Option<atmo::AtUri>,
+                    pub like: std::option::Option<atmo_core::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Interaction {
@@ -1260,12 +1260,12 @@ pub mod app {
                     pub feed_context: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub item: std::option::Option<atmo::AtUri>,
+                    pub item: std::option::Option<atmo_core::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct NotFoundPost {
                     pub not_found: bool,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Parent {
@@ -1273,16 +1273,16 @@ pub mod app {
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                     PostView(crate::app::bsky::feed::defs::PostView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct PostView {
                     pub author: crate::app::bsky::actor::defs::ProfileViewBasic,
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embed: std::option::Option<crate::app::bsky::feed::defs::Embed>,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -1293,7 +1293,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub quote_count: std::option::Option<i64>,
-                    pub record: atmo::Unknown,
+                    pub record: atmo_core::Unknown,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reply_count: std::option::Option<i64>,
@@ -1304,7 +1304,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub threadgate:
                         std::option::Option<crate::app::bsky::feed::defs::ThreadgateView>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::feed::defs::ViewerState>,
@@ -1314,14 +1314,14 @@ pub mod app {
                     ReasonPin(crate::app::bsky::feed::defs::ReasonPin),
                     ReasonRepost(crate::app::bsky::feed::defs::ReasonRepost),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ReasonPin {}
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ReasonRepost {
                     pub by: crate::app::bsky::actor::defs::ProfileViewBasic,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Replies {
@@ -1329,7 +1329,7 @@ pub mod app {
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                     ThreadViewPost(std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
@@ -1346,14 +1346,14 @@ pub mod app {
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                     PostView(crate::app::bsky::feed::defs::PostView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonFeedPost {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feed_context: std::option::Option<std::string::String>,
-                    pub post: atmo::AtUri,
+                    pub post: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason:
@@ -1364,13 +1364,13 @@ pub mod app {
                     SkeletonReasonPin(crate::app::bsky::feed::defs::SkeletonReasonPin),
                     SkeletonReasonRepost(crate::app::bsky::feed::defs::SkeletonReasonRepost),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonReasonPin {}
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonReasonRepost {
-                    pub repost: atmo::AtUri,
+                    pub repost: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadViewPost {
@@ -1390,13 +1390,13 @@ pub mod app {
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                     ThreadViewPost(std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadgateView {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lists: std::option::Option<
@@ -1404,10 +1404,10 @@ pub mod app {
                     >,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub record: std::option::Option<atmo::Unknown>,
+                    pub record: std::option::Option<atmo_core::Unknown>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub uri: std::option::Option<atmo::AtUri>,
+                    pub uri: std::option::Option<atmo_core::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerState {
@@ -1416,7 +1416,7 @@ pub mod app {
                     pub embedding_disabled: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub like: std::option::Option<atmo::AtUri>,
+                    pub like: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub pinned: std::option::Option<bool>,
@@ -1425,7 +1425,7 @@ pub mod app {
                     pub reply_disabled: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub repost: std::option::Option<atmo::AtUri>,
+                    pub repost: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub thread_muted: std::option::Option<bool>,
@@ -1434,7 +1434,7 @@ pub mod app {
             pub mod describe_feed_generator {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Feed {
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Links {
@@ -1447,7 +1447,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::describe_feed_generator::Feed>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1465,7 +1465,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -1484,7 +1484,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -1516,7 +1516,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -1545,7 +1545,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
-                    pub feed: atmo::AtUri,
+                    pub feed: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -1562,7 +1562,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub feed: atmo::AtUri,
+                    pub feed: atmo_core::AtUri,
                 }
             }
             pub mod get_feed_generators {
@@ -1588,7 +1588,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
-                    pub feed: atmo::AtUri,
+                    pub feed: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -1598,32 +1598,32 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Like {
                     pub actor: crate::app::bsky::actor::defs::ProfileView,
-                    pub created_at: atmo::DateTimeString,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub likes: std::vec::Vec<crate::app::bsky::feed::get_likes::Like>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_list_feed {
@@ -1642,7 +1642,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    pub list: atmo::AtUri,
+                    pub list: atmo_core::AtUri,
                 }
             }
             pub mod get_post_thread {
@@ -1662,7 +1662,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub parent_height: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Thread {
@@ -1670,7 +1670,7 @@ pub mod app {
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                     ThreadViewPost(crate::app::bsky::feed::defs::ThreadViewPost),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod get_posts {
@@ -1688,25 +1688,25 @@ pub mod app {
                 pub struct Output {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub posts: std::vec::Vec<crate::app::bsky::feed::defs::PostView>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_reposted_by {
@@ -1714,25 +1714,25 @@ pub mod app {
                 pub struct Output {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub reposted_by: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
+                    pub cid: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_suggested_feeds {
@@ -1811,7 +1811,7 @@ pub mod app {
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub author: std::option::Option<atmo::AtIdentifier>,
+                    pub author: std::option::Option<atmo_core::AtIdentifier>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -1826,7 +1826,7 @@ pub mod app {
                     pub limit: std::option::Option<i64>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub mentions: std::option::Option<atmo::AtIdentifier>,
+                    pub mentions: std::option::Option<atmo_core::AtIdentifier>,
                     pub q: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1867,7 +1867,7 @@ pub mod app {
                 pub struct FollowingRule {}
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ListRule {
-                    pub list: atmo::AtUri,
+                    pub list: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MentionRule {}
@@ -1875,9 +1875,9 @@ pub mod app {
         }
         pub mod graph {
             pub struct GetActorStarterPacks;
-            impl atmo::xrpc::Request for GetActorStarterPacks {
+            impl atmo_core::xrpc::Request for GetActorStarterPacks {
                 type Params = crate::app::bsky::graph::get_actor_starter_packs::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_actor_starter_packs::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1893,9 +1893,9 @@ pub mod app {
                 }
             }
             pub struct GetBlocks;
-            impl atmo::xrpc::Request for GetBlocks {
+            impl atmo_core::xrpc::Request for GetBlocks {
                 type Params = crate::app::bsky::graph::get_blocks::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_blocks::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1911,9 +1911,9 @@ pub mod app {
                 }
             }
             pub struct GetFollowers;
-            impl atmo::xrpc::Request for GetFollowers {
+            impl atmo_core::xrpc::Request for GetFollowers {
                 type Params = crate::app::bsky::graph::get_followers::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_followers::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1929,9 +1929,9 @@ pub mod app {
                 }
             }
             pub struct GetFollows;
-            impl atmo::xrpc::Request for GetFollows {
+            impl atmo_core::xrpc::Request for GetFollows {
                 type Params = crate::app::bsky::graph::get_follows::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_follows::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1947,9 +1947,9 @@ pub mod app {
                 }
             }
             pub struct GetKnownFollowers;
-            impl atmo::xrpc::Request for GetKnownFollowers {
+            impl atmo_core::xrpc::Request for GetKnownFollowers {
                 type Params = crate::app::bsky::graph::get_known_followers::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_known_followers::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1965,9 +1965,9 @@ pub mod app {
                 }
             }
             pub struct GetList;
-            impl atmo::xrpc::Request for GetList {
+            impl atmo_core::xrpc::Request for GetList {
                 type Params = crate::app::bsky::graph::get_list::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_list::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -1983,9 +1983,9 @@ pub mod app {
                 }
             }
             pub struct GetListBlocks;
-            impl atmo::xrpc::Request for GetListBlocks {
+            impl atmo_core::xrpc::Request for GetListBlocks {
                 type Params = crate::app::bsky::graph::get_list_blocks::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_list_blocks::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2001,9 +2001,9 @@ pub mod app {
                 }
             }
             pub struct GetListMutes;
-            impl atmo::xrpc::Request for GetListMutes {
+            impl atmo_core::xrpc::Request for GetListMutes {
                 type Params = crate::app::bsky::graph::get_list_mutes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_list_mutes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2019,9 +2019,9 @@ pub mod app {
                 }
             }
             pub struct GetLists;
-            impl atmo::xrpc::Request for GetLists {
+            impl atmo_core::xrpc::Request for GetLists {
                 type Params = crate::app::bsky::graph::get_lists::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_lists::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2037,9 +2037,9 @@ pub mod app {
                 }
             }
             pub struct GetMutes;
-            impl atmo::xrpc::Request for GetMutes {
+            impl atmo_core::xrpc::Request for GetMutes {
                 type Params = crate::app::bsky::graph::get_mutes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_mutes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2055,9 +2055,9 @@ pub mod app {
                 }
             }
             pub struct GetRelationships;
-            impl atmo::xrpc::Request for GetRelationships {
+            impl atmo_core::xrpc::Request for GetRelationships {
                 type Params = crate::app::bsky::graph::get_relationships::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_relationships::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2073,9 +2073,9 @@ pub mod app {
                 }
             }
             pub struct GetStarterPack;
-            impl atmo::xrpc::Request for GetStarterPack {
+            impl atmo_core::xrpc::Request for GetStarterPack {
                 type Params = crate::app::bsky::graph::get_starter_pack::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_starter_pack::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2091,9 +2091,9 @@ pub mod app {
                 }
             }
             pub struct GetStarterPacks;
-            impl atmo::xrpc::Request for GetStarterPacks {
+            impl atmo_core::xrpc::Request for GetStarterPacks {
                 type Params = crate::app::bsky::graph::get_starter_packs::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_starter_packs::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2109,9 +2109,9 @@ pub mod app {
                 }
             }
             pub struct GetSuggestedFollowsByActor;
-            impl atmo::xrpc::Request for GetSuggestedFollowsByActor {
+            impl atmo_core::xrpc::Request for GetSuggestedFollowsByActor {
                 type Params = crate::app::bsky::graph::get_suggested_follows_by_actor::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_suggested_follows_by_actor::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2127,10 +2127,10 @@ pub mod app {
                 }
             }
             pub struct MuteActor;
-            impl atmo::xrpc::Request for MuteActor {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for MuteActor {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::mute_actor::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2145,10 +2145,10 @@ pub mod app {
                 }
             }
             pub struct MuteActorList;
-            impl atmo::xrpc::Request for MuteActorList {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for MuteActorList {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::mute_actor_list::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2163,10 +2163,10 @@ pub mod app {
                 }
             }
             pub struct MuteThread;
-            impl atmo::xrpc::Request for MuteThread {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for MuteThread {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::mute_thread::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2181,10 +2181,10 @@ pub mod app {
                 }
             }
             pub struct UnmuteActor;
-            impl atmo::xrpc::Request for UnmuteActor {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UnmuteActor {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::unmute_actor::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2199,10 +2199,10 @@ pub mod app {
                 }
             }
             pub struct UnmuteActorList;
-            impl atmo::xrpc::Request for UnmuteActorList {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UnmuteActorList {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::unmute_actor_list::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2217,10 +2217,10 @@ pub mod app {
                 }
             }
             pub struct UnmuteThread;
-            impl atmo::xrpc::Request for UnmuteThread {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UnmuteThread {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::unmute_thread::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2238,7 +2238,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ListItemView {
                     pub subject: crate::app::bsky::actor::defs::ProfileView,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum ListPurpose {
@@ -2259,7 +2259,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2268,7 +2268,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description_facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -2278,7 +2278,7 @@ pub mod app {
                     pub list_item_count: std::option::Option<i64>,
                     pub name: std::string::String,
                     pub purpose: crate::app::bsky::graph::defs::ListPurpose,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::graph::defs::ListViewerState>,
@@ -2288,10 +2288,10 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub indexed_at: std::option::Option<atmo::DateTimeString>,
+                    pub indexed_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -2301,7 +2301,7 @@ pub mod app {
                     pub list_item_count: std::option::Option<i64>,
                     pub name: std::string::String,
                     pub purpose: crate::app::bsky::graph::defs::ListPurpose,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::graph::defs::ListViewerState>,
@@ -2310,36 +2310,36 @@ pub mod app {
                 pub struct ListViewerState {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub blocked: std::option::Option<atmo::AtUri>,
+                    pub blocked: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub muted: std::option::Option<bool>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct NotFoundActor {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     pub not_found: bool,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Relationship {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub followed_by: std::option::Option<atmo::AtUri>,
+                    pub followed_by: std::option::Option<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub following: std::option::Option<atmo::AtUri>,
+                    pub following: std::option::Option<atmo_core::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct StarterPackView {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileViewBasic,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feeds: std::option::Option<
                         std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                     >,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_all_time_count: std::option::Option<i64>,
@@ -2358,14 +2358,14 @@ pub mod app {
                     pub list_items_sample: std::option::Option<
                         std::vec::Vec<crate::app::bsky::graph::defs::ListItemView>,
                     >,
-                    pub record: atmo::Unknown,
-                    pub uri: atmo::AtUri,
+                    pub record: atmo_core::Unknown,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct StarterPackViewBasic {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileViewBasic,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_all_time_count: std::option::Option<i64>,
@@ -2379,8 +2379,8 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub list_item_count: std::option::Option<i64>,
-                    pub record: atmo::Unknown,
-                    pub uri: atmo::AtUri,
+                    pub record: atmo_core::Unknown,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_actor_starter_packs {
@@ -2394,7 +2394,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -2432,7 +2432,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -2452,7 +2452,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -2472,7 +2472,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -2498,7 +2498,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    pub list: atmo::AtUri,
+                    pub list: atmo_core::AtUri,
                 }
             }
             pub mod get_list_blocks {
@@ -2547,7 +2547,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -2579,13 +2579,13 @@ pub mod app {
                 pub struct Output {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub actor: std::option::Option<atmo::Did>,
+                    pub actor: std::option::Option<atmo_core::Did>,
                     pub relationships:
                         std::vec::Vec<crate::app::bsky::graph::get_relationships::Relationships>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub others: std::option::Option<std::vec::Vec<std::string::String>>,
@@ -2595,7 +2595,7 @@ pub mod app {
                     NotFoundActor(crate::app::bsky::graph::defs::NotFoundActor),
                     Relationship(crate::app::bsky::graph::defs::Relationship),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod get_starter_pack {
@@ -2605,7 +2605,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub starter_pack: atmo::AtUri,
+                    pub starter_pack: atmo_core::AtUri,
                 }
             }
             pub mod get_starter_packs {
@@ -2630,57 +2630,57 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod mute_actor {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod mute_actor_list {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub list: atmo::AtUri,
+                    pub list: atmo_core::AtUri,
                 }
             }
             pub mod mute_thread {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub root: atmo::AtUri,
+                    pub root: atmo_core::AtUri,
                 }
             }
             pub mod starterpack {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedItem {
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod unmute_actor {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub actor: atmo::AtIdentifier,
+                    pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod unmute_actor_list {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub list: atmo::AtUri,
+                    pub list: atmo_core::AtUri,
                 }
             }
             pub mod unmute_thread {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub root: atmo::AtUri,
+                    pub root: atmo_core::AtUri,
                 }
             }
         }
         pub mod labeler {
             pub struct GetServices;
-            impl atmo::xrpc::Request for GetServices {
+            impl atmo_core::xrpc::Request for GetServices {
                 type Params = crate::app::bsky::labeler::get_services::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::labeler::get_services::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2707,9 +2707,9 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerView {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -2717,7 +2717,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
@@ -2725,9 +2725,9 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerViewDetailed {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -2736,7 +2736,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
                     pub policies: crate::app::bsky::labeler::defs::LabelerPolicies,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
@@ -2746,7 +2746,7 @@ pub mod app {
                 pub struct LabelerViewerState {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub like: std::option::Option<atmo::AtUri>,
+                    pub like: std::option::Option<atmo_core::AtUri>,
                 }
             }
             pub mod get_services {
@@ -2766,15 +2766,15 @@ pub mod app {
                     LabelerView(crate::app::bsky::labeler::defs::LabelerView),
                     LabelerViewDetailed(crate::app::bsky::labeler::defs::LabelerViewDetailed),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
         }
         pub mod notification {
             pub struct GetUnreadCount;
-            impl atmo::xrpc::Request for GetUnreadCount {
+            impl atmo_core::xrpc::Request for GetUnreadCount {
                 type Params = crate::app::bsky::notification::get_unread_count::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::notification::get_unread_count::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2790,9 +2790,9 @@ pub mod app {
                 }
             }
             pub struct ListNotifications;
-            impl atmo::xrpc::Request for ListNotifications {
+            impl atmo_core::xrpc::Request for ListNotifications {
                 type Params = crate::app::bsky::notification::list_notifications::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::notification::list_notifications::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -2808,10 +2808,10 @@ pub mod app {
                 }
             }
             pub struct PutPreferences;
-            impl atmo::xrpc::Request for PutPreferences {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for PutPreferences {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::notification::put_preferences::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2826,10 +2826,10 @@ pub mod app {
                 }
             }
             pub struct RegisterPush;
-            impl atmo::xrpc::Request for RegisterPush {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for RegisterPush {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::notification::register_push::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2844,10 +2844,10 @@ pub mod app {
                 }
             }
             pub struct UpdateSeen;
-            impl atmo::xrpc::Request for UpdateSeen {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateSeen {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::notification::update_seen::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2873,15 +2873,15 @@ pub mod app {
                     pub priority: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub seen_at: std::option::Option<atmo::DateTimeString>,
+                    pub seen_at: std::option::Option<atmo_core::DateTimeString>,
                 }
             }
             pub mod list_notifications {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Notification {
                     pub author: crate::app::bsky::actor::defs::ProfileView,
-                    pub cid: atmo::CidString,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub cid: atmo_core::CidString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     pub is_read: bool,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2890,9 +2890,9 @@ pub mod app {
                     pub reason: crate::app::bsky::notification::list_notifications::Reason,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reason_subject: std::option::Option<atmo::AtUri>,
-                    pub record: atmo::Unknown,
-                    pub uri: atmo::AtUri,
+                    pub reason_subject: std::option::Option<atmo_core::AtUri>,
+                    pub record: atmo_core::Unknown,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -2907,7 +2907,7 @@ pub mod app {
                     pub priority: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub seen_at: std::option::Option<atmo::DateTimeString>,
+                    pub seen_at: std::option::Option<atmo_core::DateTimeString>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -2922,7 +2922,7 @@ pub mod app {
                     pub priority: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub seen_at: std::option::Option<atmo::DateTimeString>,
+                    pub seen_at: std::option::Option<atmo_core::DateTimeString>,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Reason {
@@ -2955,7 +2955,7 @@ pub mod app {
                 pub struct Input {
                     pub app_id: std::string::String,
                     pub platform: crate::app::bsky::notification::register_push::Platform,
-                    pub service_did: atmo::Did,
+                    pub service_did: atmo_core::Did,
                     pub token: std::string::String,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
@@ -2973,7 +2973,7 @@ pub mod app {
             pub mod update_seen {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub seen_at: atmo::DateTimeString,
+                    pub seen_at: atmo_core::DateTimeString,
                 }
             }
         }
@@ -2995,7 +2995,7 @@ pub mod app {
                     Mention(crate::app::bsky::richtext::facet::Mention),
                     Tag(crate::app::bsky::richtext::facet::Tag),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Link {
@@ -3003,7 +3003,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Mention {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Tag {
@@ -3013,9 +3013,9 @@ pub mod app {
         }
         pub mod unspecced {
             pub struct GetPopularFeedGenerators;
-            impl atmo::xrpc::Request for GetPopularFeedGenerators {
+            impl atmo_core::xrpc::Request for GetPopularFeedGenerators {
                 type Params = crate::app::bsky::unspecced::get_popular_feed_generators::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::get_popular_feed_generators::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3031,9 +3031,9 @@ pub mod app {
                 }
             }
             pub struct GetSuggestionsSkeleton;
-            impl atmo::xrpc::Request for GetSuggestionsSkeleton {
+            impl atmo_core::xrpc::Request for GetSuggestionsSkeleton {
                 type Params = crate::app::bsky::unspecced::get_suggestions_skeleton::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::get_suggestions_skeleton::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3049,9 +3049,9 @@ pub mod app {
                 }
             }
             pub struct GetTaggedSuggestions;
-            impl atmo::xrpc::Request for GetTaggedSuggestions {
+            impl atmo_core::xrpc::Request for GetTaggedSuggestions {
                 type Params = crate::app::bsky::unspecced::get_tagged_suggestions::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::get_tagged_suggestions::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3067,9 +3067,9 @@ pub mod app {
                 }
             }
             pub struct SearchActorsSkeleton;
-            impl atmo::xrpc::Request for SearchActorsSkeleton {
+            impl atmo_core::xrpc::Request for SearchActorsSkeleton {
                 type Params = crate::app::bsky::unspecced::search_actors_skeleton::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::search_actors_skeleton::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3085,9 +3085,9 @@ pub mod app {
                 }
             }
             pub struct SearchPostsSkeleton;
-            impl atmo::xrpc::Request for SearchPostsSkeleton {
+            impl atmo_core::xrpc::Request for SearchPostsSkeleton {
                 type Params = crate::app::bsky::unspecced::search_posts_skeleton::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::search_posts_skeleton::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3105,11 +3105,11 @@ pub mod app {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonSearchActor {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonSearchPost {
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_popular_feed_generators {
@@ -3143,7 +3143,7 @@ pub mod app {
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub relative_to_did: std::option::Option<atmo::Did>,
+                    pub relative_to_did: std::option::Option<atmo_core::Did>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -3155,10 +3155,10 @@ pub mod app {
                     pub limit: std::option::Option<i64>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub relative_to_did: std::option::Option<atmo::Did>,
+                    pub relative_to_did: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub viewer: std::option::Option<atmo::Did>,
+                    pub viewer: std::option::Option<atmo_core::Did>,
                 }
             }
             pub mod get_tagged_suggestions {
@@ -3214,7 +3214,7 @@ pub mod app {
                     pub typeahead: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub viewer: std::option::Option<atmo::Did>,
+                    pub viewer: std::option::Option<atmo_core::Did>,
                 }
             }
             pub mod search_posts_skeleton {
@@ -3232,7 +3232,7 @@ pub mod app {
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub author: std::option::Option<atmo::AtIdentifier>,
+                    pub author: std::option::Option<atmo_core::AtIdentifier>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -3247,7 +3247,7 @@ pub mod app {
                     pub limit: std::option::Option<i64>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub mentions: std::option::Option<atmo::AtIdentifier>,
+                    pub mentions: std::option::Option<atmo_core::AtIdentifier>,
                     pub q: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3268,7 +3268,7 @@ pub mod app {
                     pub url: std::option::Option<url::Url>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub viewer: std::option::Option<atmo::Did>,
+                    pub viewer: std::option::Option<atmo_core::Did>,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Sort {
@@ -3283,9 +3283,9 @@ pub mod app {
         }
         pub mod video {
             pub struct GetJobStatus;
-            impl atmo::xrpc::Request for GetJobStatus {
+            impl atmo_core::xrpc::Request for GetJobStatus {
                 type Params = crate::app::bsky::video::get_job_status::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::video::get_job_status::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3301,9 +3301,9 @@ pub mod app {
                 }
             }
             pub struct GetUploadLimits;
-            impl atmo::xrpc::Request for GetUploadLimits {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for GetUploadLimits {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::video::get_upload_limits::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3319,9 +3319,9 @@ pub mod app {
                 }
             }
             pub struct UploadVideo;
-            impl atmo::xrpc::Request for UploadVideo {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for UploadVideo {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::video::upload_video::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3341,8 +3341,8 @@ pub mod app {
                 pub struct JobStatus {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub blob: std::option::Option<atmo::Blob>,
-                    pub did: atmo::Did,
+                    pub blob: std::option::Option<atmo_core::Blob>,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub error: std::option::Option<std::string::String>,
@@ -3406,9 +3406,9 @@ pub mod chat {
     pub mod bsky {
         pub mod actor {
             pub struct DeleteAccount;
-            impl atmo::xrpc::Request for DeleteAccount {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for DeleteAccount {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::actor::delete_account::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3424,10 +3424,10 @@ pub mod chat {
                 }
             }
             pub struct ExportAccountData;
-            impl atmo::xrpc::Request for ExportAccountData {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for ExportAccountData {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -3455,11 +3455,11 @@ pub mod chat {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub chat_disabled: std::option::Option<bool>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -3476,8 +3476,8 @@ pub mod chat {
         }
         pub mod convo {
             pub struct DeleteMessageForSelf;
-            impl atmo::xrpc::Request for DeleteMessageForSelf {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteMessageForSelf {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::delete_message_for_self::Input;
                 type Output = crate::chat::bsky::convo::defs::DeletedMessageView;
                 #[inline]
@@ -3494,9 +3494,9 @@ pub mod chat {
                 }
             }
             pub struct GetConvo;
-            impl atmo::xrpc::Request for GetConvo {
+            impl atmo_core::xrpc::Request for GetConvo {
                 type Params = crate::chat::bsky::convo::get_convo::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_convo::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3512,9 +3512,9 @@ pub mod chat {
                 }
             }
             pub struct GetConvoForMembers;
-            impl atmo::xrpc::Request for GetConvoForMembers {
+            impl atmo_core::xrpc::Request for GetConvoForMembers {
                 type Params = crate::chat::bsky::convo::get_convo_for_members::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_convo_for_members::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3530,9 +3530,9 @@ pub mod chat {
                 }
             }
             pub struct GetLog;
-            impl atmo::xrpc::Request for GetLog {
+            impl atmo_core::xrpc::Request for GetLog {
                 type Params = crate::chat::bsky::convo::get_log::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_log::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3548,9 +3548,9 @@ pub mod chat {
                 }
             }
             pub struct GetMessages;
-            impl atmo::xrpc::Request for GetMessages {
+            impl atmo_core::xrpc::Request for GetMessages {
                 type Params = crate::chat::bsky::convo::get_messages::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_messages::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3566,8 +3566,8 @@ pub mod chat {
                 }
             }
             pub struct LeaveConvo;
-            impl atmo::xrpc::Request for LeaveConvo {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for LeaveConvo {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::leave_convo::Input;
                 type Output = crate::chat::bsky::convo::leave_convo::Output;
                 #[inline]
@@ -3584,9 +3584,9 @@ pub mod chat {
                 }
             }
             pub struct ListConvos;
-            impl atmo::xrpc::Request for ListConvos {
+            impl atmo_core::xrpc::Request for ListConvos {
                 type Params = crate::chat::bsky::convo::list_convos::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::list_convos::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3602,8 +3602,8 @@ pub mod chat {
                 }
             }
             pub struct MuteConvo;
-            impl atmo::xrpc::Request for MuteConvo {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for MuteConvo {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::mute_convo::Input;
                 type Output = crate::chat::bsky::convo::mute_convo::Output;
                 #[inline]
@@ -3620,8 +3620,8 @@ pub mod chat {
                 }
             }
             pub struct SendMessage;
-            impl atmo::xrpc::Request for SendMessage {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for SendMessage {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::send_message::Input;
                 type Output = crate::chat::bsky::convo::defs::MessageView;
                 #[inline]
@@ -3638,8 +3638,8 @@ pub mod chat {
                 }
             }
             pub struct SendMessageBatch;
-            impl atmo::xrpc::Request for SendMessageBatch {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for SendMessageBatch {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::send_message_batch::Input;
                 type Output = crate::chat::bsky::convo::send_message_batch::Output;
                 #[inline]
@@ -3656,8 +3656,8 @@ pub mod chat {
                 }
             }
             pub struct UnmuteConvo;
-            impl atmo::xrpc::Request for UnmuteConvo {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UnmuteConvo {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::unmute_convo::Input;
                 type Output = crate::chat::bsky::convo::unmute_convo::Output;
                 #[inline]
@@ -3674,8 +3674,8 @@ pub mod chat {
                 }
             }
             pub struct UpdateRead;
-            impl atmo::xrpc::Request for UpdateRead {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateRead {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::update_read::Input;
                 type Output = crate::chat::bsky::convo::update_read::Output;
                 #[inline]
@@ -3709,20 +3709,20 @@ pub mod chat {
                     pub id: std::string::String,
                     pub rev: std::string::String,
                     pub sender: crate::chat::bsky::convo::defs::MessageViewSender,
-                    pub sent_at: atmo::DateTimeString,
+                    pub sent_at: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Embed {
                     Record(crate::app::bsky::embed::Record),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum LastMessage {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LogBeginConvo {
@@ -3746,7 +3746,7 @@ pub mod chat {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LogLeaveConvo {
@@ -3758,7 +3758,7 @@ pub mod chat {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageInput {
@@ -3774,7 +3774,7 @@ pub mod chat {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageRef {
                     pub convo_id: std::string::String,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub message_id: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
@@ -3790,18 +3790,18 @@ pub mod chat {
                     pub id: std::string::String,
                     pub rev: std::string::String,
                     pub sender: crate::chat::bsky::convo::defs::MessageViewSender,
-                    pub sent_at: atmo::DateTimeString,
+                    pub sent_at: atmo_core::DateTimeString,
                     pub text: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum MessageViewEmbed {
                     View(crate::app::bsky::embed::record::View),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageViewSender {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod delete_message_for_self {
@@ -3839,7 +3839,7 @@ pub mod chat {
                     LogDeleteMessage(crate::chat::bsky::convo::defs::LogDeleteMessage),
                     LogLeaveConvo(crate::chat::bsky::convo::defs::LogLeaveConvo),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -3861,7 +3861,7 @@ pub mod chat {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -3969,9 +3969,9 @@ pub mod chat {
         }
         pub mod moderation {
             pub struct GetActorMetadata;
-            impl atmo::xrpc::Request for GetActorMetadata {
+            impl atmo_core::xrpc::Request for GetActorMetadata {
                 type Params = crate::chat::bsky::moderation::get_actor_metadata::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::moderation::get_actor_metadata::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -3987,9 +3987,9 @@ pub mod chat {
                 }
             }
             pub struct GetMessageContext;
-            impl atmo::xrpc::Request for GetMessageContext {
+            impl atmo_core::xrpc::Request for GetMessageContext {
                 type Params = crate::chat::bsky::moderation::get_message_context::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::moderation::get_message_context::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4005,10 +4005,10 @@ pub mod chat {
                 }
             }
             pub struct UpdateActorAccess;
-            impl atmo::xrpc::Request for UpdateActorAccess {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateActorAccess {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::moderation::update_actor_access::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4038,7 +4038,7 @@ pub mod chat {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub actor: atmo::Did,
+                    pub actor: atmo_core::Did,
                 }
             }
             pub mod get_message_context {
@@ -4047,7 +4047,7 @@ pub mod chat {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -4071,7 +4071,7 @@ pub mod chat {
             pub mod update_actor_access {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub actor: atmo::Did,
+                    pub actor: atmo_core::Did,
                     pub allow_access: bool,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4085,10 +4085,10 @@ pub mod com {
     pub mod atproto {
         pub mod admin {
             pub struct DeleteAccount;
-            impl atmo::xrpc::Request for DeleteAccount {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteAccount {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::delete_account::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4103,10 +4103,10 @@ pub mod com {
                 }
             }
             pub struct DisableAccountInvites;
-            impl atmo::xrpc::Request for DisableAccountInvites {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DisableAccountInvites {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::disable_account_invites::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4121,10 +4121,10 @@ pub mod com {
                 }
             }
             pub struct DisableInviteCodes;
-            impl atmo::xrpc::Request for DisableInviteCodes {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DisableInviteCodes {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::disable_invite_codes::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4139,10 +4139,10 @@ pub mod com {
                 }
             }
             pub struct EnableAccountInvites;
-            impl atmo::xrpc::Request for EnableAccountInvites {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for EnableAccountInvites {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::enable_account_invites::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4157,9 +4157,9 @@ pub mod com {
                 }
             }
             pub struct GetAccountInfo;
-            impl atmo::xrpc::Request for GetAccountInfo {
+            impl atmo_core::xrpc::Request for GetAccountInfo {
                 type Params = crate::com::atproto::admin::get_account_info::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::defs::AccountView;
                 #[inline]
                 fn method() -> http::Method {
@@ -4175,9 +4175,9 @@ pub mod com {
                 }
             }
             pub struct GetAccountInfos;
-            impl atmo::xrpc::Request for GetAccountInfos {
+            impl atmo_core::xrpc::Request for GetAccountInfos {
                 type Params = crate::com::atproto::admin::get_account_infos::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::get_account_infos::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4193,9 +4193,9 @@ pub mod com {
                 }
             }
             pub struct GetInviteCodes;
-            impl atmo::xrpc::Request for GetInviteCodes {
+            impl atmo_core::xrpc::Request for GetInviteCodes {
                 type Params = crate::com::atproto::admin::get_invite_codes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::get_invite_codes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4211,9 +4211,9 @@ pub mod com {
                 }
             }
             pub struct GetSubjectStatus;
-            impl atmo::xrpc::Request for GetSubjectStatus {
+            impl atmo_core::xrpc::Request for GetSubjectStatus {
                 type Params = crate::com::atproto::admin::get_subject_status::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::get_subject_status::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4229,9 +4229,9 @@ pub mod com {
                 }
             }
             pub struct SearchAccounts;
-            impl atmo::xrpc::Request for SearchAccounts {
+            impl atmo_core::xrpc::Request for SearchAccounts {
                 type Params = crate::com::atproto::admin::search_accounts::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::search_accounts::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4247,8 +4247,8 @@ pub mod com {
                 }
             }
             pub struct SendEmail;
-            impl atmo::xrpc::Request for SendEmail {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for SendEmail {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::send_email::Input;
                 type Output = crate::com::atproto::admin::send_email::Output;
                 #[inline]
@@ -4265,10 +4265,10 @@ pub mod com {
                 }
             }
             pub struct UpdateAccountEmail;
-            impl atmo::xrpc::Request for UpdateAccountEmail {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateAccountEmail {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_account_email::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4283,10 +4283,10 @@ pub mod com {
                 }
             }
             pub struct UpdateAccountHandle;
-            impl atmo::xrpc::Request for UpdateAccountHandle {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateAccountHandle {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_account_handle::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4301,10 +4301,10 @@ pub mod com {
                 }
             }
             pub struct UpdateAccountPassword;
-            impl atmo::xrpc::Request for UpdateAccountPassword {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateAccountPassword {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_account_password::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4319,8 +4319,8 @@ pub mod com {
                 }
             }
             pub struct UpdateSubjectStatus;
-            impl atmo::xrpc::Request for UpdateSubjectStatus {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateSubjectStatus {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_subject_status::Input;
                 type Output = crate::com::atproto::admin::update_subject_status::Output;
                 #[inline]
@@ -4341,16 +4341,16 @@ pub mod com {
                 pub struct AccountView {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo::DateTimeString>,
-                    pub did: atmo::Did,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub email_confirmed_at: std::option::Option<atmo::DateTimeString>,
-                    pub handle: atmo::Handle,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub email_confirmed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub handle: atmo_core::Handle,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_note: std::option::Option<std::string::String>,
@@ -4368,19 +4368,19 @@ pub mod com {
                     pub invites_disabled: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub related_records: std::option::Option<std::vec::Vec<atmo::Unknown>>,
+                    pub related_records: std::option::Option<std::vec::Vec<atmo_core::Unknown>>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoBlobRef {
-                    pub cid: atmo::CidString,
-                    pub did: atmo::Did,
+                    pub cid: atmo_core::CidString,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub record_uri: std::option::Option<atmo::AtUri>,
+                    pub record_uri: std::option::Option<atmo_core::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoRef {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct StatusAttr {
@@ -4393,13 +4393,13 @@ pub mod com {
             pub mod delete_account {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod disable_account_invites {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub account: atmo::Did,
+                    pub account: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub note: std::option::Option<std::string::String>,
@@ -4419,7 +4419,7 @@ pub mod com {
             pub mod enable_account_invites {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub account: atmo::Did,
+                    pub account: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub note: std::option::Option<std::string::String>,
@@ -4428,7 +4428,7 @@ pub mod com {
             pub mod get_account_info {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_account_infos {
@@ -4488,13 +4488,13 @@ pub mod com {
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub blob: std::option::Option<atmo::CidString>,
+                    pub blob: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did: std::option::Option<atmo::Did>,
+                    pub did: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub uri: std::option::Option<atmo::AtUri>,
+                    pub uri: std::option::Option<atmo_core::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Subject {
@@ -4502,7 +4502,7 @@ pub mod com {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod search_accounts {
@@ -4533,8 +4533,8 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub content: std::string::String,
-                    pub recipient_did: atmo::Did,
-                    pub sender_did: atmo::Did,
+                    pub recipient_did: atmo_core::Did,
+                    pub sender_did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
@@ -4547,21 +4547,21 @@ pub mod com {
             pub mod update_account_email {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub account: atmo::AtIdentifier,
+                    pub account: atmo_core::AtIdentifier,
                     pub email: std::string::String,
                 }
             }
             pub mod update_account_handle {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
-                    pub handle: atmo::Handle,
+                    pub did: atmo_core::Did,
+                    pub handle: atmo_core::Handle,
                 }
             }
             pub mod update_account_password {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub password: std::string::String,
                 }
             }
@@ -4590,7 +4590,7 @@ pub mod com {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Subject {
@@ -4598,15 +4598,15 @@ pub mod com {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
         }
         pub mod identity {
             pub struct GetRecommendedDidCredentials;
-            impl atmo::xrpc::Request for GetRecommendedDidCredentials {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for GetRecommendedDidCredentials {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output =
                     crate::com::atproto::identity::get_recommended_did_credentials::Output;
                 #[inline]
@@ -4623,10 +4623,10 @@ pub mod com {
                 }
             }
             pub struct RequestPlcOperationSignature;
-            impl atmo::xrpc::Request for RequestPlcOperationSignature {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for RequestPlcOperationSignature {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4641,9 +4641,9 @@ pub mod com {
                 }
             }
             pub struct ResolveHandle;
-            impl atmo::xrpc::Request for ResolveHandle {
+            impl atmo_core::xrpc::Request for ResolveHandle {
                 type Params = crate::com::atproto::identity::resolve_handle::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::identity::resolve_handle::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4659,8 +4659,8 @@ pub mod com {
                 }
             }
             pub struct SignPlcOperation;
-            impl atmo::xrpc::Request for SignPlcOperation {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for SignPlcOperation {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::identity::sign_plc_operation::Input;
                 type Output = crate::com::atproto::identity::sign_plc_operation::Output;
                 #[inline]
@@ -4677,10 +4677,10 @@ pub mod com {
                 }
             }
             pub struct SubmitPlcOperation;
-            impl atmo::xrpc::Request for SubmitPlcOperation {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for SubmitPlcOperation {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::identity::submit_plc_operation::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4695,10 +4695,10 @@ pub mod com {
                 }
             }
             pub struct UpdateHandle;
-            impl atmo::xrpc::Request for UpdateHandle {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateHandle {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::identity::update_handle::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4723,20 +4723,20 @@ pub mod com {
                     pub rotation_keys: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub services: std::option::Option<atmo::Unknown>,
+                    pub services: std::option::Option<atmo_core::Unknown>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub verification_methods: std::option::Option<atmo::Unknown>,
+                    pub verification_methods: std::option::Option<atmo_core::Unknown>,
                 }
             }
             pub mod resolve_handle {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                 }
             }
             pub mod sign_plc_operation {
@@ -4750,37 +4750,37 @@ pub mod com {
                     pub rotation_keys: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub services: std::option::Option<atmo::Unknown>,
+                    pub services: std::option::Option<atmo_core::Unknown>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub token: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub verification_methods: std::option::Option<atmo::Unknown>,
+                    pub verification_methods: std::option::Option<atmo_core::Unknown>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub operation: atmo::Unknown,
+                    pub operation: atmo_core::Unknown,
                 }
             }
             pub mod submit_plc_operation {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub operation: atmo::Unknown,
+                    pub operation: atmo_core::Unknown,
                 }
             }
             pub mod update_handle {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                 }
             }
         }
         pub mod label {
             pub struct QueryLabels;
-            impl atmo::xrpc::Request for QueryLabels {
+            impl atmo_core::xrpc::Request for QueryLabels {
                 type Params = crate::com::atproto::label::query_labels::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::label::query_labels::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -4822,11 +4822,11 @@ pub mod com {
                 pub struct Label {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
-                    pub cts: atmo::DateTimeString,
+                    pub cid: std::option::Option<atmo_core::CidString>,
+                    pub cts: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub exp: std::option::Option<atmo::DateTimeString>,
+                    pub exp: std::option::Option<atmo_core::DateTimeString>,
                     #[doc = "If true, this is a negation label, overwriting a previous label."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4834,9 +4834,9 @@ pub mod com {
                     #[doc = "Signature of dag-cbor encoded label."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    #[serde(with = "atmo::bytes::serde::option")]
+                    #[serde(with = "atmo_core::bytes::serde::option")]
                     pub sig: std::option::Option<bytes::Bytes>,
-                    pub src: atmo::Did,
+                    pub src: atmo_core::Did,
                     pub uri: url::Url,
                     pub val: std::string::String,
                     #[serde(default)]
@@ -4959,8 +4959,8 @@ pub mod com {
         }
         pub mod moderation {
             pub struct CreateReport;
-            impl atmo::xrpc::Request for CreateReport {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateReport {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::moderation::create_report::Input;
                 type Output = crate::com::atproto::moderation::create_report::Output;
                 #[inline]
@@ -4987,13 +4987,13 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     pub id: i64,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason: std::option::Option<std::string::String>,
                     pub reason_type: crate::com::atproto::moderation::defs::ReasonType,
-                    pub reported_by: atmo::Did,
+                    pub reported_by: atmo_core::Did,
                     pub subject: crate::com::atproto::moderation::create_report::OutputSubject,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
@@ -5001,14 +5001,14 @@ pub mod com {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Subject {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod defs {
@@ -5042,8 +5042,8 @@ pub mod com {
         }
         pub mod repo {
             pub struct ApplyWrites;
-            impl atmo::xrpc::Request for ApplyWrites {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for ApplyWrites {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::apply_writes::Input;
                 type Output = crate::com::atproto::repo::apply_writes::Output;
                 #[inline]
@@ -5060,8 +5060,8 @@ pub mod com {
                 }
             }
             pub struct CreateRecord;
-            impl atmo::xrpc::Request for CreateRecord {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateRecord {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::create_record::Input;
                 type Output = crate::com::atproto::repo::create_record::Output;
                 #[inline]
@@ -5078,8 +5078,8 @@ pub mod com {
                 }
             }
             pub struct DeleteRecord;
-            impl atmo::xrpc::Request for DeleteRecord {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteRecord {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::delete_record::Input;
                 type Output = crate::com::atproto::repo::delete_record::Output;
                 #[inline]
@@ -5096,9 +5096,9 @@ pub mod com {
                 }
             }
             pub struct DescribeRepo;
-            impl atmo::xrpc::Request for DescribeRepo {
+            impl atmo_core::xrpc::Request for DescribeRepo {
                 type Params = crate::com::atproto::repo::describe_repo::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::describe_repo::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5114,9 +5114,9 @@ pub mod com {
                 }
             }
             pub struct GetRecord;
-            impl atmo::xrpc::Request for GetRecord {
+            impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::com::atproto::repo::get_record::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::get_record::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5132,10 +5132,10 @@ pub mod com {
                 }
             }
             pub struct ImportRepo;
-            impl atmo::xrpc::Request for ImportRepo {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for ImportRepo {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5150,9 +5150,9 @@ pub mod com {
                 }
             }
             pub struct ListMissingBlobs;
-            impl atmo::xrpc::Request for ListMissingBlobs {
+            impl atmo_core::xrpc::Request for ListMissingBlobs {
                 type Params = crate::com::atproto::repo::list_missing_blobs::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::list_missing_blobs::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5168,9 +5168,9 @@ pub mod com {
                 }
             }
             pub struct ListRecords;
-            impl atmo::xrpc::Request for ListRecords {
+            impl atmo_core::xrpc::Request for ListRecords {
                 type Params = crate::com::atproto::repo::list_records::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::list_records::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5186,8 +5186,8 @@ pub mod com {
                 }
             }
             pub struct PutRecord;
-            impl atmo::xrpc::Request for PutRecord {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for PutRecord {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::put_record::Input;
                 type Output = crate::com::atproto::repo::put_record::Output;
                 #[inline]
@@ -5205,13 +5205,13 @@ pub mod com {
             }
             #[derive(serde :: Deserialize, serde :: Serialize)]
             pub struct StrongRef {
-                pub cid: atmo::CidString,
-                pub uri: atmo::AtUri,
+                pub cid: atmo_core::CidString,
+                pub uri: atmo_core::AtUri,
             }
             pub struct UploadBlob;
-            impl atmo::xrpc::Request for UploadBlob {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for UploadBlob {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::upload_blob::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5229,16 +5229,16 @@ pub mod com {
             pub mod apply_writes {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Create {
-                    pub collection: atmo::Nsid,
+                    pub collection: atmo_core::Nsid,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey: std::option::Option<std::string::String>,
-                    pub value: atmo::Unknown,
+                    pub value: atmo_core::Unknown,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct CreateResult {
-                    pub cid: atmo::CidString,
-                    pub uri: atmo::AtUri,
+                    pub cid: atmo_core::CidString,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
@@ -5247,17 +5247,17 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Delete {
-                    pub collection: atmo::Nsid,
+                    pub collection: atmo_core::Nsid,
                     pub rkey: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct DeleteResult {}
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub repo: atmo::AtIdentifier,
+                    pub repo: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub swap_commit: std::option::Option<atmo::CidString>,
+                    pub swap_commit: std::option::Option<atmo_core::CidString>,
                     #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data across all operations, 'true' to require it, or leave unset to validate only for known Lexicons."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5283,14 +5283,14 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Update {
-                    pub collection: atmo::Nsid,
+                    pub collection: atmo_core::Nsid,
                     pub rkey: std::string::String,
-                    pub value: atmo::Unknown,
+                    pub value: atmo_core::Unknown,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct UpdateResult {
-                    pub cid: atmo::CidString,
-                    pub uri: atmo::AtUri,
+                    pub cid: atmo_core::CidString,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
@@ -5316,15 +5316,15 @@ pub mod com {
             pub mod create_record {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub collection: atmo::Nsid,
-                    pub record: atmo::Unknown,
-                    pub repo: atmo::AtIdentifier,
+                    pub collection: atmo_core::Nsid,
+                    pub record: atmo_core::Unknown,
+                    pub repo: atmo_core::AtIdentifier,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub swap_commit: std::option::Option<atmo::CidString>,
+                    pub swap_commit: std::option::Option<atmo_core::CidString>,
                     #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5332,11 +5332,11 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<crate::com::atproto::repo::defs::CommitMeta>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
@@ -5356,22 +5356,22 @@ pub mod com {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct CommitMeta {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub rev: std::string::String,
                 }
             }
             pub mod delete_record {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub collection: atmo::Nsid,
-                    pub repo: atmo::AtIdentifier,
+                    pub collection: atmo_core::Nsid,
+                    pub repo: atmo_core::AtIdentifier,
                     pub rkey: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub swap_commit: std::option::Option<atmo::CidString>,
+                    pub swap_commit: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub swap_record: std::option::Option<atmo::CidString>,
+                    pub swap_record: std::option::Option<atmo_core::CidString>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -5384,15 +5384,15 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub collections: std::vec::Vec<std::string::String>,
-                    pub did: atmo::Did,
-                    pub did_doc: atmo::Unknown,
-                    pub handle: atmo::Handle,
+                    pub did: atmo_core::Did,
+                    pub did_doc: atmo_core::Unknown,
+                    pub handle: atmo_core::Handle,
                     #[doc = "Indicates if handle is currently valid (resolves bi-directionally)"]
                     pub handle_is_correct: bool,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub repo: atmo::AtIdentifier,
+                    pub repo: atmo_core::AtIdentifier,
                 }
             }
             pub mod get_record {
@@ -5400,17 +5400,17 @@ pub mod com {
                 pub struct Output {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
-                    pub uri: atmo::AtUri,
-                    pub value: atmo::Unknown,
+                    pub cid: std::option::Option<atmo_core::CidString>,
+                    pub uri: atmo_core::AtUri,
+                    pub value: atmo_core::Unknown,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
-                    pub collection: atmo::Nsid,
-                    pub repo: atmo::AtIdentifier,
+                    pub cid: std::option::Option<atmo_core::CidString>,
+                    pub collection: atmo_core::Nsid,
+                    pub repo: atmo_core::AtIdentifier,
                     pub rkey: std::string::String,
                 }
             }
@@ -5434,8 +5434,8 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordBlob {
-                    pub cid: atmo::CidString,
-                    pub record_uri: atmo::AtUri,
+                    pub cid: atmo_core::CidString,
+                    pub record_uri: atmo_core::AtUri,
                 }
             }
             pub mod list_records {
@@ -5448,14 +5448,14 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub collection: atmo::Nsid,
+                    pub collection: atmo_core::Nsid,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    pub repo: atmo::AtIdentifier,
+                    pub repo: atmo_core::AtIdentifier,
                     #[doc = "Flag to reverse the order of the returned records."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5469,24 +5469,24 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Record {
-                    pub cid: atmo::CidString,
-                    pub uri: atmo::AtUri,
-                    pub value: atmo::Unknown,
+                    pub cid: atmo_core::CidString,
+                    pub uri: atmo_core::AtUri,
+                    pub value: atmo_core::Unknown,
                 }
             }
             pub mod put_record {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub collection: atmo::Nsid,
-                    pub record: atmo::Unknown,
-                    pub repo: atmo::AtIdentifier,
+                    pub collection: atmo_core::Nsid,
+                    pub record: atmo_core::Unknown,
+                    pub repo: atmo_core::AtIdentifier,
                     pub rkey: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub swap_commit: std::option::Option<atmo::CidString>,
+                    pub swap_commit: std::option::Option<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub swap_record: std::option::Option<atmo::Nullable<atmo::CidString>>,
+                    pub swap_record: std::option::Option<atmo_core::Nullable<atmo_core::CidString>>,
                     #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5494,11 +5494,11 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<crate::com::atproto::repo::defs::CommitMeta>,
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
@@ -5518,16 +5518,16 @@ pub mod com {
             pub mod upload_blob {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub blob: atmo::Blob,
+                    pub blob: atmo_core::Blob,
                 }
             }
         }
         pub mod server {
             pub struct ActivateAccount;
-            impl atmo::xrpc::Request for ActivateAccount {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for ActivateAccount {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5542,9 +5542,9 @@ pub mod com {
                 }
             }
             pub struct CheckAccountStatus;
-            impl atmo::xrpc::Request for CheckAccountStatus {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for CheckAccountStatus {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::check_account_status::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5560,10 +5560,10 @@ pub mod com {
                 }
             }
             pub struct ConfirmEmail;
-            impl atmo::xrpc::Request for ConfirmEmail {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for ConfirmEmail {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::confirm_email::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5578,8 +5578,8 @@ pub mod com {
                 }
             }
             pub struct CreateAccount;
-            impl atmo::xrpc::Request for CreateAccount {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateAccount {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_account::Input;
                 type Output = crate::com::atproto::server::create_account::Output;
                 #[inline]
@@ -5596,8 +5596,8 @@ pub mod com {
                 }
             }
             pub struct CreateAppPassword;
-            impl atmo::xrpc::Request for CreateAppPassword {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateAppPassword {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_app_password::Input;
                 type Output = crate::com::atproto::server::create_app_password::AppPassword;
                 #[inline]
@@ -5614,8 +5614,8 @@ pub mod com {
                 }
             }
             pub struct CreateInviteCode;
-            impl atmo::xrpc::Request for CreateInviteCode {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateInviteCode {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_invite_code::Input;
                 type Output = crate::com::atproto::server::create_invite_code::Output;
                 #[inline]
@@ -5632,8 +5632,8 @@ pub mod com {
                 }
             }
             pub struct CreateInviteCodes;
-            impl atmo::xrpc::Request for CreateInviteCodes {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateInviteCodes {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_invite_codes::Input;
                 type Output = crate::com::atproto::server::create_invite_codes::Output;
                 #[inline]
@@ -5650,8 +5650,8 @@ pub mod com {
                 }
             }
             pub struct CreateSession;
-            impl atmo::xrpc::Request for CreateSession {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateSession {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_session::Input;
                 type Output = crate::com::atproto::server::create_session::Output;
                 #[inline]
@@ -5668,10 +5668,10 @@ pub mod com {
                 }
             }
             pub struct DeactivateAccount;
-            impl atmo::xrpc::Request for DeactivateAccount {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeactivateAccount {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::deactivate_account::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5686,10 +5686,10 @@ pub mod com {
                 }
             }
             pub struct DeleteAccount;
-            impl atmo::xrpc::Request for DeleteAccount {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteAccount {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::delete_account::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5704,10 +5704,10 @@ pub mod com {
                 }
             }
             pub struct DeleteSession;
-            impl atmo::xrpc::Request for DeleteSession {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for DeleteSession {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5722,9 +5722,9 @@ pub mod com {
                 }
             }
             pub struct DescribeServer;
-            impl atmo::xrpc::Request for DescribeServer {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for DescribeServer {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::describe_server::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5740,9 +5740,9 @@ pub mod com {
                 }
             }
             pub struct GetAccountInviteCodes;
-            impl atmo::xrpc::Request for GetAccountInviteCodes {
+            impl atmo_core::xrpc::Request for GetAccountInviteCodes {
                 type Params = crate::com::atproto::server::get_account_invite_codes::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::get_account_invite_codes::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5758,9 +5758,9 @@ pub mod com {
                 }
             }
             pub struct GetServiceAuth;
-            impl atmo::xrpc::Request for GetServiceAuth {
+            impl atmo_core::xrpc::Request for GetServiceAuth {
                 type Params = crate::com::atproto::server::get_service_auth::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::get_service_auth::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5776,9 +5776,9 @@ pub mod com {
                 }
             }
             pub struct GetSession;
-            impl atmo::xrpc::Request for GetSession {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for GetSession {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::get_session::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5794,9 +5794,9 @@ pub mod com {
                 }
             }
             pub struct ListAppPasswords;
-            impl atmo::xrpc::Request for ListAppPasswords {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for ListAppPasswords {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::list_app_passwords::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5812,9 +5812,9 @@ pub mod com {
                 }
             }
             pub struct RefreshSession;
-            impl atmo::xrpc::Request for RefreshSession {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for RefreshSession {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::refresh_session::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5830,10 +5830,10 @@ pub mod com {
                 }
             }
             pub struct RequestAccountDelete;
-            impl atmo::xrpc::Request for RequestAccountDelete {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for RequestAccountDelete {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5848,10 +5848,10 @@ pub mod com {
                 }
             }
             pub struct RequestEmailConfirmation;
-            impl atmo::xrpc::Request for RequestEmailConfirmation {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+            impl atmo_core::xrpc::Request for RequestEmailConfirmation {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5866,9 +5866,9 @@ pub mod com {
                 }
             }
             pub struct RequestEmailUpdate;
-            impl atmo::xrpc::Request for RequestEmailUpdate {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for RequestEmailUpdate {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::request_email_update::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -5884,10 +5884,10 @@ pub mod com {
                 }
             }
             pub struct RequestPasswordReset;
-            impl atmo::xrpc::Request for RequestPasswordReset {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for RequestPasswordReset {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::request_password_reset::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5902,8 +5902,8 @@ pub mod com {
                 }
             }
             pub struct ReserveSigningKey;
-            impl atmo::xrpc::Request for ReserveSigningKey {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for ReserveSigningKey {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::reserve_signing_key::Input;
                 type Output = crate::com::atproto::server::reserve_signing_key::Output;
                 #[inline]
@@ -5920,10 +5920,10 @@ pub mod com {
                 }
             }
             pub struct ResetPassword;
-            impl atmo::xrpc::Request for ResetPassword {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for ResetPassword {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::reset_password::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5938,10 +5938,10 @@ pub mod com {
                 }
             }
             pub struct RevokeAppPassword;
-            impl atmo::xrpc::Request for RevokeAppPassword {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for RevokeAppPassword {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::revoke_app_password::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5956,10 +5956,10 @@ pub mod com {
                 }
             }
             pub struct UpdateEmail;
-            impl atmo::xrpc::Request for UpdateEmail {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateEmail {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::update_email::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5982,7 +5982,7 @@ pub mod com {
                     pub indexed_records: i64,
                     pub private_state_values: i64,
                     pub repo_blocks: i64,
-                    pub repo_commit: atmo::CidString,
+                    pub repo_commit: atmo_core::CidString,
                     pub repo_rev: std::string::String,
                     pub valid_did: bool,
                 }
@@ -5999,11 +5999,11 @@ pub mod com {
                 pub struct Input {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did: std::option::Option<atmo::Did>,
+                    pub did: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_code: std::option::Option<std::string::String>,
@@ -6012,7 +6012,7 @@ pub mod com {
                     pub password: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub plc_op: std::option::Option<atmo::Unknown>,
+                    pub plc_op: std::option::Option<atmo_core::Unknown>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub recovery_key: std::option::Option<std::string::String>,
@@ -6026,18 +6026,18 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub access_jwt: std::string::String,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did_doc: std::option::Option<atmo::Unknown>,
-                    pub handle: atmo::Handle,
+                    pub did_doc: std::option::Option<atmo_core::Unknown>,
+                    pub handle: atmo_core::Handle,
                     pub refresh_jwt: std::string::String,
                 }
             }
             pub mod create_app_password {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct AppPassword {
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     pub name: std::string::String,
                     pub password: std::string::String,
                     #[serde(default)]
@@ -6058,7 +6058,7 @@ pub mod com {
                 pub struct Input {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub for_account: std::option::Option<atmo::Did>,
+                    pub for_account: std::option::Option<atmo_core::Did>,
                     pub use_count: i64,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
@@ -6102,10 +6102,10 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did_doc: std::option::Option<atmo::Unknown>,
+                    pub did_doc: std::option::Option<atmo_core::Unknown>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
@@ -6115,7 +6115,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_confirmed: std::option::Option<bool>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     pub refresh_jwt: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6139,7 +6139,7 @@ pub mod com {
                 pub struct Input {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub delete_after: std::option::Option<atmo::DateTimeString>,
+                    pub delete_after: std::option::Option<atmo_core::DateTimeString>,
                 }
             }
             pub mod defs {
@@ -6147,7 +6147,7 @@ pub mod com {
                 pub struct InviteCode {
                     pub available: i64,
                     pub code: std::string::String,
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     pub created_by: std::string::String,
                     pub disabled: bool,
                     pub for_account: std::string::String,
@@ -6155,14 +6155,14 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct InviteCodeUse {
-                    pub used_at: atmo::DateTimeString,
-                    pub used_by: atmo::Did,
+                    pub used_at: atmo_core::DateTimeString,
+                    pub used_by: atmo_core::Did,
                 }
             }
             pub mod delete_account {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub password: std::string::String,
                     pub token: std::string::String,
                 }
@@ -6190,7 +6190,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub contact:
                         std::option::Option<crate::com::atproto::server::describe_server::Contact>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[doc = "If true, an invite code must be supplied to create an account on this instance."]
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6228,13 +6228,13 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub aud: atmo::Did,
+                    pub aud: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub exp: std::option::Option<i64>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub lxm: std::option::Option<atmo::Nsid>,
+                    pub lxm: std::option::Option<atmo_core::Nsid>,
                 }
             }
             pub mod get_session {
@@ -6243,10 +6243,10 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did_doc: std::option::Option<atmo::Unknown>,
+                    pub did_doc: std::option::Option<atmo_core::Unknown>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
@@ -6256,7 +6256,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_confirmed: std::option::Option<bool>,
-                    pub handle: atmo::Handle,
+                    pub handle: atmo_core::Handle,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
@@ -6277,7 +6277,7 @@ pub mod com {
             pub mod list_app_passwords {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct AppPassword {
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     pub name: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6296,11 +6296,11 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did_doc: std::option::Option<atmo::Unknown>,
-                    pub handle: atmo::Handle,
+                    pub did_doc: std::option::Option<atmo_core::Unknown>,
+                    pub handle: atmo_core::Handle,
                     pub refresh_jwt: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6336,7 +6336,7 @@ pub mod com {
                 pub struct Input {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub did: std::option::Option<atmo::Did>,
+                    pub did: std::option::Option<atmo_core::Did>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -6371,10 +6371,10 @@ pub mod com {
         }
         pub mod sync {
             pub struct GetBlob;
-            impl atmo::xrpc::Request for GetBlob {
+            impl atmo_core::xrpc::Request for GetBlob {
                 type Params = crate::com::atproto::sync::get_blob::Params;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6389,10 +6389,10 @@ pub mod com {
                 }
             }
             pub struct GetBlocks;
-            impl atmo::xrpc::Request for GetBlocks {
+            impl atmo_core::xrpc::Request for GetBlocks {
                 type Params = crate::com::atproto::sync::get_blocks::Params;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6407,10 +6407,10 @@ pub mod com {
                 }
             }
             pub struct GetCheckout;
-            impl atmo::xrpc::Request for GetCheckout {
+            impl atmo_core::xrpc::Request for GetCheckout {
                 type Params = crate::com::atproto::sync::get_checkout::Params;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6425,9 +6425,9 @@ pub mod com {
                 }
             }
             pub struct GetHead;
-            impl atmo::xrpc::Request for GetHead {
+            impl atmo_core::xrpc::Request for GetHead {
                 type Params = crate::com::atproto::sync::get_head::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::get_head::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6443,9 +6443,9 @@ pub mod com {
                 }
             }
             pub struct GetLatestCommit;
-            impl atmo::xrpc::Request for GetLatestCommit {
+            impl atmo_core::xrpc::Request for GetLatestCommit {
                 type Params = crate::com::atproto::sync::get_latest_commit::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::get_latest_commit::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6461,10 +6461,10 @@ pub mod com {
                 }
             }
             pub struct GetRecord;
-            impl atmo::xrpc::Request for GetRecord {
+            impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::com::atproto::sync::get_record::Params;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6479,10 +6479,10 @@ pub mod com {
                 }
             }
             pub struct GetRepo;
-            impl atmo::xrpc::Request for GetRepo {
+            impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::com::atproto::sync::get_repo::Params;
-                type Input = atmo::xrpc::NoInput;
-                type Output = atmo::xrpc::NoOutput;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6497,9 +6497,9 @@ pub mod com {
                 }
             }
             pub struct GetRepoStatus;
-            impl atmo::xrpc::Request for GetRepoStatus {
+            impl atmo_core::xrpc::Request for GetRepoStatus {
                 type Params = crate::com::atproto::sync::get_repo_status::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::get_repo_status::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6515,9 +6515,9 @@ pub mod com {
                 }
             }
             pub struct ListBlobs;
-            impl atmo::xrpc::Request for ListBlobs {
+            impl atmo_core::xrpc::Request for ListBlobs {
                 type Params = crate::com::atproto::sync::list_blobs::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::list_blobs::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6533,9 +6533,9 @@ pub mod com {
                 }
             }
             pub struct ListRepos;
-            impl atmo::xrpc::Request for ListRepos {
+            impl atmo_core::xrpc::Request for ListRepos {
                 type Params = crate::com::atproto::sync::list_repos::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::list_repos::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6551,10 +6551,10 @@ pub mod com {
                 }
             }
             pub struct NotifyOfUpdate;
-            impl atmo::xrpc::Request for NotifyOfUpdate {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for NotifyOfUpdate {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::sync::notify_of_update::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6569,10 +6569,10 @@ pub mod com {
                 }
             }
             pub struct RequestCrawl;
-            impl atmo::xrpc::Request for RequestCrawl {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for RequestCrawl {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::sync::request_crawl::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6589,59 +6589,59 @@ pub mod com {
             pub mod get_blob {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub cid: atmo::CidString,
-                    pub did: atmo::Did,
+                    pub cid: atmo_core::CidString,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_blocks {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub cids: std::vec::Vec<std::string::String>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_checkout {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_head {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub root: atmo::CidString,
+                    pub root: atmo_core::CidString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_latest_commit {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    pub cid: atmo::CidString,
+                    pub cid: atmo_core::CidString,
                     pub rev: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_record {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub collection: atmo::Nsid,
+                    pub collection: atmo_core::Nsid,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub commit: std::option::Option<atmo::CidString>,
-                    pub did: atmo::Did,
+                    pub commit: std::option::Option<atmo_core::CidString>,
+                    pub did: atmo_core::Did,
                     pub rkey: std::string::String,
                 }
             }
             pub mod get_repo {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub since: std::option::Option<std::string::String>,
@@ -6651,7 +6651,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub active: bool,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rev: std::option::Option<std::string::String>,
@@ -6662,7 +6662,7 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
@@ -6689,7 +6689,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -6720,8 +6720,8 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
-                    pub did: atmo::Did,
-                    pub head: atmo::CidString,
+                    pub did: atmo_core::Did,
+                    pub head: atmo_core::CidString,
                     pub rev: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6756,13 +6756,13 @@ pub mod com {
                 pub struct Account {
                     #[doc = "Indicates that the account has a repository which can be fetched from the host that emitted this event."]
                     pub active: bool,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub seq: i64,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
                         std::option::Option<crate::com::atproto::sync::subscribe_repos::Status>,
-                    pub time: atmo::DateTimeString,
+                    pub time: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Action {
@@ -6777,40 +6777,40 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Commit {
-                    pub blobs: std::vec::Vec<atmo::CidString>,
+                    pub blobs: std::vec::Vec<atmo_core::CidString>,
                     #[doc = "CAR file containing relevant blocks, as a diff since the previous repo state."]
-                    #[serde(with = "atmo::bytes::serde")]
+                    #[serde(with = "atmo_core::bytes::serde")]
                     pub blocks: bytes::Bytes,
-                    pub commit: atmo::CidLink,
+                    pub commit: atmo_core::CidLink,
                     pub ops: std::vec::Vec<crate::com::atproto::sync::subscribe_repos::RepoOp>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub prev: std::option::Option<atmo::Nullable<atmo::CidLink>>,
+                    pub prev: std::option::Option<atmo_core::Nullable<atmo_core::CidLink>>,
                     #[doc = "DEPRECATED -- unused"]
                     pub rebase: bool,
-                    pub repo: atmo::Did,
+                    pub repo: atmo_core::Did,
                     pub rev: std::string::String,
                     pub seq: i64,
-                    pub since: atmo::Nullable<std::string::String>,
-                    pub time: atmo::DateTimeString,
+                    pub since: atmo_core::Nullable<std::string::String>,
+                    pub time: atmo_core::DateTimeString,
                     #[doc = "Indicates that this commit contained too many ops, or data size was too large. Consumers will need to make a separate request to get missing data."]
                     pub too_big: bool,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Handle {
-                    pub did: atmo::Did,
-                    pub handle: atmo::Handle,
+                    pub did: atmo_core::Did,
+                    pub handle: atmo_core::Handle,
                     pub seq: i64,
-                    pub time: atmo::DateTimeString,
+                    pub time: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Identity {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub handle: std::option::Option<atmo::Handle>,
+                    pub handle: std::option::Option<atmo_core::Handle>,
                     pub seq: i64,
-                    pub time: atmo::DateTimeString,
+                    pub time: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Info {
@@ -6821,10 +6821,10 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Migrate {
-                    pub did: atmo::Did,
-                    pub migrate_to: atmo::Nullable<std::string::String>,
+                    pub did: atmo_core::Did,
+                    pub migrate_to: atmo_core::Nullable<std::string::String>,
                     pub seq: i64,
-                    pub time: atmo::DateTimeString,
+                    pub time: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Name {
@@ -6836,7 +6836,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoOp {
                     pub action: crate::com::atproto::sync::subscribe_repos::Action,
-                    pub cid: atmo::Nullable<atmo::CidLink>,
+                    pub cid: atmo_core::Nullable<atmo_core::CidLink>,
                     pub path: std::string::String,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
@@ -6854,17 +6854,17 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Tombstone {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub seq: i64,
-                    pub time: atmo::DateTimeString,
+                    pub time: atmo_core::DateTimeString,
                 }
             }
         }
         pub mod temp {
             pub struct CheckSignupQueue;
-            impl atmo::xrpc::Request for CheckSignupQueue {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for CheckSignupQueue {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::temp::check_signup_queue::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6880,9 +6880,9 @@ pub mod com {
                 }
             }
             pub struct FetchLabels;
-            impl atmo::xrpc::Request for FetchLabels {
+            impl atmo_core::xrpc::Request for FetchLabels {
                 type Params = crate::com::atproto::temp::fetch_labels::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::temp::fetch_labels::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -6898,10 +6898,10 @@ pub mod com {
                 }
             }
             pub struct RequestPhoneVerification;
-            impl atmo::xrpc::Request for RequestPhoneVerification {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for RequestPhoneVerification {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::temp::request_phone_verification::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6955,8 +6955,8 @@ pub mod tools {
     pub mod ozone {
         pub mod communication {
             pub struct CreateTemplate;
-            impl atmo::xrpc::Request for CreateTemplate {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for CreateTemplate {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::communication::create_template::Input;
                 type Output = crate::tools::ozone::communication::defs::TemplateView;
                 #[inline]
@@ -6973,10 +6973,10 @@ pub mod tools {
                 }
             }
             pub struct DeleteTemplate;
-            impl atmo::xrpc::Request for DeleteTemplate {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteTemplate {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::communication::delete_template::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6991,9 +6991,9 @@ pub mod tools {
                 }
             }
             pub struct ListTemplates;
-            impl atmo::xrpc::Request for ListTemplates {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for ListTemplates {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::communication::list_templates::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -7009,8 +7009,8 @@ pub mod tools {
                 }
             }
             pub struct UpdateTemplate;
-            impl atmo::xrpc::Request for UpdateTemplate {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateTemplate {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::communication::update_template::Input;
                 type Output = crate::tools::ozone::communication::defs::TemplateView;
                 #[inline]
@@ -7032,7 +7032,7 @@ pub mod tools {
                     pub content_markdown: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_by: std::option::Option<atmo::Did>,
+                    pub created_by: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
@@ -7044,18 +7044,18 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct TemplateView {
                     pub content_markdown: std::string::String,
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     pub disabled: bool,
                     pub id: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
-                    pub last_updated_by: atmo::Did,
+                    pub last_updated_by: atmo_core::Did,
                     pub name: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
-                    pub updated_at: atmo::DateTimeString,
+                    pub updated_at: atmo_core::DateTimeString,
                 }
             }
             pub mod delete_template {
@@ -7092,14 +7092,14 @@ pub mod tools {
                     pub subject: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub updated_by: std::option::Option<atmo::Did>,
+                    pub updated_by: std::option::Option<atmo_core::Did>,
                 }
             }
         }
         pub mod moderation {
             pub struct EmitEvent;
-            impl atmo::xrpc::Request for EmitEvent {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for EmitEvent {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::moderation::emit_event::Input;
                 type Output = crate::tools::ozone::moderation::defs::ModEventView;
                 #[inline]
@@ -7116,9 +7116,9 @@ pub mod tools {
                 }
             }
             pub struct GetEvent;
-            impl atmo::xrpc::Request for GetEvent {
+            impl atmo_core::xrpc::Request for GetEvent {
                 type Params = crate::tools::ozone::moderation::get_event::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::defs::ModEventViewDetail;
                 #[inline]
                 fn method() -> http::Method {
@@ -7134,9 +7134,9 @@ pub mod tools {
                 }
             }
             pub struct GetRecord;
-            impl atmo::xrpc::Request for GetRecord {
+            impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::tools::ozone::moderation::get_record::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::defs::RecordViewDetail;
                 #[inline]
                 fn method() -> http::Method {
@@ -7152,9 +7152,9 @@ pub mod tools {
                 }
             }
             pub struct GetRecords;
-            impl atmo::xrpc::Request for GetRecords {
+            impl atmo_core::xrpc::Request for GetRecords {
                 type Params = crate::tools::ozone::moderation::get_records::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::get_records::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -7170,9 +7170,9 @@ pub mod tools {
                 }
             }
             pub struct GetRepo;
-            impl atmo::xrpc::Request for GetRepo {
+            impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::tools::ozone::moderation::get_repo::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::defs::RepoViewDetail;
                 #[inline]
                 fn method() -> http::Method {
@@ -7188,9 +7188,9 @@ pub mod tools {
                 }
             }
             pub struct GetRepos;
-            impl atmo::xrpc::Request for GetRepos {
+            impl atmo_core::xrpc::Request for GetRepos {
                 type Params = crate::tools::ozone::moderation::get_repos::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::get_repos::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -7206,9 +7206,9 @@ pub mod tools {
                 }
             }
             pub struct QueryEvents;
-            impl atmo::xrpc::Request for QueryEvents {
+            impl atmo_core::xrpc::Request for QueryEvents {
                 type Params = crate::tools::ozone::moderation::query_events::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::query_events::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -7224,9 +7224,9 @@ pub mod tools {
                 }
             }
             pub struct QueryStatuses;
-            impl atmo::xrpc::Request for QueryStatuses {
+            impl atmo_core::xrpc::Request for QueryStatuses {
                 type Params = crate::tools::ozone::moderation::query_statuses::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::query_statuses::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -7242,9 +7242,9 @@ pub mod tools {
                 }
             }
             pub struct SearchRepos;
-            impl atmo::xrpc::Request for SearchRepos {
+            impl atmo_core::xrpc::Request for SearchRepos {
                 type Params = crate::tools::ozone::moderation::search_repos::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::search_repos::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -7262,8 +7262,8 @@ pub mod tools {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct BlobView {
-                    pub cid: atmo::CidString,
-                    pub created_at: atmo::DateTimeString,
+                    pub cid: atmo_core::CidString,
+                    pub created_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub details:
@@ -7280,7 +7280,7 @@ pub mod tools {
                     ImageDetails(crate::tools::ozone::moderation::defs::ImageDetails),
                     VideoDetails(crate::tools::ozone::moderation::defs::VideoDetails),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Event {
@@ -7308,7 +7308,7 @@ pub mod tools {
                         crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
                     ),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ImageDetails {
@@ -7431,8 +7431,8 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventView {
-                    pub created_at: atmo::DateTimeString,
-                    pub created_by: atmo::Did,
+                    pub created_at: atmo_core::DateTimeString,
+                    pub created_by: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub creator_handle: std::option::Option<std::string::String>,
@@ -7446,8 +7446,8 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventViewDetail {
-                    pub created_at: atmo::DateTimeString,
-                    pub created_by: atmo::Did,
+                    pub created_at: atmo_core::DateTimeString,
+                    pub created_by: atmo_core::Did,
                     pub event: crate::tools::ozone::moderation::defs::ModEventViewDetailEvent,
                     pub id: i64,
                     pub subject: crate::tools::ozone::moderation::defs::ModEventViewDetailSubject,
@@ -7480,7 +7480,7 @@ pub mod tools {
                         crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
                     ),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum ModEventViewDetailSubject {
@@ -7489,7 +7489,7 @@ pub mod tools {
                     RepoView(crate::tools::ozone::moderation::defs::RepoView),
                     RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Moderation {
@@ -7510,42 +7510,42 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordView {
                     pub blob_cids: std::vec::Vec<std::string::String>,
-                    pub cid: atmo::CidString,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub cid: atmo_core::CidString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     pub moderation: crate::tools::ozone::moderation::defs::Moderation,
                     pub repo: crate::tools::ozone::moderation::defs::RepoView,
-                    pub uri: atmo::AtUri,
-                    pub value: atmo::Unknown,
+                    pub uri: atmo_core::AtUri,
+                    pub value: atmo_core::Unknown,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordViewDetail {
                     pub blobs: std::vec::Vec<crate::tools::ozone::moderation::defs::BlobView>,
-                    pub cid: atmo::CidString,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub cid: atmo_core::CidString,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
                     pub moderation: crate::tools::ozone::moderation::defs::ModerationDetail,
                     pub repo: crate::tools::ozone::moderation::defs::RepoView,
-                    pub uri: atmo::AtUri,
-                    pub value: atmo::Unknown,
+                    pub uri: atmo_core::AtUri,
+                    pub value: atmo_core::Unknown,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordViewNotFound {
-                    pub uri: atmo::AtUri,
+                    pub uri: atmo_core::AtUri,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoView {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo::DateTimeString>,
-                    pub did: atmo::Did,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
-                    pub handle: atmo::Handle,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub handle: atmo_core::Handle,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_note: std::option::Option<std::string::String>,
@@ -7557,22 +7557,22 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invites_disabled: std::option::Option<bool>,
                     pub moderation: crate::tools::ozone::moderation::defs::Moderation,
-                    pub related_records: std::vec::Vec<atmo::Unknown>,
+                    pub related_records: std::vec::Vec<atmo_core::Unknown>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewDetail {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo::DateTimeString>,
-                    pub did: atmo::Did,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub email_confirmed_at: std::option::Option<atmo::DateTimeString>,
-                    pub handle: atmo::Handle,
-                    pub indexed_at: atmo::DateTimeString,
+                    pub email_confirmed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub handle: atmo_core::Handle,
+                    pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_note: std::option::Option<std::string::String>,
@@ -7593,11 +7593,11 @@ pub mod tools {
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
                     pub moderation: crate::tools::ozone::moderation::defs::ModerationDetail,
-                    pub related_records: std::vec::Vec<atmo::Unknown>,
+                    pub related_records: std::vec::Vec<atmo_core::Unknown>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewNotFound {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum Subject {
@@ -7605,7 +7605,7 @@ pub mod tools {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum SubjectReviewState {
@@ -7633,26 +7633,26 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     pub id: i64,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_appealed_at: std::option::Option<atmo::DateTimeString>,
+                    pub last_appealed_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_reported_at: std::option::Option<atmo::DateTimeString>,
+                    pub last_reported_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_reviewed_at: std::option::Option<atmo::DateTimeString>,
+                    pub last_reviewed_at: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_reviewed_by: std::option::Option<atmo::Did>,
+                    pub last_reviewed_by: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub mute_reporting_until: std::option::Option<atmo::DateTimeString>,
+                    pub mute_reporting_until: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub mute_until: std::option::Option<atmo::DateTimeString>,
+                    pub mute_until: std::option::Option<atmo_core::DateTimeString>,
                     pub review_state: crate::tools::ozone::moderation::defs::SubjectReviewState,
                     pub subject: crate::tools::ozone::moderation::defs::SubjectStatusViewSubject,
                     #[serde(default)]
@@ -7663,21 +7663,21 @@ pub mod tools {
                     pub subject_repo_handle: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub suspend_until: std::option::Option<atmo::DateTimeString>,
+                    pub suspend_until: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tags: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takendown: std::option::Option<bool>,
-                    pub updated_at: atmo::DateTimeString,
+                    pub updated_at: atmo_core::DateTimeString,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub enum SubjectStatusViewSubject {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct VideoDetails {
@@ -7712,11 +7712,11 @@ pub mod tools {
                         crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
                     ),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub created_by: atmo::Did,
+                    pub created_by: atmo_core::Did,
                     pub event: crate::tools::ozone::moderation::emit_event::Event,
                     pub subject: crate::tools::ozone::moderation::emit_event::Subject,
                     #[serde(default)]
@@ -7728,7 +7728,7 @@ pub mod tools {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod get_event {
@@ -7742,8 +7742,8 @@ pub mod tools {
                 pub struct Params {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub cid: std::option::Option<atmo::CidString>,
-                    pub uri: atmo::AtUri,
+                    pub cid: std::option::Option<atmo_core::CidString>,
+                    pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_records {
@@ -7761,13 +7761,13 @@ pub mod tools {
                     RecordViewDetail(crate::tools::ozone::moderation::defs::RecordViewDetail),
                     RecordViewNotFound(crate::tools::ozone::moderation::defs::RecordViewNotFound),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod get_repo {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod get_repos {
@@ -7784,7 +7784,7 @@ pub mod tools {
                     RepoViewDetail(crate::tools::ozone::moderation::defs::RepoViewDetail),
                     RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
                     #[serde(untagged)]
-                    Other(atmo::Unknown),
+                    Other(atmo_core::Unknown),
                 }
             }
             pub mod query_events {
@@ -7808,13 +7808,13 @@ pub mod tools {
                     pub comment: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_after: std::option::Option<atmo::DateTimeString>,
+                    pub created_after: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_before: std::option::Option<atmo::DateTimeString>,
+                    pub created_before: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_by: std::option::Option<atmo::Did>,
+                    pub created_by: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
@@ -7895,7 +7895,7 @@ pub mod tools {
                     pub include_muted: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_reviewed_by: std::option::Option<atmo::Did>,
+                    pub last_reviewed_by: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -7905,19 +7905,19 @@ pub mod tools {
                     pub only_muted: std::option::Option<bool>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reported_after: std::option::Option<atmo::DateTimeString>,
+                    pub reported_after: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reported_before: std::option::Option<atmo::DateTimeString>,
+                    pub reported_before: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub review_state: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reviewed_after: std::option::Option<atmo::DateTimeString>,
+                    pub reviewed_after: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reviewed_before: std::option::Option<atmo::DateTimeString>,
+                    pub reviewed_before: std::option::Option<atmo_core::DateTimeString>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_direction: std::option::Option<
@@ -7981,9 +7981,9 @@ pub mod tools {
         }
         pub mod server {
             pub struct GetConfig;
-            impl atmo::xrpc::Request for GetConfig {
-                type Params = atmo::xrpc::NoParams;
-                type Input = atmo::xrpc::NoInput;
+            impl atmo_core::xrpc::Request for GetConfig {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::server::get_config::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8052,10 +8052,10 @@ pub mod tools {
         }
         pub mod set {
             pub struct AddValues;
-            impl atmo::xrpc::Request for AddValues {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for AddValues {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::add_values::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8070,8 +8070,8 @@ pub mod tools {
                 }
             }
             pub struct DeleteSet;
-            impl atmo::xrpc::Request for DeleteSet {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteSet {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::delete_set::Input;
                 type Output = crate::tools::ozone::set::delete_set::Output;
                 #[inline]
@@ -8088,10 +8088,10 @@ pub mod tools {
                 }
             }
             pub struct DeleteValues;
-            impl atmo::xrpc::Request for DeleteValues {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteValues {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::delete_values::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8106,9 +8106,9 @@ pub mod tools {
                 }
             }
             pub struct GetValues;
-            impl atmo::xrpc::Request for GetValues {
+            impl atmo_core::xrpc::Request for GetValues {
                 type Params = crate::tools::ozone::set::get_values::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::set::get_values::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8124,9 +8124,9 @@ pub mod tools {
                 }
             }
             pub struct QuerySets;
-            impl atmo::xrpc::Request for QuerySets {
+            impl atmo_core::xrpc::Request for QuerySets {
                 type Params = crate::tools::ozone::set::query_sets::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::set::query_sets::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8142,8 +8142,8 @@ pub mod tools {
                 }
             }
             pub struct UpsertSet;
-            impl atmo::xrpc::Request for UpsertSet {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpsertSet {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::defs::Set;
                 type Output = crate::tools::ozone::set::defs::SetView;
                 #[inline]
@@ -8176,13 +8176,13 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SetView {
-                    pub created_at: atmo::DateTimeString,
+                    pub created_at: atmo_core::DateTimeString,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
                     pub name: std::string::String,
                     pub set_size: i64,
-                    pub updated_at: atmo::DateTimeString,
+                    pub updated_at: atmo_core::DateTimeString,
                 }
             }
             pub mod delete_set {
@@ -8267,9 +8267,9 @@ pub mod tools {
         }
         pub mod signature {
             pub struct FindCorrelation;
-            impl atmo::xrpc::Request for FindCorrelation {
+            impl atmo_core::xrpc::Request for FindCorrelation {
                 type Params = crate::tools::ozone::signature::find_correlation::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::signature::find_correlation::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8285,9 +8285,9 @@ pub mod tools {
                 }
             }
             pub struct FindRelatedAccounts;
-            impl atmo::xrpc::Request for FindRelatedAccounts {
+            impl atmo_core::xrpc::Request for FindRelatedAccounts {
                 type Params = crate::tools::ozone::signature::find_related_accounts::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::signature::find_related_accounts::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8303,9 +8303,9 @@ pub mod tools {
                 }
             }
             pub struct SearchAccounts;
-            impl atmo::xrpc::Request for SearchAccounts {
+            impl atmo_core::xrpc::Request for SearchAccounts {
                 type Params = crate::tools::ozone::signature::search_accounts::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::signature::search_accounts::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8352,7 +8352,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -8389,8 +8389,8 @@ pub mod tools {
         }
         pub mod team {
             pub struct AddMember;
-            impl atmo::xrpc::Request for AddMember {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for AddMember {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::team::add_member::Input;
                 type Output = crate::tools::ozone::team::defs::Member;
                 #[inline]
@@ -8407,10 +8407,10 @@ pub mod tools {
                 }
             }
             pub struct DeleteMember;
-            impl atmo::xrpc::Request for DeleteMember {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for DeleteMember {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::team::delete_member::Input;
-                type Output = atmo::xrpc::NoOutput;
+                type Output = atmo_core::xrpc::NoOutput;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8425,9 +8425,9 @@ pub mod tools {
                 }
             }
             pub struct ListMembers;
-            impl atmo::xrpc::Request for ListMembers {
+            impl atmo_core::xrpc::Request for ListMembers {
                 type Params = crate::tools::ozone::team::list_members::Params;
-                type Input = atmo::xrpc::NoInput;
+                type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::team::list_members::Output;
                 #[inline]
                 fn method() -> http::Method {
@@ -8443,8 +8443,8 @@ pub mod tools {
                 }
             }
             pub struct UpdateMember;
-            impl atmo::xrpc::Request for UpdateMember {
-                type Params = atmo::xrpc::NoParams;
+            impl atmo_core::xrpc::Request for UpdateMember {
+                type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::team::update_member::Input;
                 type Output = crate::tools::ozone::team::defs::Member;
                 #[inline]
@@ -8463,7 +8463,7 @@ pub mod tools {
             pub mod add_member {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     pub role: crate::tools::ozone::team::add_member::Role,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
@@ -8486,8 +8486,8 @@ pub mod tools {
                 pub struct Member {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo::DateTimeString>,
-                    pub did: atmo::Did,
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub disabled: std::option::Option<bool>,
@@ -8501,7 +8501,7 @@ pub mod tools {
                     pub role: crate::tools::ozone::team::defs::Role,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub updated_at: std::option::Option<atmo::DateTimeString>,
+                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
                 }
                 #[derive(serde :: Serialize, serde :: Deserialize)]
                 pub enum Role {
@@ -8521,7 +8521,7 @@ pub mod tools {
             pub mod delete_member {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                 }
             }
             pub mod list_members {
@@ -8545,7 +8545,7 @@ pub mod tools {
             pub mod update_member {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
-                    pub did: atmo::Did,
+                    pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub disabled: std::option::Option<bool>,

@@ -21,24 +21,14 @@ checksum = "512761e0bb2578dd7380c6baaa0f4ce03e84f95e960231d1dec8bf4d7d6e2627"
 name = "atmo"
 version = "0.1.0"
 dependencies = [
- "bytes",
- "cid",
- "data-encoding",
- "http",
- "jiff",
  "reqwest",
- "serde",
- "serde_ipld_dagcbor",
- "serde_json",
- "serde_path_to_error",
- "url",
 ]
 
 [[package]]
 name = "atmo_api"
 version = "0.1.0"
 dependencies = [
- "atmo",
+ "atmo_core",
  "bytes",
  "cid",
  "http",
@@ -52,7 +42,7 @@ dependencies = [
 name = "atmo_codegen"
 version = "0.1.0"
 dependencies = [
- "atmo",
+ "atmo_core",
  "atmo_lexicon",
  "heck",
  "proc-macro2",
@@ -61,6 +51,22 @@ dependencies = [
  "serde_path_to_error",
  "syn 2.0.82",
  "walkdir",
+]
+
+[[package]]
+name = "atmo_core"
+version = "0.1.0"
+dependencies = [
+ "bytes",
+ "cid",
+ "data-encoding",
+ "http",
+ "jiff",
+ "serde",
+ "serde_ipld_dagcbor",
+ "serde_json",
+ "serde_path_to_error",
+ "url",
 ]
 
 [[package]]

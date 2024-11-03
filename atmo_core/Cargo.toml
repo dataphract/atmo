@@ -1,14 +1,16 @@
 [package]
-name = "atmo_api"
+name = "atmo_core"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-atmo_core = { workspace = true }
 bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }
-http = { workspace = true }
+data-encoding = { workspace = true }
 jiff = { workspace = true }
-serde = { workspace = true, features = ["derive"] }
+http = { workspace = true }
+serde = { workspace = true }
 serde_json = { workspace = true }
+serde_path_to_error = "0.1.16"
+serde_ipld_dagcbor = { workspace = true }
 url = { workspace = true }

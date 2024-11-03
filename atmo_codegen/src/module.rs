@@ -3,7 +3,7 @@ use std::{
     fmt,
 };
 
-use atmo::nsid::Nsid;
+use atmo_core::nsid::Nsid;
 use heck::{ToPascalCase, ToSnakeCase};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
