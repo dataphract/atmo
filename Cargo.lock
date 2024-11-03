@@ -39,6 +39,7 @@ name = "atmo_api"
 version = "0.1.0"
 dependencies = [
  "atmo",
+ "bytes",
  "cid",
  "http",
  "jiff",
@@ -125,6 +126,9 @@ name = "bytes"
 version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ac0150caa2ae65ca5bd83f25c7de183dea78d4d366469f148435e2acfbad0da"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "cbor4ii"

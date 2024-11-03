@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 atmo = { workspace = true }
+bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }
 http = { workspace = true }
 jiff = { workspace = true }

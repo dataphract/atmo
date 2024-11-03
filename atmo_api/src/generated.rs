@@ -158,18 +158,22 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct BskyAppStatePref {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active_progress_guide:
                         std::option::Option<crate::app::bsky::actor::defs::BskyAppProgressGuide>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub nuxs:
                         std::option::Option<std::vec::Vec<crate::app::bsky::actor::defs::Nux>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub queued_nudges: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ContentLabelPref {
                     pub label: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labeler_did: std::option::Option<atmo::Did>,
                     pub visibility: crate::app::bsky::actor::defs::Visibility,
@@ -178,17 +182,22 @@ pub mod app {
                 pub struct FeedViewPref {
                     pub feed: std::string::String,
                     #[doc = "Hide quote posts in the feed."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_quote_posts: std::option::Option<bool>,
                     #[doc = "Hide replies in the feed."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_replies: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_replies_by_like_count: std::option::Option<i64>,
                     #[doc = "Hide replies in the feed if they are not by followed users."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_replies_by_unfollowed: std::option::Option<bool>,
                     #[doc = "Hide reposts in the feed."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_reposts: std::option::Option<bool>,
                 }
@@ -215,11 +224,14 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MutedWord {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub actor_target:
                         std::option::Option<crate::app::bsky::actor::defs::ActorTarget>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub expires_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub id: std::option::Option<std::string::String>,
                     pub targets: std::vec::Vec<crate::app::bsky::actor::defs::MutedWordTarget>,
@@ -241,14 +253,17 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Nux {
                     pub completed: bool,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub data: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub expires_at: std::option::Option<atmo::DateTimeString>,
                     pub id: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct PersonalDetailsPref {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub birth_date: std::option::Option<atmo::DateTimeString>,
                 }
@@ -271,15 +286,20 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileAssociated {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub chat:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileAssociatedChat>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feedgens: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labeler: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lists: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub starter_packs: std::option::Option<i64>,
                 }
@@ -289,79 +309,107 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub associated:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileAssociated>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
                     pub handle: atmo::Handle,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub indexed_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileViewBasic {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub associated:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileAssociated>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_at: std::option::Option<atmo::DateTimeString>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
                     pub handle: atmo::Handle,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileViewDetailed {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub associated:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileAssociated>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub banner: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub followers_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub follows_count: std::option::Option<i64>,
                     pub handle: atmo::Handle,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub indexed_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_via_starter_pack:
                         std::option::Option<crate::app::bsky::graph::defs::StarterPackViewBasic>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub pinned_post: std::option::Option<crate::com::atproto::repo::StrongRef>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub posts_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
@@ -376,6 +424,7 @@ pub mod app {
                 pub struct SavedFeedsPref {
                     pub pinned: std::vec::Vec<std::string::String>,
                     pub saved: std::vec::Vec<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub timeline_index: std::option::Option<i64>,
                 }
@@ -399,8 +448,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadViewPref {
                     #[doc = "Show followed users at the top of all replies."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub prioritize_followed_users: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort: std::option::Option<crate::app::bsky::actor::defs::Sort>,
                 }
@@ -417,22 +468,30 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerState {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blocked_by: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blocking: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blocking_by_list:
                         std::option::Option<crate::app::bsky::graph::defs::ListViewBasic>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub followed_by: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub following: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub known_followers:
                         std::option::Option<crate::app::bsky::actor::defs::KnownFollowers>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub muted: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub muted_by_list:
                         std::option::Option<crate::app::bsky::graph::defs::ListViewBasic>,
@@ -479,13 +538,16 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub actors: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -500,17 +562,22 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub actors: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub q: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub term: std::option::Option<std::string::String>,
                 }
@@ -522,10 +589,13 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub q: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub term: std::option::Option<std::string::String>,
                 }
@@ -551,10 +621,13 @@ pub mod app {
             }
             #[derive(serde :: Deserialize, serde :: Serialize)]
             pub struct Video {
+                #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub alt: std::option::Option<std::string::String>,
+                #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub aspect_ratio: std::option::Option<crate::app::bsky::embed::defs::AspectRatio>,
+                #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub captions:
                     std::option::Option<std::vec::Vec<crate::app::bsky::embed::video::Caption>>,
@@ -571,6 +644,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct External {
                     pub description: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub thumb: std::option::Option<atmo::Blob>,
                     pub title: std::string::String,
@@ -583,6 +657,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewExternal {
                     pub description: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub thumb: std::option::Option<url::Url>,
                     pub title: std::string::String,
@@ -593,6 +668,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Image {
                     pub alt: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub aspect_ratio:
                         std::option::Option<crate::app::bsky::embed::defs::AspectRatio>,
@@ -605,6 +681,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewImage {
                     pub alt: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub aspect_ratio:
                         std::option::Option<crate::app::bsky::embed::defs::AspectRatio>,
@@ -660,19 +737,25 @@ pub mod app {
                 pub struct ViewRecord {
                     pub author: crate::app::bsky::actor::defs::ProfileViewBasic,
                     pub cid: atmo::CidString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embeds:
                         std::option::Option<std::vec::Vec<crate::app::bsky::embed::record::Embeds>>,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub quote_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reply_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub repost_count: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
@@ -710,13 +793,16 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub alt: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub aspect_ratio:
                         std::option::Option<crate::app::bsky::embed::defs::AspectRatio>,
                     pub cid: atmo::CidString,
                     pub playlist: url::Url,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub thumbnail: std::option::Option<url::Url>,
                 }
@@ -1051,6 +1137,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct BlockedAuthor {
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
@@ -1113,51 +1200,65 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedViewPost {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feed_context: std::option::Option<std::string::String>,
                     pub post: crate::app::bsky::feed::defs::PostView,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason: std::option::Option<crate::app::bsky::feed::defs::Reason>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reply: std::option::Option<crate::app::bsky::feed::defs::ReplyRef>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct GeneratorView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub accepts_interactions: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
                     pub cid: atmo::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description_facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
                     pub did: atmo::Did,
                     pub display_name: std::string::String,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
                         std::option::Option<crate::app::bsky::feed::defs::GeneratorViewerState>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct GeneratorViewerState {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like: std::option::Option<atmo::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Interaction {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub event: std::option::Option<crate::app::bsky::feed::defs::Event>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feed_context: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub item: std::option::Option<atmo::AtUri>,
                 }
@@ -1178,25 +1279,33 @@ pub mod app {
                 pub struct PostView {
                     pub author: crate::app::bsky::actor::defs::ProfileViewBasic,
                     pub cid: atmo::CidString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embed: std::option::Option<crate::app::bsky::feed::defs::Embed>,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub quote_count: std::option::Option<i64>,
                     pub record: atmo::Unknown,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reply_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub repost_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub threadgate:
                         std::option::Option<crate::app::bsky::feed::defs::ThreadgateView>,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::feed::defs::ViewerState>,
                 }
@@ -1224,6 +1333,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub grandparent_author:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileViewBasic>,
@@ -1240,9 +1350,11 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonFeedPost {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feed_context: std::option::Option<std::string::String>,
                     pub post: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason:
                         std::option::Option<crate::app::bsky::feed::defs::SkeletonFeedPostReason>,
@@ -1262,10 +1374,12 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadViewPost {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub parent:
                         std::option::Option<crate::app::bsky::feed::defs::ThreadViewPostParent>,
                     pub post: crate::app::bsky::feed::defs::PostView,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub replies:
                         std::option::Option<std::vec::Vec<crate::app::bsky::feed::defs::Replies>>,
@@ -1280,29 +1394,39 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadgateView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lists: std::option::Option<
                         std::vec::Vec<crate::app::bsky::graph::defs::ListViewBasic>,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub record: std::option::Option<atmo::Unknown>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub uri: std::option::Option<atmo::AtUri>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerState {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embedding_disabled: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub pinned: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reply_disabled: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub repost: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub thread_muted: std::option::Option<bool>,
                 }
@@ -1314,8 +1438,10 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Links {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privacy_policy: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub terms_of_service: std::option::Option<std::string::String>,
                 }
@@ -1323,6 +1449,7 @@ pub mod app {
                 pub struct Output {
                     pub did: atmo::Did,
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::describe_feed_generator::Feed>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub links:
                         std::option::Option<crate::app::bsky::feed::describe_feed_generator::Links>,
@@ -1331,6 +1458,7 @@ pub mod app {
             pub mod get_actor_feeds {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
@@ -1338,8 +1466,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1347,6 +1477,7 @@ pub mod app {
             pub mod get_actor_likes {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
@@ -1354,8 +1485,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1376,6 +1509,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
@@ -1383,13 +1517,17 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub filter:
                         std::option::Option<crate::app::bsky::feed::get_author_feed::Filter>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub include_pins: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1397,15 +1535,18 @@ pub mod app {
             pub mod get_feed {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1437,15 +1578,18 @@ pub mod app {
             pub mod get_feed_skeleton {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::SkeletonFeedPost>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1459,8 +1603,10 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub likes: std::vec::Vec<crate::app::bsky::feed::get_likes::Like>,
@@ -1468,10 +1614,13 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
@@ -1480,14 +1629,17 @@ pub mod app {
             pub mod get_list_feed {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub list: atmo::AtUri,
@@ -1497,14 +1649,17 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub thread: crate::app::bsky::feed::get_post_thread::Thread,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub threadgate:
                         std::option::Option<crate::app::bsky::feed::defs::ThreadgateView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub depth: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub parent_height: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
@@ -1531,8 +1686,10 @@ pub mod app {
             pub mod get_quotes {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub posts: std::vec::Vec<crate::app::bsky::feed::defs::PostView>,
@@ -1540,10 +1697,13 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
@@ -1552,8 +1712,10 @@ pub mod app {
             pub mod get_reposted_by {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub reposted_by: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -1561,10 +1723,13 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
@@ -1573,14 +1738,17 @@ pub mod app {
             pub mod get_suggested_feeds {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1588,16 +1756,20 @@ pub mod app {
             pub mod get_timeline {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub algorithm: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -1627,35 +1799,48 @@ pub mod app {
             pub mod search_posts {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hits_total: std::option::Option<i64>,
                     pub posts: std::vec::Vec<crate::app::bsky::feed::defs::PostView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub author: std::option::Option<atmo::AtIdentifier>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub domain: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub mentions: std::option::Option<atmo::AtIdentifier>,
                     pub q: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub since: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort: std::option::Option<crate::app::bsky::feed::search_posts::Sort>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tag: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub until: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub url: std::option::Option<url::Url>,
                 }
@@ -2071,49 +2256,62 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ListView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
                     pub cid: atmo::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description_facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub list_item_count: std::option::Option<i64>,
                     pub name: std::string::String,
                     pub purpose: crate::app::bsky::graph::defs::ListPurpose,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::graph::defs::ListViewerState>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ListViewBasic {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
                     pub cid: atmo::CidString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub indexed_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub list_item_count: std::option::Option<i64>,
                     pub name: std::string::String,
                     pub purpose: crate::app::bsky::graph::defs::ListPurpose,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::graph::defs::ListViewerState>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ListViewerState {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blocked: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub muted: std::option::Option<bool>,
                 }
@@ -2125,8 +2323,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Relationship {
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub followed_by: std::option::Option<atmo::AtUri>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub following: std::option::Option<atmo::AtUri>,
                 }
@@ -2134,20 +2334,26 @@ pub mod app {
                 pub struct StarterPackView {
                     pub cid: atmo::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileViewBasic,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub feeds: std::option::Option<
                         std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                     >,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_all_time_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_week_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub list: std::option::Option<crate::app::bsky::graph::defs::ListViewBasic>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub list_items_sample: std::option::Option<
                         std::vec::Vec<crate::app::bsky::graph::defs::ListItemView>,
@@ -2160,13 +2366,17 @@ pub mod app {
                     pub cid: atmo::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileViewBasic,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_all_time_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub joined_week_count: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub list_item_count: std::option::Option<i64>,
                     pub record: atmo::Unknown,
@@ -2176,6 +2386,7 @@ pub mod app {
             pub mod get_actor_starter_packs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub starter_packs:
@@ -2184,8 +2395,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2194,13 +2407,16 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub blocks: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2208,6 +2424,7 @@ pub mod app {
             pub mod get_followers {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub followers: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -2216,8 +2433,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2225,6 +2444,7 @@ pub mod app {
             pub mod get_follows {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub follows: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -2233,8 +2453,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2242,6 +2464,7 @@ pub mod app {
             pub mod get_known_followers {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub followers: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -2250,8 +2473,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2259,6 +2484,7 @@ pub mod app {
             pub mod get_list {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub items: std::vec::Vec<crate::app::bsky::graph::defs::ListItemView>,
@@ -2266,8 +2492,10 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub list: atmo::AtUri,
@@ -2276,14 +2504,17 @@ pub mod app {
             pub mod get_list_blocks {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub lists: std::vec::Vec<crate::app::bsky::graph::defs::ListView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2291,14 +2522,17 @@ pub mod app {
             pub mod get_list_mutes {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub lists: std::vec::Vec<crate::app::bsky::graph::defs::ListView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2306,6 +2540,7 @@ pub mod app {
             pub mod get_lists {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub lists: std::vec::Vec<crate::app::bsky::graph::defs::ListView>,
@@ -2313,8 +2548,10 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2322,14 +2559,17 @@ pub mod app {
             pub mod get_mutes {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub mutes: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -2337,6 +2577,7 @@ pub mod app {
             pub mod get_relationships {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub actor: std::option::Option<atmo::Did>,
                     pub relationships:
@@ -2345,6 +2586,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub actor: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub others: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
@@ -2381,6 +2623,7 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[doc = "If true, response has fallen-back to generic results, and is not scoped using relativeToDid"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub is_fallback: std::option::Option<bool>,
                     pub suggestions: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -2455,6 +2698,7 @@ pub mod app {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerPolicies {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub label_value_definitions: std::option::Option<
                         std::vec::Vec<crate::com::atproto::label::defs::LabelValueDefinition>,
@@ -2466,12 +2710,15 @@ pub mod app {
                     pub cid: atmo::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
                         std::option::Option<crate::app::bsky::labeler::defs::LabelerViewerState>,
@@ -2481,19 +2728,23 @@ pub mod app {
                     pub cid: atmo::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like_count: std::option::Option<i64>,
                     pub policies: crate::app::bsky::labeler::defs::LabelerPolicies,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
                         std::option::Option<crate::app::bsky::labeler::defs::LabelerViewerState>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerViewerState {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like: std::option::Option<atmo::AtUri>,
                 }
@@ -2505,6 +2756,7 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub detailed: std::option::Option<bool>,
                     pub dids: std::vec::Vec<std::string::String>,
@@ -2616,8 +2868,10 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub priority: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub seen_at: std::option::Option<atmo::DateTimeString>,
                 }
@@ -2629,10 +2883,12 @@ pub mod app {
                     pub cid: atmo::CidString,
                     pub indexed_at: atmo::DateTimeString,
                     pub is_read: bool,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
                     pub reason: crate::app::bsky::notification::list_notifications::Reason,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason_subject: std::option::Option<atmo::AtUri>,
                     pub record: atmo::Unknown,
@@ -2640,24 +2896,31 @@ pub mod app {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub notifications: std::vec::Vec<
                         crate::app::bsky::notification::list_notifications::Notification,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub priority: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub seen_at: std::option::Option<atmo::DateTimeString>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub priority: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub seen_at: std::option::Option<atmo::DateTimeString>,
                 }
@@ -2852,16 +3115,20 @@ pub mod app {
             pub mod get_popular_feed_generators {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub query: std::option::Option<std::string::String>,
                 }
@@ -2871,19 +3138,25 @@ pub mod app {
                 pub struct Output {
                     pub actors:
                         std::vec::Vec<crate::app::bsky::unspecced::defs::SkeletonSearchActor>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub relative_to_did: std::option::Option<atmo::Did>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub relative_to_did: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<atmo::Did>,
                 }
@@ -2919,21 +3192,27 @@ pub mod app {
                 pub struct Output {
                     pub actors:
                         std::vec::Vec<crate::app::bsky::unspecced::defs::SkeletonSearchActor>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hits_total: std::option::Option<i64>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub q: std::string::String,
                     #[doc = "If true, acts as fast/simple 'typeahead' query."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub typeahead: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<atmo::Did>,
                 }
@@ -2941,39 +3220,53 @@ pub mod app {
             pub mod search_posts_skeleton {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hits_total: std::option::Option<i64>,
                     pub posts: std::vec::Vec<crate::app::bsky::unspecced::defs::SkeletonSearchPost>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub author: std::option::Option<atmo::AtIdentifier>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub domain: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub mentions: std::option::Option<atmo::AtIdentifier>,
                     pub q: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub since: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort: std::option::Option<
                         crate::app::bsky::unspecced::search_posts_skeleton::Sort,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tag: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub until: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub url: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<atmo::Did>,
                 }
@@ -3046,14 +3339,18 @@ pub mod app {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct JobStatus {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blob: std::option::Option<atmo::Blob>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub error: std::option::Option<std::string::String>,
                     pub job_id: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub progress: std::option::Option<i64>,
                     pub state: crate::app::bsky::video::defs::State,
@@ -3082,12 +3379,16 @@ pub mod app {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub can_upload: bool,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub error: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub remaining_daily_bytes: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub remaining_daily_videos: std::option::Option<i64>,
                 }
@@ -3143,21 +3444,27 @@ pub mod chat {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileViewBasic {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub associated:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileAssociated>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
                     #[doc = "Set to true when the actor cannot actively participate in converations"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub chat_disabled: std::option::Option<bool>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub display_name: std::option::Option<std::string::String>,
                     pub handle: atmo::Handle,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
@@ -3388,6 +3695,7 @@ pub mod chat {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ConvoView {
                     pub id: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_message:
                         std::option::Option<crate::chat::bsky::convo::defs::LastMessage>,
@@ -3454,8 +3762,10 @@ pub mod chat {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageInput {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embed: std::option::Option<crate::chat::bsky::convo::defs::Embed>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
@@ -3469,9 +3779,11 @@ pub mod chat {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embed:
                         std::option::Option<crate::chat::bsky::convo::defs::MessageViewEmbed>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
@@ -3531,12 +3843,14 @@ pub mod chat {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub logs: std::vec::Vec<crate::chat::bsky::convo::get_log::Logs>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
@@ -3551,6 +3865,7 @@ pub mod chat {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub messages: std::vec::Vec<crate::chat::bsky::convo::get_messages::Messages>,
@@ -3558,8 +3873,10 @@ pub mod chat {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub convo_id: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -3579,13 +3896,16 @@ pub mod chat {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub convos: std::vec::Vec<crate::chat::bsky::convo::defs::ConvoView>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -3637,6 +3957,7 @@ pub mod chat {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub convo_id: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message_id: std::option::Option<std::string::String>,
                 }
@@ -3735,10 +4056,13 @@ pub mod chat {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub after: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub before: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub convo_id: std::option::Option<std::string::String>,
                     pub message_id: std::string::String,
@@ -3749,6 +4073,7 @@ pub mod chat {
                 pub struct Input {
                     pub actor: atmo::Did,
                     pub allow_access: bool,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub ref_: std::option::Option<std::string::String>,
                 }
@@ -4014,26 +4339,34 @@ pub mod com {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct AccountView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub deactivated_at: std::option::Option<atmo::DateTimeString>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_confirmed_at: std::option::Option<atmo::DateTimeString>,
                     pub handle: atmo::Handle,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_note: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invited_by:
                         std::option::Option<crate::com::atproto::server::defs::InviteCode>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invites: std::option::Option<
                         std::vec::Vec<crate::com::atproto::server::defs::InviteCode>,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invites_disabled: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub related_records: std::option::Option<std::vec::Vec<atmo::Unknown>>,
                 }
@@ -4041,6 +4374,7 @@ pub mod com {
                 pub struct RepoBlobRef {
                     pub cid: atmo::CidString,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub record_uri: std::option::Option<atmo::AtUri>,
                 }
@@ -4051,6 +4385,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct StatusAttr {
                     pub applied: bool,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub ref_: std::option::Option<std::string::String>,
                 }
@@ -4065,6 +4400,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub account: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub note: std::option::Option<std::string::String>,
                 }
@@ -4072,8 +4408,10 @@ pub mod com {
             pub mod disable_invite_codes {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub accounts: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub codes: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
@@ -4082,6 +4420,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub account: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub note: std::option::Option<std::string::String>,
                 }
@@ -4106,15 +4445,19 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub codes: std::vec::Vec<crate::com::atproto::server::defs::InviteCode>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort:
                         std::option::Option<crate::com::atproto::admin::get_invite_codes::Sort>,
@@ -4132,19 +4475,24 @@ pub mod com {
             pub mod get_subject_status {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub deactivated:
                         std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                     pub subject: crate::com::atproto::admin::get_subject_status::Subject,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blob: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub uri: std::option::Option<atmo::AtUri>,
                 }
@@ -4161,15 +4509,19 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub accounts: std::vec::Vec<crate::com::atproto::admin::defs::AccountView>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -4177,11 +4529,13 @@ pub mod com {
             pub mod send_email {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub content: std::string::String,
                     pub recipient_did: atmo::Did,
                     pub sender_did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
                 }
@@ -4214,16 +4568,19 @@ pub mod com {
             pub mod update_subject_status {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub deactivated:
                         std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                     pub subject: crate::com::atproto::admin::update_subject_status::Subject,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub subject: crate::com::atproto::admin::update_subject_status::OutputSubject,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
@@ -4358,12 +4715,16 @@ pub mod com {
             pub mod get_recommended_did_credentials {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub also_known_as: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rotation_keys: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub services: std::option::Option<atmo::Unknown>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub verification_methods: std::option::Option<atmo::Unknown>,
                 }
@@ -4381,14 +4742,19 @@ pub mod com {
             pub mod sign_plc_operation {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub also_known_as: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rotation_keys: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub services: std::option::Option<atmo::Unknown>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub token: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub verification_methods: std::option::Option<atmo::Unknown>,
                 }
@@ -4454,20 +4820,26 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Label {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
                     pub cts: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub exp: std::option::Option<atmo::DateTimeString>,
                     #[doc = "If true, this is a negation label, overwriting a previous label."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub neg: std::option::Option<bool>,
                     #[doc = "Signature of dag-cbor encoded label."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sig: std::option::Option<Vec<u8>>,
+                    #[serde(with = "atmo::bytes::serde::option")]
+                    pub sig: std::option::Option<bytes::Bytes>,
                     pub src: atmo::Did,
                     pub uri: url::Url,
                     pub val: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub ver: std::option::Option<i64>,
                 }
@@ -4501,9 +4873,11 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelValueDefinition {
                     #[doc = "Does the user need to have adult content enabled in order to configure this label?"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub adult_only: std::option::Option<bool>,
                     pub blurs: crate::com::atproto::label::defs::Blurs,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub default_setting:
                         std::option::Option<crate::com::atproto::label::defs::DefaultSetting>,
@@ -4542,16 +4916,20 @@ pub mod com {
             pub mod query_labels {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub labels: std::vec::Vec<crate::com::atproto::label::defs::Label>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sources: std::option::Option<std::vec::Vec<std::string::String>>,
                     pub uri_patterns: std::vec::Vec<std::string::String>,
@@ -4560,6 +4938,7 @@ pub mod com {
             pub mod subscribe_labels {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Info {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message: std::option::Option<std::string::String>,
                     pub name: crate::com::atproto::label::subscribe_labels::Name,
@@ -4600,6 +4979,7 @@ pub mod com {
             pub mod create_report {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason: std::option::Option<std::string::String>,
                     pub reason_type: crate::com::atproto::moderation::defs::ReasonType,
@@ -4609,6 +4989,7 @@ pub mod com {
                 pub struct Output {
                     pub created_at: atmo::DateTimeString,
                     pub id: i64,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reason: std::option::Option<std::string::String>,
                     pub reason_type: crate::com::atproto::moderation::defs::ReasonType,
@@ -4849,6 +5230,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Create {
                     pub collection: atmo::Nsid,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey: std::option::Option<std::string::String>,
                     pub value: atmo::Unknown,
@@ -4857,6 +5239,7 @@ pub mod com {
                 pub struct CreateResult {
                     pub cid: atmo::CidString,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
                         crate::com::atproto::repo::apply_writes::ValidationStatus,
@@ -4872,17 +5255,21 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub repo: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_commit: std::option::Option<atmo::CidString>,
                     #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data across all operations, 'true' to require it, or leave unset to validate only for known Lexicons."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validate: std::option::Option<bool>,
                     pub writes: std::vec::Vec<crate::com::atproto::repo::apply_writes::Writes>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<crate::com::atproto::repo::defs::CommitMeta>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub results: std::option::Option<
                         std::vec::Vec<crate::com::atproto::repo::apply_writes::Results>,
@@ -4904,6 +5291,7 @@ pub mod com {
                 pub struct UpdateResult {
                     pub cid: atmo::CidString,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
                         crate::com::atproto::repo::apply_writes::ValidationStatus,
@@ -4931,20 +5319,25 @@ pub mod com {
                     pub collection: atmo::Nsid,
                     pub record: atmo::Unknown,
                     pub repo: atmo::AtIdentifier,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_commit: std::option::Option<atmo::CidString>,
                     #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validate: std::option::Option<bool>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub cid: atmo::CidString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<crate::com::atproto::repo::defs::CommitMeta>,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
                         crate::com::atproto::repo::create_record::ValidationStatus,
@@ -4973,13 +5366,16 @@ pub mod com {
                     pub collection: atmo::Nsid,
                     pub repo: atmo::AtIdentifier,
                     pub rkey: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_commit: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_record: std::option::Option<atmo::CidString>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<crate::com::atproto::repo::defs::CommitMeta>,
                 }
@@ -5002,6 +5398,7 @@ pub mod com {
             pub mod get_record {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
                     pub uri: atmo::AtUri,
@@ -5009,6 +5406,7 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
                     pub collection: atmo::Nsid,
@@ -5021,13 +5419,16 @@ pub mod com {
                 pub struct Output {
                     pub blobs:
                         std::vec::Vec<crate::com::atproto::repo::list_missing_blobs::RecordBlob>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -5040,6 +5441,7 @@ pub mod com {
             pub mod list_records {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub records: std::vec::Vec<crate::com::atproto::repo::list_records::Record>,
@@ -5047,16 +5449,21 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub collection: atmo::Nsid,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub repo: atmo::AtIdentifier,
                     #[doc = "Flag to reverse the order of the returned records."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reverse: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey_end: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey_start: std::option::Option<std::string::String>,
                 }
@@ -5074,20 +5481,25 @@ pub mod com {
                     pub record: atmo::Unknown,
                     pub repo: atmo::AtIdentifier,
                     pub rkey: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_commit: std::option::Option<atmo::CidString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_record: std::option::Option<atmo::Nullable<atmo::CidString>>,
                     #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validate: std::option::Option<bool>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub cid: atmo::CidString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<crate::com::atproto::repo::defs::CommitMeta>,
                     pub uri: atmo::AtUri,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
                         crate::com::atproto::repo::put_record::ValidationStatus,
@@ -5585,21 +5997,29 @@ pub mod com {
             pub mod create_account {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                     pub handle: atmo::Handle,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_code: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub password: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub plc_op: std::option::Option<atmo::Unknown>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub recovery_key: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub verification_code: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub verification_phone: std::option::Option<std::string::String>,
                 }
@@ -5607,6 +6027,7 @@ pub mod com {
                 pub struct Output {
                     pub access_jwt: std::string::String,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did_doc: std::option::Option<atmo::Unknown>,
                     pub handle: atmo::Handle,
@@ -5619,6 +6040,7 @@ pub mod com {
                     pub created_at: atmo::DateTimeString,
                     pub name: std::string::String,
                     pub password: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
@@ -5626,6 +6048,7 @@ pub mod com {
                 pub struct Input {
                     pub name: std::string::String,
                     #[doc = "If an app password has 'privileged' access to possibly sensitive account state. Meant for use with trusted clients."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
@@ -5633,6 +6056,7 @@ pub mod com {
             pub mod create_invite_code {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub for_account: std::option::Option<atmo::Did>,
                     pub use_count: i64,
@@ -5651,6 +6075,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub code_count: i64,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub for_accounts: std::option::Option<std::vec::Vec<std::string::String>>,
                     pub use_count: i64,
@@ -5665,6 +6090,7 @@ pub mod com {
             pub mod create_session {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub auth_factor_token: std::option::Option<std::string::String>,
                     pub identifier: std::string::String,
@@ -5673,19 +6099,25 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub access_jwt: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did_doc: std::option::Option<atmo::Unknown>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_auth_factor: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_confirmed: std::option::Option<bool>,
                     pub handle: atmo::Handle,
                     pub refresh_jwt: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
                         std::option::Option<crate::com::atproto::server::create_session::Status>,
@@ -5705,6 +6137,7 @@ pub mod com {
             pub mod deactivate_account {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub delete_after: std::option::Option<atmo::DateTimeString>,
                 }
@@ -5737,30 +6170,37 @@ pub mod com {
             pub mod describe_server {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Contact {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Links {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privacy_policy: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub terms_of_service: std::option::Option<url::Url>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub available_user_domains: std::vec::Vec<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub contact:
                         std::option::Option<crate::com::atproto::server::describe_server::Contact>,
                     pub did: atmo::Did,
                     #[doc = "If true, an invite code must be supplied to create an account on this instance."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_code_required: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub links:
                         std::option::Option<crate::com::atproto::server::describe_server::Links>,
                     #[doc = "If true, a phone verification token must be supplied to create an account on this instance."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub phone_verification_required: std::option::Option<bool>,
                 }
@@ -5773,8 +6213,10 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[doc = "Controls whether any new 'earned' but not 'created' invites should be created."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub create_available: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub include_used: std::option::Option<bool>,
                 }
@@ -5787,8 +6229,10 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub aud: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub exp: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lxm: std::option::Option<atmo::Nsid>,
                 }
@@ -5796,18 +6240,24 @@ pub mod com {
             pub mod get_session {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did_doc: std::option::Option<atmo::Unknown>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_auth_factor: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_confirmed: std::option::Option<bool>,
                     pub handle: atmo::Handle,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
                         std::option::Option<crate::com::atproto::server::get_session::Status>,
@@ -5829,6 +6279,7 @@ pub mod com {
                 pub struct AppPassword {
                     pub created_at: atmo::DateTimeString,
                     pub name: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
@@ -5842,13 +6293,16 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub access_jwt: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did_doc: std::option::Option<atmo::Unknown>,
                     pub handle: atmo::Handle,
                     pub refresh_jwt: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
                         std::option::Option<crate::com::atproto::server::refresh_session::Status>,
@@ -5880,6 +6334,7 @@ pub mod com {
             pub mod reserve_signing_key {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did: std::option::Option<atmo::Did>,
                 }
@@ -5905,8 +6360,10 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub email: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_auth_factor: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub token: std::option::Option<std::string::String>,
                 }
@@ -6174,6 +6631,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub collection: atmo::Nsid,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub commit: std::option::Option<atmo::CidString>,
                     pub did: atmo::Did,
@@ -6184,6 +6642,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub since: std::option::Option<std::string::String>,
                 }
@@ -6193,8 +6652,10 @@ pub mod com {
                 pub struct Output {
                     pub active: bool,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rev: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
                         std::option::Option<crate::com::atproto::sync::get_repo_status::Status>,
@@ -6219,16 +6680,20 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub cids: std::vec::Vec<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub since: std::option::Option<std::string::String>,
                 }
@@ -6236,24 +6701,29 @@ pub mod com {
             pub mod list_repos {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub repos: std::vec::Vec<crate::com::atproto::sync::list_repos::Repo>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Repo {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub active: std::option::Option<bool>,
                     pub did: atmo::Did,
                     pub head: atmo::CidString,
                     pub rev: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status: std::option::Option<crate::com::atproto::sync::list_repos::Status>,
                 }
@@ -6288,6 +6758,7 @@ pub mod com {
                     pub active: bool,
                     pub did: atmo::Did,
                     pub seq: i64,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status:
                         std::option::Option<crate::com::atproto::sync::subscribe_repos::Status>,
@@ -6308,9 +6779,11 @@ pub mod com {
                 pub struct Commit {
                     pub blobs: std::vec::Vec<atmo::CidString>,
                     #[doc = "CAR file containing relevant blocks, as a diff since the previous repo state."]
-                    pub blocks: Vec<u8>,
+                    #[serde(with = "atmo::bytes::serde")]
+                    pub blocks: bytes::Bytes,
                     pub commit: atmo::CidLink,
                     pub ops: std::vec::Vec<crate::com::atproto::sync::subscribe_repos::RepoOp>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub prev: std::option::Option<atmo::Nullable<atmo::CidLink>>,
                     #[doc = "DEPRECATED -- unused"]
@@ -6333,6 +6806,7 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Identity {
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub handle: std::option::Option<atmo::Handle>,
                     pub seq: i64,
@@ -6340,6 +6814,7 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Info {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message: std::option::Option<std::string::String>,
                     pub name: crate::com::atproto::sync::subscribe_repos::Name,
@@ -6444,8 +6919,10 @@ pub mod com {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub activated: bool,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub estimated_time_ms: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub place_in_queue: std::option::Option<i64>,
                 }
@@ -6457,8 +6934,10 @@ pub mod com {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub since: std::option::Option<i64>,
                 }
@@ -6551,8 +7030,10 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub content_markdown: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_by: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
                     pub name: std::string::String,
@@ -6566,10 +7047,12 @@ pub mod tools {
                     pub created_at: atmo::DateTimeString,
                     pub disabled: bool,
                     pub id: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
                     pub last_updated_by: atmo::Did,
                     pub name: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
                     pub updated_at: atmo::DateTimeString,
@@ -6591,17 +7074,23 @@ pub mod tools {
             pub mod update_template {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub content_markdown: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub disabled: std::option::Option<bool>,
                     pub id: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub lang: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub name: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub updated_by: std::option::Option<atmo::Did>,
                 }
@@ -6775,10 +7264,12 @@ pub mod tools {
                 pub struct BlobView {
                     pub cid: atmo::CidString,
                     pub created_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub details:
                         std::option::Option<crate::tools::ozone::moderation::defs::Details>,
                     pub mime_type: std::string::String,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub moderation:
                         std::option::Option<crate::tools::ozone::moderation::defs::Moderation>,
@@ -6826,6 +7317,7 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventAcknowledge {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
@@ -6833,29 +7325,35 @@ pub mod tools {
                 pub struct ModEventComment {
                     pub comment: std::string::String,
                     #[doc = "Make the comment persistent on the subject"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sticky: std::option::Option<bool>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventDivert {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventEmail {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub content: std::option::Option<std::string::String>,
                     pub subject_line: std::string::String,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventEscalate {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventLabel {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub create_label_vals: std::vec::Vec<std::string::String>,
@@ -6863,38 +7361,45 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventMute {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub duration_in_hours: i64,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventMuteReporter {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub duration_in_hours: i64,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventReport {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     #[doc = "Set to true if the reporter was muted from reporting at the time of the event. These reports won't impact the reviewState of the subject."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub is_reporter_muted: std::option::Option<bool>,
                     pub report_type: crate::com::atproto::moderation::defs::ReasonType,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventResolveAppeal {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventReverseTakedown {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventTag {
                     pub add: std::vec::Vec<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub remove: std::vec::Vec<std::string::String>,
@@ -6902,20 +7407,25 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventTakedown {
                     #[doc = "If true, all other reports on content authored by this account will be resolved (acknowledged)."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub acknowledge_account_subjects: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub duration_in_hours: std::option::Option<i64>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventUnmute {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventUnmuteReporter {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
@@ -6923,12 +7433,14 @@ pub mod tools {
                 pub struct ModEventView {
                     pub created_at: atmo::DateTimeString,
                     pub created_by: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub creator_handle: std::option::Option<std::string::String>,
                     pub event: crate::tools::ozone::moderation::defs::Event,
                     pub id: i64,
                     pub subject: crate::tools::ozone::moderation::defs::Subject,
                     pub subject_blob_cids: std::vec::Vec<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_handle: std::option::Option<std::string::String>,
                 }
@@ -6981,6 +7493,7 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Moderation {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_status: std::option::Option<
                         crate::tools::ozone::moderation::defs::SubjectStatusView,
@@ -6988,6 +7501,7 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ModerationDetail {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_status: std::option::Option<
                         crate::tools::ozone::moderation::defs::SubjectStatusView,
@@ -7008,6 +7522,7 @@ pub mod tools {
                     pub blobs: std::vec::Vec<crate::tools::ozone::moderation::defs::BlobView>,
                     pub cid: atmo::CidString,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
@@ -7022,18 +7537,23 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoView {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub deactivated_at: std::option::Option<atmo::DateTimeString>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                     pub handle: atmo::Handle,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_note: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invited_by:
                         std::option::Option<crate::com::atproto::server::defs::InviteCode>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invites_disabled: std::option::Option<bool>,
                     pub moderation: crate::tools::ozone::moderation::defs::Moderation,
@@ -7041,26 +7561,34 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewDetail {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub deactivated_at: std::option::Option<atmo::DateTimeString>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email_confirmed_at: std::option::Option<atmo::DateTimeString>,
                     pub handle: atmo::Handle,
                     pub indexed_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invite_note: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invited_by:
                         std::option::Option<crate::com::atproto::server::defs::InviteCode>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invites: std::option::Option<
                         std::vec::Vec<crate::com::atproto::server::defs::InviteCode>,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub invites_disabled: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
@@ -7099,34 +7627,47 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SubjectStatusView {
                     #[doc = "True indicates that the a previously taken moderator action was appealed against, by the author of the content. False indicates last appeal was resolved by moderators."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub appealed: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub created_at: atmo::DateTimeString,
                     pub id: i64,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_appealed_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_reported_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_reviewed_at: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_reviewed_by: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub mute_reporting_until: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub mute_until: std::option::Option<atmo::DateTimeString>,
                     pub review_state: crate::tools::ozone::moderation::defs::SubjectReviewState,
                     pub subject: crate::tools::ozone::moderation::defs::SubjectStatusViewSubject,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_blob_cids: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_repo_handle: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub suspend_until: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tags: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takendown: std::option::Option<bool>,
                     pub updated_at: atmo::DateTimeString,
@@ -7178,6 +7719,7 @@ pub mod tools {
                     pub created_by: atmo::Did,
                     pub event: crate::tools::ozone::moderation::emit_event::Event,
                     pub subject: crate::tools::ozone::moderation::emit_event::Subject,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_blob_cids: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
@@ -7198,6 +7740,7 @@ pub mod tools {
             pub mod get_record {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo::CidString>,
                     pub uri: atmo::AtUri,
@@ -7247,46 +7790,63 @@ pub mod tools {
             pub mod query_events {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub events: std::vec::Vec<crate::tools::ozone::moderation::defs::ModEventView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub added_labels: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub added_tags: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_after: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_before: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_by: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[doc = "If true, only events with comments are returned"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub has_comment: std::option::Option<bool>,
                     #[doc = "If true, events on all record types (posts, lists, profile etc.) owned by the did are returned"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub include_all_user_records: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub removed_labels: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub removed_tags: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub report_types: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_direction: std::option::Option<
                         crate::tools::ozone::moderation::query_events::SortDirection,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub types: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
@@ -7301,6 +7861,7 @@ pub mod tools {
             pub mod query_statuses {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub subject_statuses:
@@ -7309,52 +7870,72 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[doc = "Get subjects in unresolved appealed status"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub appealed: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub exclude_tags: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub ignore_subjects: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[doc = "All subjects belonging to the account specified in the 'subject' param will be returned."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub include_all_user_records: std::option::Option<bool>,
                     #[doc = "By default, we don't include muted subjects in the results. Set this to true to include them."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub include_muted: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_reviewed_by: std::option::Option<atmo::Did>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     #[doc = "When set to true, only muted subjects and reporters will be returned."]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub only_muted: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reported_after: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reported_before: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub review_state: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reviewed_after: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reviewed_before: std::option::Option<atmo::DateTimeString>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_direction: std::option::Option<
                         crate::tools::ozone::moderation::query_statuses::SortDirection,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_field: std::option::Option<
                         crate::tools::ozone::moderation::query_statuses::SortField,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<url::Url>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tags: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[doc = "Get subjects that were taken down"]
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takendown: std::option::Option<bool>,
                 }
@@ -7376,18 +7957,23 @@ pub mod tools {
             pub mod search_repos {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub repos: std::vec::Vec<crate::tools::ozone::moderation::defs::RepoView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub q: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub term: std::option::Option<std::string::String>,
                 }
@@ -7415,18 +8001,23 @@ pub mod tools {
             pub mod get_config {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub appview:
                         std::option::Option<crate::tools::ozone::server::get_config::ServiceConfig>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub blob_divert:
                         std::option::Option<crate::tools::ozone::server::get_config::ServiceConfig>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub chat:
                         std::option::Option<crate::tools::ozone::server::get_config::ServiceConfig>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub pds:
                         std::option::Option<crate::tools::ozone::server::get_config::ServiceConfig>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer:
                         std::option::Option<crate::tools::ozone::server::get_config::ViewerConfig>,
@@ -7447,11 +8038,13 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ServiceConfig {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub url: std::option::Option<url::Url>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerConfig {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub role: std::option::Option<crate::tools::ozone::server::get_config::Role>,
                 }
@@ -7576,6 +8169,7 @@ pub mod tools {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Set {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
                     pub name: std::string::String,
@@ -7583,6 +8177,7 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct SetView {
                     pub created_at: atmo::DateTimeString,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
                     pub name: std::string::String,
@@ -7608,6 +8203,7 @@ pub mod tools {
             pub mod get_values {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub set: crate::tools::ozone::set::defs::SetView,
@@ -7615,8 +8211,10 @@ pub mod tools {
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub name: std::string::String,
@@ -7625,20 +8223,26 @@ pub mod tools {
             pub mod query_sets {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub sets: std::vec::Vec<crate::tools::ozone::set::defs::SetView>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub name_prefix: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_by: std::option::Option<crate::tools::ozone::set::query_sets::SortBy>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_direction:
                         std::option::Option<crate::tools::ozone::set::query_sets::SortDirection>,
@@ -7739,20 +8343,24 @@ pub mod tools {
                     pub accounts: std::vec::Vec<
                         crate::tools::ozone::signature::find_related_accounts::RelatedAccount,
                     >,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct RelatedAccount {
                     pub account: crate::com::atproto::admin::defs::AccountView,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub similarities: std::option::Option<
                         std::vec::Vec<crate::tools::ozone::signature::defs::SigDetail>,
@@ -7763,13 +8371,16 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     pub accounts: std::vec::Vec<crate::com::atproto::admin::defs::AccountView>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                     pub values: std::vec::Vec<std::string::String>,
@@ -7873,17 +8484,22 @@ pub mod tools {
             pub mod defs {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Member {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub created_at: std::option::Option<atmo::DateTimeString>,
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub disabled: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub last_updated_by: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub profile:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileViewDetailed>,
                     pub role: crate::tools::ozone::team::defs::Role,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub updated_at: std::option::Option<atmo::DateTimeString>,
                 }
@@ -7911,14 +8527,17 @@ pub mod tools {
             pub mod list_members {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     pub members: std::vec::Vec<crate::tools::ozone::team::defs::Member>,
                 }
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
@@ -7927,8 +8546,10 @@ pub mod tools {
                 #[derive(serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     pub did: atmo::Did,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub disabled: std::option::Option<bool>,
+                    #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub role: std::option::Option<crate::tools::ozone::team::update_member::Role>,
                 }

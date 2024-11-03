@@ -88,6 +88,17 @@ impl AtUri {
         let end = usize::from(coll_start.get() - 1);
         &self.text[start..end]
     }
+
+    pub fn collection(&self) -> Option<&str> {
+        let coll_start: usize = self.collection_start?.get().into();
+
+        let coll_end = match self.rkey_start {
+            Some(idx) => usize::from(idx.get()) - 1,
+            None => self.text.len(),
+        };
+
+        Some(&self.text[coll_start..coll_end])
+    }
 }
 
 impl FromStr for AtUri {

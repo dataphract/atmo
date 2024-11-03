@@ -16,7 +16,7 @@
 //!
 //! The generator produces the following module structure:
 //!
-//! ```rust,no_run
+//! ```ignore
 //! mod com {
 //!     mod atproto {
 //!         mod admin {
@@ -35,13 +35,13 @@
 //! In most cases, items defined by a Lexicon schema are emitted in the module corresponding to the
 //! schema's NSID. For example, the Rust type generated for
 //!
-//! ```
+//! ```text
 //! com.atproto.repo.listMissingBlobs#recordBlob
 //! ```
 //!
 //! is emitted so that it can be imported as follows:
 //!
-//! ```rust,no_run
+//! ```ignore
 //! use com::atproto::repo::list_missing_blobs::RecordBlob;
 //! ```
 //!
@@ -445,7 +445,7 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
 
         let field_ident = quote::format_ident!("{field_name}");
 
-        let inner_ty: TokenStream = match schema {
+        let inner_ty: Type = match schema {
             FieldSchema::Array(a) => {
                 let elem_ty = match &*a.items {
                     FieldSchema::CidLink => Type::CidString,
@@ -460,26 +460,26 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
                     x => panic!("unhandled array element type: {x:?}"),
                 };
 
-                Type::Vec(elem_ty.into()).into_token_stream()
+                Type::Vec(elem_ty.into())
             }
 
             FieldSchema::Blob(b) => {
                 desc = b.description.clone();
                 eprintln!("blob MIME type and size are not enforced");
-                Type::Blob.into_token_stream()
+                Type::Blob
             }
 
             FieldSchema::Boolean(b) => {
                 desc = b.description.clone();
-                quote::format_ident!("bool").to_token_stream()
+                Type::Bool
             }
 
             FieldSchema::Bytes(b) => {
                 desc = b.description.clone();
-                quote! { Vec<u8> }
+                Type::Bytes
             }
 
-            FieldSchema::CidLink => Type::CidLink.into_token_stream(),
+            FieldSchema::CidLink => Type::CidLink,
 
             FieldSchema::Integer(i) => {
                 // TODO: deranged
@@ -487,7 +487,7 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
                     eprintln!("ranged integer support not implemented yet sorry lol");
                 }
 
-                Type::Integer.into_token_stream()
+                Type::Integer
             }
 
             FieldSchema::Ref(r) => {
@@ -502,12 +502,12 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
                     _ => referent.path.into(),
                 };
 
-                ty.into_token_stream()
+                ty
             }
 
-            FieldSchema::String(s) => self.resolve_string_type(prop_name, s).into_token_stream(),
-            FieldSchema::Union(u) => self.emit_union(&full, prop_name, u).into_token_stream(),
-            FieldSchema::Unknown => Type::Unknown.into_token_stream(),
+            FieldSchema::String(s) => self.resolve_string_type(prop_name, s),
+            FieldSchema::Union(u) => self.emit_union(&full, prop_name, u).into(),
+            FieldSchema::Unknown => Type::Unknown,
         };
 
         Field {
@@ -569,18 +569,21 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
         let ident = quote::format_ident!("{rpc_name}");
         let parent_path = path.parent().unwrap();
 
-        self.generated.get_or_create_mut(&parent_path).add_item(
-            rpc_name,
-            Item::Rpc(RpcDef {
-                ident,
-                ty,
-                nsid: self.scope.clone(),
-                params,
-                input,
-                output,
-                output_encoding,
-            }),
-        );
+        self.generated
+            .get_or_create_mut(&parent_path)
+            .add_item(
+                rpc_name,
+                Item::Rpc(RpcDef {
+                    ident,
+                    ty,
+                    nsid: self.scope.clone(),
+                    params,
+                    input,
+                    output,
+                    output_encoding,
+                }),
+            )
+            .unwrap();
     }
 }
 
@@ -607,6 +610,7 @@ pub struct Referent<'a> {
     schema: &'a Schema,
 }
 
+#[derive(Debug)]
 pub enum Type {
     AtIdentifier,
     AtUri,

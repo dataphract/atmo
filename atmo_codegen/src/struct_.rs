@@ -1,6 +1,8 @@
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
+use crate::Type;
+
 #[derive(Debug)]
 pub struct StructDef {
     pub name: syn::Ident,
@@ -28,7 +30,7 @@ pub struct Field {
     pub name: syn::Ident,
     pub optional: bool,
     pub nullable: bool,
-    pub inner_ty: TokenStream,
+    pub inner_ty: Type,
 }
 
 impl ToTokens for Field {
@@ -36,8 +38,25 @@ impl ToTokens for Field {
         let crate_ = crate::crate_name();
 
         let doc_attr = self.doc.clone().map(FieldAttr::Doc);
-        let skip_none = self.optional.then_some(FieldAttr::SerdeSkipNone);
-        let attrs = doc_attr.iter().chain(skip_none.as_ref());
+        let serde_default = self.optional.then_some(FieldAttr::SerdeDefault);
+        let serde_skip_none = self.optional.then_some(FieldAttr::SerdeSkipNone);
+        let serde_with = match self.inner_ty {
+            Type::Bytes => {
+                let path = if self.optional {
+                    format!("{crate_}::bytes::serde::option")
+                } else {
+                    format!("{crate_}::bytes::serde")
+                };
+
+                Some(FieldAttr::SerdeWith(path))
+            }
+            _ => None,
+        };
+        let attrs = doc_attr
+            .iter()
+            .chain(serde_default.as_ref())
+            .chain(serde_skip_none.as_ref())
+            .chain(serde_with.as_ref());
 
         let name = &self.name;
 
@@ -59,15 +78,21 @@ impl ToTokens for Field {
 
 enum FieldAttr {
     Doc(String),
+    SerdeDefault,
     SerdeSkipNone,
+    SerdeWith(String),
 }
 
 impl ToTokens for FieldAttr {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         let tt = match self {
             FieldAttr::Doc(s) => quote! { #[doc = #s] },
+            FieldAttr::SerdeDefault => quote! { #[serde(default)] },
             FieldAttr::SerdeSkipNone => {
                 quote! { #[serde(skip_serializing_if = "std::option::Option::is_none")] }
+            }
+            FieldAttr::SerdeWith(s) => {
+                quote! { #[serde(with = #s)] }
             }
         };
 

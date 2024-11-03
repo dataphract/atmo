@@ -20,7 +20,7 @@ pub use crate::{
 
 pub mod at_uri;
 mod blob;
-mod bytes;
+pub mod bytes;
 mod cid;
 pub mod datetime;
 pub mod did;

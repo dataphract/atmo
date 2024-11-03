@@ -26,7 +26,7 @@ serde_ipld_dagcbor = "0.6.1"
 url = { version = "2.5.2", features = ["serde"] }
 
 [dependencies]
-bytes = { workspace = true }
+bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }
 data-encoding = { workspace = true }
 jiff = { workspace = true }
