@@ -1,7 +1,6 @@
 use std::marker::PhantomData;
 
 use atmo_core::xrpc::Request;
-use http::header;
 use serde::{de::DeserializeOwned, Serialize};
 use url::Url;
 

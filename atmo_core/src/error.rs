@@ -30,6 +30,12 @@ impl ParseError {
         }
     }
 
+    pub(crate) fn did_url() -> Self {
+        ParseError {
+            while_parsing: "DID URL",
+        }
+    }
+
     pub(crate) fn handle() -> Self {
         ParseError {
             while_parsing: "Handle",

@@ -111,6 +111,23 @@ pub(crate) fn is_valid_nsid_name(s: &[u8]) -> bool {
         && s.iter().all(|b| b.is_ascii_alphabetic())
 }
 
+macro_rules! impl_deserialize_via_from_str {
+    ($name:ident) => {
+        impl<'de> serde::de::Deserialize<'de> for $name {
+            fn deserialize<D>(des: D) -> Result<Self, D::Error>
+            where
+                D: serde::de::Deserializer<'de>,
+            {
+                let s = <&str>::deserialize(des)?;
+
+                <$name as std::str::FromStr>::from_str(s)
+                    .map_err(<D::Error as serde::de::Error>::custom)
+            }
+        }
+    };
+}
+pub(crate) use impl_deserialize_via_from_str;
+
 #[cfg(test)]
 pub(crate) mod test {
     use std::str::FromStr;
