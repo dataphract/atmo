@@ -8,7 +8,8 @@ atmo_core = { workspace = true }
 bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }
 http = { workspace = true }
+ipld-core = { workspace = true, features = ["serde"] }
 jiff = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
-serde_json = { workspace = true }
+serde_json = { workspace = true, features = ["raw_value"] }
 url = { workspace = true }

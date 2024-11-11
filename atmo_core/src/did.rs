@@ -11,7 +11,7 @@ use crate::{
     split_once, Handle,
 };
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Did(String);
 
 impl Did {

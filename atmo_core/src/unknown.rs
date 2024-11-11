@@ -7,7 +7,7 @@ pub struct Unknown {
     #[serde(default, rename = "$type")]
     ty: Option<Nsid>,
     #[serde(flatten)]
-    inner: serde_json::Value,
+    inner: serde_json::Map<String, serde_json::Value>,
 }
 
 impl Unknown {
@@ -20,5 +20,22 @@ impl Unknown {
         T: DeserializeOwned,
     {
         T::deserialize(&self.inner)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::json;
+
+    use super::*;
+
+    #[test]
+    fn deserialize_empty() {
+        let obj = json!({});
+
+        let unk = Unknown::deserialize(obj).unwrap();
+
+        assert!(unk.ty.is_none());
+        assert!(unk.inner.is_empty());
     }
 }

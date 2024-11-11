@@ -15,6 +15,7 @@ const LEN_RANGE: RangeInclusive<usize> = 1..=(8 * 1024);
 /// ```text
 /// "at://" AUTHORITY [ "/" COLLECTION [ "/" RKEY ] ]
 /// ```
+#[derive(Debug)]
 pub struct AtUri {
     // The full text of the AT-URI.
     text: String,

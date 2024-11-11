@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// A `Nullable` value can be constructed using [`Nullable::null`] or [`Nullable::non_null`] as
 /// appropriate. To keep this abstraction as lightweight as possible, the only other implementations
 /// are `From<Option<T>>`, `Into<Option<T>>`, `Serialize` and `Deserialize`.
-#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Nullable<T>(Option<T>);
 
 impl<T> Nullable<T> {

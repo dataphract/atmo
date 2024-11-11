@@ -31,11 +31,13 @@ mod nullable;
 mod parse;
 pub mod rkey;
 pub mod tid;
+pub mod union_;
 mod unknown;
 pub mod xrpc;
 
 pub(crate) const SEGMENT_LEN_RANGE: RangeInclusive<usize> = 1..=63;
 
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum AtIdentifier {
     Did(Did),
     Handle(Handle),

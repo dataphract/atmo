@@ -8,6 +8,7 @@ use serde::{de::Error as _, ser::SerializeStruct, Deserialize, Serialize};
 const BASE: multibase::Base = multibase::Base::Base32Lower;
 
 /// CID link value, corresponding to the `cid-link` Lexicon type.
+#[derive(Debug)]
 pub struct CidLink(cid::Cid);
 
 impl Serialize for CidLink {

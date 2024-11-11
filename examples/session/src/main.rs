@@ -1,5 +1,8 @@
 use atmo::{
-    api::com::atproto::server::{create_session, CreateSession},
+    api::{
+        app::bsky::actor::{defs::Preferences, GetPreferences},
+        com::atproto::server::{create_session, CreateSession},
+    },
     core::did::DidDoc,
     XrpcClient,
 };
@@ -21,7 +24,7 @@ async fn main() {
         .interact()
         .unwrap();
 
-    let resp = cl
+    let session = cl
         .request(&url, CreateSession)
         .input(&create_session::Input {
             identifier,
@@ -32,10 +35,17 @@ async fn main() {
         .await
         .unwrap();
 
-    let _access = resp.access_jwt;
-    let _refresh = resp.refresh_jwt;
+    let did_doc: DidDoc = session.did_doc.as_ref().unwrap().downcast().unwrap();
 
-    let did_doc: DidDoc = resp.did_doc.as_ref().unwrap().downcast().unwrap();
+    let resp = cl
+        .request(&url, GetPreferences)
+        .bearer_auth(&session.access_jwt)
+        .send()
+        .await
+        .unwrap();
 
-    println!("{:#?}", did_doc);
+    for pref in resp.preferences {
+        println!("pref: {pref:#?}");
+    }
+    //println!("preferences: {resp:#?}");
 }

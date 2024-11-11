@@ -6,7 +6,7 @@ use crate::{error::ParseError, is_valid_domain_segment, is_valid_tld};
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=253;
 
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Handle(String);
 
 impl Handle {

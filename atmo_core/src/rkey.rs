@@ -2,6 +2,7 @@ use std::{fmt, ops::RangeInclusive, str::FromStr};
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=512;
 
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct RecordKey(String);
 
 impl RecordKey {

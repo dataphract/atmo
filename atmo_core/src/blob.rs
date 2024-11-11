@@ -7,6 +7,7 @@ use serde::{
 
 use crate::cid::CidLink;
 
+#[derive(Debug)]
 pub struct Blob {
     pub ref_: CidLink,
     pub mime_type: String,

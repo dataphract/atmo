@@ -176,7 +176,7 @@ impl Gen {
 
                     Schema::Query(q) => {
                         scoped.emit_rpc(
-                            RpcType::Procedure,
+                            RpcType::Query,
                             q.parameters.as_ref(),
                             None,
                             q.output.as_ref(),
@@ -344,17 +344,16 @@ impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
                 let referent = self.resolve_ref(r);
                 let path = referent.path.clone();
 
-                if full.fragment_name() == Some("ThreadViewPost") {
-                    dbg!(&referent.full);
-                    dbg!(&full);
-                }
-
                 // TODO(dp): this is fragile, needs to actually do a full walk of references. also
                 // boxes too eagerly -- there might be a Vec indirection, so need to keep track of
                 // that and avoid boxing if possible.
                 let needs_boxed = &referent.full == full;
 
-                UnionEnumVariant { path, needs_boxed }
+                UnionEnumVariant {
+                    nsid: referent.full,
+                    path,
+                    needs_boxed,
+                }
             })
             .collect();
 
