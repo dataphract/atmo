@@ -17,7 +17,7 @@ impl ToTokens for StructDef {
         let fields = self.fields.iter();
 
         quote! {
-            #[derive(Debug, serde::Deserialize, serde::Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde::Deserialize, serde::Serialize)]
             pub struct #name {
                 #(#fields),*
             }

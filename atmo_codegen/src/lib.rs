@@ -104,8 +104,6 @@ mod rpc;
 mod struct_;
 mod unions;
 
-const APPLICATION_JSON: &str = "application/json";
-
 pub(crate) fn crate_name() -> syn::Ident {
     quote::format_ident!("atmo_core")
 }
@@ -163,7 +161,10 @@ impl Gen {
                         scoped.emit_struct(&full, o);
                     }
 
-                    Schema::Record(r) => continue,
+                    Schema::Record(r) => {
+                        let full = FullReference::from_str(nsid.as_str()).unwrap();
+                        scoped.emit_struct(&full, &r.record);
+                    }
 
                     Schema::Procedure(p) => {
                         scoped.emit_rpc(
@@ -212,7 +213,7 @@ pub struct ScopedGen<'gen, 'lex> {
     gen: &'lex Gen,
 }
 
-impl<'gen, 'scope, 'lex> ScopedGen<'gen, 'lex> {
+impl<'gen, 'lex> ScopedGen<'gen, 'lex> {
     fn resolve_ref(&self, r: nsid::Reference) -> Referent<'lex> {
         let (nsid, fragment) = match r {
             nsid::Reference::Full(full) => (full.clone_nsid(), full.clone_fragment()),

@@ -107,11 +107,6 @@ impl Generated {
         }
     }
 
-    pub fn item(&self, path: &ItemPath) -> Option<&Item> {
-        let module = self.modules.get(&path.module_path)?;
-        module.items.get(&path.item_name)
-    }
-
     // There's probably a way to do this in-place (i.e. without returning a new TokenStream for each
     // module) but it really doesn't matter.
     fn emit_module(&self, path: &ModulePath) -> TokenStream {
@@ -157,16 +152,15 @@ impl ToTokens for Generated {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ModulePath {
     segments: Vec<String>,
 }
 
 impl ModulePath {
+    #[inline]
     pub fn new() -> Self {
-        Self {
-            segments: Vec::new(),
-        }
+        Self::default()
     }
 
     pub fn name(&self) -> &str {

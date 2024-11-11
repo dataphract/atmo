@@ -209,7 +209,7 @@ impl FullReference {
 
     pub fn fragment_name(&self) -> Option<&str> {
         self.has_fragment()
-            .then_some(&self.text[self.frag_start + 1..])
+            .then(|| &self.text[self.frag_start + 1..])
     }
 }
 

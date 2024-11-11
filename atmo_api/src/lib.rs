@@ -5,5 +5,7 @@
 //! [atproto Lexicons]: https://github.com/bluesky-social/atproto/tree/main/lexicons
 
 mod generated;
+#[cfg(test)]
+mod tests;
 
 pub use generated::*;

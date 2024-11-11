@@ -22,18 +22,26 @@ const SUBSEC_PRECISION: usize = 9;
 /// To that end, this type stores the original parsed string and exposes it via
 /// [`DateTimeString::as_str`].
 ///
-/// # Comparison and Hashing
+/// # Comparison
 ///
-/// This type deliberately does not implement `Eq`, `Ord` or `Hash`, as the intended behavior of
-/// these trait implementations would be ambiguous (see above). Users wishing to compare or hash
-/// these values should do so by retrieving either the string representation or the timestamp
-/// representation as appropriate.
+/// The `Eq` implementation for this type compares the underlying `String` representation, rather
+/// than comparing the timestamp. As such, two `DateTimeStrings` representing the same numeric date
+/// and time may compare unequal.
 #[derive(Clone, Debug)]
 pub struct DateTimeString {
     // Keep the original representation to allow round-tripping, hashing, etc.
     original: String,
     parsed: Timestamp,
 }
+
+impl PartialEq for DateTimeString {
+    #[inline]
+    fn eq(&self, other: &Self) -> bool {
+        self.original == other.original
+    }
+}
+
+impl Eq for DateTimeString {}
 
 impl DateTimeString {
     /// Returns the string representation of the `DateTime` as originally parsed.

@@ -73,6 +73,44 @@ pub mod app {
                     "application/json"
                 }
             }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Profile {
+                #[doc = "Small image to be displayed next to posts from account. AKA, 'profile picture'"]
+                #[serde(default)]
+                #[serde(rename = "avatar")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub avatar: std::option::Option<atmo_core::Blob>,
+                #[doc = "Larger horizontal image to display behind profile view."]
+                #[serde(default)]
+                #[serde(rename = "banner")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub banner: std::option::Option<atmo_core::Blob>,
+                #[serde(default)]
+                #[serde(rename = "createdAt")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                #[serde(default)]
+                #[serde(rename = "description")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description: std::option::Option<std::string::String>,
+                #[serde(default)]
+                #[serde(rename = "displayName")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub display_name: std::option::Option<std::string::String>,
+                #[serde(default)]
+                #[serde(rename = "joinedViaStarterPack")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub joined_via_starter_pack:
+                    std::option::Option<crate::com::atproto::repo::StrongRef>,
+                #[serde(default)]
+                #[serde(rename = "labels")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub labels: std::option::Option<crate::app::bsky::actor::profile::Labels>,
+                #[serde(default)]
+                #[serde(rename = "pinnedPost")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub pinned_post: std::option::Option<crate::com::atproto::repo::StrongRef>,
+            }
             pub struct PutPreferences;
             impl atmo_core::xrpc::Request for PutPreferences {
                 type Params = atmo_core::xrpc::NoParams;
@@ -128,7 +166,7 @@ pub mod app {
                 }
             }
             pub mod defs {
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ActorTarget {
                     #[serde(rename = "all")]
                     All,
@@ -137,12 +175,12 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AdultContentPref {
                     #[serde(rename = "enabled")]
                     pub enabled: bool,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum AllowIncoming {
                     #[serde(rename = "all")]
                     All,
@@ -153,12 +191,12 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BskyAppProgressGuide {
                     #[serde(rename = "guide")]
                     pub guide: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BskyAppStatePref {
                     #[serde(default)]
                     #[serde(rename = "activeProgressGuide")]
@@ -175,7 +213,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub queued_nudges: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ContentLabelPref {
                     #[serde(rename = "label")]
                     pub label: std::string::String,
@@ -186,7 +224,7 @@ pub mod app {
                     #[serde(rename = "visibility")]
                     pub visibility: crate::app::bsky::actor::defs::Visibility,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedViewPref {
                     #[serde(rename = "feed")]
                     pub feed: std::string::String,
@@ -215,34 +253,34 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_reposts: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct HiddenPostsPref {
                     #[serde(rename = "items")]
                     pub items: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct InterestsPref {
                     #[serde(rename = "tags")]
                     pub tags: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct KnownFollowers {
                     #[serde(rename = "count")]
                     pub count: i64,
                     #[serde(rename = "followers")]
                     pub followers: std::vec::Vec<crate::app::bsky::actor::defs::ProfileViewBasic>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerPrefItem {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelersPref {
                     #[serde(rename = "labelers")]
                     pub labelers: std::vec::Vec<crate::app::bsky::actor::defs::LabelerPrefItem>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MutedWord {
                     #[serde(default)]
                     #[serde(rename = "actorTarget")]
@@ -262,7 +300,7 @@ pub mod app {
                     #[serde(rename = "value")]
                     pub value: std::string::String,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum MutedWordTarget {
                     #[serde(rename = "content")]
                     Content,
@@ -271,12 +309,12 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MutedWordsPref {
                     #[serde(rename = "items")]
                     pub items: std::vec::Vec<crate::app::bsky::actor::defs::MutedWord>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Nux {
                     #[serde(rename = "completed")]
                     pub completed: bool,
@@ -291,14 +329,14 @@ pub mod app {
                     #[serde(rename = "id")]
                     pub id: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct PersonalDetailsPref {
                     #[serde(default)]
                     #[serde(rename = "birthDate")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub birth_date: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Preferences {
                     AdultContentPref(crate::app::bsky::actor::defs::AdultContentPref),
                     BskyAppStatePref(crate::app::bsky::actor::defs::BskyAppStatePref),
@@ -495,7 +533,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileAssociated {
                     #[serde(default)]
                     #[serde(rename = "chat")]
@@ -519,12 +557,12 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub starter_packs: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileAssociatedChat {
                     #[serde(rename = "allowIncoming")]
                     pub allow_incoming: crate::app::bsky::actor::defs::AllowIncoming,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileView {
                     #[serde(default)]
                     #[serde(rename = "associated")]
@@ -565,7 +603,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileViewBasic {
                     #[serde(default)]
                     #[serde(rename = "associated")]
@@ -598,7 +636,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileViewDetailed {
                     #[serde(default)]
                     #[serde(rename = "associated")]
@@ -664,7 +702,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SavedFeed {
                     #[serde(rename = "id")]
                     pub id: std::string::String,
@@ -675,7 +713,7 @@ pub mod app {
                     #[serde(rename = "value")]
                     pub value: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SavedFeedsPref {
                     #[serde(rename = "pinned")]
                     pub pinned: std::vec::Vec<std::string::String>,
@@ -686,12 +724,12 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub timeline_index: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SavedFeedsPrefV2 {
                     #[serde(rename = "items")]
                     pub items: std::vec::Vec<crate::app::bsky::actor::defs::SavedFeed>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Sort {
                     #[serde(rename = "oldest")]
                     Oldest,
@@ -704,7 +742,7 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadViewPref {
                     #[doc = "Show followed users at the top of all replies."]
                     #[serde(default)]
@@ -716,7 +754,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort: std::option::Option<crate::app::bsky::actor::defs::Sort>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Type {
                     #[serde(rename = "feed")]
                     Feed,
@@ -727,7 +765,7 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerState {
                     #[serde(default)]
                     #[serde(rename = "blockedBy")]
@@ -765,7 +803,7 @@ pub mod app {
                     pub muted_by_list:
                         std::option::Option<crate::app::bsky::graph::defs::ListViewBasic>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Visibility {
                     #[serde(rename = "ignore")]
                     Ignore,
@@ -780,35 +818,35 @@ pub mod app {
                 }
             }
             pub mod get_preferences {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "preferences")]
                     pub preferences: std::vec::Vec<crate::app::bsky::actor::defs::Preferences>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {}
             }
             pub mod get_profile {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod get_profiles {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "profiles")]
                     pub profiles: std::vec::Vec<crate::app::bsky::actor::defs::ProfileViewDetailed>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actors")]
                     pub actors: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod get_suggestions {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "actors")]
                     pub actors: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -817,7 +855,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -829,15 +867,72 @@ pub mod app {
                     pub limit: std::option::Option<i64>,
                 }
             }
+            pub mod profile {
+                #[doc = "Self-label values, specific to the Bluesky application, on the overall account."]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Labels {
+                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Labels {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+            }
             pub mod put_preferences {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "preferences")]
                     pub preferences: std::vec::Vec<crate::app::bsky::actor::defs::Preferences>,
                 }
             }
             pub mod search_actors {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "actors")]
                     pub actors: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -846,7 +941,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -867,12 +962,12 @@ pub mod app {
                 }
             }
             pub mod search_actors_typeahead {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "actors")]
                     pub actors: std::vec::Vec<crate::app::bsky::actor::defs::ProfileViewBasic>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "limit")]
@@ -890,29 +985,29 @@ pub mod app {
             }
         }
         pub mod embed {
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct External {
                 #[serde(rename = "external")]
                 pub external: crate::app::bsky::embed::external::External,
             }
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Images {
                 #[serde(rename = "images")]
                 pub images: std::vec::Vec<crate::app::bsky::embed::images::Image>,
             }
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Record {
                 #[serde(rename = "record")]
                 pub record: crate::com::atproto::repo::StrongRef,
             }
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct RecordWithMedia {
                 #[serde(rename = "media")]
                 pub media: crate::app::bsky::embed::record_with_media::Media,
                 #[serde(rename = "record")]
                 pub record: crate::app::bsky::embed::Record,
             }
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Video {
                 #[serde(default)]
                 #[serde(rename = "alt")]
@@ -931,7 +1026,7 @@ pub mod app {
                 pub video: atmo_core::Blob,
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AspectRatio {
                     #[serde(rename = "height")]
                     pub height: i64,
@@ -940,7 +1035,7 @@ pub mod app {
                 }
             }
             pub mod external {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct External {
                     #[serde(rename = "description")]
                     pub description: std::string::String,
@@ -953,12 +1048,12 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: url::Url,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(rename = "external")]
                     pub external: crate::app::bsky::embed::external::ViewExternal,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewExternal {
                     #[serde(rename = "description")]
                     pub description: std::string::String,
@@ -973,7 +1068,7 @@ pub mod app {
                 }
             }
             pub mod images {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Image {
                     #[serde(rename = "alt")]
                     pub alt: std::string::String,
@@ -985,12 +1080,12 @@ pub mod app {
                     #[serde(rename = "image")]
                     pub image: atmo_core::Blob,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(rename = "images")]
                     pub images: std::vec::Vec<crate::app::bsky::embed::images::ViewImage>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewImage {
                     #[serde(rename = "alt")]
                     pub alt: std::string::String,
@@ -1006,7 +1101,7 @@ pub mod app {
                 }
             }
             pub mod record {
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Embeds {
                     ExternalView(crate::app::bsky::embed::external::View),
                     ImagesView(crate::app::bsky::embed::images::View),
@@ -1096,7 +1191,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Record {
                     GeneratorView(crate::app::bsky::feed::defs::GeneratorView),
                     LabelerView(crate::app::bsky::labeler::defs::LabelerView),
@@ -1141,12 +1236,12 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(rename = "record")]
                     pub record: crate::app::bsky::embed::record::Record,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewBlocked {
                     #[serde(rename = "author")]
                     pub author: crate::app::bsky::feed::defs::BlockedAuthor,
@@ -1155,21 +1250,21 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewDetached {
                     #[serde(rename = "detached")]
                     pub detached: bool,
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewNotFound {
                     #[serde(rename = "notFound")]
                     pub not_found: bool,
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewRecord {
                     #[serde(rename = "author")]
                     pub author: crate::app::bsky::actor::defs::ProfileViewBasic,
@@ -1210,7 +1305,7 @@ pub mod app {
                 }
             }
             pub mod record_with_media {
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Media {
                     External(crate::app::bsky::embed::External),
                     Images(crate::app::bsky::embed::Images),
@@ -1278,14 +1373,14 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(rename = "media")]
                     pub media: crate::app::bsky::embed::record_with_media::ViewMedia,
                     #[serde(rename = "record")]
                     pub record: crate::app::bsky::embed::record::View,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum ViewMedia {
                     ExternalView(crate::app::bsky::embed::external::View),
                     ImagesView(crate::app::bsky::embed::images::View),
@@ -1355,14 +1450,14 @@ pub mod app {
                 }
             }
             pub mod video {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Caption {
                     #[serde(rename = "file")]
                     pub file: atmo_core::Blob,
                     #[serde(rename = "lang")]
                     pub lang: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(default)]
                     #[serde(rename = "alt")]
@@ -1402,6 +1497,37 @@ pub mod app {
                 fn output_encoding() -> &'static str {
                     "application/json"
                 }
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Generator {
+                #[doc = "Declaration that a feed accepts feedback interactions from a client through app.bsky.feed.sendInteractions"]
+                #[serde(default)]
+                #[serde(rename = "acceptsInteractions")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub accepts_interactions: std::option::Option<bool>,
+                #[serde(default)]
+                #[serde(rename = "avatar")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub avatar: std::option::Option<atmo_core::Blob>,
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "description")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description: std::option::Option<std::string::String>,
+                #[serde(default)]
+                #[serde(rename = "descriptionFacets")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description_facets:
+                    std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
+                #[serde(rename = "did")]
+                pub did: atmo_core::Did,
+                #[serde(rename = "displayName")]
+                pub display_name: std::string::String,
+                #[serde(default)]
+                #[serde(rename = "labels")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub labels: std::option::Option<crate::app::bsky::feed::generator::Labels>,
             }
             pub struct GetActorFeeds;
             impl atmo_core::xrpc::Request for GetActorFeeds {
@@ -1673,6 +1799,74 @@ pub mod app {
                     "application/json"
                 }
             }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Like {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(rename = "subject")]
+                pub subject: crate::com::atproto::repo::StrongRef,
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Post {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "embed")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub embed: std::option::Option<crate::app::bsky::feed::post::Embed>,
+                #[serde(default)]
+                #[serde(rename = "entities")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub entities:
+                    std::option::Option<std::vec::Vec<crate::app::bsky::feed::post::Entity>>,
+                #[serde(default)]
+                #[serde(rename = "facets")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub facets: std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
+                #[serde(default)]
+                #[serde(rename = "labels")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub labels: std::option::Option<crate::app::bsky::feed::post::Labels>,
+                #[serde(default)]
+                #[serde(rename = "langs")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub langs: std::option::Option<std::vec::Vec<std::string::String>>,
+                #[serde(default)]
+                #[serde(rename = "reply")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub reply: std::option::Option<crate::app::bsky::feed::post::ReplyRef>,
+                #[serde(default)]
+                #[serde(rename = "tags")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub tags: std::option::Option<std::vec::Vec<std::string::String>>,
+                #[serde(rename = "text")]
+                pub text: std::string::String,
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Postgate {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "detachedEmbeddingUris")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub detached_embedding_uris:
+                    std::option::Option<std::vec::Vec<std::string::String>>,
+                #[serde(default)]
+                #[serde(rename = "embeddingRules")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub embedding_rules: std::option::Option<
+                    std::vec::Vec<crate::app::bsky::feed::postgate::EmbeddingRules>,
+                >,
+                #[serde(rename = "post")]
+                pub post: atmo_core::AtUri,
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Repost {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(rename = "subject")]
+                pub subject: crate::com::atproto::repo::StrongRef,
+            }
             pub struct SearchPosts;
             impl atmo_core::xrpc::Request for SearchPosts {
                 type Params = crate::app::bsky::feed::search_posts::Params;
@@ -1709,8 +1903,24 @@ pub mod app {
                     "application/json"
                 }
             }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Threadgate {
+                #[serde(default)]
+                #[serde(rename = "allow")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub allow:
+                    std::option::Option<std::vec::Vec<crate::app::bsky::feed::threadgate::Allow>>,
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "hiddenReplies")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub hidden_replies: std::option::Option<std::vec::Vec<std::string::String>>,
+                #[serde(rename = "post")]
+                pub post: atmo_core::AtUri,
+            }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BlockedAuthor {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -1719,7 +1929,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::actor::defs::ViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BlockedPost {
                     #[serde(rename = "author")]
                     pub author: crate::app::bsky::feed::defs::BlockedAuthor,
@@ -1728,7 +1938,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Embed {
                     ExternalView(crate::app::bsky::embed::external::View),
                     ImagesView(crate::app::bsky::embed::images::View),
@@ -1818,7 +2028,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Event {
                     #[doc = "Request that less content like the given feed item be shown in the feed"]
                     #[serde(rename = "app.bsky.feed.defs#requestLess")]
@@ -1859,7 +2069,7 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedViewPost {
                     #[serde(default)]
                     #[serde(rename = "feedContext")]
@@ -1876,7 +2086,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub reply: std::option::Option<crate::app::bsky::feed::defs::ReplyRef>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct GeneratorView {
                     #[serde(default)]
                     #[serde(rename = "acceptsInteractions")]
@@ -1922,14 +2132,14 @@ pub mod app {
                     pub viewer:
                         std::option::Option<crate::app::bsky::feed::defs::GeneratorViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct GeneratorViewerState {
                     #[serde(default)]
                     #[serde(rename = "like")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub like: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Interaction {
                     #[serde(default)]
                     #[serde(rename = "event")]
@@ -1944,14 +2154,14 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub item: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct NotFoundPost {
                     #[serde(rename = "notFound")]
                     pub not_found: bool,
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Parent {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
@@ -2019,7 +2229,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct PostView {
                     #[serde(rename = "author")]
                     pub author: crate::app::bsky::actor::defs::ProfileViewBasic,
@@ -2066,7 +2276,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::feed::defs::ViewerState>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Reason {
                     ReasonPin(crate::app::bsky::feed::defs::ReasonPin),
                     ReasonRepost(crate::app::bsky::feed::defs::ReasonRepost),
@@ -2125,16 +2335,16 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReasonPin {}
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReasonRepost {
                     #[serde(rename = "by")]
                     pub by: crate::app::bsky::actor::defs::ProfileViewBasic,
                     #[serde(rename = "indexedAt")]
                     pub indexed_at: atmo_core::DateTimeString,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Replies {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
@@ -2206,7 +2416,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
                     #[serde(default)]
                     #[serde(rename = "grandparentAuthor")]
@@ -2218,7 +2428,7 @@ pub mod app {
                     #[serde(rename = "root")]
                     pub root: crate::app::bsky::feed::defs::Root,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Root {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
@@ -2286,7 +2496,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonFeedPost {
                     #[serde(default)]
                     #[serde(rename = "feedContext")]
@@ -2300,7 +2510,7 @@ pub mod app {
                     pub reason:
                         std::option::Option<crate::app::bsky::feed::defs::SkeletonFeedPostReason>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum SkeletonFeedPostReason {
                     SkeletonReasonPin(crate::app::bsky::feed::defs::SkeletonReasonPin),
                     SkeletonReasonRepost(crate::app::bsky::feed::defs::SkeletonReasonRepost),
@@ -2367,14 +2577,14 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonReasonPin {}
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonReasonRepost {
                     #[serde(rename = "repost")]
                     pub repost: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadViewPost {
                     #[serde(default)]
                     #[serde(rename = "parent")]
@@ -2389,7 +2599,7 @@ pub mod app {
                     pub replies:
                         std::option::Option<std::vec::Vec<crate::app::bsky::feed::defs::Replies>>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum ThreadViewPostParent {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
@@ -2461,7 +2671,7 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadgateView {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2482,7 +2692,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub uri: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerState {
                     #[serde(default)]
                     #[serde(rename = "embeddingDisabled")]
@@ -2511,12 +2721,12 @@ pub mod app {
                 }
             }
             pub mod describe_feed_generator {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Feed {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Links {
                     #[serde(default)]
                     #[serde(rename = "privacyPolicy")]
@@ -2527,7 +2737,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub terms_of_service: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -2540,8 +2750,65 @@ pub mod app {
                         std::option::Option<crate::app::bsky::feed::describe_feed_generator::Links>,
                 }
             }
+            pub mod generator {
+                #[doc = "Self-label values"]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Labels {
+                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Labels {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+            }
             pub mod get_actor_feeds {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2550,7 +2817,7 @@ pub mod app {
                     #[serde(rename = "feeds")]
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -2565,7 +2832,7 @@ pub mod app {
                 }
             }
             pub mod get_actor_likes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2574,7 +2841,7 @@ pub mod app {
                     #[serde(rename = "feed")]
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -2589,7 +2856,7 @@ pub mod app {
                 }
             }
             pub mod get_author_feed {
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Filter {
                     #[serde(rename = "posts_with_replies")]
                     PostsWithReplies,
@@ -2602,7 +2869,7 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2611,7 +2878,7 @@ pub mod app {
                     #[serde(rename = "feed")]
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -2635,7 +2902,7 @@ pub mod app {
                 }
             }
             pub mod get_feed {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2644,7 +2911,7 @@ pub mod app {
                     #[serde(rename = "feed")]
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2659,7 +2926,7 @@ pub mod app {
                 }
             }
             pub mod get_feed_generator {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[doc = "Indicates whether the feed generator service has been online recently, or else seems to be inactive."]
                     #[serde(rename = "isOnline")]
@@ -2670,26 +2937,26 @@ pub mod app {
                     #[serde(rename = "view")]
                     pub view: crate::app::bsky::feed::defs::GeneratorView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "feed")]
                     pub feed: atmo_core::AtUri,
                 }
             }
             pub mod get_feed_generators {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "feeds")]
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "feeds")]
                     pub feeds: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod get_feed_skeleton {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2698,7 +2965,7 @@ pub mod app {
                     #[serde(rename = "feed")]
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::SkeletonFeedPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2713,7 +2980,7 @@ pub mod app {
                 }
             }
             pub mod get_likes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Like {
                     #[serde(rename = "actor")]
                     pub actor: crate::app::bsky::actor::defs::ProfileView,
@@ -2722,7 +2989,7 @@ pub mod app {
                     #[serde(rename = "indexedAt")]
                     pub indexed_at: atmo_core::DateTimeString,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2737,7 +3004,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2756,7 +3023,7 @@ pub mod app {
                 }
             }
             pub mod get_list_feed {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2765,7 +3032,7 @@ pub mod app {
                     #[serde(rename = "feed")]
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2780,7 +3047,7 @@ pub mod app {
                 }
             }
             pub mod get_post_thread {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "thread")]
                     pub thread: crate::app::bsky::feed::get_post_thread::Thread,
@@ -2790,7 +3057,7 @@ pub mod app {
                     pub threadgate:
                         std::option::Option<crate::app::bsky::feed::defs::ThreadgateView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "depth")]
@@ -2803,7 +3070,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Thread {
                     BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                     NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
@@ -2877,19 +3144,19 @@ pub mod app {
                 }
             }
             pub mod get_posts {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "posts")]
                     pub posts: std::vec::Vec<crate::app::bsky::feed::defs::PostView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "uris")]
                     pub uris: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod get_quotes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2904,7 +3171,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2923,7 +3190,7 @@ pub mod app {
                 }
             }
             pub mod get_reposted_by {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2938,7 +3205,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -2957,7 +3224,7 @@ pub mod app {
                 }
             }
             pub mod get_suggested_feeds {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2966,7 +3233,7 @@ pub mod app {
                     #[serde(rename = "feeds")]
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2979,7 +3246,7 @@ pub mod app {
                 }
             }
             pub mod get_timeline {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -2988,7 +3255,7 @@ pub mod app {
                     #[serde(rename = "feed")]
                     pub feed: std::vec::Vec<crate::app::bsky::feed::defs::FeedViewPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "algorithm")]
@@ -3005,7 +3272,93 @@ pub mod app {
                 }
             }
             pub mod post {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Embed {
+                    External(crate::app::bsky::embed::External),
+                    Images(crate::app::bsky::embed::Images),
+                    Record(crate::app::bsky::embed::Record),
+                    RecordWithMedia(crate::app::bsky::embed::RecordWithMedia),
+                    Video(crate::app::bsky::embed::Video),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Embed {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "app.bsky.embed.external" => {
+                                    crate::app::bsky::embed::External::deserialize(map_des)
+                                        .map(Self::External)
+                                }
+                                "app.bsky.embed.images" => {
+                                    crate::app::bsky::embed::Images::deserialize(map_des)
+                                        .map(Self::Images)
+                                }
+                                "app.bsky.embed.record" => {
+                                    crate::app::bsky::embed::Record::deserialize(map_des)
+                                        .map(Self::Record)
+                                }
+                                "app.bsky.embed.recordWithMedia" => {
+                                    crate::app::bsky::embed::RecordWithMedia::deserialize(map_des)
+                                        .map(Self::RecordWithMedia)
+                                }
+                                "app.bsky.embed.video" => {
+                                    crate::app::bsky::embed::Video::deserialize(map_des)
+                                        .map(Self::Video)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "app.bsky.embed.external" => {
+                                    crate::app::bsky::embed::External::deserialize(map_des)
+                                        .map(Self::External)
+                                }
+                                "app.bsky.embed.images" => {
+                                    crate::app::bsky::embed::Images::deserialize(map_des)
+                                        .map(Self::Images)
+                                }
+                                "app.bsky.embed.record" => {
+                                    crate::app::bsky::embed::Record::deserialize(map_des)
+                                        .map(Self::Record)
+                                }
+                                "app.bsky.embed.recordWithMedia" => {
+                                    crate::app::bsky::embed::RecordWithMedia::deserialize(map_des)
+                                        .map(Self::RecordWithMedia)
+                                }
+                                "app.bsky.embed.video" => {
+                                    crate::app::bsky::embed::Video::deserialize(map_des)
+                                        .map(Self::Video)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Entity {
                     #[serde(rename = "index")]
                     pub index: crate::app::bsky::feed::post::TextSlice,
@@ -3014,14 +3367,69 @@ pub mod app {
                     #[serde(rename = "value")]
                     pub value: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[doc = "Self-label values for this post. Effectively content warnings."]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Labels {
+                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Labels {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
                     #[serde(rename = "parent")]
                     pub parent: crate::com::atproto::repo::StrongRef,
                     #[serde(rename = "root")]
                     pub root: crate::com::atproto::repo::StrongRef,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct TextSlice {
                     #[serde(rename = "end")]
                     pub end: i64,
@@ -3030,11 +3438,65 @@ pub mod app {
                 }
             }
             pub mod postgate {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct DisableRule {}
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum EmbeddingRules {
+                    DisableRule(crate::app::bsky::feed::postgate::DisableRule),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for EmbeddingRules {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "app.bsky.feed.postgate#disableRule" => {
+                                    crate::app::bsky::feed::postgate::DisableRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::DisableRule)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "app.bsky.feed.postgate#disableRule" => {
+                                    crate::app::bsky::feed::postgate::DisableRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::DisableRule)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
             }
             pub mod search_posts {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3047,7 +3509,7 @@ pub mod app {
                     #[serde(rename = "posts")]
                     pub posts: std::vec::Vec<crate::app::bsky::feed::defs::PostView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "author")]
@@ -3096,7 +3558,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub url: std::option::Option<url::Url>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Sort {
                     #[serde(rename = "top")]
                     Top,
@@ -3107,27 +3569,121 @@ pub mod app {
                 }
             }
             pub mod send_interactions {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "interactions")]
                     pub interactions: std::vec::Vec<crate::app::bsky::feed::defs::Interaction>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {}
             }
             pub mod threadgate {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Allow {
+                    FollowingRule(crate::app::bsky::feed::threadgate::FollowingRule),
+                    ListRule(crate::app::bsky::feed::threadgate::ListRule),
+                    MentionRule(crate::app::bsky::feed::threadgate::MentionRule),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Allow {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "app.bsky.feed.threadgate#followingRule" => {
+                                    crate::app::bsky::feed::threadgate::FollowingRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::FollowingRule)
+                                }
+                                "app.bsky.feed.threadgate#listRule" => {
+                                    crate::app::bsky::feed::threadgate::ListRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::ListRule)
+                                }
+                                "app.bsky.feed.threadgate#mentionRule" => {
+                                    crate::app::bsky::feed::threadgate::MentionRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::MentionRule)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "app.bsky.feed.threadgate#followingRule" => {
+                                    crate::app::bsky::feed::threadgate::FollowingRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::FollowingRule)
+                                }
+                                "app.bsky.feed.threadgate#listRule" => {
+                                    crate::app::bsky::feed::threadgate::ListRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::ListRule)
+                                }
+                                "app.bsky.feed.threadgate#mentionRule" => {
+                                    crate::app::bsky::feed::threadgate::MentionRule::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::MentionRule)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FollowingRule {}
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ListRule {
                     #[serde(rename = "list")]
                     pub list: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MentionRule {}
             }
         }
         pub mod graph {
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Block {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(rename = "subject")]
+                pub subject: atmo_core::Did,
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Follow {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(rename = "subject")]
+                pub subject: atmo_core::Did,
+            }
             pub struct GetActorStarterPacks;
             impl atmo_core::xrpc::Request for GetActorStarterPacks {
                 type Params = crate::app::bsky::graph::get_actor_starter_packs::Params;
@@ -3380,6 +3936,48 @@ pub mod app {
                     "application/json"
                 }
             }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct List {
+                #[serde(default)]
+                #[serde(rename = "avatar")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub avatar: std::option::Option<atmo_core::Blob>,
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "description")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description: std::option::Option<std::string::String>,
+                #[serde(default)]
+                #[serde(rename = "descriptionFacets")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description_facets:
+                    std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
+                #[serde(default)]
+                #[serde(rename = "labels")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub labels: std::option::Option<crate::app::bsky::graph::list::Labels>,
+                #[serde(rename = "name")]
+                pub name: std::string::String,
+                #[serde(rename = "purpose")]
+                pub purpose: crate::app::bsky::graph::defs::ListPurpose,
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Listblock {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(rename = "subject")]
+                pub subject: atmo_core::AtUri,
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Listitem {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(rename = "list")]
+                pub list: atmo_core::AtUri,
+                #[serde(rename = "subject")]
+                pub subject: atmo_core::Did,
+            }
             pub struct MuteActor;
             impl atmo_core::xrpc::Request for MuteActor {
                 type Params = atmo_core::xrpc::NoParams;
@@ -3433,6 +4031,30 @@ pub mod app {
                 fn output_encoding() -> &'static str {
                     "*/*"
                 }
+            }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Starterpack {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "description")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description: std::option::Option<std::string::String>,
+                #[serde(default)]
+                #[serde(rename = "descriptionFacets")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub description_facets:
+                    std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
+                #[serde(default)]
+                #[serde(rename = "feeds")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub feeds: std::option::Option<
+                    std::vec::Vec<crate::app::bsky::graph::starterpack::FeedItem>,
+                >,
+                #[serde(rename = "list")]
+                pub list: atmo_core::AtUri,
+                #[serde(rename = "name")]
+                pub name: std::string::String,
             }
             pub struct UnmuteActor;
             impl atmo_core::xrpc::Request for UnmuteActor {
@@ -3489,14 +4111,14 @@ pub mod app {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ListItemView {
                     #[serde(rename = "subject")]
                     pub subject: crate::app::bsky::actor::defs::ProfileView,
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ListPurpose {
                     #[doc = "A list of actors to apply an aggregate moderation action (mute/block) on."]
                     #[serde(rename = "app.bsky.graph.defs#modlist")]
@@ -3510,7 +4132,7 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ListView {
                     #[serde(default)]
                     #[serde(rename = "avatar")]
@@ -3551,7 +4173,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::graph::defs::ListViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ListViewBasic {
                     #[serde(default)]
                     #[serde(rename = "avatar")]
@@ -3583,7 +4205,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::graph::defs::ListViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ListViewerState {
                     #[serde(default)]
                     #[serde(rename = "blocked")]
@@ -3594,14 +4216,14 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub muted: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct NotFoundActor {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
                     #[serde(rename = "notFound")]
                     pub not_found: bool,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Relationship {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -3614,7 +4236,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub following: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct StarterPackView {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -3656,7 +4278,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct StarterPackViewBasic {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -3688,7 +4310,7 @@ pub mod app {
                 }
             }
             pub mod get_actor_starter_packs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3698,7 +4320,7 @@ pub mod app {
                     pub starter_packs:
                         std::vec::Vec<crate::app::bsky::graph::defs::StarterPackViewBasic>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -3713,7 +4335,7 @@ pub mod app {
                 }
             }
             pub mod get_blocks {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "blocks")]
                     pub blocks: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
@@ -3722,7 +4344,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3735,7 +4357,7 @@ pub mod app {
                 }
             }
             pub mod get_followers {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3746,7 +4368,7 @@ pub mod app {
                     #[serde(rename = "subject")]
                     pub subject: crate::app::bsky::actor::defs::ProfileView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -3761,7 +4383,7 @@ pub mod app {
                 }
             }
             pub mod get_follows {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3772,7 +4394,7 @@ pub mod app {
                     #[serde(rename = "subject")]
                     pub subject: crate::app::bsky::actor::defs::ProfileView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -3787,7 +4409,7 @@ pub mod app {
                 }
             }
             pub mod get_known_followers {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3798,7 +4420,7 @@ pub mod app {
                     #[serde(rename = "subject")]
                     pub subject: crate::app::bsky::actor::defs::ProfileView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -3813,7 +4435,7 @@ pub mod app {
                 }
             }
             pub mod get_list {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3824,7 +4446,7 @@ pub mod app {
                     #[serde(rename = "list")]
                     pub list: crate::app::bsky::graph::defs::ListView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3839,7 +4461,7 @@ pub mod app {
                 }
             }
             pub mod get_list_blocks {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3848,7 +4470,7 @@ pub mod app {
                     #[serde(rename = "lists")]
                     pub lists: std::vec::Vec<crate::app::bsky::graph::defs::ListView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3861,7 +4483,7 @@ pub mod app {
                 }
             }
             pub mod get_list_mutes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3870,7 +4492,7 @@ pub mod app {
                     #[serde(rename = "lists")]
                     pub lists: std::vec::Vec<crate::app::bsky::graph::defs::ListView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3883,7 +4505,7 @@ pub mod app {
                 }
             }
             pub mod get_lists {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3892,7 +4514,7 @@ pub mod app {
                     #[serde(rename = "lists")]
                     pub lists: std::vec::Vec<crate::app::bsky::graph::defs::ListView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -3907,7 +4529,7 @@ pub mod app {
                 }
             }
             pub mod get_mutes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3916,7 +4538,7 @@ pub mod app {
                     #[serde(rename = "mutes")]
                     pub mutes: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -3929,7 +4551,7 @@ pub mod app {
                 }
             }
             pub mod get_relationships {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "actor")]
@@ -3939,7 +4561,7 @@ pub mod app {
                     pub relationships:
                         std::vec::Vec<crate::app::bsky::graph::get_relationships::Relationships>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
@@ -3948,7 +4570,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub others: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Relationships {
                     NotFoundActor(crate::app::bsky::graph::defs::NotFoundActor),
                     Relationship(crate::app::bsky::graph::defs::Relationship),
@@ -4017,32 +4639,32 @@ pub mod app {
                 }
             }
             pub mod get_starter_pack {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "starterPack")]
                     pub starter_pack: crate::app::bsky::graph::defs::StarterPackView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "starterPack")]
                     pub starter_pack: atmo_core::AtUri,
                 }
             }
             pub mod get_starter_packs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "starterPacks")]
                     pub starter_packs:
                         std::vec::Vec<crate::app::bsky::graph::defs::StarterPackViewBasic>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "uris")]
                     pub uris: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod get_suggested_follows_by_actor {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[doc = "If true, response has fallen-back to generic results, and is not scoped using relativeToDid"]
                     #[serde(default)]
@@ -4052,56 +4674,112 @@ pub mod app {
                     #[serde(rename = "suggestions")]
                     pub suggestions: std::vec::Vec<crate::app::bsky::actor::defs::ProfileView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
                 }
             }
+            pub mod list {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Labels {
+                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Labels {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+            }
             pub mod mute_actor {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod mute_actor_list {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "list")]
                     pub list: atmo_core::AtUri,
                 }
             }
             pub mod mute_thread {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "root")]
                     pub root: atmo_core::AtUri,
                 }
             }
             pub mod starterpack {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedItem {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
             }
             pub mod unmute_actor {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::AtIdentifier,
                 }
             }
             pub mod unmute_actor_list {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "list")]
                     pub list: atmo_core::AtUri,
                 }
             }
             pub mod unmute_thread {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "root")]
                     pub root: atmo_core::AtUri,
@@ -4127,8 +4805,19 @@ pub mod app {
                     "application/json"
                 }
             }
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Service {
+                #[serde(rename = "createdAt")]
+                pub created_at: atmo_core::DateTimeString,
+                #[serde(default)]
+                #[serde(rename = "labels")]
+                #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                pub labels: std::option::Option<crate::app::bsky::labeler::service::Labels>,
+                #[serde(rename = "policies")]
+                pub policies: crate::app::bsky::labeler::defs::LabelerPolicies,
+            }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerPolicies {
                     #[serde(default)]
                     #[serde(rename = "labelValueDefinitions")]
@@ -4139,7 +4828,7 @@ pub mod app {
                     #[serde(rename = "labelValues")]
                     pub label_values: std::vec::Vec<crate::com::atproto::label::defs::LabelValue>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerView {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -4164,7 +4853,7 @@ pub mod app {
                     pub viewer:
                         std::option::Option<crate::app::bsky::labeler::defs::LabelerViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerViewDetailed {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -4191,7 +4880,7 @@ pub mod app {
                     pub viewer:
                         std::option::Option<crate::app::bsky::labeler::defs::LabelerViewerState>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelerViewerState {
                     #[serde(default)]
                     #[serde(rename = "like")]
@@ -4200,12 +4889,12 @@ pub mod app {
                 }
             }
             pub mod get_services {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "views")]
                     pub views: std::vec::Vec<crate::app::bsky::labeler::get_services::Views>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "detailed")]
@@ -4214,7 +4903,7 @@ pub mod app {
                     #[serde(rename = "dids")]
                     pub dids: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Views {
                     LabelerView(crate::app::bsky::labeler::defs::LabelerView),
                     LabelerViewDetailed(crate::app::bsky::labeler::defs::LabelerViewDetailed),
@@ -4249,6 +4938,62 @@ pub mod app {
                                 }),
                             );
                             let res = match union_ . ty . as_ref () { "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.labeler.defs#labelerViewDetailed" => crate :: app :: bsky :: labeler :: defs :: LabelerViewDetailed :: deserialize (map_des) . map (Self :: LabelerViewDetailed) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                            res.map_err(D::Error::custom)
+                        }
+                    }
+                }
+            }
+            pub mod service {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                pub enum Labels {
+                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                    #[serde(untagged)]
+                    Other(atmo_core::Unknown),
+                }
+                impl<'de> serde::Deserialize<'de> for Labels {
+                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                    where
+                        D: serde::Deserializer<'de>,
+                    {
+                        use serde::de::Error as _;
+                        if des.is_human_readable() {
+                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
+                            res.map_err(D::Error::custom)
+                        } else {
+                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
+                                Default::default();
+                            let union_ = des.deserialize_map(visitor)?;
+                            let map_des = serde::de::value::MapDeserializer::new(
+                                union_.map.iter().map(|(k, v)| {
+                                    (
+                                        k.as_ref(),
+                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                    )
+                                }),
+                            );
+                            let res = match union_.ty.as_ref() {
+                                "com.atproto.label.defs#selfLabels" => {
+                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                        map_des,
+                                    )
+                                    .map(Self::SelfLabels)
+                                }
+                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                            };
                             res.map_err(D::Error::custom)
                         }
                     }
@@ -4347,12 +5092,12 @@ pub mod app {
                 }
             }
             pub mod get_unread_count {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "count")]
                     pub count: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "priority")]
@@ -4365,7 +5110,7 @@ pub mod app {
                 }
             }
             pub mod list_notifications {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Notification {
                     #[serde(rename = "author")]
                     pub author: crate::app::bsky::actor::defs::ProfileView,
@@ -4391,7 +5136,7 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4410,7 +5155,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub seen_at: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4429,7 +5174,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub seen_at: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Reason {
                     #[serde(rename = "like")]
                     Like,
@@ -4450,14 +5195,14 @@ pub mod app {
                 }
             }
             pub mod put_preferences {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "priority")]
                     pub priority: bool,
                 }
             }
             pub mod register_push {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "appId")]
                     pub app_id: std::string::String,
@@ -4468,7 +5213,7 @@ pub mod app {
                     #[serde(rename = "token")]
                     pub token: std::string::String,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Platform {
                     #[serde(rename = "ios")]
                     Ios,
@@ -4481,7 +5226,7 @@ pub mod app {
                 }
             }
             pub mod update_seen {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "seenAt")]
                     pub seen_at: atmo_core::DateTimeString,
@@ -4489,7 +5234,7 @@ pub mod app {
             }
         }
         pub mod richtext {
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Facet {
                 #[serde(rename = "features")]
                 pub features: std::vec::Vec<crate::app::bsky::richtext::facet::Features>,
@@ -4497,14 +5242,14 @@ pub mod app {
                 pub index: crate::app::bsky::richtext::facet::ByteSlice,
             }
             pub mod facet {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ByteSlice {
                     #[serde(rename = "byteEnd")]
                     pub byte_end: i64,
                     #[serde(rename = "byteStart")]
                     pub byte_start: i64,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Features {
                     Link(crate::app::bsky::richtext::facet::Link),
                     Mention(crate::app::bsky::richtext::facet::Mention),
@@ -4572,17 +5317,17 @@ pub mod app {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Link {
                     #[serde(rename = "uri")]
                     pub uri: url::Url,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Mention {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Tag {
                     #[serde(rename = "tag")]
                     pub tag: std::string::String,
@@ -4681,19 +5426,19 @@ pub mod app {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonSearchActor {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonSearchPost {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
             }
             pub mod get_popular_feed_generators {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4702,7 +5447,7 @@ pub mod app {
                     #[serde(rename = "feeds")]
                     pub feeds: std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4719,7 +5464,7 @@ pub mod app {
                 }
             }
             pub mod get_suggestions_skeleton {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "actors")]
                     pub actors:
@@ -4733,7 +5478,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub relative_to_did: std::option::Option<atmo_core::Did>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4754,16 +5499,16 @@ pub mod app {
                 }
             }
             pub mod get_tagged_suggestions {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "suggestions")]
                     pub suggestions: std::vec::Vec<
                         crate::app::bsky::unspecced::get_tagged_suggestions::Suggestion,
                     >,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {}
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SubjectType {
                     #[serde(rename = "actor")]
                     Actor,
@@ -4772,7 +5517,7 @@ pub mod app {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Suggestion {
                     #[serde(rename = "subject")]
                     pub subject: url::Url,
@@ -4784,7 +5529,7 @@ pub mod app {
                 }
             }
             pub mod search_actors_skeleton {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "actors")]
                     pub actors:
@@ -4798,7 +5543,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hits_total: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4822,7 +5567,7 @@ pub mod app {
                 }
             }
             pub mod search_posts_skeleton {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -4835,7 +5580,7 @@ pub mod app {
                     #[serde(rename = "posts")]
                     pub posts: std::vec::Vec<crate::app::bsky::unspecced::defs::SkeletonSearchPost>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "author")]
@@ -4890,7 +5635,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<atmo_core::Did>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Sort {
                     #[serde(rename = "top")]
                     Top,
@@ -4957,7 +5702,7 @@ pub mod app {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct JobStatus {
                     #[serde(default)]
                     #[serde(rename = "blob")]
@@ -4982,7 +5727,7 @@ pub mod app {
                     #[serde(rename = "state")]
                     pub state: crate::app::bsky::video::defs::State,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum State {
                     #[serde(rename = "JOB_STATE_COMPLETED")]
                     JobStateCompleted,
@@ -4993,19 +5738,19 @@ pub mod app {
                 }
             }
             pub mod get_job_status {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "jobStatus")]
                     pub job_status: crate::app::bsky::video::defs::JobStatus,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "jobId")]
                     pub job_id: std::string::String,
                 }
             }
             pub mod get_upload_limits {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "canUpload")]
                     pub can_upload: bool,
@@ -5028,7 +5773,7 @@ pub mod app {
                 }
             }
             pub mod upload_video {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "jobStatus")]
                     pub job_status: crate::app::bsky::video::defs::JobStatus,
@@ -5040,6 +5785,11 @@ pub mod app {
 pub mod chat {
     pub mod bsky {
         pub mod actor {
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+            pub struct Declaration {
+                #[serde(rename = "allowIncoming")]
+                pub allow_incoming: crate::chat::bsky::actor::declaration::AllowIncoming,
+            }
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
                 type Params = atmo_core::xrpc::NoParams;
@@ -5076,8 +5826,21 @@ pub mod chat {
                     "application/jsonl"
                 }
             }
+            pub mod declaration {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum AllowIncoming {
+                    #[serde(rename = "all")]
+                    All,
+                    #[serde(rename = "none")]
+                    None,
+                    #[serde(rename = "following")]
+                    Following,
+                    #[serde(untagged)]
+                    Other(String),
+                }
+            }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileViewBasic {
                     #[serde(default)]
                     #[serde(rename = "associated")]
@@ -5113,7 +5876,7 @@ pub mod chat {
                 }
             }
             pub mod delete_account {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {}
             }
         }
@@ -5335,7 +6098,7 @@ pub mod chat {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ConvoView {
                     #[serde(rename = "id")]
                     pub id: std::string::String,
@@ -5353,7 +6116,7 @@ pub mod chat {
                     #[serde(rename = "unreadCount")]
                     pub unread_count: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct DeletedMessageView {
                     #[serde(rename = "id")]
                     pub id: std::string::String,
@@ -5364,7 +6127,7 @@ pub mod chat {
                     #[serde(rename = "sentAt")]
                     pub sent_at: atmo_core::DateTimeString,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Embed {
                     Record(crate::app::bsky::embed::Record),
                     #[serde(untagged)]
@@ -5414,7 +6177,7 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum LastMessage {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
@@ -5481,14 +6244,14 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogBeginConvo {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogCreateMessage {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -5497,7 +6260,7 @@ pub mod chat {
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogDeleteMessage {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -5506,7 +6269,7 @@ pub mod chat {
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum LogDeleteMessageMessage {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
@@ -5573,14 +6336,14 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogLeaveConvo {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Message {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
@@ -5647,7 +6410,7 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageInput {
                     #[serde(default)]
                     #[serde(rename = "embed")]
@@ -5661,7 +6424,7 @@ pub mod chat {
                     #[serde(rename = "text")]
                     pub text: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageRef {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -5670,7 +6433,7 @@ pub mod chat {
                     #[serde(rename = "messageId")]
                     pub message_id: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageView {
                     #[serde(default)]
                     #[serde(rename = "embed")]
@@ -5693,7 +6456,7 @@ pub mod chat {
                     #[serde(rename = "text")]
                     pub text: std::string::String,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum MessageViewEmbed {
                     View(crate::app::bsky::embed::record::View),
                     #[serde(untagged)]
@@ -5743,14 +6506,14 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageViewSender {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod delete_message_for_self {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -5759,31 +6522,31 @@ pub mod chat {
                 }
             }
             pub mod get_convo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convo")]
                     pub convo: crate::chat::bsky::convo::defs::ConvoView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                 }
             }
             pub mod get_convo_for_members {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convo")]
                     pub convo: crate::chat::bsky::convo::defs::ConvoView,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "members")]
                     pub members: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod get_log {
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Logs {
                     LogBeginConvo(crate::chat::bsky::convo::defs::LogBeginConvo),
                     LogCreateMessage(crate::chat::bsky::convo::defs::LogCreateMessage),
@@ -5876,7 +6639,7 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -5885,7 +6648,7 @@ pub mod chat {
                     #[serde(rename = "logs")]
                     pub logs: std::vec::Vec<crate::chat::bsky::convo::get_log::Logs>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -5894,7 +6657,7 @@ pub mod chat {
                 }
             }
             pub mod get_messages {
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Messages {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
@@ -5961,7 +6724,7 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -5970,7 +6733,7 @@ pub mod chat {
                     #[serde(rename = "messages")]
                     pub messages: std::vec::Vec<crate::chat::bsky::convo::get_messages::Messages>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -5985,12 +6748,12 @@ pub mod chat {
                 }
             }
             pub mod leave_convo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -5999,7 +6762,7 @@ pub mod chat {
                 }
             }
             pub mod list_convos {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convos")]
                     pub convos: std::vec::Vec<crate::chat::bsky::convo::defs::ConvoView>,
@@ -6008,7 +6771,7 @@ pub mod chat {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -6021,19 +6784,19 @@ pub mod chat {
                 }
             }
             pub mod mute_convo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convo")]
                     pub convo: crate::chat::bsky::convo::defs::ConvoView,
                 }
             }
             pub mod send_message {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -6042,39 +6805,39 @@ pub mod chat {
                 }
             }
             pub mod send_message_batch {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BatchItem {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                     #[serde(rename = "message")]
                     pub message: crate::chat::bsky::convo::defs::MessageInput,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "items")]
                     pub items:
                         std::vec::Vec<crate::chat::bsky::convo::send_message_batch::BatchItem>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "items")]
                     pub items: std::vec::Vec<crate::chat::bsky::convo::defs::MessageView>,
                 }
             }
             pub mod unmute_convo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convo")]
                     pub convo: crate::chat::bsky::convo::defs::ConvoView,
                 }
             }
             pub mod update_read {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
@@ -6083,7 +6846,7 @@ pub mod chat {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message_id: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "convo")]
                     pub convo: crate::chat::bsky::convo::defs::ConvoView,
@@ -6146,7 +6909,7 @@ pub mod chat {
                 }
             }
             pub mod get_actor_metadata {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Metadata {
                     #[serde(rename = "convos")]
                     pub convos: i64,
@@ -6157,7 +6920,7 @@ pub mod chat {
                     #[serde(rename = "messagesSent")]
                     pub messages_sent: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "all")]
                     pub all: crate::chat::bsky::moderation::get_actor_metadata::Metadata,
@@ -6166,14 +6929,14 @@ pub mod chat {
                     #[serde(rename = "month")]
                     pub month: crate::chat::bsky::moderation::get_actor_metadata::Metadata,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::Did,
                 }
             }
             pub mod get_message_context {
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Messages {
                     DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                     MessageView(crate::chat::bsky::convo::defs::MessageView),
@@ -6240,13 +7003,13 @@ pub mod chat {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "messages")]
                     pub messages:
                         std::vec::Vec<crate::chat::bsky::moderation::get_message_context::Messages>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "after")]
@@ -6265,7 +7028,7 @@ pub mod chat {
                 }
             }
             pub mod update_actor_access {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "actor")]
                     pub actor: atmo_core::Did,
@@ -6536,7 +7299,7 @@ pub mod com {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AccountView {
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
@@ -6580,7 +7343,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub related_records: std::option::Option<std::vec::Vec<atmo_core::Unknown>>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoBlobRef {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -6591,12 +7354,12 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub record_uri: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoRef {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct StatusAttr {
                     #[serde(rename = "applied")]
                     pub applied: bool,
@@ -6607,14 +7370,14 @@ pub mod com {
                 }
             }
             pub mod delete_account {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod disable_account_invites {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "account")]
                     pub account: atmo_core::Did,
@@ -6625,7 +7388,7 @@ pub mod com {
                 }
             }
             pub mod disable_invite_codes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "accounts")]
@@ -6638,7 +7401,7 @@ pub mod com {
                 }
             }
             pub mod enable_account_invites {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "account")]
                     pub account: atmo_core::Did,
@@ -6649,26 +7412,26 @@ pub mod com {
                 }
             }
             pub mod get_account_info {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod get_account_infos {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "infos")]
                     pub infos: std::vec::Vec<crate::com::atproto::admin::defs::AccountView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "dids")]
                     pub dids: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod get_invite_codes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "codes")]
                     pub codes: std::vec::Vec<crate::com::atproto::server::defs::InviteCode>,
@@ -6677,7 +7440,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -6693,7 +7456,7 @@ pub mod com {
                     pub sort:
                         std::option::Option<crate::com::atproto::admin::get_invite_codes::Sort>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Sort {
                     #[serde(rename = "recent")]
                     Recent,
@@ -6704,7 +7467,7 @@ pub mod com {
                 }
             }
             pub mod get_subject_status {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "deactivated")]
@@ -6718,7 +7481,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "blob")]
@@ -6733,7 +7496,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub uri: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Subject {
                     RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
@@ -6807,7 +7570,7 @@ pub mod com {
                 }
             }
             pub mod search_accounts {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accounts")]
                     pub accounts: std::vec::Vec<crate::com::atproto::admin::defs::AccountView>,
@@ -6816,7 +7579,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -6833,7 +7596,7 @@ pub mod com {
                 }
             }
             pub mod send_email {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "comment")]
@@ -6850,14 +7613,14 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "sent")]
                     pub sent: bool,
                 }
             }
             pub mod update_account_email {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "account")]
                     pub account: atmo_core::AtIdentifier,
@@ -6866,7 +7629,7 @@ pub mod com {
                 }
             }
             pub mod update_account_handle {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -6875,7 +7638,7 @@ pub mod com {
                 }
             }
             pub mod update_account_password {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -6884,7 +7647,7 @@ pub mod com {
                 }
             }
             pub mod update_subject_status {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "deactivated")]
@@ -6898,7 +7661,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "subject")]
                     pub subject: crate::com::atproto::admin::update_subject_status::OutputSubject,
@@ -6907,7 +7670,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum OutputSubject {
                     RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
@@ -6979,7 +7742,7 @@ pub mod com {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Subject {
                     RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
@@ -7164,7 +7927,7 @@ pub mod com {
                 }
             }
             pub mod get_recommended_did_credentials {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "alsoKnownAs")]
@@ -7185,19 +7948,19 @@ pub mod com {
                 }
             }
             pub mod resolve_handle {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "handle")]
                     pub handle: atmo_core::Handle,
                 }
             }
             pub mod sign_plc_operation {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "alsoKnownAs")]
@@ -7220,21 +7983,21 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub verification_methods: std::option::Option<atmo_core::Unknown>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "operation")]
                     pub operation: atmo_core::Unknown,
                 }
             }
             pub mod submit_plc_operation {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "operation")]
                     pub operation: atmo_core::Unknown,
                 }
             }
             pub mod update_handle {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "handle")]
                     pub handle: atmo_core::Handle,
@@ -7261,7 +8024,7 @@ pub mod com {
                 }
             }
             pub mod defs {
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Blurs {
                     #[serde(rename = "content")]
                     Content,
@@ -7272,7 +8035,7 @@ pub mod com {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum DefaultSetting {
                     #[serde(rename = "ignore")]
                     Ignore,
@@ -7283,7 +8046,7 @@ pub mod com {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Label {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -7317,7 +8080,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub ver: std::option::Option<i64>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum LabelValue {
                     #[serde(rename = "!hide")]
                     Hide,
@@ -7344,7 +8107,7 @@ pub mod com {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelValueDefinition {
                     #[doc = "Does the user need to have adult content enabled in order to configure this label?"]
                     #[serde(default)]
@@ -7367,7 +8130,7 @@ pub mod com {
                     #[serde(rename = "severity")]
                     pub severity: crate::com::atproto::label::defs::Severity,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelValueDefinitionStrings {
                     #[serde(rename = "description")]
                     pub description: std::string::String,
@@ -7376,17 +8139,17 @@ pub mod com {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SelfLabel {
                     #[serde(rename = "val")]
                     pub val: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SelfLabels {
                     #[serde(rename = "values")]
                     pub values: std::vec::Vec<crate::com::atproto::label::defs::SelfLabel>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Severity {
                     #[serde(rename = "inform")]
                     Inform,
@@ -7399,7 +8162,7 @@ pub mod com {
                 }
             }
             pub mod query_labels {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -7408,7 +8171,7 @@ pub mod com {
                     #[serde(rename = "labels")]
                     pub labels: std::vec::Vec<crate::com::atproto::label::defs::Label>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -7427,7 +8190,7 @@ pub mod com {
                 }
             }
             pub mod subscribe_labels {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Info {
                     #[serde(default)]
                     #[serde(rename = "message")]
@@ -7436,14 +8199,14 @@ pub mod com {
                     #[serde(rename = "name")]
                     pub name: crate::com::atproto::label::subscribe_labels::Name,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Labels {
                     #[serde(rename = "labels")]
                     pub labels: std::vec::Vec<crate::com::atproto::label::defs::Label>,
                     #[serde(rename = "seq")]
                     pub seq: i64,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Name {
                     #[serde(rename = "OutdatedCursor")]
                     OutdatedCursor,
@@ -7472,7 +8235,7 @@ pub mod com {
                 }
             }
             pub mod create_report {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "reason")]
@@ -7483,7 +8246,7 @@ pub mod com {
                     #[serde(rename = "subject")]
                     pub subject: crate::com::atproto::moderation::create_report::Subject,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
@@ -7500,7 +8263,7 @@ pub mod com {
                     #[serde(rename = "subject")]
                     pub subject: crate::com::atproto::moderation::create_report::OutputSubject,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum OutputSubject {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
@@ -7559,7 +8322,7 @@ pub mod com {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Subject {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
@@ -7620,7 +8383,7 @@ pub mod com {
                 }
             }
             pub mod defs {
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ReasonType {
                     #[doc = "Spam: frequent unwanted promotion, replies, mentions"]
                     #[serde(rename = "com.atproto.moderation.defs#reasonSpam")]
@@ -7811,7 +8574,7 @@ pub mod com {
                     "application/json"
                 }
             }
-            #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct StrongRef {
                 #[serde(rename = "cid")]
                 pub cid: atmo_core::CidString,
@@ -7837,7 +8600,7 @@ pub mod com {
                 }
             }
             pub mod apply_writes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Create {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -7848,7 +8611,7 @@ pub mod com {
                     #[serde(rename = "value")]
                     pub value: atmo_core::Unknown,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct CreateResult {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -7861,16 +8624,16 @@ pub mod com {
                         crate::com::atproto::repo::apply_writes::ValidationStatus,
                     >,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Delete {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
                     #[serde(rename = "rkey")]
                     pub rkey: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct DeleteResult {}
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "repo")]
                     pub repo: atmo_core::AtIdentifier,
@@ -7886,7 +8649,7 @@ pub mod com {
                     #[serde(rename = "writes")]
                     pub writes: std::vec::Vec<crate::com::atproto::repo::apply_writes::Writes>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "commit")]
@@ -7899,7 +8662,7 @@ pub mod com {
                         std::vec::Vec<crate::com::atproto::repo::apply_writes::Results>,
                     >,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Results {
                     CreateResult(crate::com::atproto::repo::apply_writes::CreateResult),
                     DeleteResult(crate::com::atproto::repo::apply_writes::DeleteResult),
@@ -7937,7 +8700,7 @@ pub mod com {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Update {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -7946,7 +8709,7 @@ pub mod com {
                     #[serde(rename = "value")]
                     pub value: atmo_core::Unknown,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct UpdateResult {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -7959,7 +8722,7 @@ pub mod com {
                         crate::com::atproto::repo::apply_writes::ValidationStatus,
                     >,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ValidationStatus {
                     #[serde(rename = "valid")]
                     Valid,
@@ -7968,7 +8731,7 @@ pub mod com {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Writes {
                     Create(crate::com::atproto::repo::apply_writes::Create),
                     Delete(crate::com::atproto::repo::apply_writes::Delete),
@@ -8066,7 +8829,7 @@ pub mod com {
                 }
             }
             pub mod create_record {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -8088,7 +8851,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validate: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -8105,7 +8868,7 @@ pub mod com {
                         crate::com::atproto::repo::create_record::ValidationStatus,
                     >,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ValidationStatus {
                     #[serde(rename = "valid")]
                     Valid,
@@ -8116,7 +8879,7 @@ pub mod com {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct CommitMeta {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -8125,7 +8888,7 @@ pub mod com {
                 }
             }
             pub mod delete_record {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -8142,7 +8905,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_record: std::option::Option<atmo_core::CidString>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "commit")]
@@ -8151,7 +8914,7 @@ pub mod com {
                 }
             }
             pub mod describe_repo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "collections")]
                     pub collections: std::vec::Vec<std::string::String>,
@@ -8165,14 +8928,14 @@ pub mod com {
                     #[serde(rename = "handleIsCorrect")]
                     pub handle_is_correct: bool,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "repo")]
                     pub repo: atmo_core::AtIdentifier,
                 }
             }
             pub mod get_record {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -8183,7 +8946,7 @@ pub mod com {
                     #[serde(rename = "value")]
                     pub value: atmo_core::Unknown,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -8198,7 +8961,7 @@ pub mod com {
                 }
             }
             pub mod list_missing_blobs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "blobs")]
                     pub blobs:
@@ -8208,7 +8971,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -8219,7 +8982,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordBlob {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -8228,7 +8991,7 @@ pub mod com {
                 }
             }
             pub mod list_records {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -8237,7 +9000,7 @@ pub mod com {
                     #[serde(rename = "records")]
                     pub records: std::vec::Vec<crate::com::atproto::repo::list_records::Record>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -8265,7 +9028,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub rkey_start: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Record {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -8276,7 +9039,7 @@ pub mod com {
                 }
             }
             pub mod put_record {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -8300,7 +9063,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validate: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -8317,7 +9080,7 @@ pub mod com {
                         crate::com::atproto::repo::put_record::ValidationStatus,
                     >,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ValidationStatus {
                     #[serde(rename = "valid")]
                     Valid,
@@ -8328,7 +9091,7 @@ pub mod com {
                 }
             }
             pub mod upload_blob {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "blob")]
                     pub blob: atmo_core::Blob,
@@ -8787,7 +9550,7 @@ pub mod com {
                 }
             }
             pub mod check_account_status {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "activated")]
                     pub activated: bool,
@@ -8810,7 +9573,7 @@ pub mod com {
                 }
             }
             pub mod confirm_email {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "email")]
                     pub email: std::string::String,
@@ -8819,7 +9582,7 @@ pub mod com {
                 }
             }
             pub mod create_account {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "did")]
@@ -8856,7 +9619,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub verification_phone: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accessJwt")]
                     pub access_jwt: std::string::String,
@@ -8873,7 +9636,7 @@ pub mod com {
                 }
             }
             pub mod create_app_password {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AppPassword {
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
@@ -8886,7 +9649,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
@@ -8898,7 +9661,7 @@ pub mod com {
                 }
             }
             pub mod create_invite_code {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "forAccount")]
@@ -8907,21 +9670,21 @@ pub mod com {
                     #[serde(rename = "useCount")]
                     pub use_count: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "code")]
                     pub code: std::string::String,
                 }
             }
             pub mod create_invite_codes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AccountCodes {
                     #[serde(rename = "account")]
                     pub account: std::string::String,
                     #[serde(rename = "codes")]
                     pub codes: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "codeCount")]
                     pub code_count: i64,
@@ -8932,7 +9695,7 @@ pub mod com {
                     #[serde(rename = "useCount")]
                     pub use_count: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "codes")]
                     pub codes: std::vec::Vec<
@@ -8941,7 +9704,7 @@ pub mod com {
                 }
             }
             pub mod create_session {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "authFactorToken")]
@@ -8952,7 +9715,7 @@ pub mod com {
                     #[serde(rename = "password")]
                     pub password: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accessJwt")]
                     pub access_jwt: std::string::String,
@@ -8988,7 +9751,7 @@ pub mod com {
                     pub status:
                         std::option::Option<crate::com::atproto::server::create_session::Status>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
                     #[serde(rename = "takendown")]
                     Takendown,
@@ -9001,7 +9764,7 @@ pub mod com {
                 }
             }
             pub mod deactivate_account {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "deleteAfter")]
@@ -9010,7 +9773,7 @@ pub mod com {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct InviteCode {
                     #[serde(rename = "available")]
                     pub available: i64,
@@ -9027,7 +9790,7 @@ pub mod com {
                     #[serde(rename = "uses")]
                     pub uses: std::vec::Vec<crate::com::atproto::server::defs::InviteCodeUse>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct InviteCodeUse {
                     #[serde(rename = "usedAt")]
                     pub used_at: atmo_core::DateTimeString,
@@ -9036,7 +9799,7 @@ pub mod com {
                 }
             }
             pub mod delete_account {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -9047,14 +9810,14 @@ pub mod com {
                 }
             }
             pub mod describe_server {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Contact {
                     #[serde(default)]
                     #[serde(rename = "email")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Links {
                     #[serde(default)]
                     #[serde(rename = "privacyPolicy")]
@@ -9065,7 +9828,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub terms_of_service: std::option::Option<url::Url>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "availableUserDomains")]
                     pub available_user_domains: std::vec::Vec<std::string::String>,
@@ -9094,12 +9857,12 @@ pub mod com {
                 }
             }
             pub mod get_account_invite_codes {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "codes")]
                     pub codes: std::vec::Vec<crate::com::atproto::server::defs::InviteCode>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[doc = "Controls whether any new 'earned' but not 'created' invites should be created."]
                     #[serde(default)]
@@ -9113,12 +9876,12 @@ pub mod com {
                 }
             }
             pub mod get_service_auth {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "token")]
                     pub token: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "aud")]
                     pub aud: atmo_core::Did,
@@ -9133,7 +9896,7 @@ pub mod com {
                 }
             }
             pub mod get_session {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "active")]
@@ -9165,7 +9928,7 @@ pub mod com {
                     pub status:
                         std::option::Option<crate::com::atproto::server::get_session::Status>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
                     #[serde(rename = "takendown")]
                     Takendown,
@@ -9178,7 +9941,7 @@ pub mod com {
                 }
             }
             pub mod list_app_passwords {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AppPassword {
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
@@ -9189,7 +9952,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "passwords")]
                     pub passwords:
@@ -9197,7 +9960,7 @@ pub mod com {
                 }
             }
             pub mod refresh_session {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accessJwt")]
                     pub access_jwt: std::string::String,
@@ -9221,7 +9984,7 @@ pub mod com {
                     pub status:
                         std::option::Option<crate::com::atproto::server::refresh_session::Status>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
                     #[serde(rename = "takendown")]
                     Takendown,
@@ -9234,35 +9997,35 @@ pub mod com {
                 }
             }
             pub mod request_email_update {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "tokenRequired")]
                     pub token_required: bool,
                 }
             }
             pub mod request_password_reset {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "email")]
                     pub email: std::string::String,
                 }
             }
             pub mod reserve_signing_key {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "did")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub did: std::option::Option<atmo_core::Did>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "signingKey")]
                     pub signing_key: std::string::String,
                 }
             }
             pub mod reset_password {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "password")]
                     pub password: std::string::String,
@@ -9271,14 +10034,14 @@ pub mod com {
                 }
             }
             pub mod revoke_app_password {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
                 }
             }
             pub mod update_email {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "email")]
                     pub email: std::string::String,
@@ -9511,7 +10274,7 @@ pub mod com {
                 }
             }
             pub mod get_blob {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -9520,7 +10283,7 @@ pub mod com {
                 }
             }
             pub mod get_blocks {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "cids")]
                     pub cids: std::vec::Vec<std::string::String>,
@@ -9529,40 +10292,40 @@ pub mod com {
                 }
             }
             pub mod get_checkout {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod get_head {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "root")]
                     pub root: atmo_core::CidString,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod get_latest_commit {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod get_record {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "collection")]
                     pub collection: atmo_core::Nsid,
@@ -9577,7 +10340,7 @@ pub mod com {
                 }
             }
             pub mod get_repo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -9588,7 +10351,7 @@ pub mod com {
                 }
             }
             pub mod get_repo_status {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "active")]
                     pub active: bool,
@@ -9604,12 +10367,12 @@ pub mod com {
                     pub status:
                         std::option::Option<crate::com::atproto::sync::get_repo_status::Status>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
                     #[serde(rename = "takendown")]
                     Takendown,
@@ -9622,7 +10385,7 @@ pub mod com {
                 }
             }
             pub mod list_blobs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cids")]
                     pub cids: std::vec::Vec<std::string::String>,
@@ -9631,7 +10394,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -9650,7 +10413,7 @@ pub mod com {
                 }
             }
             pub mod list_repos {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -9659,7 +10422,7 @@ pub mod com {
                     #[serde(rename = "repos")]
                     pub repos: std::vec::Vec<crate::com::atproto::sync::list_repos::Repo>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -9670,7 +10433,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Repo {
                     #[serde(default)]
                     #[serde(rename = "active")]
@@ -9687,7 +10450,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub status: std::option::Option<crate::com::atproto::sync::list_repos::Status>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
                     #[serde(rename = "takendown")]
                     Takendown,
@@ -9700,21 +10463,21 @@ pub mod com {
                 }
             }
             pub mod notify_of_update {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "hostname")]
                     pub hostname: std::string::String,
                 }
             }
             pub mod request_crawl {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "hostname")]
                     pub hostname: std::string::String,
                 }
             }
             pub mod subscribe_repos {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Account {
                     #[doc = "Indicates that the account has a repository which can be fetched from the host that emitted this event."]
                     #[serde(rename = "active")]
@@ -9731,7 +10494,7 @@ pub mod com {
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Action {
                     #[serde(rename = "create")]
                     Create,
@@ -9742,7 +10505,7 @@ pub mod com {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Commit {
                     #[serde(rename = "blobs")]
                     pub blobs: std::vec::Vec<atmo_core::CidString>,
@@ -9775,7 +10538,7 @@ pub mod com {
                     #[serde(rename = "tooBig")]
                     pub too_big: bool,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Handle {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -9786,7 +10549,7 @@ pub mod com {
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Identity {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -9799,7 +10562,7 @@ pub mod com {
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Info {
                     #[serde(default)]
                     #[serde(rename = "message")]
@@ -9808,7 +10571,7 @@ pub mod com {
                     #[serde(rename = "name")]
                     pub name: crate::com::atproto::sync::subscribe_repos::Name,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Migrate {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -9819,14 +10582,14 @@ pub mod com {
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Name {
                     #[serde(rename = "OutdatedCursor")]
                     OutdatedCursor,
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoOp {
                     #[serde(rename = "action")]
                     pub action: crate::com::atproto::sync::subscribe_repos::Action,
@@ -9835,7 +10598,7 @@ pub mod com {
                     #[serde(rename = "path")]
                     pub path: std::string::String,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Status {
                     #[serde(rename = "takendown")]
                     Takendown,
@@ -9848,7 +10611,7 @@ pub mod com {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Tombstone {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -9915,7 +10678,7 @@ pub mod com {
                 }
             }
             pub mod check_signup_queue {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "activated")]
                     pub activated: bool,
@@ -9930,12 +10693,12 @@ pub mod com {
                 }
             }
             pub mod fetch_labels {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "labels")]
                     pub labels: std::vec::Vec<crate::com::atproto::label::defs::Label>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "limit")]
@@ -9948,7 +10711,7 @@ pub mod com {
                 }
             }
             pub mod request_phone_verification {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "phoneNumber")]
                     pub phone_number: std::string::String,
@@ -10033,7 +10796,7 @@ pub mod tools {
                 }
             }
             pub mod create_template {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "contentMarkdown")]
                     pub content_markdown: std::string::String,
@@ -10052,7 +10815,7 @@ pub mod tools {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct TemplateView {
                     #[serde(rename = "contentMarkdown")]
                     pub content_markdown: std::string::String,
@@ -10079,14 +10842,14 @@ pub mod tools {
                 }
             }
             pub mod delete_template {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "id")]
                     pub id: std::string::String,
                 }
             }
             pub mod list_templates {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "communicationTemplates")]
                     pub communication_templates:
@@ -10094,7 +10857,7 @@ pub mod tools {
                 }
             }
             pub mod update_template {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
                     #[serde(rename = "contentMarkdown")]
@@ -10289,7 +11052,7 @@ pub mod tools {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BlobView {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -10310,7 +11073,7 @@ pub mod tools {
                     #[serde(rename = "size")]
                     pub size: i64,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Details {
                     ImageDetails(crate::tools::ozone::moderation::defs::ImageDetails),
                     VideoDetails(crate::tools::ozone::moderation::defs::VideoDetails),
@@ -10349,7 +11112,7 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Event {
                     ModEventAcknowledge(crate::tools::ozone::moderation::defs::ModEventAcknowledge),
                     ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
@@ -10409,21 +11172,21 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ImageDetails {
                     #[serde(rename = "height")]
                     pub height: i64,
                     #[serde(rename = "width")]
                     pub width: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventAcknowledge {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventComment {
                     #[serde(rename = "comment")]
                     pub comment: std::string::String,
@@ -10433,14 +11196,14 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sticky: std::option::Option<bool>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventDivert {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventEmail {
                     #[serde(default)]
                     #[serde(rename = "comment")]
@@ -10453,14 +11216,14 @@ pub mod tools {
                     #[serde(rename = "subjectLine")]
                     pub subject_line: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventEscalate {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventLabel {
                     #[serde(default)]
                     #[serde(rename = "comment")]
@@ -10471,7 +11234,7 @@ pub mod tools {
                     #[serde(rename = "negateLabelVals")]
                     pub negate_label_vals: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventMute {
                     #[serde(default)]
                     #[serde(rename = "comment")]
@@ -10480,7 +11243,7 @@ pub mod tools {
                     #[serde(rename = "durationInHours")]
                     pub duration_in_hours: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventMuteReporter {
                     #[serde(default)]
                     #[serde(rename = "comment")]
@@ -10489,7 +11252,7 @@ pub mod tools {
                     #[serde(rename = "durationInHours")]
                     pub duration_in_hours: i64,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventReport {
                     #[serde(default)]
                     #[serde(rename = "comment")]
@@ -10503,21 +11266,21 @@ pub mod tools {
                     #[serde(rename = "reportType")]
                     pub report_type: crate::com::atproto::moderation::defs::ReasonType,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventResolveAppeal {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventReverseTakedown {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventTag {
                     #[serde(rename = "add")]
                     pub add: std::vec::Vec<std::string::String>,
@@ -10528,7 +11291,7 @@ pub mod tools {
                     #[serde(rename = "remove")]
                     pub remove: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventTakedown {
                     #[doc = "If true, all other reports on content authored by this account will be resolved (acknowledged)."]
                     #[serde(default)]
@@ -10544,21 +11307,21 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub duration_in_hours: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventUnmute {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventUnmuteReporter {
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventView {
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
@@ -10581,7 +11344,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_handle: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventViewDetail {
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
@@ -10597,7 +11360,7 @@ pub mod tools {
                     pub subject_blobs:
                         std::vec::Vec<crate::tools::ozone::moderation::defs::BlobView>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum ModEventViewDetailEvent {
                     ModEventAcknowledge(crate::tools::ozone::moderation::defs::ModEventAcknowledge),
                     ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
@@ -10657,7 +11420,7 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum ModEventViewDetailSubject {
                     RecordView(crate::tools::ozone::moderation::defs::RecordView),
                     RecordViewNotFound(crate::tools::ozone::moderation::defs::RecordViewNotFound),
@@ -10698,7 +11461,7 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Moderation {
                     #[serde(default)]
                     #[serde(rename = "subjectStatus")]
@@ -10707,7 +11470,7 @@ pub mod tools {
                         crate::tools::ozone::moderation::defs::SubjectStatusView,
                     >,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModerationDetail {
                     #[serde(default)]
                     #[serde(rename = "subjectStatus")]
@@ -10716,7 +11479,7 @@ pub mod tools {
                         crate::tools::ozone::moderation::defs::SubjectStatusView,
                     >,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordView {
                     #[serde(rename = "blobCids")]
                     pub blob_cids: std::vec::Vec<std::string::String>,
@@ -10733,7 +11496,7 @@ pub mod tools {
                     #[serde(rename = "value")]
                     pub value: atmo_core::Unknown,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordViewDetail {
                     #[serde(rename = "blobs")]
                     pub blobs: std::vec::Vec<crate::tools::ozone::moderation::defs::BlobView>,
@@ -10755,12 +11518,12 @@ pub mod tools {
                     #[serde(rename = "value")]
                     pub value: atmo_core::Unknown,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordViewNotFound {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoView {
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
@@ -10794,7 +11557,7 @@ pub mod tools {
                     #[serde(rename = "relatedRecords")]
                     pub related_records: std::vec::Vec<atmo_core::Unknown>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewDetail {
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
@@ -10843,12 +11606,12 @@ pub mod tools {
                     #[serde(rename = "relatedRecords")]
                     pub related_records: std::vec::Vec<atmo_core::Unknown>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewNotFound {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Subject {
                     MessageRef(crate::chat::bsky::convo::defs::MessageRef),
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
@@ -10916,7 +11679,7 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SubjectReviewState {
                     #[doc = "Moderator review status of a subject: Open. Indicates that the subject needs to be reviewed by a moderator"]
                     #[serde(rename = "#reviewOpen")]
@@ -10933,7 +11696,7 @@ pub mod tools {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SubjectStatusView {
                     #[doc = "True indicates that the a previously taken moderator action was appealed against, by the author of the content. False indicates last appeal was resolved by moderators."]
                     #[serde(default)]
@@ -10999,7 +11762,7 @@ pub mod tools {
                     #[serde(rename = "updatedAt")]
                     pub updated_at: atmo_core::DateTimeString,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum SubjectStatusViewSubject {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
@@ -11058,7 +11821,7 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct VideoDetails {
                     #[serde(rename = "height")]
                     pub height: i64,
@@ -11069,7 +11832,7 @@ pub mod tools {
                 }
             }
             pub mod emit_event {
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Event {
                     ModEventAcknowledge(crate::tools::ozone::moderation::defs::ModEventAcknowledge),
                     ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
@@ -11128,7 +11891,7 @@ pub mod tools {
                         }
                     }
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "createdBy")]
                     pub created_by: atmo_core::Did,
@@ -11141,7 +11904,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject_blob_cids: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Subject {
                     RepoRef(crate::com::atproto::admin::defs::RepoRef),
                     StrongRef(crate::com::atproto::repo::StrongRef),
@@ -11202,14 +11965,14 @@ pub mod tools {
                 }
             }
             pub mod get_event {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "id")]
                     pub id: i64,
                 }
             }
             pub mod get_record {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cid")]
@@ -11220,18 +11983,18 @@ pub mod tools {
                 }
             }
             pub mod get_records {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "records")]
                     pub records:
                         std::vec::Vec<crate::tools::ozone::moderation::get_records::Records>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "uris")]
                     pub uris: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Records {
                     RecordViewDetail(crate::tools::ozone::moderation::defs::RecordViewDetail),
                     RecordViewNotFound(crate::tools::ozone::moderation::defs::RecordViewNotFound),
@@ -11272,24 +12035,24 @@ pub mod tools {
                 }
             }
             pub mod get_repo {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod get_repos {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "repos")]
                     pub repos: std::vec::Vec<crate::tools::ozone::moderation::get_repos::Repos>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "dids")]
                     pub dids: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
                 pub enum Repos {
                     RepoViewDetail(crate::tools::ozone::moderation::defs::RepoViewDetail),
                     RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
@@ -11330,7 +12093,7 @@ pub mod tools {
                 }
             }
             pub mod query_events {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11339,7 +12102,7 @@ pub mod tools {
                     #[serde(rename = "events")]
                     pub events: std::vec::Vec<crate::tools::ozone::moderation::defs::ModEventView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "addedLabels")]
@@ -11410,7 +12173,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub types: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SortDirection {
                     #[serde(rename = "asc")]
                     Asc,
@@ -11419,7 +12182,7 @@ pub mod tools {
                 }
             }
             pub mod query_statuses {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11429,7 +12192,7 @@ pub mod tools {
                     pub subject_statuses:
                         std::vec::Vec<crate::tools::ozone::moderation::defs::SubjectStatusView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[doc = "Get subjects in unresolved appealed status"]
                     #[serde(default)]
@@ -11521,14 +12284,14 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takendown: std::option::Option<bool>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SortDirection {
                     #[serde(rename = "asc")]
                     Asc,
                     #[serde(rename = "desc")]
                     Desc,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SortField {
                     #[serde(rename = "lastReviewedAt")]
                     LastReviewedAt,
@@ -11537,7 +12300,7 @@ pub mod tools {
                 }
             }
             pub mod search_repos {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11546,7 +12309,7 @@ pub mod tools {
                     #[serde(rename = "repos")]
                     pub repos: std::vec::Vec<crate::tools::ozone::moderation::defs::RepoView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11587,7 +12350,7 @@ pub mod tools {
                 }
             }
             pub mod get_config {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "appview")]
@@ -11615,7 +12378,7 @@ pub mod tools {
                     pub viewer:
                         std::option::Option<crate::tools::ozone::server::get_config::ViewerConfig>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Role {
                     #[doc = "Admin role. Highest level of access, can perform all actions."]
                     #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
@@ -11629,14 +12392,14 @@ pub mod tools {
                     #[serde(untagged)]
                     Other(String),
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ServiceConfig {
                     #[serde(default)]
                     #[serde(rename = "url")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub url: std::option::Option<url::Url>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerConfig {
                     #[serde(default)]
                     #[serde(rename = "role")]
@@ -11755,7 +12518,7 @@ pub mod tools {
                 }
             }
             pub mod add_values {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
@@ -11764,7 +12527,7 @@ pub mod tools {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Set {
                     #[serde(default)]
                     #[serde(rename = "description")]
@@ -11773,7 +12536,7 @@ pub mod tools {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SetView {
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
@@ -11790,16 +12553,16 @@ pub mod tools {
                 }
             }
             pub mod delete_set {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {}
             }
             pub mod delete_values {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
@@ -11808,7 +12571,7 @@ pub mod tools {
                 }
             }
             pub mod get_values {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11819,7 +12582,7 @@ pub mod tools {
                     #[serde(rename = "values")]
                     pub values: std::vec::Vec<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11834,7 +12597,7 @@ pub mod tools {
                 }
             }
             pub mod query_sets {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11843,7 +12606,7 @@ pub mod tools {
                     #[serde(rename = "sets")]
                     pub sets: std::vec::Vec<crate::tools::ozone::set::defs::SetView>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11867,7 +12630,7 @@ pub mod tools {
                     pub sort_direction:
                         std::option::Option<crate::tools::ozone::set::query_sets::SortDirection>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SortBy {
                     #[serde(rename = "name")]
                     Name,
@@ -11876,7 +12639,7 @@ pub mod tools {
                     #[serde(rename = "updatedAt")]
                     UpdatedAt,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SortDirection {
                     #[serde(rename = "asc")]
                     Asc,
@@ -11941,7 +12704,7 @@ pub mod tools {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SigDetail {
                     #[serde(rename = "property")]
                     pub property: std::string::String,
@@ -11950,19 +12713,19 @@ pub mod tools {
                 }
             }
             pub mod find_correlation {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "details")]
                     pub details: std::vec::Vec<crate::tools::ozone::signature::defs::SigDetail>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "dids")]
                     pub dids: std::vec::Vec<std::string::String>,
                 }
             }
             pub mod find_related_accounts {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accounts")]
                     pub accounts: std::vec::Vec<
@@ -11973,7 +12736,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -11986,7 +12749,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RelatedAccount {
                     #[serde(rename = "account")]
                     pub account: crate::com::atproto::admin::defs::AccountView,
@@ -11999,7 +12762,7 @@ pub mod tools {
                 }
             }
             pub mod search_accounts {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accounts")]
                     pub accounts: std::vec::Vec<crate::com::atproto::admin::defs::AccountView>,
@@ -12008,7 +12771,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -12097,14 +12860,14 @@ pub mod tools {
                 }
             }
             pub mod add_member {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                     #[serde(rename = "role")]
                     pub role: crate::tools::ozone::team::add_member::Role,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Role {
                     #[doc = "Admin role. Highest level of access, can perform all actions."]
                     #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
@@ -12120,7 +12883,7 @@ pub mod tools {
                 }
             }
             pub mod defs {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Member {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
@@ -12148,7 +12911,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub updated_at: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Role {
                     #[doc = "Admin role. Highest level of access, can perform all actions."]
                     #[serde(rename = "#roleAdmin")]
@@ -12164,14 +12927,14 @@ pub mod tools {
                 }
             }
             pub mod delete_member {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
             }
             pub mod list_members {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -12180,7 +12943,7 @@ pub mod tools {
                     #[serde(rename = "members")]
                     pub members: std::vec::Vec<crate::tools::ozone::team::defs::Member>,
                 }
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
                     #[serde(rename = "cursor")]
@@ -12193,7 +12956,7 @@ pub mod tools {
                 }
             }
             pub mod update_member {
-                #[derive(Debug, serde :: Deserialize, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
@@ -12206,7 +12969,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub role: std::option::Option<crate::tools::ozone::team::update_member::Role>,
                 }
-                #[derive(Clone, Debug, serde :: Serialize, serde :: Deserialize)]
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum Role {
                     #[doc = "Admin role. Highest level of access, can perform all actions."]
                     #[serde(rename = "tools.ozone.team.defs#roleAdmin")]

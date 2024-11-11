@@ -26,7 +26,7 @@ impl ToTokens for StringEnumDef {
         });
 
         quote! {
-            #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
             pub enum #ident {
                 #(#variants,)*
                 #other_variant
@@ -165,7 +165,7 @@ impl ToTokens for UnionEnumDef {
 
         quote! {
             #(#[doc = #doc])*
-            #[derive(Debug, serde::Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq, serde::Serialize)]
             pub enum #ident {
                 #(#variants,)*
                 #other_variant
