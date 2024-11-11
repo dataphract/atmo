@@ -120,9 +120,9 @@ macro_rules! impl_deserialize_via_from_str {
             where
                 D: serde::de::Deserializer<'de>,
             {
-                let s = <&str>::deserialize(des)?;
+                let s = std::borrow::Cow::<str>::deserialize(des)?;
 
-                <$name as std::str::FromStr>::from_str(s)
+                <$name as std::str::FromStr>::from_str(s.as_ref())
                     .map_err(<D::Error as serde::de::Error>::custom)
             }
         }

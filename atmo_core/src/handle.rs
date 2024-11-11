@@ -1,8 +1,10 @@
 use std::{ops::RangeInclusive, str::FromStr};
 
-use serde::{de::Error as _, Deserialize, Serialize};
+use serde::Serialize;
 
-use crate::{error::ParseError, is_valid_domain_segment, is_valid_tld};
+use crate::{
+    error::ParseError, impl_deserialize_via_from_str, is_valid_domain_segment, is_valid_tld,
+};
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=253;
 
@@ -20,16 +22,7 @@ impl Handle {
     }
 }
 
-impl<'de> Deserialize<'de> for Handle {
-    #[inline]
-    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = <&str>::deserialize(des)?;
-        Handle::from_str(s).map_err(D::Error::custom)
-    }
-}
+impl_deserialize_via_from_str!(Handle);
 
 impl Serialize for Handle {
     #[inline]
