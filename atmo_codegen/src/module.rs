@@ -3,15 +3,15 @@ use std::{
     fmt,
 };
 
-use atmo_core::nsid::Nsid;
+use atmo_core::nsid::{FullReference, Nsid};
 use heck::{ToPascalCase, ToSnakeCase};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
 use crate::{
-    enum_::{StringEnumDef, UnionEnumDef},
-    rpc::RpcDef,
-    struct_::StructDef,
+    enum_::{RustStringEnumDef, RustUnionEnumDef},
+    rpc::RustRpcDef,
+    struct_::RustStructDef,
 };
 
 pub struct Module {
@@ -19,21 +19,17 @@ pub struct Module {
     path: ModulePath,
     // Set of submodules.
     submodules: BTreeSet<ModulePath>,
-    // Map of non-submodule items, keyed by name.
+    // Map of non-submodule items, keyed by NSID.
     items: BTreeMap<String, Item>,
 }
 
 impl Module {
-    pub fn item_exists(&self, name: &str) -> bool {
-        self.items.contains_key(name)
-    }
-
     pub fn add_item(&mut self, name: String, item: Item) -> Result<(), NameCollision> {
         if let Some(existing) = self.items.get(&name) {
             match (existing, &item) {
                 (Item::StringEnum(s1), Item::StringEnum(s2)) => {
                     if s1 != s2 {
-                        return Err(NameCollision);
+                        return Err(NameCollision(name));
                     } else {
                         return Ok(());
                     }
@@ -41,12 +37,13 @@ impl Module {
 
                 (Item::UnionEnum(u1), Item::UnionEnum(u2)) => {
                     if u1 != u2 {
-                        return Err(NameCollision);
+                        return Err(NameCollision(name));
                     } else {
                         return Ok(());
                     }
                 }
-                _ => panic!("item collision: {name}"),
+
+                _ => return Err(NameCollision(name)),
             }
         }
 
@@ -57,19 +54,40 @@ impl Module {
 }
 
 #[derive(Debug)]
-pub struct NameCollision;
+pub struct NameCollision(String);
 
 #[derive(Debug)]
 pub enum Item {
-    Rpc(RpcDef),
-    Struct(StructDef),
-    StringEnum(StringEnumDef),
-    UnionEnum(UnionEnumDef),
+    Rpc(RustRpcDef),
+    Struct(RustStructDef),
+    StringEnum(RustStringEnumDef),
+    UnionEnum(RustUnionEnumDef),
+}
+
+impl From<RustRpcDef> for Item {
+    #[inline]
+    fn from(rpc: RustRpcDef) -> Self {
+        Item::Rpc(rpc)
+    }
+}
+
+impl From<RustStructDef> for Item {
+    #[inline]
+    fn from(s: RustStructDef) -> Self {
+        Item::Struct(s)
+    }
+}
+
+impl From<RustUnionEnumDef> for Item {
+    #[inline]
+    fn from(u: RustUnionEnumDef) -> Self {
+        Item::UnionEnum(u)
+    }
 }
 
 impl ToTokens for Item {
     fn to_tokens(&self, tokens: &mut TokenStream) {
-        match self {
+        match &self {
             Item::Rpc(r) => r.to_tokens(tokens),
             Item::Struct(s) => s.to_tokens(tokens),
             Item::StringEnum(e) => e.to_tokens(tokens),
@@ -79,12 +97,12 @@ impl ToTokens for Item {
 }
 
 #[derive(Default)]
-pub struct Generated {
+pub struct ModuleTree {
     // Flattened module tree, keyed by fully-qualified module path.
     modules: BTreeMap<ModulePath, Module>,
 }
 
-impl Generated {
+impl ModuleTree {
     pub fn get_or_create_mut(&mut self, path: &ModulePath) -> &mut Module {
         self.create_ancestors(path);
         self.create_only(path)
@@ -130,7 +148,7 @@ impl Generated {
     }
 }
 
-impl IntoIterator for Generated {
+impl IntoIterator for ModuleTree {
     type Item = (ModulePath, Module);
 
     type IntoIter = <BTreeMap<ModulePath, Module> as IntoIterator>::IntoIter;
@@ -140,7 +158,7 @@ impl IntoIterator for Generated {
     }
 }
 
-impl ToTokens for Generated {
+impl ToTokens for ModuleTree {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         for (path, module) in self.modules.iter() {
             if module.path.parent().is_some() {
@@ -244,6 +262,14 @@ impl FromIterator<String> for ModulePath {
     }
 }
 
+impl<'a> FromIterator<&'a str> for ModulePath {
+    fn from_iter<T: IntoIterator<Item = &'a str>>(iter: T) -> Self {
+        ModulePath {
+            segments: Vec::from_iter(iter.into_iter().map(String::from)),
+        }
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ItemPath {
     module_path: ModulePath,
@@ -289,6 +315,28 @@ impl ItemPath {
     }
 }
 
+impl From<&FullReference> for ItemPath {
+    fn from(r: &FullReference) -> Self {
+        match r.fragment_name() {
+            Some("main") | None => {
+                let nsid = r.clone_nsid();
+                ModulePath::from(&nsid)
+                    .parent()
+                    .unwrap()
+                    .item_path(nsid.name().to_pascal_case())
+            }
+            Some(name) => ModulePath::from(r.clone_nsid()).item_path(name.to_pascal_case()),
+        }
+    }
+}
+
+impl From<FullReference> for ItemPath {
+    #[inline]
+    fn from(r: FullReference) -> Self {
+        Self::from(&r)
+    }
+}
+
 impl ToTokens for ItemPath {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         let module_path = &self.module_path;
@@ -298,5 +346,23 @@ impl ToTokens for ItemPath {
             #module_path :: #item_name
         }
         .to_tokens(tokens)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+
+    use super::*;
+
+    #[test]
+    fn module_path_from_nsid() {
+        let nsid = Nsid::from_str("com.example.foo").unwrap();
+        let mod_path = ModulePath::from(nsid);
+
+        assert_eq!(
+            ModulePath::from_iter(vec!["com", "example", "foo"]),
+            mod_path
+        );
     }
 }

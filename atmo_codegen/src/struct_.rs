@@ -6,12 +6,12 @@ use quote::{quote, ToTokens};
 use crate::Type;
 
 #[derive(Debug)]
-pub struct StructDef {
+pub struct RustStructDef {
     pub name: syn::Ident,
-    pub fields: Vec<Field>,
+    pub fields: Vec<RustStructField>,
 }
 
-impl ToTokens for StructDef {
+impl ToTokens for RustStructDef {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         let name = &self.name;
         let fields = self.fields.iter();
@@ -19,7 +19,7 @@ impl ToTokens for StructDef {
         quote! {
             #[derive(Clone, Debug, PartialEq, Eq, serde::Deserialize, serde::Serialize)]
             pub struct #name {
-                #(#fields),*
+                #(#fields,)*
             }
         }
         .to_tokens(tokens)
@@ -27,26 +27,27 @@ impl ToTokens for StructDef {
 }
 
 #[derive(Debug)]
-pub struct Field {
+pub struct RustStructField {
     pub doc: Option<String>,
     pub name: syn::Ident,
     pub rename: String,
-    pub optional: bool,
-    pub nullable: bool,
+    pub is_array: bool,
+    pub is_optional: bool,
+    pub is_nullable: bool,
     pub inner_ty: Type,
 }
 
-impl ToTokens for Field {
+impl ToTokens for RustStructField {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         let crate_ = crate::crate_name();
 
         let doc_attr = self.doc.clone().map(FieldAttr::Doc);
-        let serde_default = self.optional.then_some(FieldAttr::SerdeDefault);
+        let serde_default = self.is_optional.then_some(FieldAttr::SerdeDefault);
         let serde_rename = FieldAttr::SerdeRename(self.rename.clone());
-        let serde_skip_none = self.optional.then_some(FieldAttr::SerdeSkipNone);
+        let serde_skip_none = self.is_optional.then_some(FieldAttr::SerdeSkipNone);
         let serde_with = match self.inner_ty {
             Type::Bytes => {
-                let path = if self.optional {
+                let path = if self.is_optional {
                     format!("{crate_}::bytes::serde::option")
                 } else {
                     format!("{crate_}::bytes::serde")
@@ -65,12 +66,17 @@ impl ToTokens for Field {
 
         let name = &self.name;
 
-        let inner_ty = &self.inner_ty;
-        let ty = match (self.optional, self.nullable) {
-            (false, false) => quote! { #inner_ty },
-            (false, true) => quote! { #crate_::Nullable<#inner_ty> },
-            (true, false) => quote! { std::option::Option<#inner_ty> },
-            (true, true) => quote! { std::option::Option<#crate_::Nullable<#inner_ty>> },
+        let inner_ty = self.inner_ty.clone();
+        let maybe_arr_ty = if self.is_array {
+            Type::Vec(inner_ty.into())
+        } else {
+            inner_ty
+        };
+        let ty = match (self.is_optional, self.is_nullable) {
+            (false, false) => maybe_arr_ty,
+            (false, true) => Type::Nullable(maybe_arr_ty.into()),
+            (true, false) => Type::Option(maybe_arr_ty.into()),
+            (true, true) => Type::Option(Type::Nullable(maybe_arr_ty.into()).into()),
         };
 
         quote! {

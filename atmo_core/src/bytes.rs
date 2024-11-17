@@ -29,6 +29,7 @@ pub mod serde {
     {
         if des.is_human_readable() {
             #[derive(Deserialize)]
+            #[serde(deny_unknown_fields)]
             struct Wrapper<'a> {
                 #[serde(rename = "$bytes")]
                 bytes: Cow<'a, str>,

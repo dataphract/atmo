@@ -3,6 +3,9 @@ name = "atmo_core"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = []
+
 [dependencies]
 bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }

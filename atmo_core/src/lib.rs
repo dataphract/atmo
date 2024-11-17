@@ -30,6 +30,7 @@ pub mod nsid;
 mod nullable;
 mod parse;
 pub mod rkey;
+pub mod stream;
 pub mod tid;
 pub mod union_;
 mod unknown;

@@ -4,6 +4,7 @@ pub trait Request {
     type Params;
     type Input;
     type Output;
+    type Error;
 
     fn method() -> http::Method;
     fn nsid() -> &'static str;

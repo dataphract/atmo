@@ -6,6 +6,7 @@ pub mod app {
                 type Params = crate::app::bsky::actor::get_preferences::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::get_preferences::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -23,7 +24,8 @@ pub mod app {
             impl atmo_core::xrpc::Request for GetProfile {
                 type Params = crate::app::bsky::actor::get_profile::Params;
                 type Input = atmo_core::xrpc::NoInput;
-                type Output = crate::app::bsky::actor::defs::ProfileViewDetailed;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -42,6 +44,7 @@ pub mod app {
                 type Params = crate::app::bsky::actor::get_profiles::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::get_profiles::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -60,6 +63,7 @@ pub mod app {
                 type Params = crate::app::bsky::actor::get_suggestions::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::get_suggestions::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -75,12 +79,10 @@ pub mod app {
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Profile {
-                #[doc = "Small image to be displayed next to posts from account. AKA, 'profile picture'"]
                 #[serde(default)]
                 #[serde(rename = "avatar")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub avatar: std::option::Option<atmo_core::Blob>,
-                #[doc = "Larger horizontal image to display behind profile view."]
                 #[serde(default)]
                 #[serde(rename = "banner")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -105,7 +107,7 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "labels")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub labels: std::option::Option<crate::app::bsky::actor::profile::Labels>,
+                pub labels: std::option::Option<crate::app::bsky::actor::profile::main::Labels>,
                 #[serde(default)]
                 #[serde(rename = "pinnedPost")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -116,6 +118,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::actor::put_preferences::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -134,6 +137,7 @@ pub mod app {
                 type Params = crate::app::bsky::actor::search_actors::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::search_actors::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -152,6 +156,7 @@ pub mod app {
                 type Params = crate::app::bsky::actor::search_actors_typeahead::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::actor::search_actors_typeahead::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -166,30 +171,10 @@ pub mod app {
                 }
             }
             pub mod defs {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum ActorTarget {
-                    #[serde(rename = "all")]
-                    All,
-                    #[serde(rename = "exclude-following")]
-                    ExcludeFollowing,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AdultContentPref {
                     #[serde(rename = "enabled")]
                     pub enabled: bool,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum AllowIncoming {
-                    #[serde(rename = "all")]
-                    All,
-                    #[serde(rename = "none")]
-                    None,
-                    #[serde(rename = "following")]
-                    Following,
-                    #[serde(untagged)]
-                    Other(String),
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BskyAppProgressGuide {
@@ -222,18 +207,16 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labeler_did: std::option::Option<atmo_core::Did>,
                     #[serde(rename = "visibility")]
-                    pub visibility: crate::app::bsky::actor::defs::Visibility,
+                    pub visibility: crate::app::bsky::actor::defs::content_label_pref::Visibility,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedViewPref {
                     #[serde(rename = "feed")]
                     pub feed: std::string::String,
-                    #[doc = "Hide quote posts in the feed."]
                     #[serde(default)]
                     #[serde(rename = "hideQuotePosts")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_quote_posts: std::option::Option<bool>,
-                    #[doc = "Hide replies in the feed."]
                     #[serde(default)]
                     #[serde(rename = "hideReplies")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -242,12 +225,10 @@ pub mod app {
                     #[serde(rename = "hideRepliesByLikeCount")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_replies_by_like_count: std::option::Option<i64>,
-                    #[doc = "Hide replies in the feed if they are not by followed users."]
                     #[serde(default)]
                     #[serde(rename = "hideRepliesByUnfollowed")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hide_replies_by_unfollowed: std::option::Option<bool>,
-                    #[doc = "Hide reposts in the feed."]
                     #[serde(default)]
                     #[serde(rename = "hideReposts")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -256,7 +237,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct HiddenPostsPref {
                     #[serde(rename = "items")]
-                    pub items: std::vec::Vec<std::string::String>,
+                    pub items: std::vec::Vec<atmo_core::AtUri>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct InterestsPref {
@@ -286,7 +267,7 @@ pub mod app {
                     #[serde(rename = "actorTarget")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub actor_target:
-                        std::option::Option<crate::app::bsky::actor::defs::ActorTarget>,
+                        std::option::Option<crate::app::bsky::actor::defs::muted_word::ActorTarget>,
                     #[serde(default)]
                     #[serde(rename = "expiresAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -560,7 +541,8 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileAssociatedChat {
                     #[serde(rename = "allowIncoming")]
-                    pub allow_incoming: crate::app::bsky::actor::defs::AllowIncoming,
+                    pub allow_incoming:
+                        crate::app::bsky::actor::defs::profile_associated_chat::AllowIncoming,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ProfileView {
@@ -709,16 +691,16 @@ pub mod app {
                     #[serde(rename = "pinned")]
                     pub pinned: bool,
                     #[serde(rename = "type")]
-                    pub ty: crate::app::bsky::actor::defs::Type,
+                    pub ty: crate::app::bsky::actor::defs::saved_feed::Type,
                     #[serde(rename = "value")]
                     pub value: std::string::String,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SavedFeedsPref {
                     #[serde(rename = "pinned")]
-                    pub pinned: std::vec::Vec<std::string::String>,
+                    pub pinned: std::vec::Vec<atmo_core::AtUri>,
                     #[serde(rename = "saved")]
-                    pub saved: std::vec::Vec<std::string::String>,
+                    pub saved: std::vec::Vec<atmo_core::AtUri>,
                     #[serde(default)]
                     #[serde(rename = "timelineIndex")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -729,22 +711,8 @@ pub mod app {
                     #[serde(rename = "items")]
                     pub items: std::vec::Vec<crate::app::bsky::actor::defs::SavedFeed>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Sort {
-                    #[serde(rename = "oldest")]
-                    Oldest,
-                    #[serde(rename = "newest")]
-                    Newest,
-                    #[serde(rename = "most-likes")]
-                    MostLikes,
-                    #[serde(rename = "random")]
-                    Random,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadViewPref {
-                    #[doc = "Show followed users at the top of all replies."]
                     #[serde(default)]
                     #[serde(rename = "prioritizeFollowedUsers")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -752,18 +720,8 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "sort")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sort: std::option::Option<crate::app::bsky::actor::defs::Sort>,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Type {
-                    #[serde(rename = "feed")]
-                    Feed,
-                    #[serde(rename = "list")]
-                    List,
-                    #[serde(rename = "timeline")]
-                    Timeline,
-                    #[serde(untagged)]
-                    Other(String),
+                    pub sort:
+                        std::option::Option<crate::app::bsky::actor::defs::thread_view_pref::Sort>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewerState {
@@ -803,18 +761,82 @@ pub mod app {
                     pub muted_by_list:
                         std::option::Option<crate::app::bsky::graph::defs::ListViewBasic>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Visibility {
-                    #[serde(rename = "ignore")]
-                    Ignore,
-                    #[serde(rename = "show")]
-                    Show,
-                    #[serde(rename = "warn")]
-                    Warn,
-                    #[serde(rename = "hide")]
-                    Hide,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod content_label_pref {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Visibility {
+                        #[serde(rename = "ignore")]
+                        Ignore,
+                        #[serde(rename = "show")]
+                        Show,
+                        #[serde(rename = "warn")]
+                        Warn,
+                        #[serde(rename = "hide")]
+                        Hide,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod muted_word {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ActorTarget {
+                        #[serde(rename = "all")]
+                        All,
+                        #[serde(rename = "exclude-following")]
+                        ExcludeFollowing,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod profile_associated_chat {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum AllowIncoming {
+                        #[serde(rename = "all")]
+                        All,
+                        #[serde(rename = "none")]
+                        None,
+                        #[serde(rename = "following")]
+                        Following,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod saved_feed {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Type {
+                        #[serde(rename = "feed")]
+                        Feed,
+                        #[serde(rename = "list")]
+                        List,
+                        #[serde(rename = "timeline")]
+                        Timeline,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod thread_view_pref {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Sort {
+                        #[serde(rename = "oldest")]
+                        Oldest,
+                        #[serde(rename = "newest")]
+                        Newest,
+                        #[serde(rename = "most-likes")]
+                        MostLikes,
+                        #[serde(rename = "random")]
+                        Random,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod get_preferences {
@@ -842,7 +864,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "actors")]
-                    pub actors: std::vec::Vec<std::string::String>,
+                    pub actors: std::vec::Vec<atmo_core::AtIdentifier>,
                 }
             }
             pub mod get_suggestions {
@@ -868,58 +890,60 @@ pub mod app {
                 }
             }
             pub mod profile {
-                #[doc = "Self-label values, specific to the Bluesky application, on the overall account."]
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Labels {
-                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Labels {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Labels {
+                        SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Labels {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -1003,7 +1027,7 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct RecordWithMedia {
                 #[serde(rename = "media")]
-                pub media: crate::app::bsky::embed::record_with_media::Media,
+                pub media: crate::app::bsky::embed::record_with_media::main::Media,
                 #[serde(rename = "record")]
                 pub record: crate::app::bsky::embed::Record,
             }
@@ -1101,145 +1125,10 @@ pub mod app {
                 }
             }
             pub mod record {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Embeds {
-                    ExternalView(crate::app::bsky::embed::external::View),
-                    ImagesView(crate::app::bsky::embed::images::View),
-                    RecordView(crate::app::bsky::embed::record::View),
-                    RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
-                    VideoView(crate::app::bsky::embed::video::View),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Embeds {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external#view" => {
-                                    crate::app::bsky::embed::external::View::deserialize(map_des)
-                                        .map(Self::ExternalView)
-                                }
-                                "app.bsky.embed.images#view" => {
-                                    crate::app::bsky::embed::images::View::deserialize(map_des)
-                                        .map(Self::ImagesView)
-                                }
-                                "app.bsky.embed.record#view" => {
-                                    crate::app::bsky::embed::record::View::deserialize(map_des)
-                                        .map(Self::RecordView)
-                                }
-                                "app.bsky.embed.recordWithMedia#view" => {
-                                    crate::app::bsky::embed::record_with_media::View::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RecordWithMediaView)
-                                }
-                                "app.bsky.embed.video#view" => {
-                                    crate::app::bsky::embed::video::View::deserialize(map_des)
-                                        .map(Self::VideoView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external#view" => {
-                                    crate::app::bsky::embed::external::View::deserialize(map_des)
-                                        .map(Self::ExternalView)
-                                }
-                                "app.bsky.embed.images#view" => {
-                                    crate::app::bsky::embed::images::View::deserialize(map_des)
-                                        .map(Self::ImagesView)
-                                }
-                                "app.bsky.embed.record#view" => {
-                                    crate::app::bsky::embed::record::View::deserialize(map_des)
-                                        .map(Self::RecordView)
-                                }
-                                "app.bsky.embed.recordWithMedia#view" => {
-                                    crate::app::bsky::embed::record_with_media::View::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RecordWithMediaView)
-                                }
-                                "app.bsky.embed.video#view" => {
-                                    crate::app::bsky::embed::video::View::deserialize(map_des)
-                                        .map(Self::VideoView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Record {
-                    GeneratorView(crate::app::bsky::feed::defs::GeneratorView),
-                    LabelerView(crate::app::bsky::labeler::defs::LabelerView),
-                    ListView(crate::app::bsky::graph::defs::ListView),
-                    StarterPackViewBasic(crate::app::bsky::graph::defs::StarterPackViewBasic),
-                    ViewBlocked(crate::app::bsky::embed::record::ViewBlocked),
-                    ViewDetached(crate::app::bsky::embed::record::ViewDetached),
-                    ViewNotFound(crate::app::bsky::embed::record::ViewNotFound),
-                    ViewRecord(crate::app::bsky::embed::record::ViewRecord),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Record {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "app.bsky.feed.defs#generatorView" => crate :: app :: bsky :: feed :: defs :: GeneratorView :: deserialize (map_des) . map (Self :: GeneratorView) , "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.graph.defs#listView" => crate :: app :: bsky :: graph :: defs :: ListView :: deserialize (map_des) . map (Self :: ListView) , "app.bsky.graph.defs#starterPackViewBasic" => crate :: app :: bsky :: graph :: defs :: StarterPackViewBasic :: deserialize (map_des) . map (Self :: StarterPackViewBasic) , "app.bsky.embed.record#viewBlocked" => crate :: app :: bsky :: embed :: record :: ViewBlocked :: deserialize (map_des) . map (Self :: ViewBlocked) , "app.bsky.embed.record#viewDetached" => crate :: app :: bsky :: embed :: record :: ViewDetached :: deserialize (map_des) . map (Self :: ViewDetached) , "app.bsky.embed.record#viewNotFound" => crate :: app :: bsky :: embed :: record :: ViewNotFound :: deserialize (map_des) . map (Self :: ViewNotFound) , "app.bsky.embed.record#viewRecord" => crate :: app :: bsky :: embed :: record :: ViewRecord :: deserialize (map_des) . map (Self :: ViewRecord) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "app.bsky.feed.defs#generatorView" => crate :: app :: bsky :: feed :: defs :: GeneratorView :: deserialize (map_des) . map (Self :: GeneratorView) , "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.graph.defs#listView" => crate :: app :: bsky :: graph :: defs :: ListView :: deserialize (map_des) . map (Self :: ListView) , "app.bsky.graph.defs#starterPackViewBasic" => crate :: app :: bsky :: graph :: defs :: StarterPackViewBasic :: deserialize (map_des) . map (Self :: StarterPackViewBasic) , "app.bsky.embed.record#viewBlocked" => crate :: app :: bsky :: embed :: record :: ViewBlocked :: deserialize (map_des) . map (Self :: ViewBlocked) , "app.bsky.embed.record#viewDetached" => crate :: app :: bsky :: embed :: record :: ViewDetached :: deserialize (map_des) . map (Self :: ViewDetached) , "app.bsky.embed.record#viewNotFound" => crate :: app :: bsky :: embed :: record :: ViewNotFound :: deserialize (map_des) . map (Self :: ViewNotFound) , "app.bsky.embed.record#viewRecord" => crate :: app :: bsky :: embed :: record :: ViewRecord :: deserialize (map_des) . map (Self :: ViewRecord) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(rename = "record")]
-                    pub record: crate::app::bsky::embed::record::Record,
+                    pub record: crate::app::bsky::embed::record::view::Record,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ViewBlocked {
@@ -1273,8 +1162,9 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "embeds")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub embeds:
-                        std::option::Option<std::vec::Vec<crate::app::bsky::embed::record::Embeds>>,
+                    pub embeds: std::option::Option<
+                        std::vec::Vec<crate::app::bsky::embed::record::view_record::Embeds>,
+                    >,
                     #[serde(rename = "indexedAt")]
                     pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
@@ -1303,148 +1193,251 @@ pub mod app {
                     #[serde(rename = "value")]
                     pub value: atmo_core::Unknown,
                 }
-            }
-            pub mod record_with_media {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Media {
-                    External(crate::app::bsky::embed::External),
-                    Images(crate::app::bsky::embed::Images),
-                    Video(crate::app::bsky::embed::Video),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Media {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external" => {
-                                    crate::app::bsky::embed::External::deserialize(map_des)
-                                        .map(Self::External)
-                                }
-                                "app.bsky.embed.images" => {
-                                    crate::app::bsky::embed::Images::deserialize(map_des)
-                                        .map(Self::Images)
-                                }
-                                "app.bsky.embed.video" => {
-                                    crate::app::bsky::embed::Video::deserialize(map_des)
-                                        .map(Self::Video)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external" => {
-                                    crate::app::bsky::embed::External::deserialize(map_des)
-                                        .map(Self::External)
-                                }
-                                "app.bsky.embed.images" => {
-                                    crate::app::bsky::embed::Images::deserialize(map_des)
-                                        .map(Self::Images)
-                                }
-                                "app.bsky.embed.video" => {
-                                    crate::app::bsky::embed::Video::deserialize(map_des)
-                                        .map(Self::Video)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Record {
+                        GeneratorView(crate::app::bsky::feed::defs::GeneratorView),
+                        LabelerView(crate::app::bsky::labeler::defs::LabelerView),
+                        ListView(crate::app::bsky::graph::defs::ListView),
+                        StarterPackViewBasic(crate::app::bsky::graph::defs::StarterPackViewBasic),
+                        ViewBlocked(crate::app::bsky::embed::record::ViewBlocked),
+                        ViewDetached(crate::app::bsky::embed::record::ViewDetached),
+                        ViewNotFound(crate::app::bsky::embed::record::ViewNotFound),
+                        ViewRecord(crate::app::bsky::embed::record::ViewRecord),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Record {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.feed.defs#generatorView" => crate :: app :: bsky :: feed :: defs :: GeneratorView :: deserialize (map_des) . map (Self :: GeneratorView) , "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.graph.defs#listView" => crate :: app :: bsky :: graph :: defs :: ListView :: deserialize (map_des) . map (Self :: ListView) , "app.bsky.graph.defs#starterPackViewBasic" => crate :: app :: bsky :: graph :: defs :: StarterPackViewBasic :: deserialize (map_des) . map (Self :: StarterPackViewBasic) , "app.bsky.embed.record#viewBlocked" => crate :: app :: bsky :: embed :: record :: ViewBlocked :: deserialize (map_des) . map (Self :: ViewBlocked) , "app.bsky.embed.record#viewDetached" => crate :: app :: bsky :: embed :: record :: ViewDetached :: deserialize (map_des) . map (Self :: ViewDetached) , "app.bsky.embed.record#viewNotFound" => crate :: app :: bsky :: embed :: record :: ViewNotFound :: deserialize (map_des) . map (Self :: ViewNotFound) , "app.bsky.embed.record#viewRecord" => crate :: app :: bsky :: embed :: record :: ViewRecord :: deserialize (map_des) . map (Self :: ViewRecord) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.feed.defs#generatorView" => crate :: app :: bsky :: feed :: defs :: GeneratorView :: deserialize (map_des) . map (Self :: GeneratorView) , "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.graph.defs#listView" => crate :: app :: bsky :: graph :: defs :: ListView :: deserialize (map_des) . map (Self :: ListView) , "app.bsky.graph.defs#starterPackViewBasic" => crate :: app :: bsky :: graph :: defs :: StarterPackViewBasic :: deserialize (map_des) . map (Self :: StarterPackViewBasic) , "app.bsky.embed.record#viewBlocked" => crate :: app :: bsky :: embed :: record :: ViewBlocked :: deserialize (map_des) . map (Self :: ViewBlocked) , "app.bsky.embed.record#viewDetached" => crate :: app :: bsky :: embed :: record :: ViewDetached :: deserialize (map_des) . map (Self :: ViewDetached) , "app.bsky.embed.record#viewNotFound" => crate :: app :: bsky :: embed :: record :: ViewNotFound :: deserialize (map_des) . map (Self :: ViewNotFound) , "app.bsky.embed.record#viewRecord" => crate :: app :: bsky :: embed :: record :: ViewRecord :: deserialize (map_des) . map (Self :: ViewRecord) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
+                pub mod view_record {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Embeds {
+                        ExternalView(crate::app::bsky::embed::external::View),
+                        ImagesView(crate::app::bsky::embed::images::View),
+                        RecordView(crate::app::bsky::embed::record::View),
+                        RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
+                        VideoView(crate::app::bsky::embed::video::View),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Embeds {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.embed.external#view" => crate :: app :: bsky :: embed :: external :: View :: deserialize (map_des) . map (Self :: ExternalView) , "app.bsky.embed.images#view" => crate :: app :: bsky :: embed :: images :: View :: deserialize (map_des) . map (Self :: ImagesView) , "app.bsky.embed.record#view" => crate :: app :: bsky :: embed :: record :: View :: deserialize (map_des) . map (Self :: RecordView) , "app.bsky.embed.recordWithMedia#view" => crate :: app :: bsky :: embed :: record_with_media :: View :: deserialize (map_des) . map (Self :: RecordWithMediaView) , "app.bsky.embed.video#view" => crate :: app :: bsky :: embed :: video :: View :: deserialize (map_des) . map (Self :: VideoView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.embed.external#view" => crate :: app :: bsky :: embed :: external :: View :: deserialize (map_des) . map (Self :: ExternalView) , "app.bsky.embed.images#view" => crate :: app :: bsky :: embed :: images :: View :: deserialize (map_des) . map (Self :: ImagesView) , "app.bsky.embed.record#view" => crate :: app :: bsky :: embed :: record :: View :: deserialize (map_des) . map (Self :: RecordView) , "app.bsky.embed.recordWithMedia#view" => crate :: app :: bsky :: embed :: record_with_media :: View :: deserialize (map_des) . map (Self :: RecordWithMediaView) , "app.bsky.embed.video#view" => crate :: app :: bsky :: embed :: video :: View :: deserialize (map_des) . map (Self :: VideoView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+            }
+            pub mod record_with_media {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
                     #[serde(rename = "media")]
-                    pub media: crate::app::bsky::embed::record_with_media::ViewMedia,
+                    pub media: crate::app::bsky::embed::record_with_media::view::Media,
                     #[serde(rename = "record")]
                     pub record: crate::app::bsky::embed::record::View,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum ViewMedia {
-                    ExternalView(crate::app::bsky::embed::external::View),
-                    ImagesView(crate::app::bsky::embed::images::View),
-                    VideoView(crate::app::bsky::embed::video::View),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Media {
+                        External(crate::app::bsky::embed::External),
+                        Images(crate::app::bsky::embed::Images),
+                        Video(crate::app::bsky::embed::Video),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Media {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.external" => {
+                                        crate::app::bsky::embed::External::deserialize(map_des)
+                                            .map(Self::External)
+                                    }
+                                    "app.bsky.embed.images" => {
+                                        crate::app::bsky::embed::Images::deserialize(map_des)
+                                            .map(Self::Images)
+                                    }
+                                    "app.bsky.embed.video" => {
+                                        crate::app::bsky::embed::Video::deserialize(map_des)
+                                            .map(Self::Video)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.external" => {
+                                        crate::app::bsky::embed::External::deserialize(map_des)
+                                            .map(Self::External)
+                                    }
+                                    "app.bsky.embed.images" => {
+                                        crate::app::bsky::embed::Images::deserialize(map_des)
+                                            .map(Self::Images)
+                                    }
+                                    "app.bsky.embed.video" => {
+                                        crate::app::bsky::embed::Video::deserialize(map_des)
+                                            .map(Self::Video)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
                 }
-                impl<'de> serde::Deserialize<'de> for ViewMedia {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external#view" => {
-                                    crate::app::bsky::embed::external::View::deserialize(map_des)
+                pub mod view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Media {
+                        ExternalView(crate::app::bsky::embed::external::View),
+                        ImagesView(crate::app::bsky::embed::images::View),
+                        VideoView(crate::app::bsky::embed::video::View),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Media {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.external#view" => {
+                                        crate::app::bsky::embed::external::View::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::ExternalView)
-                                }
-                                "app.bsky.embed.images#view" => {
-                                    crate::app::bsky::embed::images::View::deserialize(map_des)
-                                        .map(Self::ImagesView)
-                                }
-                                "app.bsky.embed.video#view" => {
-                                    crate::app::bsky::embed::video::View::deserialize(map_des)
-                                        .map(Self::VideoView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external#view" => {
-                                    crate::app::bsky::embed::external::View::deserialize(map_des)
+                                    }
+                                    "app.bsky.embed.images#view" => {
+                                        crate::app::bsky::embed::images::View::deserialize(map_des)
+                                            .map(Self::ImagesView)
+                                    }
+                                    "app.bsky.embed.video#view" => {
+                                        crate::app::bsky::embed::video::View::deserialize(map_des)
+                                            .map(Self::VideoView)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.external#view" => {
+                                        crate::app::bsky::embed::external::View::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::ExternalView)
-                                }
-                                "app.bsky.embed.images#view" => {
-                                    crate::app::bsky::embed::images::View::deserialize(map_des)
-                                        .map(Self::ImagesView)
-                                }
-                                "app.bsky.embed.video#view" => {
-                                    crate::app::bsky::embed::video::View::deserialize(map_des)
-                                        .map(Self::VideoView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "app.bsky.embed.images#view" => {
+                                        crate::app::bsky::embed::images::View::deserialize(map_des)
+                                            .map(Self::ImagesView)
+                                    }
+                                    "app.bsky.embed.video#view" => {
+                                        crate::app::bsky::embed::video::View::deserialize(map_des)
+                                            .map(Self::VideoView)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -1485,6 +1478,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::describe_feed_generator::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1500,7 +1494,6 @@ pub mod app {
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Generator {
-                #[doc = "Declaration that a feed accepts feedback interactions from a client through app.bsky.feed.sendInteractions"]
                 #[serde(default)]
                 #[serde(rename = "acceptsInteractions")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1527,13 +1520,14 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "labels")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub labels: std::option::Option<crate::app::bsky::feed::generator::Labels>,
+                pub labels: std::option::Option<crate::app::bsky::feed::generator::main::Labels>,
             }
             pub struct GetActorFeeds;
             impl atmo_core::xrpc::Request for GetActorFeeds {
                 type Params = crate::app::bsky::feed::get_actor_feeds::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_actor_feeds::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1552,6 +1546,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_actor_likes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_actor_likes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1570,6 +1565,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_author_feed::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_author_feed::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1588,6 +1584,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_feed::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1606,6 +1603,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_feed_generator::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed_generator::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1624,6 +1622,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_feed_generators::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed_generators::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1642,6 +1641,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_feed_skeleton::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_feed_skeleton::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1660,6 +1660,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_likes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_likes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1678,6 +1679,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_list_feed::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_list_feed::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1696,6 +1698,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_post_thread::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_post_thread::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1714,6 +1717,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_posts::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_posts::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1732,6 +1736,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_quotes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_quotes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1750,6 +1755,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_reposted_by::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_reposted_by::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1768,6 +1774,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_suggested_feeds::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_suggested_feeds::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1786,6 +1793,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::get_timeline::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::get_timeline::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1813,7 +1821,7 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "embed")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub embed: std::option::Option<crate::app::bsky::feed::post::Embed>,
+                pub embed: std::option::Option<crate::app::bsky::feed::post::main::Embed>,
                 #[serde(default)]
                 #[serde(rename = "entities")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1826,7 +1834,7 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "labels")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub labels: std::option::Option<crate::app::bsky::feed::post::Labels>,
+                pub labels: std::option::Option<crate::app::bsky::feed::post::main::Labels>,
                 #[serde(default)]
                 #[serde(rename = "langs")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1849,13 +1857,12 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "detachedEmbeddingUris")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub detached_embedding_uris:
-                    std::option::Option<std::vec::Vec<std::string::String>>,
+                pub detached_embedding_uris: std::option::Option<std::vec::Vec<atmo_core::AtUri>>,
                 #[serde(default)]
                 #[serde(rename = "embeddingRules")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub embedding_rules: std::option::Option<
-                    std::vec::Vec<crate::app::bsky::feed::postgate::EmbeddingRules>,
+                    std::vec::Vec<crate::app::bsky::feed::postgate::main::EmbeddingRules>,
                 >,
                 #[serde(rename = "post")]
                 pub post: atmo_core::AtUri,
@@ -1872,6 +1879,7 @@ pub mod app {
                 type Params = crate::app::bsky::feed::search_posts::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::feed::search_posts::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1890,6 +1898,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::feed::send_interactions::Input;
                 type Output = crate::app::bsky::feed::send_interactions::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -1908,14 +1917,15 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "allow")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub allow:
-                    std::option::Option<std::vec::Vec<crate::app::bsky::feed::threadgate::Allow>>,
+                pub allow: std::option::Option<
+                    std::vec::Vec<crate::app::bsky::feed::threadgate::main::Allow>,
+                >,
                 #[serde(rename = "createdAt")]
                 pub created_at: atmo_core::DateTimeString,
                 #[serde(default)]
                 #[serde(rename = "hiddenReplies")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub hidden_replies: std::option::Option<std::vec::Vec<std::string::String>>,
+                pub hidden_replies: std::option::Option<std::vec::Vec<atmo_core::AtUri>>,
                 #[serde(rename = "post")]
                 pub post: atmo_core::AtUri,
             }
@@ -1938,137 +1948,6 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Embed {
-                    ExternalView(crate::app::bsky::embed::external::View),
-                    ImagesView(crate::app::bsky::embed::images::View),
-                    RecordView(crate::app::bsky::embed::record::View),
-                    RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
-                    VideoView(crate::app::bsky::embed::video::View),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Embed {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external#view" => {
-                                    crate::app::bsky::embed::external::View::deserialize(map_des)
-                                        .map(Self::ExternalView)
-                                }
-                                "app.bsky.embed.images#view" => {
-                                    crate::app::bsky::embed::images::View::deserialize(map_des)
-                                        .map(Self::ImagesView)
-                                }
-                                "app.bsky.embed.record#view" => {
-                                    crate::app::bsky::embed::record::View::deserialize(map_des)
-                                        .map(Self::RecordView)
-                                }
-                                "app.bsky.embed.recordWithMedia#view" => {
-                                    crate::app::bsky::embed::record_with_media::View::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RecordWithMediaView)
-                                }
-                                "app.bsky.embed.video#view" => {
-                                    crate::app::bsky::embed::video::View::deserialize(map_des)
-                                        .map(Self::VideoView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external#view" => {
-                                    crate::app::bsky::embed::external::View::deserialize(map_des)
-                                        .map(Self::ExternalView)
-                                }
-                                "app.bsky.embed.images#view" => {
-                                    crate::app::bsky::embed::images::View::deserialize(map_des)
-                                        .map(Self::ImagesView)
-                                }
-                                "app.bsky.embed.record#view" => {
-                                    crate::app::bsky::embed::record::View::deserialize(map_des)
-                                        .map(Self::RecordView)
-                                }
-                                "app.bsky.embed.recordWithMedia#view" => {
-                                    crate::app::bsky::embed::record_with_media::View::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RecordWithMediaView)
-                                }
-                                "app.bsky.embed.video#view" => {
-                                    crate::app::bsky::embed::video::View::deserialize(map_des)
-                                        .map(Self::VideoView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Event {
-                    #[doc = "Request that less content like the given feed item be shown in the feed"]
-                    #[serde(rename = "app.bsky.feed.defs#requestLess")]
-                    RequestLess,
-                    #[doc = "Request that more content like the given feed item be shown in the feed"]
-                    #[serde(rename = "app.bsky.feed.defs#requestMore")]
-                    RequestMore,
-                    #[doc = "User clicked through to the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#clickthroughItem")]
-                    ClickthroughItem,
-                    #[doc = "User clicked through to the author of the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#clickthroughAuthor")]
-                    ClickthroughAuthor,
-                    #[doc = "User clicked through to the reposter of the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#clickthroughReposter")]
-                    ClickthroughReposter,
-                    #[doc = "User clicked through to the embedded content of the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#clickthroughEmbed")]
-                    ClickthroughEmbed,
-                    #[doc = "Feed item was seen by user"]
-                    #[serde(rename = "app.bsky.feed.defs#interactionSeen")]
-                    InteractionSeen,
-                    #[doc = "User liked the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#interactionLike")]
-                    InteractionLike,
-                    #[doc = "User reposted the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#interactionRepost")]
-                    InteractionRepost,
-                    #[doc = "User replied to the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#interactionReply")]
-                    InteractionReply,
-                    #[doc = "User quoted the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#interactionQuote")]
-                    InteractionQuote,
-                    #[doc = "User shared the feed item"]
-                    #[serde(rename = "app.bsky.feed.defs#interactionShare")]
-                    InteractionShare,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FeedViewPost {
                     #[serde(default)]
@@ -2080,7 +1959,8 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "reason")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reason: std::option::Option<crate::app::bsky::feed::defs::Reason>,
+                    pub reason:
+                        std::option::Option<crate::app::bsky::feed::defs::feed_view_post::Reason>,
                     #[serde(default)]
                     #[serde(rename = "reply")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2144,7 +2024,8 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "event")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub event: std::option::Option<crate::app::bsky::feed::defs::Event>,
+                    pub event:
+                        std::option::Option<crate::app::bsky::feed::defs::interaction::Event>,
                     #[serde(default)]
                     #[serde(rename = "feedContext")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2161,74 +2042,6 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Parent {
-                    BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
-                    NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    PostView(crate::app::bsky::feed::defs::PostView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Parent {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#postView" => {
-                                    crate::app::bsky::feed::defs::PostView::deserialize(map_des)
-                                        .map(Self::PostView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#postView" => {
-                                    crate::app::bsky::feed::defs::PostView::deserialize(map_des)
-                                        .map(Self::PostView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct PostView {
                     #[serde(rename = "author")]
@@ -2238,7 +2051,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "embed")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub embed: std::option::Option<crate::app::bsky::feed::defs::Embed>,
+                    pub embed: std::option::Option<crate::app::bsky::feed::defs::post_view::Embed>,
                     #[serde(rename = "indexedAt")]
                     pub indexed_at: atmo_core::DateTimeString,
                     #[serde(default)]
@@ -2276,65 +2089,6 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<crate::app::bsky::feed::defs::ViewerState>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Reason {
-                    ReasonPin(crate::app::bsky::feed::defs::ReasonPin),
-                    ReasonRepost(crate::app::bsky::feed::defs::ReasonRepost),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Reason {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#reasonPin" => {
-                                    crate::app::bsky::feed::defs::ReasonPin::deserialize(map_des)
-                                        .map(Self::ReasonPin)
-                                }
-                                "app.bsky.feed.defs#reasonRepost" => {
-                                    crate::app::bsky::feed::defs::ReasonRepost::deserialize(map_des)
-                                        .map(Self::ReasonRepost)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#reasonPin" => {
-                                    crate::app::bsky::feed::defs::ReasonPin::deserialize(map_des)
-                                        .map(Self::ReasonPin)
-                                }
-                                "app.bsky.feed.defs#reasonRepost" => {
-                                    crate::app::bsky::feed::defs::ReasonRepost::deserialize(map_des)
-                                        .map(Self::ReasonRepost)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReasonPin {}
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -2344,78 +2098,6 @@ pub mod app {
                     #[serde(rename = "indexedAt")]
                     pub indexed_at: atmo_core::DateTimeString,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Replies {
-                    BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
-                    NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    ThreadViewPost(std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Replies {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#threadViewPost" => {
-                                    crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#threadViewPost" => {
-                                    crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
                     #[serde(default)]
@@ -2424,77 +2106,9 @@ pub mod app {
                     pub grandparent_author:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileViewBasic>,
                     #[serde(rename = "parent")]
-                    pub parent: crate::app::bsky::feed::defs::Parent,
+                    pub parent: crate::app::bsky::feed::defs::reply_ref::Parent,
                     #[serde(rename = "root")]
-                    pub root: crate::app::bsky::feed::defs::Root,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Root {
-                    BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
-                    NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    PostView(crate::app::bsky::feed::defs::PostView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Root {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#postView" => {
-                                    crate::app::bsky::feed::defs::PostView::deserialize(map_des)
-                                        .map(Self::PostView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#postView" => {
-                                    crate::app::bsky::feed::defs::PostView::deserialize(map_des)
-                                        .map(Self::PostView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
+                    pub root: crate::app::bsky::feed::defs::reply_ref::Root,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonFeedPost {
@@ -2507,75 +2121,9 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "reason")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reason:
-                        std::option::Option<crate::app::bsky::feed::defs::SkeletonFeedPostReason>,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum SkeletonFeedPostReason {
-                    SkeletonReasonPin(crate::app::bsky::feed::defs::SkeletonReasonPin),
-                    SkeletonReasonRepost(crate::app::bsky::feed::defs::SkeletonReasonRepost),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for SkeletonFeedPostReason {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#skeletonReasonPin" => {
-                                    crate::app::bsky::feed::defs::SkeletonReasonPin::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SkeletonReasonPin)
-                                }
-                                "app.bsky.feed.defs#skeletonReasonRepost" => {
-                                    crate::app::bsky::feed::defs::SkeletonReasonRepost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SkeletonReasonRepost)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#skeletonReasonPin" => {
-                                    crate::app::bsky::feed::defs::SkeletonReasonPin::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SkeletonReasonPin)
-                                }
-                                "app.bsky.feed.defs#skeletonReasonRepost" => {
-                                    crate::app::bsky::feed::defs::SkeletonReasonRepost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SkeletonReasonRepost)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
+                    pub reason: std::option::Option<
+                        crate::app::bsky::feed::defs::skeleton_feed_post::Reason,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SkeletonReasonPin {}
@@ -2590,86 +2138,15 @@ pub mod app {
                     #[serde(rename = "parent")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub parent:
-                        std::option::Option<crate::app::bsky::feed::defs::ThreadViewPostParent>,
+                        std::option::Option<crate::app::bsky::feed::defs::thread_view_post::Parent>,
                     #[serde(rename = "post")]
                     pub post: crate::app::bsky::feed::defs::PostView,
                     #[serde(default)]
                     #[serde(rename = "replies")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub replies:
-                        std::option::Option<std::vec::Vec<crate::app::bsky::feed::defs::Replies>>,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum ThreadViewPostParent {
-                    BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
-                    NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    ThreadViewPost(std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for ThreadViewPostParent {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#threadViewPost" => {
-                                    crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
-                                        .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
-                                        .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#threadViewPost" => {
-                                    crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
+                    pub replies: std::option::Option<
+                        std::vec::Vec<crate::app::bsky::feed::defs::thread_view_post::Replies>,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ThreadgateView {
@@ -2719,6 +2196,520 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub thread_muted: std::option::Option<bool>,
                 }
+                pub mod feed_view_post {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Reason {
+                        ReasonPin(crate::app::bsky::feed::defs::ReasonPin),
+                        ReasonRepost(crate::app::bsky::feed::defs::ReasonRepost),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Reason {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#reasonPin" => {
+                                        crate::app::bsky::feed::defs::ReasonPin::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::ReasonPin)
+                                    }
+                                    "app.bsky.feed.defs#reasonRepost" => {
+                                        crate::app::bsky::feed::defs::ReasonRepost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::ReasonRepost)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#reasonPin" => {
+                                        crate::app::bsky::feed::defs::ReasonPin::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::ReasonPin)
+                                    }
+                                    "app.bsky.feed.defs#reasonRepost" => {
+                                        crate::app::bsky::feed::defs::ReasonRepost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::ReasonRepost)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod interaction {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Event {
+                        #[serde(rename = "app.bsky.feed.defs#requestLess")]
+                        AppBskyFeedDefsRequestLess,
+                        #[serde(rename = "app.bsky.feed.defs#requestMore")]
+                        AppBskyFeedDefsRequestMore,
+                        #[serde(rename = "app.bsky.feed.defs#clickthroughItem")]
+                        AppBskyFeedDefsClickthroughItem,
+                        #[serde(rename = "app.bsky.feed.defs#clickthroughAuthor")]
+                        AppBskyFeedDefsClickthroughAuthor,
+                        #[serde(rename = "app.bsky.feed.defs#clickthroughReposter")]
+                        AppBskyFeedDefsClickthroughReposter,
+                        #[serde(rename = "app.bsky.feed.defs#clickthroughEmbed")]
+                        AppBskyFeedDefsClickthroughEmbed,
+                        #[serde(rename = "app.bsky.feed.defs#interactionSeen")]
+                        AppBskyFeedDefsInteractionSeen,
+                        #[serde(rename = "app.bsky.feed.defs#interactionLike")]
+                        AppBskyFeedDefsInteractionLike,
+                        #[serde(rename = "app.bsky.feed.defs#interactionRepost")]
+                        AppBskyFeedDefsInteractionRepost,
+                        #[serde(rename = "app.bsky.feed.defs#interactionReply")]
+                        AppBskyFeedDefsInteractionReply,
+                        #[serde(rename = "app.bsky.feed.defs#interactionQuote")]
+                        AppBskyFeedDefsInteractionQuote,
+                        #[serde(rename = "app.bsky.feed.defs#interactionShare")]
+                        AppBskyFeedDefsInteractionShare,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod post_view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Embed {
+                        ExternalView(crate::app::bsky::embed::external::View),
+                        ImagesView(crate::app::bsky::embed::images::View),
+                        RecordView(crate::app::bsky::embed::record::View),
+                        RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
+                        VideoView(crate::app::bsky::embed::video::View),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Embed {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.embed.external#view" => crate :: app :: bsky :: embed :: external :: View :: deserialize (map_des) . map (Self :: ExternalView) , "app.bsky.embed.images#view" => crate :: app :: bsky :: embed :: images :: View :: deserialize (map_des) . map (Self :: ImagesView) , "app.bsky.embed.record#view" => crate :: app :: bsky :: embed :: record :: View :: deserialize (map_des) . map (Self :: RecordView) , "app.bsky.embed.recordWithMedia#view" => crate :: app :: bsky :: embed :: record_with_media :: View :: deserialize (map_des) . map (Self :: RecordWithMediaView) , "app.bsky.embed.video#view" => crate :: app :: bsky :: embed :: video :: View :: deserialize (map_des) . map (Self :: VideoView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.embed.external#view" => crate :: app :: bsky :: embed :: external :: View :: deserialize (map_des) . map (Self :: ExternalView) , "app.bsky.embed.images#view" => crate :: app :: bsky :: embed :: images :: View :: deserialize (map_des) . map (Self :: ImagesView) , "app.bsky.embed.record#view" => crate :: app :: bsky :: embed :: record :: View :: deserialize (map_des) . map (Self :: RecordView) , "app.bsky.embed.recordWithMedia#view" => crate :: app :: bsky :: embed :: record_with_media :: View :: deserialize (map_des) . map (Self :: RecordWithMediaView) , "app.bsky.embed.video#view" => crate :: app :: bsky :: embed :: video :: View :: deserialize (map_des) . map (Self :: VideoView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod reply_ref {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Parent {
+                        BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
+                        NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
+                        PostView(crate::app::bsky::feed::defs::PostView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Parent {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#postView" => {
+                                        crate::app::bsky::feed::defs::PostView::deserialize(map_des)
+                                            .map(Self::PostView)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#postView" => {
+                                        crate::app::bsky::feed::defs::PostView::deserialize(map_des)
+                                            .map(Self::PostView)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Root {
+                        BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
+                        NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
+                        PostView(crate::app::bsky::feed::defs::PostView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Root {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#postView" => {
+                                        crate::app::bsky::feed::defs::PostView::deserialize(map_des)
+                                            .map(Self::PostView)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#postView" => {
+                                        crate::app::bsky::feed::defs::PostView::deserialize(map_des)
+                                            .map(Self::PostView)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod skeleton_feed_post {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Reason {
+                        SkeletonReasonPin(crate::app::bsky::feed::defs::SkeletonReasonPin),
+                        SkeletonReasonRepost(crate::app::bsky::feed::defs::SkeletonReasonRepost),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Reason {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.feed.defs#skeletonReasonPin" => crate :: app :: bsky :: feed :: defs :: SkeletonReasonPin :: deserialize (map_des) . map (Self :: SkeletonReasonPin) , "app.bsky.feed.defs#skeletonReasonRepost" => crate :: app :: bsky :: feed :: defs :: SkeletonReasonRepost :: deserialize (map_des) . map (Self :: SkeletonReasonRepost) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.feed.defs#skeletonReasonPin" => crate :: app :: bsky :: feed :: defs :: SkeletonReasonPin :: deserialize (map_des) . map (Self :: SkeletonReasonPin) , "app.bsky.feed.defs#skeletonReasonRepost" => crate :: app :: bsky :: feed :: defs :: SkeletonReasonRepost :: deserialize (map_des) . map (Self :: SkeletonReasonRepost) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod thread_view_post {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Parent {
+                        BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
+                        NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
+                        ThreadViewPost(
+                            std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>,
+                        ),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Parent {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#threadViewPost" => {
+                                        crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#threadViewPost" => {
+                                        crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Replies {
+                        BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
+                        NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
+                        ThreadViewPost(
+                            std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>,
+                        ),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Replies {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#threadViewPost" => {
+                                        crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::BlockedPost)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundPost)
+                                    }
+                                    "app.bsky.feed.defs#threadViewPost" => {
+                                        crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(|val| Self::ThreadViewPost(std::boxed::Box::new(val)))
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
             }
             pub mod describe_feed_generator {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -2751,58 +2742,60 @@ pub mod app {
                 }
             }
             pub mod generator {
-                #[doc = "Self-label values"]
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Labels {
-                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Labels {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Labels {
+                        SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Labels {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -2856,19 +2849,6 @@ pub mod app {
                 }
             }
             pub mod get_author_feed {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Filter {
-                    #[serde(rename = "posts_with_replies")]
-                    PostsWithReplies,
-                    #[serde(rename = "posts_no_replies")]
-                    PostsNoReplies,
-                    #[serde(rename = "posts_with_media")]
-                    PostsWithMedia,
-                    #[serde(rename = "posts_and_author_threads")]
-                    PostsAndAuthorThreads,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -2889,8 +2869,9 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "filter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub filter:
-                        std::option::Option<crate::app::bsky::feed::get_author_feed::Filter>,
+                    pub filter: std::option::Option<
+                        crate::app::bsky::feed::get_author_feed::params::Filter,
+                    >,
                     #[serde(default)]
                     #[serde(rename = "includePins")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2899,6 +2880,23 @@ pub mod app {
                     #[serde(rename = "limit")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                }
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Filter {
+                        #[serde(rename = "posts_with_replies")]
+                        PostsWithReplies,
+                        #[serde(rename = "posts_no_replies")]
+                        PostsNoReplies,
+                        #[serde(rename = "posts_with_media")]
+                        PostsWithMedia,
+                        #[serde(rename = "posts_and_author_threads")]
+                        PostsAndAuthorThreads,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod get_feed {
@@ -2928,10 +2926,8 @@ pub mod app {
             pub mod get_feed_generator {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    #[doc = "Indicates whether the feed generator service has been online recently, or else seems to be inactive."]
                     #[serde(rename = "isOnline")]
                     pub is_online: bool,
-                    #[doc = "Indicates whether the feed generator service is compatible with the record declaration."]
                     #[serde(rename = "isValid")]
                     pub is_valid: bool,
                     #[serde(rename = "view")]
@@ -2952,7 +2948,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "feeds")]
-                    pub feeds: std::vec::Vec<std::string::String>,
+                    pub feeds: std::vec::Vec<atmo_core::AtUri>,
                 }
             }
             pub mod get_feed_skeleton {
@@ -3050,7 +3046,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "thread")]
-                    pub thread: crate::app::bsky::feed::get_post_thread::Thread,
+                    pub thread: crate::app::bsky::feed::get_post_thread::output::Thread,
                     #[serde(default)]
                     #[serde(rename = "threadgate")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3070,75 +3066,86 @@ pub mod app {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Thread {
-                    BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
-                    NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
-                    ThreadViewPost(crate::app::bsky::feed::defs::ThreadViewPost),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Thread {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Thread {
+                        BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
+                        NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
+                        ThreadViewPost(crate::app::bsky::feed::defs::ThreadViewPost),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Thread {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#threadViewPost" => {
-                                    crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::ThreadViewPost)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.defs#blockedPost" => {
-                                    crate::app::bsky::feed::defs::BlockedPost::deserialize(map_des)
+                                    }
+                                    "app.bsky.feed.defs#threadViewPost" => {
+                                        crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::ThreadViewPost)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.defs#blockedPost" => {
+                                        crate::app::bsky::feed::defs::BlockedPost::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::BlockedPost)
-                                }
-                                "app.bsky.feed.defs#notFoundPost" => {
-                                    crate::app::bsky::feed::defs::NotFoundPost::deserialize(map_des)
+                                    }
+                                    "app.bsky.feed.defs#notFoundPost" => {
+                                        crate::app::bsky::feed::defs::NotFoundPost::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::NotFoundPost)
-                                }
-                                "app.bsky.feed.defs#threadViewPost" => {
-                                    crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::ThreadViewPost)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "app.bsky.feed.defs#threadViewPost" => {
+                                        crate::app::bsky::feed::defs::ThreadViewPost::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::ThreadViewPost)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -3152,7 +3159,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "uris")]
-                    pub uris: std::vec::Vec<std::string::String>,
+                    pub uris: std::vec::Vec<atmo_core::AtUri>,
                 }
             }
             pub mod get_quotes {
@@ -3272,92 +3279,6 @@ pub mod app {
                 }
             }
             pub mod post {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Embed {
-                    External(crate::app::bsky::embed::External),
-                    Images(crate::app::bsky::embed::Images),
-                    Record(crate::app::bsky::embed::Record),
-                    RecordWithMedia(crate::app::bsky::embed::RecordWithMedia),
-                    Video(crate::app::bsky::embed::Video),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Embed {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external" => {
-                                    crate::app::bsky::embed::External::deserialize(map_des)
-                                        .map(Self::External)
-                                }
-                                "app.bsky.embed.images" => {
-                                    crate::app::bsky::embed::Images::deserialize(map_des)
-                                        .map(Self::Images)
-                                }
-                                "app.bsky.embed.record" => {
-                                    crate::app::bsky::embed::Record::deserialize(map_des)
-                                        .map(Self::Record)
-                                }
-                                "app.bsky.embed.recordWithMedia" => {
-                                    crate::app::bsky::embed::RecordWithMedia::deserialize(map_des)
-                                        .map(Self::RecordWithMedia)
-                                }
-                                "app.bsky.embed.video" => {
-                                    crate::app::bsky::embed::Video::deserialize(map_des)
-                                        .map(Self::Video)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.external" => {
-                                    crate::app::bsky::embed::External::deserialize(map_des)
-                                        .map(Self::External)
-                                }
-                                "app.bsky.embed.images" => {
-                                    crate::app::bsky::embed::Images::deserialize(map_des)
-                                        .map(Self::Images)
-                                }
-                                "app.bsky.embed.record" => {
-                                    crate::app::bsky::embed::Record::deserialize(map_des)
-                                        .map(Self::Record)
-                                }
-                                "app.bsky.embed.recordWithMedia" => {
-                                    crate::app::bsky::embed::RecordWithMedia::deserialize(map_des)
-                                        .map(Self::RecordWithMedia)
-                                }
-                                "app.bsky.embed.video" => {
-                                    crate::app::bsky::embed::Video::deserialize(map_des)
-                                        .map(Self::Video)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Entity {
                     #[serde(rename = "index")]
@@ -3366,61 +3287,6 @@ pub mod app {
                     pub ty: std::string::String,
                     #[serde(rename = "value")]
                     pub value: std::string::String,
-                }
-                #[doc = "Self-label values for this post. Effectively content warnings."]
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Labels {
-                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Labels {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
@@ -3436,61 +3302,212 @@ pub mod app {
                     #[serde(rename = "start")]
                     pub start: i64,
                 }
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Embed {
+                        External(crate::app::bsky::embed::External),
+                        Images(crate::app::bsky::embed::Images),
+                        Record(crate::app::bsky::embed::Record),
+                        RecordWithMedia(crate::app::bsky::embed::RecordWithMedia),
+                        Video(crate::app::bsky::embed::Video),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Embed {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.external" => {
+                                        crate::app::bsky::embed::External::deserialize(map_des)
+                                            .map(Self::External)
+                                    }
+                                    "app.bsky.embed.images" => {
+                                        crate::app::bsky::embed::Images::deserialize(map_des)
+                                            .map(Self::Images)
+                                    }
+                                    "app.bsky.embed.record" => {
+                                        crate::app::bsky::embed::Record::deserialize(map_des)
+                                            .map(Self::Record)
+                                    }
+                                    "app.bsky.embed.recordWithMedia" => {
+                                        crate::app::bsky::embed::RecordWithMedia::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RecordWithMedia)
+                                    }
+                                    "app.bsky.embed.video" => {
+                                        crate::app::bsky::embed::Video::deserialize(map_des)
+                                            .map(Self::Video)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.external" => {
+                                        crate::app::bsky::embed::External::deserialize(map_des)
+                                            .map(Self::External)
+                                    }
+                                    "app.bsky.embed.images" => {
+                                        crate::app::bsky::embed::Images::deserialize(map_des)
+                                            .map(Self::Images)
+                                    }
+                                    "app.bsky.embed.record" => {
+                                        crate::app::bsky::embed::Record::deserialize(map_des)
+                                            .map(Self::Record)
+                                    }
+                                    "app.bsky.embed.recordWithMedia" => {
+                                        crate::app::bsky::embed::RecordWithMedia::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RecordWithMedia)
+                                    }
+                                    "app.bsky.embed.video" => {
+                                        crate::app::bsky::embed::Video::deserialize(map_des)
+                                            .map(Self::Video)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Labels {
+                        SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Labels {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
             }
             pub mod postgate {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct DisableRule {}
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum EmbeddingRules {
-                    DisableRule(crate::app::bsky::feed::postgate::DisableRule),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for EmbeddingRules {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.postgate#disableRule" => {
-                                    crate::app::bsky::feed::postgate::DisableRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DisableRule)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.postgate#disableRule" => {
-                                    crate::app::bsky::feed::postgate::DisableRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DisableRule)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum EmbeddingRules {
+                        DisableRule(crate::app::bsky::feed::postgate::DisableRule),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for EmbeddingRules {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.postgate#disableRule" => {
+                                        crate::app::bsky::feed::postgate::DisableRule::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::DisableRule)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.feed.postgate#disableRule" => {
+                                        crate::app::bsky::feed::postgate::DisableRule::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::DisableRule)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -3544,7 +3561,8 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "sort")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sort: std::option::Option<crate::app::bsky::feed::search_posts::Sort>,
+                    pub sort:
+                        std::option::Option<crate::app::bsky::feed::search_posts::params::Sort>,
                     #[serde(default)]
                     #[serde(rename = "tag")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3558,14 +3576,18 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub url: std::option::Option<url::Url>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Sort {
-                    #[serde(rename = "top")]
-                    Top,
-                    #[serde(rename = "latest")]
-                    Latest,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Sort {
+                        #[serde(rename = "top")]
+                        Top,
+                        #[serde(rename = "latest")]
+                        Latest,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod send_interactions {
@@ -3578,86 +3600,6 @@ pub mod app {
                 pub struct Output {}
             }
             pub mod threadgate {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Allow {
-                    FollowingRule(crate::app::bsky::feed::threadgate::FollowingRule),
-                    ListRule(crate::app::bsky::feed::threadgate::ListRule),
-                    MentionRule(crate::app::bsky::feed::threadgate::MentionRule),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Allow {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.threadgate#followingRule" => {
-                                    crate::app::bsky::feed::threadgate::FollowingRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::FollowingRule)
-                                }
-                                "app.bsky.feed.threadgate#listRule" => {
-                                    crate::app::bsky::feed::threadgate::ListRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::ListRule)
-                                }
-                                "app.bsky.feed.threadgate#mentionRule" => {
-                                    crate::app::bsky::feed::threadgate::MentionRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MentionRule)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.feed.threadgate#followingRule" => {
-                                    crate::app::bsky::feed::threadgate::FollowingRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::FollowingRule)
-                                }
-                                "app.bsky.feed.threadgate#listRule" => {
-                                    crate::app::bsky::feed::threadgate::ListRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::ListRule)
-                                }
-                                "app.bsky.feed.threadgate#mentionRule" => {
-                                    crate::app::bsky::feed::threadgate::MentionRule::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MentionRule)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct FollowingRule {}
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -3667,6 +3609,49 @@ pub mod app {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MentionRule {}
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Allow {
+                        FollowingRule(crate::app::bsky::feed::threadgate::FollowingRule),
+                        ListRule(crate::app::bsky::feed::threadgate::ListRule),
+                        MentionRule(crate::app::bsky::feed::threadgate::MentionRule),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Allow {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.feed.threadgate#followingRule" => crate :: app :: bsky :: feed :: threadgate :: FollowingRule :: deserialize (map_des) . map (Self :: FollowingRule) , "app.bsky.feed.threadgate#listRule" => crate :: app :: bsky :: feed :: threadgate :: ListRule :: deserialize (map_des) . map (Self :: ListRule) , "app.bsky.feed.threadgate#mentionRule" => crate :: app :: bsky :: feed :: threadgate :: MentionRule :: deserialize (map_des) . map (Self :: MentionRule) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.feed.threadgate#followingRule" => crate :: app :: bsky :: feed :: threadgate :: FollowingRule :: deserialize (map_des) . map (Self :: FollowingRule) , "app.bsky.feed.threadgate#listRule" => crate :: app :: bsky :: feed :: threadgate :: ListRule :: deserialize (map_des) . map (Self :: ListRule) , "app.bsky.feed.threadgate#mentionRule" => crate :: app :: bsky :: feed :: threadgate :: MentionRule :: deserialize (map_des) . map (Self :: MentionRule) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
             }
         }
         pub mod graph {
@@ -3689,6 +3674,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_actor_starter_packs::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_actor_starter_packs::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3707,6 +3693,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_blocks::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_blocks::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3725,6 +3712,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_followers::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_followers::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3743,6 +3731,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_follows::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_follows::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3761,6 +3750,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_known_followers::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_known_followers::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3779,6 +3769,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_list::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_list::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3797,6 +3788,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_list_blocks::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_list_blocks::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3815,6 +3807,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_list_mutes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_list_mutes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3833,6 +3826,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_lists::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_lists::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3851,6 +3845,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_mutes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_mutes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3869,6 +3864,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_relationships::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_relationships::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3887,6 +3883,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_starter_pack::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_starter_pack::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3905,6 +3902,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_starter_packs::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_starter_packs::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3923,6 +3921,7 @@ pub mod app {
                 type Params = crate::app::bsky::graph::get_suggested_follows_by_actor::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::graph::get_suggested_follows_by_actor::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -3956,7 +3955,7 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "labels")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub labels: std::option::Option<crate::app::bsky::graph::list::Labels>,
+                pub labels: std::option::Option<crate::app::bsky::graph::list::main::Labels>,
                 #[serde(rename = "name")]
                 pub name: std::string::String,
                 #[serde(rename = "purpose")]
@@ -3983,6 +3982,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::mute_actor::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4001,6 +4001,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::mute_actor_list::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4019,6 +4020,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::mute_thread::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4061,6 +4063,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::unmute_actor::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4079,6 +4082,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::unmute_actor_list::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4097,6 +4101,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::graph::unmute_thread::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4120,15 +4125,12 @@ pub mod app {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ListPurpose {
-                    #[doc = "A list of actors to apply an aggregate moderation action (mute/block) on."]
                     #[serde(rename = "app.bsky.graph.defs#modlist")]
-                    Modlist,
-                    #[doc = "A list of actors used for curation purposes such as list feeds or interaction gating."]
+                    AppBskyGraphDefsModlist,
                     #[serde(rename = "app.bsky.graph.defs#curatelist")]
-                    Curatelist,
-                    #[doc = "A list of actors used for only for reference purposes such as within a starter pack."]
+                    AppBskyGraphDefsCuratelist,
                     #[serde(rename = "app.bsky.graph.defs#referencelist")]
-                    Referencelist,
+                    AppBskyGraphDefsReferencelist,
                     #[serde(untagged)]
                     Other(String),
                 }
@@ -4558,8 +4560,9 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub actor: std::option::Option<atmo_core::Did>,
                     #[serde(rename = "relationships")]
-                    pub relationships:
-                        std::vec::Vec<crate::app::bsky::graph::get_relationships::Relationships>,
+                    pub relationships: std::vec::Vec<
+                        crate::app::bsky::graph::get_relationships::output::Relationships,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -4568,72 +4571,75 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "others")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub others: std::option::Option<std::vec::Vec<std::string::String>>,
+                    pub others: std::option::Option<std::vec::Vec<atmo_core::AtIdentifier>>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Relationships {
-                    NotFoundActor(crate::app::bsky::graph::defs::NotFoundActor),
-                    Relationship(crate::app::bsky::graph::defs::Relationship),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Relationships {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.graph.defs#notFoundActor" => {
-                                    crate::app::bsky::graph::defs::NotFoundActor::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::NotFoundActor)
-                                }
-                                "app.bsky.graph.defs#relationship" => {
-                                    crate::app::bsky::graph::defs::Relationship::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Relationship)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.graph.defs#notFoundActor" => {
-                                    crate::app::bsky::graph::defs::NotFoundActor::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::NotFoundActor)
-                                }
-                                "app.bsky.graph.defs#relationship" => {
-                                    crate::app::bsky::graph::defs::Relationship::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Relationship)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Relationships {
+                        NotFoundActor(crate::app::bsky::graph::defs::NotFoundActor),
+                        Relationship(crate::app::bsky::graph::defs::Relationship),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Relationships {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.graph.defs#notFoundActor" => {
+                                        crate::app::bsky::graph::defs::NotFoundActor::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundActor)
+                                    }
+                                    "app.bsky.graph.defs#relationship" => {
+                                        crate::app::bsky::graph::defs::Relationship::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::Relationship)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.graph.defs#notFoundActor" => {
+                                        crate::app::bsky::graph::defs::NotFoundActor::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::NotFoundActor)
+                                    }
+                                    "app.bsky.graph.defs#relationship" => {
+                                        crate::app::bsky::graph::defs::Relationship::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::Relationship)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -4660,13 +4666,12 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "uris")]
-                    pub uris: std::vec::Vec<std::string::String>,
+                    pub uris: std::vec::Vec<atmo_core::AtUri>,
                 }
             }
             pub mod get_suggested_follows_by_actor {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
-                    #[doc = "If true, response has fallen-back to generic results, and is not scoped using relativeToDid"]
                     #[serde(default)]
                     #[serde(rename = "isFallback")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4681,57 +4686,60 @@ pub mod app {
                 }
             }
             pub mod list {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Labels {
-                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Labels {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Labels {
+                        SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Labels {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -4792,6 +4800,7 @@ pub mod app {
                 type Params = crate::app::bsky::labeler::get_services::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::labeler::get_services::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4812,7 +4821,7 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "labels")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub labels: std::option::Option<crate::app::bsky::labeler::service::Labels>,
+                pub labels: std::option::Option<crate::app::bsky::labeler::service::main::Labels>,
                 #[serde(rename = "policies")]
                 pub policies: crate::app::bsky::labeler::defs::LabelerPolicies,
             }
@@ -4892,7 +4901,8 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "views")]
-                    pub views: std::vec::Vec<crate::app::bsky::labeler::get_services::Views>,
+                    pub views:
+                        std::vec::Vec<crate::app::bsky::labeler::get_services::output::Views>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -4901,100 +4911,106 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub detailed: std::option::Option<bool>,
                     #[serde(rename = "dids")]
-                    pub dids: std::vec::Vec<std::string::String>,
+                    pub dids: std::vec::Vec<atmo_core::Did>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Views {
-                    LabelerView(crate::app::bsky::labeler::defs::LabelerView),
-                    LabelerViewDetailed(crate::app::bsky::labeler::defs::LabelerViewDetailed),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Views {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.labeler.defs#labelerViewDetailed" => crate :: app :: bsky :: labeler :: defs :: LabelerViewDetailed :: deserialize (map_des) . map (Self :: LabelerViewDetailed) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.labeler.defs#labelerViewDetailed" => crate :: app :: bsky :: labeler :: defs :: LabelerViewDetailed :: deserialize (map_des) . map (Self :: LabelerViewDetailed) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Views {
+                        LabelerView(crate::app::bsky::labeler::defs::LabelerView),
+                        LabelerViewDetailed(crate::app::bsky::labeler::defs::LabelerViewDetailed),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Views {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.labeler.defs#labelerViewDetailed" => crate :: app :: bsky :: labeler :: defs :: LabelerViewDetailed :: deserialize (map_des) . map (Self :: LabelerViewDetailed) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "app.bsky.labeler.defs#labelerView" => crate :: app :: bsky :: labeler :: defs :: LabelerView :: deserialize (map_des) . map (Self :: LabelerView) , "app.bsky.labeler.defs#labelerViewDetailed" => crate :: app :: bsky :: labeler :: defs :: LabelerViewDetailed :: deserialize (map_des) . map (Self :: LabelerViewDetailed) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
             }
             pub mod service {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Labels {
-                    SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Labels {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.label.defs#selfLabels" => {
-                                    crate::com::atproto::label::defs::SelfLabels::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::SelfLabels)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Labels {
+                        SelfLabels(crate::com::atproto::label::defs::SelfLabels),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Labels {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.label.defs#selfLabels" => {
+                                        crate::com::atproto::label::defs::SelfLabels::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::SelfLabels)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -5006,6 +5022,7 @@ pub mod app {
                 type Params = crate::app::bsky::notification::get_unread_count::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::notification::get_unread_count::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5024,6 +5041,7 @@ pub mod app {
                 type Params = crate::app::bsky::notification::list_notifications::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::notification::list_notifications::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5042,6 +5060,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::notification::put_preferences::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5060,6 +5079,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::notification::register_push::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5078,6 +5098,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::app::bsky::notification::update_seen::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5126,7 +5147,8 @@ pub mod app {
                     pub labels:
                         std::option::Option<std::vec::Vec<crate::com::atproto::label::defs::Label>>,
                     #[serde(rename = "reason")]
-                    pub reason: crate::app::bsky::notification::list_notifications::Reason,
+                    pub reason:
+                        crate::app::bsky::notification::list_notifications::notification::Reason,
                     #[serde(default)]
                     #[serde(rename = "reasonSubject")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5174,24 +5196,28 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub seen_at: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Reason {
-                    #[serde(rename = "like")]
-                    Like,
-                    #[serde(rename = "repost")]
-                    Repost,
-                    #[serde(rename = "follow")]
-                    Follow,
-                    #[serde(rename = "mention")]
-                    Mention,
-                    #[serde(rename = "reply")]
-                    Reply,
-                    #[serde(rename = "quote")]
-                    Quote,
-                    #[serde(rename = "starterpack-joined")]
-                    StarterpackJoined,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod notification {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Reason {
+                        #[serde(rename = "like")]
+                        Like,
+                        #[serde(rename = "repost")]
+                        Repost,
+                        #[serde(rename = "follow")]
+                        Follow,
+                        #[serde(rename = "mention")]
+                        Mention,
+                        #[serde(rename = "reply")]
+                        Reply,
+                        #[serde(rename = "quote")]
+                        Quote,
+                        #[serde(rename = "starterpack-joined")]
+                        StarterpackJoined,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod put_preferences {
@@ -5207,22 +5233,26 @@ pub mod app {
                     #[serde(rename = "appId")]
                     pub app_id: std::string::String,
                     #[serde(rename = "platform")]
-                    pub platform: crate::app::bsky::notification::register_push::Platform,
+                    pub platform: crate::app::bsky::notification::register_push::input::Platform,
                     #[serde(rename = "serviceDid")]
                     pub service_did: atmo_core::Did,
                     #[serde(rename = "token")]
                     pub token: std::string::String,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Platform {
-                    #[serde(rename = "ios")]
-                    Ios,
-                    #[serde(rename = "android")]
-                    Android,
-                    #[serde(rename = "web")]
-                    Web,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod input {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Platform {
+                        #[serde(rename = "ios")]
+                        Ios,
+                        #[serde(rename = "android")]
+                        Android,
+                        #[serde(rename = "web")]
+                        Web,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod update_seen {
@@ -5237,7 +5267,7 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Facet {
                 #[serde(rename = "features")]
-                pub features: std::vec::Vec<crate::app::bsky::richtext::facet::Features>,
+                pub features: std::vec::Vec<crate::app::bsky::richtext::facet::main::Features>,
                 #[serde(rename = "index")]
                 pub index: crate::app::bsky::richtext::facet::ByteSlice,
             }
@@ -5248,74 +5278,6 @@ pub mod app {
                     pub byte_end: i64,
                     #[serde(rename = "byteStart")]
                     pub byte_start: i64,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Features {
-                    Link(crate::app::bsky::richtext::facet::Link),
-                    Mention(crate::app::bsky::richtext::facet::Mention),
-                    Tag(crate::app::bsky::richtext::facet::Tag),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Features {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.richtext.facet#link" => {
-                                    crate::app::bsky::richtext::facet::Link::deserialize(map_des)
-                                        .map(Self::Link)
-                                }
-                                "app.bsky.richtext.facet#mention" => {
-                                    crate::app::bsky::richtext::facet::Mention::deserialize(map_des)
-                                        .map(Self::Mention)
-                                }
-                                "app.bsky.richtext.facet#tag" => {
-                                    crate::app::bsky::richtext::facet::Tag::deserialize(map_des)
-                                        .map(Self::Tag)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.richtext.facet#link" => {
-                                    crate::app::bsky::richtext::facet::Link::deserialize(map_des)
-                                        .map(Self::Link)
-                                }
-                                "app.bsky.richtext.facet#mention" => {
-                                    crate::app::bsky::richtext::facet::Mention::deserialize(map_des)
-                                        .map(Self::Mention)
-                                }
-                                "app.bsky.richtext.facet#tag" => {
-                                    crate::app::bsky::richtext::facet::Tag::deserialize(map_des)
-                                        .map(Self::Tag)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Link {
@@ -5332,14 +5294,113 @@ pub mod app {
                     #[serde(rename = "tag")]
                     pub tag: std::string::String,
                 }
+                pub mod main {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Features {
+                        Link(crate::app::bsky::richtext::facet::Link),
+                        Mention(crate::app::bsky::richtext::facet::Mention),
+                        Tag(crate::app::bsky::richtext::facet::Tag),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Features {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.richtext.facet#link" => {
+                                        crate::app::bsky::richtext::facet::Link::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::Link)
+                                    }
+                                    "app.bsky.richtext.facet#mention" => {
+                                        crate::app::bsky::richtext::facet::Mention::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::Mention)
+                                    }
+                                    "app.bsky.richtext.facet#tag" => {
+                                        crate::app::bsky::richtext::facet::Tag::deserialize(map_des)
+                                            .map(Self::Tag)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.richtext.facet#link" => {
+                                        crate::app::bsky::richtext::facet::Link::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::Link)
+                                    }
+                                    "app.bsky.richtext.facet#mention" => {
+                                        crate::app::bsky::richtext::facet::Mention::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::Mention)
+                                    }
+                                    "app.bsky.richtext.facet#tag" => {
+                                        crate::app::bsky::richtext::facet::Tag::deserialize(map_des)
+                                            .map(Self::Tag)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
             }
         }
         pub mod unspecced {
+            pub struct GetConfig;
+            impl atmo_core::xrpc::Request for GetConfig {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = crate::app::bsky::unspecced::get_config::Output;
+                type Error = atmo_core::xrpc::Error;
+                #[inline]
+                fn method() -> http::Method {
+                    http::Method::GET
+                }
+                #[inline]
+                fn nsid() -> &'static str {
+                    "app.bsky.unspecced.getConfig"
+                }
+                #[inline]
+                fn output_encoding() -> &'static str {
+                    "application/json"
+                }
+            }
             pub struct GetPopularFeedGenerators;
             impl atmo_core::xrpc::Request for GetPopularFeedGenerators {
                 type Params = crate::app::bsky::unspecced::get_popular_feed_generators::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::get_popular_feed_generators::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5358,6 +5419,7 @@ pub mod app {
                 type Params = crate::app::bsky::unspecced::get_suggestions_skeleton::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::get_suggestions_skeleton::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5376,6 +5438,7 @@ pub mod app {
                 type Params = crate::app::bsky::unspecced::get_tagged_suggestions::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::get_tagged_suggestions::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5394,6 +5457,7 @@ pub mod app {
                 type Params = crate::app::bsky::unspecced::search_actors_skeleton::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::search_actors_skeleton::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5412,6 +5476,7 @@ pub mod app {
                 type Params = crate::app::bsky::unspecced::search_posts_skeleton::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::unspecced::search_posts_skeleton::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5435,6 +5500,15 @@ pub mod app {
                 pub struct SkeletonSearchPost {
                     #[serde(rename = "uri")]
                     pub uri: atmo_core::AtUri,
+                }
+            }
+            pub mod get_config {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Output {
+                    #[serde(default)]
+                    #[serde(rename = "checkEmailConfirmed")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub check_email_confirmed: std::option::Option<bool>,
                 }
             }
             pub mod get_popular_feed_generators {
@@ -5508,24 +5582,20 @@ pub mod app {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {}
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum SubjectType {
-                    #[serde(rename = "actor")]
-                    Actor,
-                    #[serde(rename = "feed")]
-                    Feed,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
-                pub struct Suggestion {
-                    #[serde(rename = "subject")]
-                    pub subject: url::Url,
-                    #[serde(rename = "subjectType")]
-                    pub subject_type:
-                        crate::app::bsky::unspecced::get_tagged_suggestions::SubjectType,
-                    #[serde(rename = "tag")]
-                    pub tag: std::string::String,
+                pub struct Suggestion { # [serde (rename = "subject")] pub subject : url :: Url , # [serde (rename = "subjectType")] pub subject_type : crate :: app :: bsky :: unspecced :: get_tagged_suggestions :: suggestion :: SubjectType , # [serde (rename = "tag")] pub tag : std :: string :: String , }
+                pub mod suggestion {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SubjectType {
+                        #[serde(rename = "actor")]
+                        Actor,
+                        #[serde(rename = "feed")]
+                        Feed,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod search_actors_skeleton {
@@ -5555,7 +5625,6 @@ pub mod app {
                     pub limit: std::option::Option<i64>,
                     #[serde(rename = "q")]
                     pub q: std::string::String,
-                    #[doc = "If true, acts as fast/simple 'typeahead' query."]
                     #[serde(default)]
                     #[serde(rename = "typeahead")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5616,7 +5685,7 @@ pub mod app {
                     #[serde(rename = "sort")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort: std::option::Option<
-                        crate::app::bsky::unspecced::search_posts_skeleton::Sort,
+                        crate::app::bsky::unspecced::search_posts_skeleton::params::Sort,
                     >,
                     #[serde(default)]
                     #[serde(rename = "tag")]
@@ -5635,14 +5704,18 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub viewer: std::option::Option<atmo_core::Did>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Sort {
-                    #[serde(rename = "top")]
-                    Top,
-                    #[serde(rename = "latest")]
-                    Latest,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Sort {
+                        #[serde(rename = "top")]
+                        Top,
+                        #[serde(rename = "latest")]
+                        Latest,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
         }
@@ -5652,6 +5725,7 @@ pub mod app {
                 type Params = crate::app::bsky::video::get_job_status::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::video::get_job_status::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5670,6 +5744,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::video::get_upload_limits::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5688,6 +5763,7 @@ pub mod app {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::app::bsky::video::upload_video::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5725,16 +5801,20 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub progress: std::option::Option<i64>,
                     #[serde(rename = "state")]
-                    pub state: crate::app::bsky::video::defs::State,
+                    pub state: crate::app::bsky::video::defs::job_status::State,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum State {
-                    #[serde(rename = "JOB_STATE_COMPLETED")]
-                    JobStateCompleted,
-                    #[serde(rename = "JOB_STATE_FAILED")]
-                    JobStateFailed,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod job_status {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum State {
+                        #[serde(rename = "JOB_STATE_COMPLETED")]
+                        JobStateCompleted,
+                        #[serde(rename = "JOB_STATE_FAILED")]
+                        JobStateFailed,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod get_job_status {
@@ -5788,13 +5868,14 @@ pub mod chat {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Declaration {
                 #[serde(rename = "allowIncoming")]
-                pub allow_incoming: crate::chat::bsky::actor::declaration::AllowIncoming,
+                pub allow_incoming: crate::chat::bsky::actor::declaration::main::AllowIncoming,
             }
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::actor::delete_account::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5813,6 +5894,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5827,16 +5909,20 @@ pub mod chat {
                 }
             }
             pub mod declaration {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum AllowIncoming {
-                    #[serde(rename = "all")]
-                    All,
-                    #[serde(rename = "none")]
-                    None,
-                    #[serde(rename = "following")]
-                    Following,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod main {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum AllowIncoming {
+                        #[serde(rename = "all")]
+                        All,
+                        #[serde(rename = "none")]
+                        None,
+                        #[serde(rename = "following")]
+                        Following,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod defs {
@@ -5851,7 +5937,6 @@ pub mod chat {
                     #[serde(rename = "avatar")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub avatar: std::option::Option<url::Url>,
-                    #[doc = "Set to true when the actor cannot actively participate in converations"]
                     #[serde(default)]
                     #[serde(rename = "chatDisabled")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5885,7 +5970,8 @@ pub mod chat {
             impl atmo_core::xrpc::Request for DeleteMessageForSelf {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::delete_message_for_self::Input;
-                type Output = crate::chat::bsky::convo::defs::DeletedMessageView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5904,6 +5990,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::convo::get_convo::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_convo::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5922,6 +6009,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::convo::get_convo_for_members::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_convo_for_members::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5940,6 +6028,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::convo::get_log::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_log::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5958,6 +6047,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::convo::get_messages::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::get_messages::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5976,6 +6066,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::leave_convo::Input;
                 type Output = crate::chat::bsky::convo::leave_convo::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5994,6 +6085,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::convo::list_convos::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::convo::list_convos::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6012,6 +6104,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::mute_convo::Input;
                 type Output = crate::chat::bsky::convo::mute_convo::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6029,7 +6122,8 @@ pub mod chat {
             impl atmo_core::xrpc::Request for SendMessage {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::send_message::Input;
-                type Output = crate::chat::bsky::convo::defs::MessageView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6048,6 +6142,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::send_message_batch::Input;
                 type Output = crate::chat::bsky::convo::send_message_batch::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6066,6 +6161,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::unmute_convo::Input;
                 type Output = crate::chat::bsky::convo::unmute_convo::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6084,6 +6180,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::convo::update_read::Input;
                 type Output = crate::chat::bsky::convo::update_read::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6105,12 +6202,17 @@ pub mod chat {
                     #[serde(default)]
                     #[serde(rename = "lastMessage")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_message:
-                        std::option::Option<crate::chat::bsky::convo::defs::LastMessage>,
+                    pub last_message: std::option::Option<
+                        crate::chat::bsky::convo::defs::convo_view::LastMessage,
+                    >,
                     #[serde(rename = "members")]
                     pub members: std::vec::Vec<crate::chat::bsky::actor::defs::ProfileViewBasic>,
                     #[serde(rename = "muted")]
                     pub muted: bool,
+                    #[serde(default)]
+                    #[serde(rename = "opened")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub opened: std::option::Option<bool>,
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                     #[serde(rename = "unreadCount")]
@@ -6127,123 +6229,6 @@ pub mod chat {
                     #[serde(rename = "sentAt")]
                     pub sent_at: atmo_core::DateTimeString,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Embed {
-                    Record(crate::app::bsky::embed::Record),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Embed {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.record" => {
-                                    crate::app::bsky::embed::Record::deserialize(map_des)
-                                        .map(Self::Record)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.record" => {
-                                    crate::app::bsky::embed::Record::deserialize(map_des)
-                                        .map(Self::Record)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum LastMessage {
-                    DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
-                    MessageView(crate::chat::bsky::convo::defs::MessageView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for LastMessage {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogBeginConvo {
                     #[serde(rename = "convoId")]
@@ -6256,7 +6241,7 @@ pub mod chat {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                     #[serde(rename = "message")]
-                    pub message: crate::chat::bsky::convo::defs::Message,
+                    pub message: crate::chat::bsky::convo::defs::log_create_message::Message,
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
@@ -6265,76 +6250,9 @@ pub mod chat {
                     #[serde(rename = "convoId")]
                     pub convo_id: std::string::String,
                     #[serde(rename = "message")]
-                    pub message: crate::chat::bsky::convo::defs::LogDeleteMessageMessage,
+                    pub message: crate::chat::bsky::convo::defs::log_delete_message::Message,
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum LogDeleteMessageMessage {
-                    DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
-                    MessageView(crate::chat::bsky::convo::defs::MessageView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for LogDeleteMessageMessage {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogLeaveConvo {
@@ -6343,79 +6261,13 @@ pub mod chat {
                     #[serde(rename = "rev")]
                     pub rev: std::string::String,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Message {
-                    DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
-                    MessageView(crate::chat::bsky::convo::defs::MessageView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Message {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageInput {
                     #[serde(default)]
                     #[serde(rename = "embed")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub embed: std::option::Option<crate::chat::bsky::convo::defs::Embed>,
+                    pub embed:
+                        std::option::Option<crate::chat::bsky::convo::defs::message_input::Embed>,
                     #[serde(default)]
                     #[serde(rename = "facets")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6439,7 +6291,7 @@ pub mod chat {
                     #[serde(rename = "embed")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embed:
-                        std::option::Option<crate::chat::bsky::convo::defs::MessageViewEmbed>,
+                        std::option::Option<crate::chat::bsky::convo::defs::message_view::Embed>,
                     #[serde(default)]
                     #[serde(rename = "facets")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6456,60 +6308,242 @@ pub mod chat {
                     #[serde(rename = "text")]
                     pub text: std::string::String,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum MessageViewEmbed {
-                    View(crate::app::bsky::embed::record::View),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for MessageViewEmbed {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.record#view" => {
-                                    crate::app::bsky::embed::record::View::deserialize(map_des)
-                                        .map(Self::View)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "app.bsky.embed.record#view" => {
-                                    crate::app::bsky::embed::record::View::deserialize(map_des)
-                                        .map(Self::View)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MessageViewSender {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
+                }
+                pub mod convo_view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum LastMessage {
+                        DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
+                        MessageView(crate::chat::bsky::convo::defs::MessageView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for LastMessage {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod log_create_message {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Message {
+                        DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
+                        MessageView(crate::chat::bsky::convo::defs::MessageView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Message {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod log_delete_message {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Message {
+                        DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
+                        MessageView(crate::chat::bsky::convo::defs::MessageView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Message {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod message_input {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Embed {
+                        Record(crate::app::bsky::embed::Record),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Embed {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.record" => {
+                                        crate::app::bsky::embed::Record::deserialize(map_des)
+                                            .map(Self::Record)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.record" => {
+                                        crate::app::bsky::embed::Record::deserialize(map_des)
+                                            .map(Self::Record)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod message_view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Embed {
+                        View(crate::app::bsky::embed::record::View),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Embed {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.record#view" => {
+                                        crate::app::bsky::embed::record::View::deserialize(map_des)
+                                            .map(Self::View)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "app.bsky.embed.record#view" => {
+                                        crate::app::bsky::embed::record::View::deserialize(map_des)
+                                            .map(Self::View)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
                 }
             }
             pub mod delete_message_for_self {
@@ -6542,103 +6576,10 @@ pub mod chat {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "members")]
-                    pub members: std::vec::Vec<std::string::String>,
+                    pub members: std::vec::Vec<atmo_core::Did>,
                 }
             }
             pub mod get_log {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Logs {
-                    LogBeginConvo(crate::chat::bsky::convo::defs::LogBeginConvo),
-                    LogCreateMessage(crate::chat::bsky::convo::defs::LogCreateMessage),
-                    LogDeleteMessage(crate::chat::bsky::convo::defs::LogDeleteMessage),
-                    LogLeaveConvo(crate::chat::bsky::convo::defs::LogLeaveConvo),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Logs {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#logBeginConvo" => {
-                                    crate::chat::bsky::convo::defs::LogBeginConvo::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogBeginConvo)
-                                }
-                                "chat.bsky.convo.defs#logCreateMessage" => {
-                                    crate::chat::bsky::convo::defs::LogCreateMessage::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogCreateMessage)
-                                }
-                                "chat.bsky.convo.defs#logDeleteMessage" => {
-                                    crate::chat::bsky::convo::defs::LogDeleteMessage::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogDeleteMessage)
-                                }
-                                "chat.bsky.convo.defs#logLeaveConvo" => {
-                                    crate::chat::bsky::convo::defs::LogLeaveConvo::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogLeaveConvo)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#logBeginConvo" => {
-                                    crate::chat::bsky::convo::defs::LogBeginConvo::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogBeginConvo)
-                                }
-                                "chat.bsky.convo.defs#logCreateMessage" => {
-                                    crate::chat::bsky::convo::defs::LogCreateMessage::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogCreateMessage)
-                                }
-                                "chat.bsky.convo.defs#logDeleteMessage" => {
-                                    crate::chat::bsky::convo::defs::LogDeleteMessage::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogDeleteMessage)
-                                }
-                                "chat.bsky.convo.defs#logLeaveConvo" => {
-                                    crate::chat::bsky::convo::defs::LogLeaveConvo::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::LogLeaveConvo)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -6646,7 +6587,7 @@ pub mod chat {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(rename = "logs")]
-                    pub logs: std::vec::Vec<crate::chat::bsky::convo::get_log::Logs>,
+                    pub logs: std::vec::Vec<crate::chat::bsky::convo::get_log::output::Logs>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -6655,75 +6596,52 @@ pub mod chat {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                 }
-            }
-            pub mod get_messages {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Messages {
-                    DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
-                    MessageView(crate::chat::bsky::convo::defs::MessageView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Messages {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Logs {
+                        LogBeginConvo(crate::chat::bsky::convo::defs::LogBeginConvo),
+                        LogCreateMessage(crate::chat::bsky::convo::defs::LogCreateMessage),
+                        LogDeleteMessage(crate::chat::bsky::convo::defs::LogDeleteMessage),
+                        LogLeaveConvo(crate::chat::bsky::convo::defs::LogLeaveConvo),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Logs {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#logBeginConvo" => crate :: chat :: bsky :: convo :: defs :: LogBeginConvo :: deserialize (map_des) . map (Self :: LogBeginConvo) , "chat.bsky.convo.defs#logCreateMessage" => crate :: chat :: bsky :: convo :: defs :: LogCreateMessage :: deserialize (map_des) . map (Self :: LogCreateMessage) , "chat.bsky.convo.defs#logDeleteMessage" => crate :: chat :: bsky :: convo :: defs :: LogDeleteMessage :: deserialize (map_des) . map (Self :: LogDeleteMessage) , "chat.bsky.convo.defs#logLeaveConvo" => crate :: chat :: bsky :: convo :: defs :: LogLeaveConvo :: deserialize (map_des) . map (Self :: LogLeaveConvo) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#logBeginConvo" => crate :: chat :: bsky :: convo :: defs :: LogBeginConvo :: deserialize (map_des) . map (Self :: LogBeginConvo) , "chat.bsky.convo.defs#logCreateMessage" => crate :: chat :: bsky :: convo :: defs :: LogCreateMessage :: deserialize (map_des) . map (Self :: LogCreateMessage) , "chat.bsky.convo.defs#logDeleteMessage" => crate :: chat :: bsky :: convo :: defs :: LogDeleteMessage :: deserialize (map_des) . map (Self :: LogDeleteMessage) , "chat.bsky.convo.defs#logLeaveConvo" => crate :: chat :: bsky :: convo :: defs :: LogLeaveConvo :: deserialize (map_des) . map (Self :: LogLeaveConvo) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
+            }
+            pub mod get_messages {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -6731,7 +6649,8 @@ pub mod chat {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
                     #[serde(rename = "messages")]
-                    pub messages: std::vec::Vec<crate::chat::bsky::convo::get_messages::Messages>,
+                    pub messages:
+                        std::vec::Vec<crate::chat::bsky::convo::get_messages::output::Messages>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -6745,6 +6664,48 @@ pub mod chat {
                     #[serde(rename = "limit")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
+                }
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Messages {
+                        DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
+                        MessageView(crate::chat::bsky::convo::defs::MessageView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Messages {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
                 }
             }
             pub mod leave_convo {
@@ -6859,6 +6820,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::moderation::get_actor_metadata::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::moderation::get_actor_metadata::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6877,6 +6839,7 @@ pub mod chat {
                 type Params = crate::chat::bsky::moderation::get_message_context::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::chat::bsky::moderation::get_message_context::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6895,6 +6858,7 @@ pub mod chat {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::chat::bsky::moderation::update_actor_access::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6936,78 +6900,12 @@ pub mod chat {
                 }
             }
             pub mod get_message_context {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Messages {
-                    DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
-                    MessageView(crate::chat::bsky::convo::defs::MessageView),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Messages {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#deletedMessageView" => {
-                                    crate::chat::bsky::convo::defs::DeletedMessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::DeletedMessageView)
-                                }
-                                "chat.bsky.convo.defs#messageView" => {
-                                    crate::chat::bsky::convo::defs::MessageView::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::MessageView)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "messages")]
-                    pub messages:
-                        std::vec::Vec<crate::chat::bsky::moderation::get_message_context::Messages>,
+                    pub messages: std::vec::Vec<
+                        crate::chat::bsky::moderation::get_message_context::output::Messages,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -7025,6 +6923,48 @@ pub mod chat {
                     pub convo_id: std::option::Option<std::string::String>,
                     #[serde(rename = "messageId")]
                     pub message_id: std::string::String,
+                }
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Messages {
+                        DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
+                        MessageView(crate::chat::bsky::convo::defs::MessageView),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Messages {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "chat.bsky.convo.defs#deletedMessageView" => crate :: chat :: bsky :: convo :: defs :: DeletedMessageView :: deserialize (map_des) . map (Self :: DeletedMessageView) , "chat.bsky.convo.defs#messageView" => crate :: chat :: bsky :: convo :: defs :: MessageView :: deserialize (map_des) . map (Self :: MessageView) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
                 }
             }
             pub mod update_actor_access {
@@ -7051,6 +6991,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::delete_account::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7069,6 +7010,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::disable_account_invites::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7087,6 +7029,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::disable_invite_codes::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7105,6 +7048,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::enable_account_invites::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7122,7 +7066,8 @@ pub mod com {
             impl atmo_core::xrpc::Request for GetAccountInfo {
                 type Params = crate::com::atproto::admin::get_account_info::Params;
                 type Input = atmo_core::xrpc::NoInput;
-                type Output = crate::com::atproto::admin::defs::AccountView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7141,6 +7086,7 @@ pub mod com {
                 type Params = crate::com::atproto::admin::get_account_infos::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::get_account_infos::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7159,6 +7105,7 @@ pub mod com {
                 type Params = crate::com::atproto::admin::get_invite_codes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::get_invite_codes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7177,6 +7124,7 @@ pub mod com {
                 type Params = crate::com::atproto::admin::get_subject_status::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::get_subject_status::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7195,6 +7143,7 @@ pub mod com {
                 type Params = crate::com::atproto::admin::search_accounts::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::admin::search_accounts::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7213,6 +7162,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::send_email::Input;
                 type Output = crate::com::atproto::admin::send_email::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7231,6 +7181,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_account_email::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7249,6 +7200,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_account_handle::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7267,6 +7219,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_account_password::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7285,6 +7238,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::admin::update_subject_status::Input;
                 type Output = crate::com::atproto::admin::update_subject_status::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7342,6 +7296,12 @@ pub mod com {
                     #[serde(rename = "relatedRecords")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub related_records: std::option::Option<std::vec::Vec<atmo_core::Unknown>>,
+                    #[serde(default)]
+                    #[serde(rename = "threatSignatures")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub threat_signatures: std::option::Option<
+                        std::vec::Vec<crate::com::atproto::admin::defs::ThreatSignature>,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoBlobRef {
@@ -7367,6 +7327,13 @@ pub mod com {
                     #[serde(rename = "ref")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub ref_: std::option::Option<std::string::String>,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct ThreatSignature {
+                    #[serde(rename = "property")]
+                    pub property: std::string::String,
+                    #[serde(rename = "value")]
+                    pub value: std::string::String,
                 }
             }
             pub mod delete_account {
@@ -7427,7 +7394,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "dids")]
-                    pub dids: std::vec::Vec<std::string::String>,
+                    pub dids: std::vec::Vec<atmo_core::Did>,
                 }
             }
             pub mod get_invite_codes {
@@ -7453,17 +7420,22 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "sort")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sort:
-                        std::option::Option<crate::com::atproto::admin::get_invite_codes::Sort>,
+                    pub sort: std::option::Option<
+                        crate::com::atproto::admin::get_invite_codes::params::Sort,
+                    >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Sort {
-                    #[serde(rename = "recent")]
-                    Recent,
-                    #[serde(rename = "usage")]
-                    Usage,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Sort {
+                        #[serde(rename = "recent")]
+                        Recent,
+                        #[serde(rename = "usage")]
+                        Usage,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod get_subject_status {
@@ -7475,7 +7447,7 @@ pub mod com {
                     pub deactivated:
                         std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                     #[serde(rename = "subject")]
-                    pub subject: crate::com::atproto::admin::get_subject_status::Subject,
+                    pub subject: crate::com::atproto::admin::get_subject_status::output::Subject,
                     #[serde(default)]
                     #[serde(rename = "takedown")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7496,75 +7468,82 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub uri: std::option::Option<atmo_core::AtUri>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Subject {
-                    RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Subject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoBlobRef" => {
-                                    crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RepoBlobRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoBlobRef" => {
+                                        crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoBlobRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoBlobRef" => {
-                                    crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RepoBlobRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoBlobRef" => {
+                                        crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoBlobRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -7655,7 +7634,7 @@ pub mod com {
                     pub deactivated:
                         std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                     #[serde(rename = "subject")]
-                    pub subject: crate::com::atproto::admin::update_subject_status::Subject,
+                    pub subject: crate::com::atproto::admin::update_subject_status::input::Subject,
                     #[serde(default)]
                     #[serde(rename = "takedown")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7664,153 +7643,167 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "subject")]
-                    pub subject: crate::com::atproto::admin::update_subject_status::OutputSubject,
+                    pub subject: crate::com::atproto::admin::update_subject_status::output::Subject,
                     #[serde(default)]
                     #[serde(rename = "takedown")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum OutputSubject {
-                    RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for OutputSubject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoBlobRef" => {
-                                    crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RepoBlobRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                pub mod input {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoBlobRef" => {
+                                        crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoBlobRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoBlobRef" => {
-                                    crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RepoBlobRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoBlobRef" => {
+                                        crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoBlobRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Subject {
-                    RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Subject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoBlobRef" => {
-                                    crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RepoBlobRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoBlobRef" => {
+                                        crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoBlobRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoBlobRef" => {
-                                    crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::RepoBlobRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoBlobRef" => {
+                                        crate::com::atproto::admin::defs::RepoBlobRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoBlobRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -7823,6 +7816,7 @@ pub mod com {
                 type Input = atmo_core::xrpc::NoInput;
                 type Output =
                     crate::com::atproto::identity::get_recommended_did_credentials::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7841,6 +7835,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7859,6 +7854,7 @@ pub mod com {
                 type Params = crate::com::atproto::identity::resolve_handle::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::identity::resolve_handle::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7877,6 +7873,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::identity::sign_plc_operation::Input;
                 type Output = crate::com::atproto::identity::sign_plc_operation::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7895,6 +7892,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::identity::submit_plc_operation::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7913,6 +7911,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::identity::update_handle::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8010,6 +8009,7 @@ pub mod com {
                 type Params = crate::com::atproto::label::query_labels::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::label::query_labels::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8024,28 +8024,6 @@ pub mod com {
                 }
             }
             pub mod defs {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Blurs {
-                    #[serde(rename = "content")]
-                    Content,
-                    #[serde(rename = "media")]
-                    Media,
-                    #[serde(rename = "none")]
-                    None,
-                    #[serde(untagged)]
-                    Other(String),
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum DefaultSetting {
-                    #[serde(rename = "ignore")]
-                    Ignore,
-                    #[serde(rename = "warn")]
-                    Warn,
-                    #[serde(rename = "hide")]
-                    Hide,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Label {
                     #[serde(default)]
@@ -8058,12 +8036,10 @@ pub mod com {
                     #[serde(rename = "exp")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub exp: std::option::Option<atmo_core::DateTimeString>,
-                    #[doc = "If true, this is a negation label, overwriting a previous label."]
                     #[serde(default)]
                     #[serde(rename = "neg")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub neg: std::option::Option<bool>,
-                    #[doc = "Signature of dag-cbor encoded label."]
                     #[serde(default)]
                     #[serde(rename = "sig")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -8109,18 +8085,18 @@ pub mod com {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelValueDefinition {
-                    #[doc = "Does the user need to have adult content enabled in order to configure this label?"]
                     #[serde(default)]
                     #[serde(rename = "adultOnly")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub adult_only: std::option::Option<bool>,
                     #[serde(rename = "blurs")]
-                    pub blurs: crate::com::atproto::label::defs::Blurs,
+                    pub blurs: crate::com::atproto::label::defs::label_value_definition::Blurs,
                     #[serde(default)]
                     #[serde(rename = "defaultSetting")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub default_setting:
-                        std::option::Option<crate::com::atproto::label::defs::DefaultSetting>,
+                    pub default_setting: std::option::Option<
+                        crate::com::atproto::label::defs::label_value_definition::DefaultSetting,
+                    >,
                     #[serde(rename = "identifier")]
                     pub identifier: std::string::String,
                     #[serde(rename = "locales")]
@@ -8128,7 +8104,8 @@ pub mod com {
                         crate::com::atproto::label::defs::LabelValueDefinitionStrings,
                     >,
                     #[serde(rename = "severity")]
-                    pub severity: crate::com::atproto::label::defs::Severity,
+                    pub severity:
+                        crate::com::atproto::label::defs::label_value_definition::Severity,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelValueDefinitionStrings {
@@ -8149,16 +8126,46 @@ pub mod com {
                     #[serde(rename = "values")]
                     pub values: std::vec::Vec<crate::com::atproto::label::defs::SelfLabel>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Severity {
-                    #[serde(rename = "inform")]
-                    Inform,
-                    #[serde(rename = "alert")]
-                    Alert,
-                    #[serde(rename = "none")]
-                    None,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod label_value_definition {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Blurs {
+                        #[serde(rename = "content")]
+                        Content,
+                        #[serde(rename = "media")]
+                        Media,
+                        #[serde(rename = "none")]
+                        None,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum DefaultSetting {
+                        #[serde(rename = "ignore")]
+                        Ignore,
+                        #[serde(rename = "warn")]
+                        Warn,
+                        #[serde(rename = "hide")]
+                        Hide,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Severity {
+                        #[serde(rename = "inform")]
+                        Inform,
+                        #[serde(rename = "alert")]
+                        Alert,
+                        #[serde(rename = "none")]
+                        None,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod query_labels {
@@ -8184,7 +8191,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "sources")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sources: std::option::Option<std::vec::Vec<std::string::String>>,
+                    pub sources: std::option::Option<std::vec::Vec<atmo_core::Did>>,
                     #[serde(rename = "uriPatterns")]
                     pub uri_patterns: std::vec::Vec<std::string::String>,
                 }
@@ -8197,7 +8204,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message: std::option::Option<std::string::String>,
                     #[serde(rename = "name")]
-                    pub name: crate::com::atproto::label::subscribe_labels::Name,
+                    pub name: crate::com::atproto::label::subscribe_labels::info::Name,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Labels {
@@ -8206,12 +8213,16 @@ pub mod com {
                     #[serde(rename = "seq")]
                     pub seq: i64,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Name {
-                    #[serde(rename = "OutdatedCursor")]
-                    OutdatedCursor,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod info {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Name {
+                        #[serde(rename = "OutdatedCursor")]
+                        OutdatedCursor,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
         }
@@ -8221,6 +8232,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::moderation::create_report::Input;
                 type Output = crate::com::atproto::moderation::create_report::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8244,7 +8256,7 @@ pub mod com {
                     #[serde(rename = "reasonType")]
                     pub reason_type: crate::com::atproto::moderation::defs::ReasonType,
                     #[serde(rename = "subject")]
-                    pub subject: crate::com::atproto::moderation::create_report::Subject,
+                    pub subject: crate::com::atproto::moderation::create_report::input::Subject,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -8261,123 +8273,137 @@ pub mod com {
                     #[serde(rename = "reportedBy")]
                     pub reported_by: atmo_core::Did,
                     #[serde(rename = "subject")]
-                    pub subject: crate::com::atproto::moderation::create_report::OutputSubject,
+                    pub subject: crate::com::atproto::moderation::create_report::output::Subject,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum OutputSubject {
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for OutputSubject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                pub mod input {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Subject {
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Subject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -8385,27 +8411,20 @@ pub mod com {
             pub mod defs {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum ReasonType {
-                    #[doc = "Spam: frequent unwanted promotion, replies, mentions"]
                     #[serde(rename = "com.atproto.moderation.defs#reasonSpam")]
-                    ReasonSpam,
-                    #[doc = "Direct violation of server rules, laws, terms of service"]
+                    ComAtprotoModerationDefsReasonSpam,
                     #[serde(rename = "com.atproto.moderation.defs#reasonViolation")]
-                    ReasonViolation,
-                    #[doc = "Misleading identity, affiliation, or content"]
+                    ComAtprotoModerationDefsReasonViolation,
                     #[serde(rename = "com.atproto.moderation.defs#reasonMisleading")]
-                    ReasonMisleading,
-                    #[doc = "Unwanted or mislabeled sexual content"]
+                    ComAtprotoModerationDefsReasonMisleading,
                     #[serde(rename = "com.atproto.moderation.defs#reasonSexual")]
-                    ReasonSexual,
-                    #[doc = "Rude, harassing, explicit, or otherwise unwelcoming behavior"]
+                    ComAtprotoModerationDefsReasonSexual,
                     #[serde(rename = "com.atproto.moderation.defs#reasonRude")]
-                    ReasonRude,
-                    #[doc = "Other: reports not falling under another report category"]
+                    ComAtprotoModerationDefsReasonRude,
                     #[serde(rename = "com.atproto.moderation.defs#reasonOther")]
-                    ReasonOther,
-                    #[doc = "Appeal: appeal a previously taken moderation action"]
+                    ComAtprotoModerationDefsReasonOther,
                     #[serde(rename = "com.atproto.moderation.defs#reasonAppeal")]
-                    ReasonAppeal,
+                    ComAtprotoModerationDefsReasonAppeal,
                     #[serde(untagged)]
                     Other(String),
                 }
@@ -8417,6 +8436,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::apply_writes::Input;
                 type Output = crate::com::atproto::repo::apply_writes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8435,6 +8455,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::create_record::Input;
                 type Output = crate::com::atproto::repo::create_record::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8453,6 +8474,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::delete_record::Input;
                 type Output = crate::com::atproto::repo::delete_record::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8471,6 +8493,7 @@ pub mod com {
                 type Params = crate::com::atproto::repo::describe_repo::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::describe_repo::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8489,6 +8512,7 @@ pub mod com {
                 type Params = crate::com::atproto::repo::get_record::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::get_record::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8507,6 +8531,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8525,6 +8550,7 @@ pub mod com {
                 type Params = crate::com::atproto::repo::list_missing_blobs::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::list_missing_blobs::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8543,6 +8569,7 @@ pub mod com {
                 type Params = crate::com::atproto::repo::list_records::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::list_records::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8561,6 +8588,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::repo::put_record::Input;
                 type Output = crate::com::atproto::repo::put_record::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8586,6 +8614,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::repo::upload_blob::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8621,7 +8650,7 @@ pub mod com {
                     #[serde(rename = "validationStatus")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
-                        crate::com::atproto::repo::apply_writes::ValidationStatus,
+                        crate::com::atproto::repo::apply_writes::create_result::ValidationStatus,
                     >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -8641,13 +8670,13 @@ pub mod com {
                     #[serde(rename = "swapCommit")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_commit: std::option::Option<atmo_core::CidString>,
-                    #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data across all operations, 'true' to require it, or leave unset to validate only for known Lexicons."]
                     #[serde(default)]
                     #[serde(rename = "validate")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validate: std::option::Option<bool>,
                     #[serde(rename = "writes")]
-                    pub writes: std::vec::Vec<crate::com::atproto::repo::apply_writes::Writes>,
+                    pub writes:
+                        std::vec::Vec<crate::com::atproto::repo::apply_writes::input::Writes>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -8659,46 +8688,8 @@ pub mod com {
                     #[serde(rename = "results")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub results: std::option::Option<
-                        std::vec::Vec<crate::com::atproto::repo::apply_writes::Results>,
+                        std::vec::Vec<crate::com::atproto::repo::apply_writes::output::Results>,
                     >,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Results {
-                    CreateResult(crate::com::atproto::repo::apply_writes::CreateResult),
-                    DeleteResult(crate::com::atproto::repo::apply_writes::DeleteResult),
-                    UpdateResult(crate::com::atproto::repo::apply_writes::UpdateResult),
-                }
-                impl<'de> serde::Deserialize<'de> for Results {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) , } ;
-                            res.map_err(D::Error::custom)
-                        }
-                    }
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Update {
@@ -8719,112 +8710,115 @@ pub mod com {
                     #[serde(rename = "validationStatus")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
-                        crate::com::atproto::repo::apply_writes::ValidationStatus,
+                        crate::com::atproto::repo::apply_writes::update_result::ValidationStatus,
                     >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum ValidationStatus {
-                    #[serde(rename = "valid")]
-                    Valid,
-                    #[serde(rename = "unknown")]
-                    Unknown,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod create_result {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ValidationStatus {
+                        #[serde(rename = "valid")]
+                        Valid,
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Writes {
-                    Create(crate::com::atproto::repo::apply_writes::Create),
-                    Delete(crate::com::atproto::repo::apply_writes::Delete),
-                    Update(crate::com::atproto::repo::apply_writes::Update),
-                }
-                impl<'de> serde::Deserialize<'de> for Writes {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.repo.applyWrites#create" => {
-                                    crate::com::atproto::repo::apply_writes::Create::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Create)
-                                }
-                                "com.atproto.repo.applyWrites#delete" => {
-                                    crate::com::atproto::repo::apply_writes::Delete::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Delete)
-                                }
-                                "com.atproto.repo.applyWrites#update" => {
-                                    crate::com::atproto::repo::apply_writes::Update::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Update)
-                                }
-                                other => {
-                                    return Err(D::Error::unknown_variant(
-                                        other,
-                                        &[
-                                            "com.atproto.repo.applyWrites#create",
-                                            "com.atproto.repo.applyWrites#delete",
-                                            "com.atproto.repo.applyWrites#update",
-                                        ],
-                                    ))
-                                }
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.repo.applyWrites#create" => {
-                                    crate::com::atproto::repo::apply_writes::Create::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Create)
-                                }
-                                "com.atproto.repo.applyWrites#delete" => {
-                                    crate::com::atproto::repo::apply_writes::Delete::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Delete)
-                                }
-                                "com.atproto.repo.applyWrites#update" => {
-                                    crate::com::atproto::repo::apply_writes::Update::deserialize(
-                                        map_des,
-                                    )
-                                    .map(Self::Update)
-                                }
-                                other => {
-                                    return Err(D::Error::unknown_variant(
-                                        other,
-                                        &[
-                                            "com.atproto.repo.applyWrites#create",
-                                            "com.atproto.repo.applyWrites#delete",
-                                            "com.atproto.repo.applyWrites#update",
-                                        ],
-                                    ))
-                                }
-                            };
-                            res.map_err(D::Error::custom)
+                pub mod input {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Writes {
+                        Create(crate::com::atproto::repo::apply_writes::Create),
+                        Delete(crate::com::atproto::repo::apply_writes::Delete),
+                        Update(crate::com::atproto::repo::apply_writes::Update),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Writes {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#create" => crate :: com :: atproto :: repo :: apply_writes :: Create :: deserialize (map_des) . map (Self :: Create) , "com.atproto.repo.applyWrites#delete" => crate :: com :: atproto :: repo :: apply_writes :: Delete :: deserialize (map_des) . map (Self :: Delete) , "com.atproto.repo.applyWrites#update" => crate :: com :: atproto :: repo :: apply_writes :: Update :: deserialize (map_des) . map (Self :: Update) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#create" , "com.atproto.repo.applyWrites#delete" , "com.atproto.repo.applyWrites#update" ,])) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#create" => crate :: com :: atproto :: repo :: apply_writes :: Create :: deserialize (map_des) . map (Self :: Create) , "com.atproto.repo.applyWrites#delete" => crate :: com :: atproto :: repo :: apply_writes :: Delete :: deserialize (map_des) . map (Self :: Delete) , "com.atproto.repo.applyWrites#update" => crate :: com :: atproto :: repo :: apply_writes :: Update :: deserialize (map_des) . map (Self :: Update) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#create" , "com.atproto.repo.applyWrites#delete" , "com.atproto.repo.applyWrites#update" ,])) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
+                    }
+                }
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Results {
+                        CreateResult(crate::com::atproto::repo::apply_writes::CreateResult),
+                        DeleteResult(crate::com::atproto::repo::apply_writes::DeleteResult),
+                        UpdateResult(crate::com::atproto::repo::apply_writes::UpdateResult),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Results {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod update_result {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ValidationStatus {
+                        #[serde(rename = "valid")]
+                        Valid,
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(untagged)]
+                        Other(String),
                     }
                 }
             }
@@ -8845,7 +8839,6 @@ pub mod com {
                     #[serde(rename = "swapCommit")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_commit: std::option::Option<atmo_core::CidString>,
-                    #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."]
                     #[serde(default)]
                     #[serde(rename = "validate")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -8865,17 +8858,21 @@ pub mod com {
                     #[serde(rename = "validationStatus")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
-                        crate::com::atproto::repo::create_record::ValidationStatus,
+                        crate::com::atproto::repo::create_record::output::ValidationStatus,
                     >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum ValidationStatus {
-                    #[serde(rename = "valid")]
-                    Valid,
-                    #[serde(rename = "unknown")]
-                    Unknown,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod output {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ValidationStatus {
+                        #[serde(rename = "valid")]
+                        Valid,
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod defs {
@@ -8917,14 +8914,13 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "collections")]
-                    pub collections: std::vec::Vec<std::string::String>,
+                    pub collections: std::vec::Vec<atmo_core::Nsid>,
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                     #[serde(rename = "didDoc")]
                     pub did_doc: atmo_core::Unknown,
                     #[serde(rename = "handle")]
                     pub handle: atmo_core::Handle,
-                    #[doc = "Indicates if handle is currently valid (resolves bi-directionally)"]
                     #[serde(rename = "handleIsCorrect")]
                     pub handle_is_correct: bool,
                 }
@@ -9014,7 +9010,6 @@ pub mod com {
                     pub limit: std::option::Option<i64>,
                     #[serde(rename = "repo")]
                     pub repo: atmo_core::AtIdentifier,
-                    #[doc = "Flag to reverse the order of the returned records."]
                     #[serde(default)]
                     #[serde(rename = "reverse")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -9057,7 +9052,6 @@ pub mod com {
                     #[serde(rename = "swapRecord")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub swap_record: std::option::Option<atmo_core::Nullable<atmo_core::CidString>>,
-                    #[doc = "Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons."]
                     #[serde(default)]
                     #[serde(rename = "validate")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -9077,17 +9071,21 @@ pub mod com {
                     #[serde(rename = "validationStatus")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub validation_status: std::option::Option<
-                        crate::com::atproto::repo::put_record::ValidationStatus,
+                        crate::com::atproto::repo::put_record::output::ValidationStatus,
                     >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum ValidationStatus {
-                    #[serde(rename = "valid")]
-                    Valid,
-                    #[serde(rename = "unknown")]
-                    Unknown,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod output {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ValidationStatus {
+                        #[serde(rename = "valid")]
+                        Valid,
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod upload_blob {
@@ -9104,6 +9102,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9122,6 +9121,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::check_account_status::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9140,6 +9140,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::confirm_email::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9158,6 +9159,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_account::Input;
                 type Output = crate::com::atproto::server::create_account::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9175,7 +9177,8 @@ pub mod com {
             impl atmo_core::xrpc::Request for CreateAppPassword {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_app_password::Input;
-                type Output = crate::com::atproto::server::create_app_password::AppPassword;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9194,6 +9197,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_invite_code::Input;
                 type Output = crate::com::atproto::server::create_invite_code::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9212,6 +9216,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_invite_codes::Input;
                 type Output = crate::com::atproto::server::create_invite_codes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9230,6 +9235,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::create_session::Input;
                 type Output = crate::com::atproto::server::create_session::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9248,6 +9254,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::deactivate_account::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9266,6 +9273,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::delete_account::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9284,6 +9292,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9302,6 +9311,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::describe_server::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9320,6 +9330,7 @@ pub mod com {
                 type Params = crate::com::atproto::server::get_account_invite_codes::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::get_account_invite_codes::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9338,6 +9349,7 @@ pub mod com {
                 type Params = crate::com::atproto::server::get_service_auth::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::get_service_auth::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9356,6 +9368,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::get_session::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9374,6 +9387,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::list_app_passwords::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9392,6 +9406,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::refresh_session::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9410,6 +9425,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9428,6 +9444,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9446,6 +9463,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::server::request_email_update::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9464,6 +9482,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::request_password_reset::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9482,6 +9501,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::reserve_signing_key::Input;
                 type Output = crate::com::atproto::server::reserve_signing_key::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9500,6 +9520,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::reset_password::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9518,6 +9539,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::revoke_app_password::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9536,6 +9558,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::server::update_email::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9653,7 +9676,6 @@ pub mod com {
                 pub struct Input {
                     #[serde(rename = "name")]
                     pub name: std::string::String,
-                    #[doc = "If an app password has 'privileged' access to possibly sensitive account state. Meant for use with trusted clients."]
                     #[serde(default)]
                     #[serde(rename = "privileged")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -9691,7 +9713,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "forAccounts")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub for_accounts: std::option::Option<std::vec::Vec<std::string::String>>,
+                    pub for_accounts: std::option::Option<std::vec::Vec<atmo_core::Did>>,
                     #[serde(rename = "useCount")]
                     pub use_count: i64,
                 }
@@ -9748,19 +9770,24 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "status")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub status:
-                        std::option::Option<crate::com::atproto::server::create_session::Status>,
+                    pub status: std::option::Option<
+                        crate::com::atproto::server::create_session::output::Status,
+                    >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Status {
-                    #[serde(rename = "takendown")]
-                    Takendown,
-                    #[serde(rename = "suspended")]
-                    Suspended,
-                    #[serde(rename = "deactivated")]
-                    Deactivated,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod output {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod deactivate_account {
@@ -9839,7 +9866,6 @@ pub mod com {
                         std::option::Option<crate::com::atproto::server::describe_server::Contact>,
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
-                    #[doc = "If true, an invite code must be supplied to create an account on this instance."]
                     #[serde(default)]
                     #[serde(rename = "inviteCodeRequired")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -9849,7 +9875,6 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub links:
                         std::option::Option<crate::com::atproto::server::describe_server::Links>,
-                    #[doc = "If true, a phone verification token must be supplied to create an account on this instance."]
                     #[serde(default)]
                     #[serde(rename = "phoneVerificationRequired")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -9864,7 +9889,6 @@ pub mod com {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    #[doc = "Controls whether any new 'earned' but not 'created' invites should be created."]
                     #[serde(default)]
                     #[serde(rename = "createAvailable")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -9925,19 +9949,24 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "status")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub status:
-                        std::option::Option<crate::com::atproto::server::get_session::Status>,
+                    pub status: std::option::Option<
+                        crate::com::atproto::server::get_session::output::Status,
+                    >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Status {
-                    #[serde(rename = "takendown")]
-                    Takendown,
-                    #[serde(rename = "suspended")]
-                    Suspended,
-                    #[serde(rename = "deactivated")]
-                    Deactivated,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod output {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod list_app_passwords {
@@ -9981,19 +10010,24 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "status")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub status:
-                        std::option::Option<crate::com::atproto::server::refresh_session::Status>,
+                    pub status: std::option::Option<
+                        crate::com::atproto::server::refresh_session::output::Status,
+                    >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Status {
-                    #[serde(rename = "takendown")]
-                    Takendown,
-                    #[serde(rename = "suspended")]
-                    Suspended,
-                    #[serde(rename = "deactivated")]
-                    Deactivated,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod output {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod request_email_update {
@@ -10062,6 +10096,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_blob::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10080,6 +10115,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_blocks::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10098,6 +10134,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_checkout::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10116,6 +10153,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_head::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::get_head::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10134,6 +10172,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_latest_commit::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::get_latest_commit::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10152,6 +10191,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_record::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10170,6 +10210,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_repo::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10188,6 +10229,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::get_repo_status::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::get_repo_status::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10206,6 +10248,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::list_blobs::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::list_blobs::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10224,6 +10267,7 @@ pub mod com {
                 type Params = crate::com::atproto::sync::list_repos::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::sync::list_repos::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10242,6 +10286,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::sync::notify_of_update::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10260,6 +10305,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::sync::request_crawl::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10286,7 +10332,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "cids")]
-                    pub cids: std::vec::Vec<std::string::String>,
+                    pub cids: std::vec::Vec<atmo_core::CidString>,
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
@@ -10364,31 +10410,36 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "status")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub status:
-                        std::option::Option<crate::com::atproto::sync::get_repo_status::Status>,
+                    pub status: std::option::Option<
+                        crate::com::atproto::sync::get_repo_status::output::Status,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Status {
-                    #[serde(rename = "takendown")]
-                    Takendown,
-                    #[serde(rename = "suspended")]
-                    Suspended,
-                    #[serde(rename = "deactivated")]
-                    Deactivated,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod output {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod list_blobs {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cids")]
-                    pub cids: std::vec::Vec<std::string::String>,
+                    pub cids: std::vec::Vec<atmo_core::CidString>,
                     #[serde(default)]
                     #[serde(rename = "cursor")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -10448,18 +10499,23 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "status")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub status: std::option::Option<crate::com::atproto::sync::list_repos::Status>,
+                    pub status:
+                        std::option::Option<crate::com::atproto::sync::list_repos::repo::Status>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Status {
-                    #[serde(rename = "takendown")]
-                    Takendown,
-                    #[serde(rename = "suspended")]
-                    Suspended,
-                    #[serde(rename = "deactivated")]
-                    Deactivated,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod repo {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod notify_of_update {
@@ -10479,7 +10535,6 @@ pub mod com {
             pub mod subscribe_repos {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Account {
-                    #[doc = "Indicates that the account has a repository which can be fetched from the host that emitted this event."]
                     #[serde(rename = "active")]
                     pub active: bool,
                     #[serde(rename = "did")]
@@ -10489,27 +10544,16 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "status")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub status:
-                        std::option::Option<crate::com::atproto::sync::subscribe_repos::Status>,
+                    pub status: std::option::Option<
+                        crate::com::atproto::sync::subscribe_repos::account::Status,
+                    >,
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Action {
-                    #[serde(rename = "create")]
-                    Create,
-                    #[serde(rename = "update")]
-                    Update,
-                    #[serde(rename = "delete")]
-                    Delete,
-                    #[serde(untagged)]
-                    Other(String),
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Commit {
                     #[serde(rename = "blobs")]
-                    pub blobs: std::vec::Vec<atmo_core::CidString>,
-                    #[doc = "CAR file containing relevant blocks, as a diff since the previous repo state."]
+                    pub blobs: std::vec::Vec<atmo_core::CidLink>,
                     #[serde(rename = "blocks")]
                     #[serde(with = "atmo_core::bytes::serde")]
                     pub blocks: bytes::Bytes,
@@ -10521,7 +10565,6 @@ pub mod com {
                     #[serde(rename = "prev")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub prev: std::option::Option<atmo_core::Nullable<atmo_core::CidLink>>,
-                    #[doc = "DEPRECATED -- unused"]
                     #[serde(rename = "rebase")]
                     pub rebase: bool,
                     #[serde(rename = "repo")]
@@ -10534,7 +10577,6 @@ pub mod com {
                     pub since: atmo_core::Nullable<std::string::String>,
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
-                    #[doc = "Indicates that this commit contained too many ops, or data size was too large. Consumers will need to make a separate request to get missing data."]
                     #[serde(rename = "tooBig")]
                     pub too_big: bool,
                 }
@@ -10569,7 +10611,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub message: std::option::Option<std::string::String>,
                     #[serde(rename = "name")]
-                    pub name: crate::com::atproto::sync::subscribe_repos::Name,
+                    pub name: crate::com::atproto::sync::subscribe_repos::info::Name,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Migrate {
@@ -10582,34 +10624,14 @@ pub mod com {
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Name {
-                    #[serde(rename = "OutdatedCursor")]
-                    OutdatedCursor,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoOp {
                     #[serde(rename = "action")]
-                    pub action: crate::com::atproto::sync::subscribe_repos::Action,
+                    pub action: crate::com::atproto::sync::subscribe_repos::repo_op::Action,
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::Nullable<atmo_core::CidLink>,
                     #[serde(rename = "path")]
                     pub path: std::string::String,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Status {
-                    #[serde(rename = "takendown")]
-                    Takendown,
-                    #[serde(rename = "suspended")]
-                    Suspended,
-                    #[serde(rename = "deleted")]
-                    Deleted,
-                    #[serde(rename = "deactivated")]
-                    Deactivated,
-                    #[serde(untagged)]
-                    Other(String),
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Tombstone {
@@ -10620,6 +10642,49 @@ pub mod com {
                     #[serde(rename = "time")]
                     pub time: atmo_core::DateTimeString,
                 }
+                pub mod account {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deleted")]
+                        Deleted,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod info {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Name {
+                        #[serde(rename = "OutdatedCursor")]
+                        OutdatedCursor,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod repo_op {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Action {
+                        #[serde(rename = "create")]
+                        Create,
+                        #[serde(rename = "update")]
+                        Update,
+                        #[serde(rename = "delete")]
+                        Delete,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
             }
         }
         pub mod temp {
@@ -10628,6 +10693,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::temp::check_signup_queue::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10646,6 +10712,7 @@ pub mod com {
                 type Params = crate::com::atproto::temp::fetch_labels::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::com::atproto::temp::fetch_labels::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10664,6 +10731,7 @@ pub mod com {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::com::atproto::temp::request_phone_verification::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10727,7 +10795,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for CreateTemplate {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::communication::create_template::Input;
-                type Output = crate::tools::ozone::communication::defs::TemplateView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10746,6 +10815,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::communication::delete_template::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10764,6 +10834,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::communication::list_templates::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10781,7 +10852,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for UpdateTemplate {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::communication::update_template::Input;
-                type Output = crate::tools::ozone::communication::defs::TemplateView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10893,7 +10965,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for EmitEvent {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::moderation::emit_event::Input;
-                type Output = crate::tools::ozone::moderation::defs::ModEventView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10911,7 +10984,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for GetEvent {
                 type Params = crate::tools::ozone::moderation::get_event::Params;
                 type Input = atmo_core::xrpc::NoInput;
-                type Output = crate::tools::ozone::moderation::defs::ModEventViewDetail;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10929,7 +11003,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::tools::ozone::moderation::get_record::Params;
                 type Input = atmo_core::xrpc::NoInput;
-                type Output = crate::tools::ozone::moderation::defs::RecordViewDetail;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10948,6 +11023,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::moderation::get_records::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::get_records::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10965,7 +11041,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::tools::ozone::moderation::get_repo::Params;
                 type Input = atmo_core::xrpc::NoInput;
-                type Output = crate::tools::ozone::moderation::defs::RepoViewDetail;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10984,6 +11061,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::moderation::get_repos::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::get_repos::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11002,6 +11080,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::moderation::query_events::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::query_events::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11020,6 +11099,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::moderation::query_statuses::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::query_statuses::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11038,6 +11118,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::moderation::search_repos::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::moderation::search_repos::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11053,6 +11134,48 @@ pub mod tools {
             }
             pub mod defs {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct AccountEvent {
+                    #[serde(rename = "active")]
+                    pub active: bool,
+                    #[serde(default)]
+                    #[serde(rename = "comment")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub comment: std::option::Option<std::string::String>,
+                    #[serde(default)]
+                    #[serde(rename = "status")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub status: std::option::Option<
+                        crate::tools::ozone::moderation::defs::account_event::Status,
+                    >,
+                    #[serde(rename = "timestamp")]
+                    pub timestamp: atmo_core::DateTimeString,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct AccountHosting {
+                    #[serde(default)]
+                    #[serde(rename = "createdAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "deactivatedAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "deletedAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub deleted_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "reactivatedAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub reactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(rename = "status")]
+                    pub status: crate::tools::ozone::moderation::defs::account_hosting::Status,
+                    #[serde(default)]
+                    #[serde(rename = "updatedAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BlobView {
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
@@ -11061,8 +11184,9 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "details")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub details:
-                        std::option::Option<crate::tools::ozone::moderation::defs::Details>,
+                    pub details: std::option::Option<
+                        crate::tools::ozone::moderation::defs::blob_view::Details,
+                    >,
                     #[serde(rename = "mimeType")]
                     pub mime_type: std::string::String,
                     #[serde(default)]
@@ -11073,104 +11197,26 @@ pub mod tools {
                     #[serde(rename = "size")]
                     pub size: i64,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Details {
-                    ImageDetails(crate::tools::ozone::moderation::defs::ImageDetails),
-                    VideoDetails(crate::tools::ozone::moderation::defs::VideoDetails),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Details {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#imageDetails" => crate :: tools :: ozone :: moderation :: defs :: ImageDetails :: deserialize (map_des) . map (Self :: ImageDetails) , "tools.ozone.moderation.defs#videoDetails" => crate :: tools :: ozone :: moderation :: defs :: VideoDetails :: deserialize (map_des) . map (Self :: VideoDetails) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#imageDetails" => crate :: tools :: ozone :: moderation :: defs :: ImageDetails :: deserialize (map_des) . map (Self :: ImageDetails) , "tools.ozone.moderation.defs#videoDetails" => crate :: tools :: ozone :: moderation :: defs :: VideoDetails :: deserialize (map_des) . map (Self :: VideoDetails) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Event {
-                    ModEventAcknowledge(crate::tools::ozone::moderation::defs::ModEventAcknowledge),
-                    ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
-                    ModEventDivert(crate::tools::ozone::moderation::defs::ModEventDivert),
-                    ModEventEmail(crate::tools::ozone::moderation::defs::ModEventEmail),
-                    ModEventEscalate(crate::tools::ozone::moderation::defs::ModEventEscalate),
-                    ModEventLabel(crate::tools::ozone::moderation::defs::ModEventLabel),
-                    ModEventMute(crate::tools::ozone::moderation::defs::ModEventMute),
-                    ModEventMuteReporter(
-                        crate::tools::ozone::moderation::defs::ModEventMuteReporter,
-                    ),
-                    ModEventReport(crate::tools::ozone::moderation::defs::ModEventReport),
-                    ModEventResolveAppeal(
-                        crate::tools::ozone::moderation::defs::ModEventResolveAppeal,
-                    ),
-                    ModEventReverseTakedown(
-                        crate::tools::ozone::moderation::defs::ModEventReverseTakedown,
-                    ),
-                    ModEventTag(crate::tools::ozone::moderation::defs::ModEventTag),
-                    ModEventTakedown(crate::tools::ozone::moderation::defs::ModEventTakedown),
-                    ModEventUnmute(crate::tools::ozone::moderation::defs::ModEventUnmute),
-                    ModEventUnmuteReporter(
-                        crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
-                    ),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Event {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        }
-                    }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct IdentityEvent {
+                    #[serde(default)]
+                    #[serde(rename = "comment")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub comment: std::option::Option<std::string::String>,
+                    #[serde(default)]
+                    #[serde(rename = "handle")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub handle: std::option::Option<atmo_core::Handle>,
+                    #[serde(default)]
+                    #[serde(rename = "pdsHost")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub pds_host: std::option::Option<url::Url>,
+                    #[serde(rename = "timestamp")]
+                    pub timestamp: atmo_core::DateTimeString,
+                    #[serde(default)]
+                    #[serde(rename = "tombstone")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub tombstone: std::option::Option<bool>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ImageDetails {
@@ -11190,7 +11236,6 @@ pub mod tools {
                 pub struct ModEventComment {
                     #[serde(rename = "comment")]
                     pub comment: std::string::String,
-                    #[doc = "Make the comment persistent on the subject"]
                     #[serde(default)]
                     #[serde(rename = "sticky")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -11258,7 +11303,6 @@ pub mod tools {
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
-                    #[doc = "Set to true if the reporter was muted from reporting at the time of the event. These reports won't impact the reviewState of the subject."]
                     #[serde(default)]
                     #[serde(rename = "isReporterMuted")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -11293,7 +11337,6 @@ pub mod tools {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventTakedown {
-                    #[doc = "If true, all other reports on content authored by this account will be resolved (acknowledged)."]
                     #[serde(default)]
                     #[serde(rename = "acknowledgeAccountSubjects")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -11332,11 +11375,11 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub creator_handle: std::option::Option<std::string::String>,
                     #[serde(rename = "event")]
-                    pub event: crate::tools::ozone::moderation::defs::Event,
+                    pub event: crate::tools::ozone::moderation::defs::mod_event_view::Event,
                     #[serde(rename = "id")]
                     pub id: i64,
                     #[serde(rename = "subject")]
-                    pub subject: crate::tools::ozone::moderation::defs::Subject,
+                    pub subject: crate::tools::ozone::moderation::defs::mod_event_view::Subject,
                     #[serde(rename = "subjectBlobCids")]
                     pub subject_blob_cids: std::vec::Vec<std::string::String>,
                     #[serde(default)]
@@ -11351,115 +11394,15 @@ pub mod tools {
                     #[serde(rename = "createdBy")]
                     pub created_by: atmo_core::Did,
                     #[serde(rename = "event")]
-                    pub event: crate::tools::ozone::moderation::defs::ModEventViewDetailEvent,
+                    pub event: crate::tools::ozone::moderation::defs::mod_event_view_detail::Event,
                     #[serde(rename = "id")]
                     pub id: i64,
                     #[serde(rename = "subject")]
-                    pub subject: crate::tools::ozone::moderation::defs::ModEventViewDetailSubject,
+                    pub subject:
+                        crate::tools::ozone::moderation::defs::mod_event_view_detail::Subject,
                     #[serde(rename = "subjectBlobs")]
                     pub subject_blobs:
                         std::vec::Vec<crate::tools::ozone::moderation::defs::BlobView>,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum ModEventViewDetailEvent {
-                    ModEventAcknowledge(crate::tools::ozone::moderation::defs::ModEventAcknowledge),
-                    ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
-                    ModEventDivert(crate::tools::ozone::moderation::defs::ModEventDivert),
-                    ModEventEmail(crate::tools::ozone::moderation::defs::ModEventEmail),
-                    ModEventEscalate(crate::tools::ozone::moderation::defs::ModEventEscalate),
-                    ModEventLabel(crate::tools::ozone::moderation::defs::ModEventLabel),
-                    ModEventMute(crate::tools::ozone::moderation::defs::ModEventMute),
-                    ModEventMuteReporter(
-                        crate::tools::ozone::moderation::defs::ModEventMuteReporter,
-                    ),
-                    ModEventReport(crate::tools::ozone::moderation::defs::ModEventReport),
-                    ModEventResolveAppeal(
-                        crate::tools::ozone::moderation::defs::ModEventResolveAppeal,
-                    ),
-                    ModEventReverseTakedown(
-                        crate::tools::ozone::moderation::defs::ModEventReverseTakedown,
-                    ),
-                    ModEventTag(crate::tools::ozone::moderation::defs::ModEventTag),
-                    ModEventTakedown(crate::tools::ozone::moderation::defs::ModEventTakedown),
-                    ModEventUnmute(crate::tools::ozone::moderation::defs::ModEventUnmute),
-                    ModEventUnmuteReporter(
-                        crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
-                    ),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for ModEventViewDetailEvent {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum ModEventViewDetailSubject {
-                    RecordView(crate::tools::ozone::moderation::defs::RecordView),
-                    RecordViewNotFound(crate::tools::ozone::moderation::defs::RecordViewNotFound),
-                    RepoView(crate::tools::ozone::moderation::defs::RepoView),
-                    RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for ModEventViewDetailSubject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordView" => crate :: tools :: ozone :: moderation :: defs :: RecordView :: deserialize (map_des) . map (Self :: RecordView) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , "tools.ozone.moderation.defs#repoView" => crate :: tools :: ozone :: moderation :: defs :: RepoView :: deserialize (map_des) . map (Self :: RepoView) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordView" => crate :: tools :: ozone :: moderation :: defs :: RecordView :: deserialize (map_des) . map (Self :: RecordView) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , "tools.ozone.moderation.defs#repoView" => crate :: tools :: ozone :: moderation :: defs :: RepoView :: deserialize (map_des) . map (Self :: RepoView) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        }
-                    }
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Moderation {
@@ -11480,9 +11423,41 @@ pub mod tools {
                     >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct RecordEvent {
+                    #[serde(default)]
+                    #[serde(rename = "cid")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub cid: std::option::Option<atmo_core::CidString>,
+                    #[serde(default)]
+                    #[serde(rename = "comment")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub comment: std::option::Option<std::string::String>,
+                    #[serde(rename = "op")]
+                    pub op: crate::tools::ozone::moderation::defs::record_event::Op,
+                    #[serde(rename = "timestamp")]
+                    pub timestamp: atmo_core::DateTimeString,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct RecordHosting {
+                    #[serde(default)]
+                    #[serde(rename = "createdAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "deletedAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub deleted_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(rename = "status")]
+                    pub status: crate::tools::ozone::moderation::defs::record_hosting::Status,
+                    #[serde(default)]
+                    #[serde(rename = "updatedAt")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordView {
                     #[serde(rename = "blobCids")]
-                    pub blob_cids: std::vec::Vec<std::string::String>,
+                    pub blob_cids: std::vec::Vec<atmo_core::CidString>,
                     #[serde(rename = "cid")]
                     pub cid: atmo_core::CidString,
                     #[serde(rename = "indexedAt")]
@@ -11556,6 +11531,12 @@ pub mod tools {
                     pub moderation: crate::tools::ozone::moderation::defs::Moderation,
                     #[serde(rename = "relatedRecords")]
                     pub related_records: std::vec::Vec<atmo_core::Unknown>,
+                    #[serde(default)]
+                    #[serde(rename = "threatSignatures")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub threat_signatures: std::option::Option<
+                        std::vec::Vec<crate::com::atproto::admin::defs::ThreatSignature>,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewDetail {
@@ -11605,92 +11586,26 @@ pub mod tools {
                     pub moderation: crate::tools::ozone::moderation::defs::ModerationDetail,
                     #[serde(rename = "relatedRecords")]
                     pub related_records: std::vec::Vec<atmo_core::Unknown>,
+                    #[serde(default)]
+                    #[serde(rename = "threatSignatures")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub threat_signatures: std::option::Option<
+                        std::vec::Vec<crate::com::atproto::admin::defs::ThreatSignature>,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoViewNotFound {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Subject {
-                    MessageRef(crate::chat::bsky::convo::defs::MessageRef),
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Subject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#messageRef" => {
-                                    crate::chat::bsky::convo::defs::MessageRef::deserialize(map_des)
-                                        .map(Self::MessageRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
-                                        .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "chat.bsky.convo.defs#messageRef" => {
-                                    crate::chat::bsky::convo::defs::MessageRef::deserialize(map_des)
-                                        .map(Self::MessageRef)
-                                }
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
-                                        .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
                 pub enum SubjectReviewState {
-                    #[doc = "Moderator review status of a subject: Open. Indicates that the subject needs to be reviewed by a moderator"]
                     #[serde(rename = "#reviewOpen")]
                     ReviewOpen,
-                    #[doc = "Moderator review status of a subject: Escalated. Indicates that the subject was escalated for review by a moderator"]
                     #[serde(rename = "#reviewEscalated")]
                     ReviewEscalated,
-                    #[doc = "Moderator review status of a subject: Closed. Indicates that the subject was already reviewed and resolved by a moderator"]
                     #[serde(rename = "#reviewClosed")]
                     ReviewClosed,
-                    #[doc = "Moderator review status of a subject: Unnecessary. Indicates that the subject does not need a review at the moment but there is probably some moderation related metadata available for it"]
                     #[serde(rename = "#reviewNone")]
                     ReviewNone,
                     #[serde(untagged)]
@@ -11698,7 +11613,6 @@ pub mod tools {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SubjectStatusView {
-                    #[doc = "True indicates that the a previously taken moderator action was appealed against, by the author of the content. False indicates last appeal was resolved by moderators."]
                     #[serde(default)]
                     #[serde(rename = "appealed")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -11709,6 +11623,12 @@ pub mod tools {
                     pub comment: std::option::Option<std::string::String>,
                     #[serde(rename = "createdAt")]
                     pub created_at: atmo_core::DateTimeString,
+                    #[serde(default)]
+                    #[serde(rename = "hosting")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub hosting: std::option::Option<
+                        crate::tools::ozone::moderation::defs::subject_status_view::Hosting,
+                    >,
                     #[serde(rename = "id")]
                     pub id: i64,
                     #[serde(default)]
@@ -11738,11 +11658,12 @@ pub mod tools {
                     #[serde(rename = "reviewState")]
                     pub review_state: crate::tools::ozone::moderation::defs::SubjectReviewState,
                     #[serde(rename = "subject")]
-                    pub subject: crate::tools::ozone::moderation::defs::SubjectStatusViewSubject,
+                    pub subject:
+                        crate::tools::ozone::moderation::defs::subject_status_view::Subject,
                     #[serde(default)]
                     #[serde(rename = "subjectBlobCids")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub subject_blob_cids: std::option::Option<std::vec::Vec<std::string::String>>,
+                    pub subject_blob_cids: std::option::Option<std::vec::Vec<atmo_core::CidString>>,
                     #[serde(default)]
                     #[serde(rename = "subjectRepoHandle")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -11762,65 +11683,6 @@ pub mod tools {
                     #[serde(rename = "updatedAt")]
                     pub updated_at: atmo_core::DateTimeString,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum SubjectStatusViewSubject {
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for SubjectStatusViewSubject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
-                                        .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
-                                        .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        }
-                    }
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct VideoDetails {
                     #[serde(rename = "height")]
@@ -11830,136 +11692,622 @@ pub mod tools {
                     #[serde(rename = "width")]
                     pub width: i64,
                 }
-            }
-            pub mod emit_event {
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Event {
-                    ModEventAcknowledge(crate::tools::ozone::moderation::defs::ModEventAcknowledge),
-                    ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
-                    ModEventEmail(crate::tools::ozone::moderation::defs::ModEventEmail),
-                    ModEventEscalate(crate::tools::ozone::moderation::defs::ModEventEscalate),
-                    ModEventLabel(crate::tools::ozone::moderation::defs::ModEventLabel),
-                    ModEventMute(crate::tools::ozone::moderation::defs::ModEventMute),
-                    ModEventMuteReporter(
-                        crate::tools::ozone::moderation::defs::ModEventMuteReporter,
-                    ),
-                    ModEventReport(crate::tools::ozone::moderation::defs::ModEventReport),
-                    ModEventResolveAppeal(
-                        crate::tools::ozone::moderation::defs::ModEventResolveAppeal,
-                    ),
-                    ModEventReverseTakedown(
-                        crate::tools::ozone::moderation::defs::ModEventReverseTakedown,
-                    ),
-                    ModEventTag(crate::tools::ozone::moderation::defs::ModEventTag),
-                    ModEventTakedown(crate::tools::ozone::moderation::defs::ModEventTakedown),
-                    ModEventUnmute(crate::tools::ozone::moderation::defs::ModEventUnmute),
-                    ModEventUnmuteReporter(
-                        crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
-                    ),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
+                pub mod account_event {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(rename = "deleted")]
+                        Deleted,
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "tombstoned")]
+                        Tombstoned,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
-                impl<'de> serde::Deserialize<'de> for Event {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
+                pub mod account_hosting {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "takendown")]
+                        Takendown,
+                        #[serde(rename = "suspended")]
+                        Suspended,
+                        #[serde(rename = "deleted")]
+                        Deleted,
+                        #[serde(rename = "deactivated")]
+                        Deactivated,
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod blob_view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Details {
+                        ImageDetails(crate::tools::ozone::moderation::defs::ImageDetails),
+                        VideoDetails(crate::tools::ozone::moderation::defs::VideoDetails),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Details {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#imageDetails" => crate :: tools :: ozone :: moderation :: defs :: ImageDetails :: deserialize (map_des) . map (Self :: ImageDetails) , "tools.ozone.moderation.defs#videoDetails" => crate :: tools :: ozone :: moderation :: defs :: VideoDetails :: deserialize (map_des) . map (Self :: VideoDetails) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#imageDetails" => crate :: tools :: ozone :: moderation :: defs :: ImageDetails :: deserialize (map_des) . map (Self :: ImageDetails) , "tools.ozone.moderation.defs#videoDetails" => crate :: tools :: ozone :: moderation :: defs :: VideoDetails :: deserialize (map_des) . map (Self :: VideoDetails) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
+                pub mod mod_event_view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Event {
+                        AccountEvent(crate::tools::ozone::moderation::defs::AccountEvent),
+                        IdentityEvent(crate::tools::ozone::moderation::defs::IdentityEvent),
+                        ModEventAcknowledge(
+                            crate::tools::ozone::moderation::defs::ModEventAcknowledge,
+                        ),
+                        ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
+                        ModEventDivert(crate::tools::ozone::moderation::defs::ModEventDivert),
+                        ModEventEmail(crate::tools::ozone::moderation::defs::ModEventEmail),
+                        ModEventEscalate(crate::tools::ozone::moderation::defs::ModEventEscalate),
+                        ModEventLabel(crate::tools::ozone::moderation::defs::ModEventLabel),
+                        ModEventMute(crate::tools::ozone::moderation::defs::ModEventMute),
+                        ModEventMuteReporter(
+                            crate::tools::ozone::moderation::defs::ModEventMuteReporter,
+                        ),
+                        ModEventReport(crate::tools::ozone::moderation::defs::ModEventReport),
+                        ModEventResolveAppeal(
+                            crate::tools::ozone::moderation::defs::ModEventResolveAppeal,
+                        ),
+                        ModEventReverseTakedown(
+                            crate::tools::ozone::moderation::defs::ModEventReverseTakedown,
+                        ),
+                        ModEventTag(crate::tools::ozone::moderation::defs::ModEventTag),
+                        ModEventTakedown(crate::tools::ozone::moderation::defs::ModEventTakedown),
+                        ModEventUnmute(crate::tools::ozone::moderation::defs::ModEventUnmute),
+                        ModEventUnmuteReporter(
+                            crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
+                        ),
+                        RecordEvent(crate::tools::ozone::moderation::defs::RecordEvent),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Event {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountEvent" => crate :: tools :: ozone :: moderation :: defs :: AccountEvent :: deserialize (map_des) . map (Self :: AccountEvent) , "tools.ozone.moderation.defs#identityEvent" => crate :: tools :: ozone :: moderation :: defs :: IdentityEvent :: deserialize (map_des) . map (Self :: IdentityEvent) , "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , "tools.ozone.moderation.defs#recordEvent" => crate :: tools :: ozone :: moderation :: defs :: RecordEvent :: deserialize (map_des) . map (Self :: RecordEvent) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountEvent" => crate :: tools :: ozone :: moderation :: defs :: AccountEvent :: deserialize (map_des) . map (Self :: AccountEvent) , "tools.ozone.moderation.defs#identityEvent" => crate :: tools :: ozone :: moderation :: defs :: IdentityEvent :: deserialize (map_des) . map (Self :: IdentityEvent) , "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , "tools.ozone.moderation.defs#recordEvent" => crate :: tools :: ozone :: moderation :: defs :: RecordEvent :: deserialize (map_des) . map (Self :: RecordEvent) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        MessageRef(crate::chat::bsky::convo::defs::MessageRef),
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "chat.bsky.convo.defs#messageRef" => {
+                                        crate::chat::bsky::convo::defs::MessageRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::MessageRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoRef)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "chat.bsky.convo.defs#messageRef" => {
+                                        crate::chat::bsky::convo::defs::MessageRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::MessageRef)
+                                    }
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoRef)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod mod_event_view_detail {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Event {
+                        AccountEvent(crate::tools::ozone::moderation::defs::AccountEvent),
+                        IdentityEvent(crate::tools::ozone::moderation::defs::IdentityEvent),
+                        ModEventAcknowledge(
+                            crate::tools::ozone::moderation::defs::ModEventAcknowledge,
+                        ),
+                        ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
+                        ModEventDivert(crate::tools::ozone::moderation::defs::ModEventDivert),
+                        ModEventEmail(crate::tools::ozone::moderation::defs::ModEventEmail),
+                        ModEventEscalate(crate::tools::ozone::moderation::defs::ModEventEscalate),
+                        ModEventLabel(crate::tools::ozone::moderation::defs::ModEventLabel),
+                        ModEventMute(crate::tools::ozone::moderation::defs::ModEventMute),
+                        ModEventMuteReporter(
+                            crate::tools::ozone::moderation::defs::ModEventMuteReporter,
+                        ),
+                        ModEventReport(crate::tools::ozone::moderation::defs::ModEventReport),
+                        ModEventResolveAppeal(
+                            crate::tools::ozone::moderation::defs::ModEventResolveAppeal,
+                        ),
+                        ModEventReverseTakedown(
+                            crate::tools::ozone::moderation::defs::ModEventReverseTakedown,
+                        ),
+                        ModEventTag(crate::tools::ozone::moderation::defs::ModEventTag),
+                        ModEventTakedown(crate::tools::ozone::moderation::defs::ModEventTakedown),
+                        ModEventUnmute(crate::tools::ozone::moderation::defs::ModEventUnmute),
+                        ModEventUnmuteReporter(
+                            crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
+                        ),
+                        RecordEvent(crate::tools::ozone::moderation::defs::RecordEvent),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Event {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountEvent" => crate :: tools :: ozone :: moderation :: defs :: AccountEvent :: deserialize (map_des) . map (Self :: AccountEvent) , "tools.ozone.moderation.defs#identityEvent" => crate :: tools :: ozone :: moderation :: defs :: IdentityEvent :: deserialize (map_des) . map (Self :: IdentityEvent) , "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , "tools.ozone.moderation.defs#recordEvent" => crate :: tools :: ozone :: moderation :: defs :: RecordEvent :: deserialize (map_des) . map (Self :: RecordEvent) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountEvent" => crate :: tools :: ozone :: moderation :: defs :: AccountEvent :: deserialize (map_des) . map (Self :: AccountEvent) , "tools.ozone.moderation.defs#identityEvent" => crate :: tools :: ozone :: moderation :: defs :: IdentityEvent :: deserialize (map_des) . map (Self :: IdentityEvent) , "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventDivert" => crate :: tools :: ozone :: moderation :: defs :: ModEventDivert :: deserialize (map_des) . map (Self :: ModEventDivert) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , "tools.ozone.moderation.defs#recordEvent" => crate :: tools :: ozone :: moderation :: defs :: RecordEvent :: deserialize (map_des) . map (Self :: RecordEvent) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RecordView(crate::tools::ozone::moderation::defs::RecordView),
+                        RecordViewNotFound(
+                            crate::tools::ozone::moderation::defs::RecordViewNotFound,
+                        ),
+                        RepoView(crate::tools::ozone::moderation::defs::RepoView),
+                        RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordView" => crate :: tools :: ozone :: moderation :: defs :: RecordView :: deserialize (map_des) . map (Self :: RecordView) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , "tools.ozone.moderation.defs#repoView" => crate :: tools :: ozone :: moderation :: defs :: RepoView :: deserialize (map_des) . map (Self :: RepoView) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordView" => crate :: tools :: ozone :: moderation :: defs :: RecordView :: deserialize (map_des) . map (Self :: RecordView) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , "tools.ozone.moderation.defs#repoView" => crate :: tools :: ozone :: moderation :: defs :: RepoView :: deserialize (map_des) . map (Self :: RepoView) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+                pub mod record_event {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Op {
+                        #[serde(rename = "create")]
+                        Create,
+                        #[serde(rename = "update")]
+                        Update,
+                        #[serde(rename = "delete")]
+                        Delete,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod record_hosting {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Status {
+                        #[serde(rename = "deleted")]
+                        Deleted,
+                        #[serde(rename = "unknown")]
+                        Unknown,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+                pub mod subject_status_view {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Hosting {
+                        AccountHosting(crate::tools::ozone::moderation::defs::AccountHosting),
+                        RecordHosting(crate::tools::ozone::moderation::defs::RecordHosting),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Hosting {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountHosting" => crate :: tools :: ozone :: moderation :: defs :: AccountHosting :: deserialize (map_des) . map (Self :: AccountHosting) , "tools.ozone.moderation.defs#recordHosting" => crate :: tools :: ozone :: moderation :: defs :: RecordHosting :: deserialize (map_des) . map (Self :: RecordHosting) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountHosting" => crate :: tools :: ozone :: moderation :: defs :: AccountHosting :: deserialize (map_des) . map (Self :: AccountHosting) , "tools.ozone.moderation.defs#recordHosting" => crate :: tools :: ozone :: moderation :: defs :: RecordHosting :: deserialize (map_des) . map (Self :: RecordHosting) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoRef)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
+                                        .map(Self::RepoRef)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                }
+            }
+            pub mod emit_event {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "createdBy")]
                     pub created_by: atmo_core::Did,
                     #[serde(rename = "event")]
-                    pub event: crate::tools::ozone::moderation::emit_event::Event,
+                    pub event: crate::tools::ozone::moderation::emit_event::input::Event,
                     #[serde(rename = "subject")]
-                    pub subject: crate::tools::ozone::moderation::emit_event::Subject,
+                    pub subject: crate::tools::ozone::moderation::emit_event::input::Subject,
                     #[serde(default)]
                     #[serde(rename = "subjectBlobCids")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub subject_blob_cids: std::option::Option<std::vec::Vec<std::string::String>>,
+                    pub subject_blob_cids: std::option::Option<std::vec::Vec<atmo_core::CidString>>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Subject {
-                    RepoRef(crate::com::atproto::admin::defs::RepoRef),
-                    StrongRef(crate::com::atproto::repo::StrongRef),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Subject {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                pub mod input {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Event {
+                        AccountEvent(crate::tools::ozone::moderation::defs::AccountEvent),
+                        IdentityEvent(crate::tools::ozone::moderation::defs::IdentityEvent),
+                        ModEventAcknowledge(
+                            crate::tools::ozone::moderation::defs::ModEventAcknowledge,
+                        ),
+                        ModEventComment(crate::tools::ozone::moderation::defs::ModEventComment),
+                        ModEventEmail(crate::tools::ozone::moderation::defs::ModEventEmail),
+                        ModEventEscalate(crate::tools::ozone::moderation::defs::ModEventEscalate),
+                        ModEventLabel(crate::tools::ozone::moderation::defs::ModEventLabel),
+                        ModEventMute(crate::tools::ozone::moderation::defs::ModEventMute),
+                        ModEventMuteReporter(
+                            crate::tools::ozone::moderation::defs::ModEventMuteReporter,
+                        ),
+                        ModEventReport(crate::tools::ozone::moderation::defs::ModEventReport),
+                        ModEventResolveAppeal(
+                            crate::tools::ozone::moderation::defs::ModEventResolveAppeal,
+                        ),
+                        ModEventReverseTakedown(
+                            crate::tools::ozone::moderation::defs::ModEventReverseTakedown,
+                        ),
+                        ModEventTag(crate::tools::ozone::moderation::defs::ModEventTag),
+                        ModEventTakedown(crate::tools::ozone::moderation::defs::ModEventTakedown),
+                        ModEventUnmute(crate::tools::ozone::moderation::defs::ModEventUnmute),
+                        ModEventUnmuteReporter(
+                            crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
+                        ),
+                        RecordEvent(crate::tools::ozone::moderation::defs::RecordEvent),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Event {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountEvent" => crate :: tools :: ozone :: moderation :: defs :: AccountEvent :: deserialize (map_des) . map (Self :: AccountEvent) , "tools.ozone.moderation.defs#identityEvent" => crate :: tools :: ozone :: moderation :: defs :: IdentityEvent :: deserialize (map_des) . map (Self :: IdentityEvent) , "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , "tools.ozone.moderation.defs#recordEvent" => crate :: tools :: ozone :: moderation :: defs :: RecordEvent :: deserialize (map_des) . map (Self :: RecordEvent) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#accountEvent" => crate :: tools :: ozone :: moderation :: defs :: AccountEvent :: deserialize (map_des) . map (Self :: AccountEvent) , "tools.ozone.moderation.defs#identityEvent" => crate :: tools :: ozone :: moderation :: defs :: IdentityEvent :: deserialize (map_des) . map (Self :: IdentityEvent) , "tools.ozone.moderation.defs#modEventAcknowledge" => crate :: tools :: ozone :: moderation :: defs :: ModEventAcknowledge :: deserialize (map_des) . map (Self :: ModEventAcknowledge) , "tools.ozone.moderation.defs#modEventComment" => crate :: tools :: ozone :: moderation :: defs :: ModEventComment :: deserialize (map_des) . map (Self :: ModEventComment) , "tools.ozone.moderation.defs#modEventEmail" => crate :: tools :: ozone :: moderation :: defs :: ModEventEmail :: deserialize (map_des) . map (Self :: ModEventEmail) , "tools.ozone.moderation.defs#modEventEscalate" => crate :: tools :: ozone :: moderation :: defs :: ModEventEscalate :: deserialize (map_des) . map (Self :: ModEventEscalate) , "tools.ozone.moderation.defs#modEventLabel" => crate :: tools :: ozone :: moderation :: defs :: ModEventLabel :: deserialize (map_des) . map (Self :: ModEventLabel) , "tools.ozone.moderation.defs#modEventMute" => crate :: tools :: ozone :: moderation :: defs :: ModEventMute :: deserialize (map_des) . map (Self :: ModEventMute) , "tools.ozone.moderation.defs#modEventMuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventMuteReporter :: deserialize (map_des) . map (Self :: ModEventMuteReporter) , "tools.ozone.moderation.defs#modEventReport" => crate :: tools :: ozone :: moderation :: defs :: ModEventReport :: deserialize (map_des) . map (Self :: ModEventReport) , "tools.ozone.moderation.defs#modEventResolveAppeal" => crate :: tools :: ozone :: moderation :: defs :: ModEventResolveAppeal :: deserialize (map_des) . map (Self :: ModEventResolveAppeal) , "tools.ozone.moderation.defs#modEventReverseTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventReverseTakedown :: deserialize (map_des) . map (Self :: ModEventReverseTakedown) , "tools.ozone.moderation.defs#modEventTag" => crate :: tools :: ozone :: moderation :: defs :: ModEventTag :: deserialize (map_des) . map (Self :: ModEventTag) , "tools.ozone.moderation.defs#modEventTakedown" => crate :: tools :: ozone :: moderation :: defs :: ModEventTakedown :: deserialize (map_des) . map (Self :: ModEventTakedown) , "tools.ozone.moderation.defs#modEventUnmute" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmute :: deserialize (map_des) . map (Self :: ModEventUnmute) , "tools.ozone.moderation.defs#modEventUnmuteReporter" => crate :: tools :: ozone :: moderation :: defs :: ModEventUnmuteReporter :: deserialize (map_des) . map (Self :: ModEventUnmuteReporter) , "tools.ozone.moderation.defs#recordEvent" => crate :: tools :: ozone :: moderation :: defs :: RecordEvent :: deserialize (map_des) . map (Self :: RecordEvent) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
+                        }
+                    }
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Subject {
+                        RepoRef(crate::com::atproto::admin::defs::RepoRef),
+                        StrongRef(crate::com::atproto::repo::StrongRef),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Subject {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_.ty.as_ref() {
-                                "com.atproto.admin.defs#repoRef" => {
-                                    crate::com::atproto::admin::defs::RepoRef::deserialize(map_des)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_.ty.as_ref() {
+                                    "com.atproto.admin.defs#repoRef" => {
+                                        crate::com::atproto::admin::defs::RepoRef::deserialize(
+                                            map_des,
+                                        )
                                         .map(Self::RepoRef)
-                                }
-                                "com.atproto.repo.strongRef" => {
-                                    crate::com::atproto::repo::StrongRef::deserialize(map_des)
-                                        .map(Self::StrongRef)
-                                }
-                                _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                            };
-                            res.map_err(D::Error::custom)
+                                    }
+                                    "com.atproto.repo.strongRef" => {
+                                        crate::com::atproto::repo::StrongRef::deserialize(map_des)
+                                            .map(Self::StrongRef)
+                                    }
+                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
+                                };
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -11986,50 +12334,56 @@ pub mod tools {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "records")]
-                    pub records:
-                        std::vec::Vec<crate::tools::ozone::moderation::get_records::Records>,
+                    pub records: std::vec::Vec<
+                        crate::tools::ozone::moderation::get_records::output::Records,
+                    >,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "uris")]
-                    pub uris: std::vec::Vec<std::string::String>,
+                    pub uris: std::vec::Vec<atmo_core::AtUri>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Records {
-                    RecordViewDetail(crate::tools::ozone::moderation::defs::RecordViewDetail),
-                    RecordViewNotFound(crate::tools::ozone::moderation::defs::RecordViewNotFound),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Records {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RecordViewDetail :: deserialize (map_des) . map (Self :: RecordViewDetail) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RecordViewDetail :: deserialize (map_des) . map (Self :: RecordViewDetail) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Records {
+                        RecordViewDetail(crate::tools::ozone::moderation::defs::RecordViewDetail),
+                        RecordViewNotFound(
+                            crate::tools::ozone::moderation::defs::RecordViewNotFound,
+                        ),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Records {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RecordViewDetail :: deserialize (map_des) . map (Self :: RecordViewDetail) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#recordViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RecordViewDetail :: deserialize (map_des) . map (Self :: RecordViewDetail) , "tools.ozone.moderation.defs#recordViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RecordViewNotFound :: deserialize (map_des) . map (Self :: RecordViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -12045,49 +12399,53 @@ pub mod tools {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "repos")]
-                    pub repos: std::vec::Vec<crate::tools::ozone::moderation::get_repos::Repos>,
+                    pub repos:
+                        std::vec::Vec<crate::tools::ozone::moderation::get_repos::output::Repos>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "dids")]
-                    pub dids: std::vec::Vec<std::string::String>,
+                    pub dids: std::vec::Vec<atmo_core::Did>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
-                pub enum Repos {
-                    RepoViewDetail(crate::tools::ozone::moderation::defs::RepoViewDetail),
-                    RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
-                    #[serde(untagged)]
-                    Other(atmo_core::Unknown),
-                }
-                impl<'de> serde::Deserialize<'de> for Repos {
-                    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-                    where
-                        D: serde::Deserializer<'de>,
-                    {
-                        use serde::de::Error as _;
-                        if des.is_human_readable() {
-                            let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#repoViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RepoViewDetail :: deserialize (map_des) . map (Self :: RepoViewDetail) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
-                        } else {
-                            let visitor: atmo_core::union_::UnionVisitor<ipld_core::ipld::Ipld> =
-                                Default::default();
-                            let union_ = des.deserialize_map(visitor)?;
-                            let map_des = serde::de::value::MapDeserializer::new(
-                                union_.map.iter().map(|(k, v)| {
-                                    (
-                                        k.as_ref(),
-                                        atmo_core::union_::IpldIntoDeserializer(v.clone()),
-                                    )
-                                }),
-                            );
-                            let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#repoViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RepoViewDetail :: deserialize (map_des) . map (Self :: RepoViewDetail) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
-                            res.map_err(D::Error::custom)
+                pub mod output {
+                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    pub enum Repos {
+                        RepoViewDetail(crate::tools::ozone::moderation::defs::RepoViewDetail),
+                        RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
+                        #[serde(untagged)]
+                        Other(atmo_core::Unknown),
+                    }
+                    impl<'de> serde::Deserialize<'de> for Repos {
+                        fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                        where
+                            D: serde::Deserializer<'de>,
+                        {
+                            use serde::de::Error as _;
+                            if des.is_human_readable() {
+                                let visitor: atmo_core::union_::UnionVisitor<serde_json::Value> =
+                                    Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#repoViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RepoViewDetail :: deserialize (map_des) . map (Self :: RepoViewDetail) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            } else {
+                                let visitor: atmo_core::union_::UnionVisitor<
+                                    ipld_core::ipld::Ipld,
+                                > = Default::default();
+                                let union_ = des.deserialize_map(visitor)?;
+                                let map_des = serde::de::value::MapDeserializer::new(
+                                    union_.map.iter().map(|(k, v)| {
+                                        (
+                                            k.as_ref(),
+                                            atmo_core::union_::IpldIntoDeserializer(v.clone()),
+                                        )
+                                    }),
+                                );
+                                let res = match union_ . ty . as_ref () { "tools.ozone.moderation.defs#repoViewDetail" => crate :: tools :: ozone :: moderation :: defs :: RepoViewDetail :: deserialize (map_des) . map (Self :: RepoViewDetail) , "tools.ozone.moderation.defs#repoViewNotFound" => crate :: tools :: ozone :: moderation :: defs :: RepoViewNotFound :: deserialize (map_des) . map (Self :: RepoViewNotFound) , _ => atmo_core :: Unknown :: deserialize (map_des) . map (Self :: Other) , } ;
+                                res.map_err(D::Error::custom)
+                            }
                         }
                     }
                 }
@@ -12113,6 +12471,10 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub added_tags: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[serde(default)]
+                    #[serde(rename = "collections")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub collections: std::option::Option<std::vec::Vec<atmo_core::Nsid>>,
+                    #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
@@ -12132,12 +12494,10 @@ pub mod tools {
                     #[serde(rename = "cursor")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cursor: std::option::Option<std::string::String>,
-                    #[doc = "If true, only events with comments are returned"]
                     #[serde(default)]
                     #[serde(rename = "hasComment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub has_comment: std::option::Option<bool>,
-                    #[doc = "If true, events on all record types (posts, lists, profile etc.) owned by the did are returned"]
                     #[serde(default)]
                     #[serde(rename = "includeAllUserRecords")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -12162,23 +12522,44 @@ pub mod tools {
                     #[serde(rename = "sortDirection")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_direction: std::option::Option<
-                        crate::tools::ozone::moderation::query_events::SortDirection,
+                        crate::tools::ozone::moderation::query_events::params::SortDirection,
                     >,
                     #[serde(default)]
                     #[serde(rename = "subject")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<url::Url>,
                     #[serde(default)]
+                    #[serde(rename = "subjectType")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub subject_type: std::option::Option<
+                        crate::tools::ozone::moderation::query_events::params::SubjectType,
+                    >,
+                    #[serde(default)]
                     #[serde(rename = "types")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub types: std::option::Option<std::vec::Vec<std::string::String>>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum SortDirection {
-                    #[serde(rename = "asc")]
-                    Asc,
-                    #[serde(rename = "desc")]
-                    Desc,
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SortDirection {
+                        #[serde(rename = "asc")]
+                        Asc,
+                        #[serde(rename = "desc")]
+                        Desc,
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SubjectType {
+                        #[serde(rename = "account")]
+                        Account,
+                        #[serde(rename = "record")]
+                        Record,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod query_statuses {
@@ -12194,11 +12575,14 @@ pub mod tools {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
-                    #[doc = "Get subjects in unresolved appealed status"]
                     #[serde(default)]
                     #[serde(rename = "appealed")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub appealed: std::option::Option<bool>,
+                    #[serde(default)]
+                    #[serde(rename = "collections")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub collections: std::option::Option<std::vec::Vec<atmo_core::Nsid>>,
                     #[serde(default)]
                     #[serde(rename = "comment")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -12212,15 +12596,33 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub exclude_tags: std::option::Option<std::vec::Vec<std::string::String>>,
                     #[serde(default)]
+                    #[serde(rename = "hostingDeletedAfter")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub hosting_deleted_after: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "hostingDeletedBefore")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub hosting_deleted_before: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "hostingStatuses")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub hosting_statuses: std::option::Option<std::vec::Vec<std::string::String>>,
+                    #[serde(default)]
+                    #[serde(rename = "hostingUpdatedAfter")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub hosting_updated_after: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
+                    #[serde(rename = "hostingUpdatedBefore")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub hosting_updated_before: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(default)]
                     #[serde(rename = "ignoreSubjects")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub ignore_subjects: std::option::Option<std::vec::Vec<std::string::String>>,
-                    #[doc = "All subjects belonging to the account specified in the 'subject' param will be returned."]
+                    pub ignore_subjects: std::option::Option<std::vec::Vec<url::Url>>,
                     #[serde(default)]
                     #[serde(rename = "includeAllUserRecords")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub include_all_user_records: std::option::Option<bool>,
-                    #[doc = "By default, we don't include muted subjects in the results. Set this to true to include them."]
                     #[serde(default)]
                     #[serde(rename = "includeMuted")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -12233,7 +12635,6 @@ pub mod tools {
                     #[serde(rename = "limit")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
-                    #[doc = "When set to true, only muted subjects and reporters will be returned."]
                     #[serde(default)]
                     #[serde(rename = "onlyMuted")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -12262,41 +12663,63 @@ pub mod tools {
                     #[serde(rename = "sortDirection")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_direction: std::option::Option<
-                        crate::tools::ozone::moderation::query_statuses::SortDirection,
+                        crate::tools::ozone::moderation::query_statuses::params::SortDirection,
                     >,
                     #[serde(default)]
                     #[serde(rename = "sortField")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub sort_field: std::option::Option<
-                        crate::tools::ozone::moderation::query_statuses::SortField,
+                        crate::tools::ozone::moderation::query_statuses::params::SortField,
                     >,
                     #[serde(default)]
                     #[serde(rename = "subject")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<url::Url>,
                     #[serde(default)]
+                    #[serde(rename = "subjectType")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub subject_type: std::option::Option<
+                        crate::tools::ozone::moderation::query_statuses::params::SubjectType,
+                    >,
+                    #[serde(default)]
                     #[serde(rename = "tags")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tags: std::option::Option<std::vec::Vec<std::string::String>>,
-                    #[doc = "Get subjects that were taken down"]
                     #[serde(default)]
                     #[serde(rename = "takendown")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takendown: std::option::Option<bool>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum SortDirection {
-                    #[serde(rename = "asc")]
-                    Asc,
-                    #[serde(rename = "desc")]
-                    Desc,
-                }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum SortField {
-                    #[serde(rename = "lastReviewedAt")]
-                    LastReviewedAt,
-                    #[serde(rename = "lastReportedAt")]
-                    LastReportedAt,
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SortDirection {
+                        #[serde(rename = "asc")]
+                        Asc,
+                        #[serde(rename = "desc")]
+                        Desc,
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SortField {
+                        #[serde(rename = "lastReviewedAt")]
+                        LastReviewedAt,
+                        #[serde(rename = "lastReportedAt")]
+                        LastReportedAt,
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SubjectType {
+                        #[serde(rename = "account")]
+                        Account,
+                        #[serde(rename = "record")]
+                        Record,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod search_repos {
@@ -12336,6 +12759,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::server::get_config::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12378,20 +12802,6 @@ pub mod tools {
                     pub viewer:
                         std::option::Option<crate::tools::ozone::server::get_config::ViewerConfig>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Role {
-                    #[doc = "Admin role. Highest level of access, can perform all actions."]
-                    #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
-                    RoleAdmin,
-                    #[doc = "Moderator role. Can perform most actions."]
-                    #[serde(rename = "tools.ozone.team.defs#roleModerator")]
-                    RoleModerator,
-                    #[doc = "Triage role. Mostly intended for monitoring and escalating issues."]
-                    #[serde(rename = "tools.ozone.team.defs#roleTriage")]
-                    RoleTriage,
-                    #[serde(untagged)]
-                    Other(String),
-                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ServiceConfig {
                     #[serde(default)]
@@ -12404,7 +12814,24 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "role")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub role: std::option::Option<crate::tools::ozone::server::get_config::Role>,
+                    pub role: std::option::Option<
+                        crate::tools::ozone::server::get_config::viewer_config::Role,
+                    >,
+                }
+                pub mod viewer_config {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Role {
+                        #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
+                        ToolsOzoneTeamDefsRoleAdmin,
+                        #[serde(rename = "tools.ozone.team.defs#roleModerator")]
+                        ToolsOzoneTeamDefsRoleModerator,
+                        #[serde(rename = "tools.ozone.team.defs#roleTriage")]
+                        ToolsOzoneTeamDefsRoleTriage,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
         }
@@ -12414,6 +12841,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::add_values::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12432,6 +12860,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::delete_set::Input;
                 type Output = crate::tools::ozone::set::delete_set::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12450,6 +12879,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::delete_values::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12468,6 +12898,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::set::get_values::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::set::get_values::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12486,6 +12917,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::set::query_sets::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::set::query_sets::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12503,7 +12935,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for UpsertSet {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::set::defs::Set;
-                type Output = crate::tools::ozone::set::defs::SetView;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12623,28 +13056,281 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "sortBy")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sort_by: std::option::Option<crate::tools::ozone::set::query_sets::SortBy>,
+                    pub sort_by:
+                        std::option::Option<crate::tools::ozone::set::query_sets::params::SortBy>,
                     #[serde(default)]
                     #[serde(rename = "sortDirection")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub sort_direction:
-                        std::option::Option<crate::tools::ozone::set::query_sets::SortDirection>,
+                    pub sort_direction: std::option::Option<
+                        crate::tools::ozone::set::query_sets::params::SortDirection,
+                    >,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum SortBy {
-                    #[serde(rename = "name")]
-                    Name,
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SortBy {
+                        #[serde(rename = "name")]
+                        Name,
+                        #[serde(rename = "createdAt")]
+                        CreatedAt,
+                        #[serde(rename = "updatedAt")]
+                        UpdatedAt,
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum SortDirection {
+                        #[serde(rename = "asc")]
+                        Asc,
+                        #[serde(rename = "desc")]
+                        Desc,
+                    }
+                }
+            }
+        }
+        pub mod setting {
+            pub struct ListOptions;
+            impl atmo_core::xrpc::Request for ListOptions {
+                type Params = crate::tools::ozone::setting::list_options::Params;
+                type Input = atmo_core::xrpc::NoInput;
+                type Output = crate::tools::ozone::setting::list_options::Output;
+                type Error = atmo_core::xrpc::Error;
+                #[inline]
+                fn method() -> http::Method {
+                    http::Method::GET
+                }
+                #[inline]
+                fn nsid() -> &'static str {
+                    "tools.ozone.setting.listOptions"
+                }
+                #[inline]
+                fn output_encoding() -> &'static str {
+                    "application/json"
+                }
+            }
+            pub struct RemoveOptions;
+            impl atmo_core::xrpc::Request for RemoveOptions {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = crate::tools::ozone::setting::remove_options::Input;
+                type Output = crate::tools::ozone::setting::remove_options::Output;
+                type Error = atmo_core::xrpc::Error;
+                #[inline]
+                fn method() -> http::Method {
+                    http::Method::POST
+                }
+                #[inline]
+                fn nsid() -> &'static str {
+                    "tools.ozone.setting.removeOptions"
+                }
+                #[inline]
+                fn output_encoding() -> &'static str {
+                    "application/json"
+                }
+            }
+            pub struct UpsertOption;
+            impl atmo_core::xrpc::Request for UpsertOption {
+                type Params = atmo_core::xrpc::NoParams;
+                type Input = crate::tools::ozone::setting::upsert_option::Input;
+                type Output = crate::tools::ozone::setting::upsert_option::Output;
+                type Error = atmo_core::xrpc::Error;
+                #[inline]
+                fn method() -> http::Method {
+                    http::Method::POST
+                }
+                #[inline]
+                fn nsid() -> &'static str {
+                    "tools.ozone.setting.upsertOption"
+                }
+                #[inline]
+                fn output_encoding() -> &'static str {
+                    "application/json"
+                }
+            }
+            pub mod defs {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Option {
+                    #[serde(default)]
                     #[serde(rename = "createdAt")]
-                    CreatedAt,
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(rename = "createdBy")]
+                    pub created_by: atmo_core::Did,
+                    #[serde(default)]
+                    #[serde(rename = "description")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub description: std::option::Option<std::string::String>,
+                    #[serde(rename = "did")]
+                    pub did: atmo_core::Did,
+                    #[serde(rename = "key")]
+                    pub key: atmo_core::Nsid,
+                    #[serde(rename = "lastUpdatedBy")]
+                    pub last_updated_by: atmo_core::Did,
+                    #[serde(default)]
+                    #[serde(rename = "managerRole")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub manager_role: std::option::Option<
+                        crate::tools::ozone::setting::defs::option::ManagerRole,
+                    >,
+                    #[serde(rename = "scope")]
+                    pub scope: crate::tools::ozone::setting::defs::option::Scope,
+                    #[serde(default)]
                     #[serde(rename = "updatedAt")]
-                    UpdatedAt,
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                    #[serde(rename = "value")]
+                    pub value: atmo_core::Unknown,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum SortDirection {
-                    #[serde(rename = "asc")]
-                    Asc,
-                    #[serde(rename = "desc")]
-                    Desc,
+                pub mod option {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ManagerRole {
+                        #[serde(rename = "tools.ozone.team.defs#roleModerator")]
+                        ToolsOzoneTeamDefsRoleModerator,
+                        #[serde(rename = "tools.ozone.team.defs#roleTriage")]
+                        ToolsOzoneTeamDefsRoleTriage,
+                        #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
+                        ToolsOzoneTeamDefsRoleAdmin,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Scope {
+                        #[serde(rename = "instance")]
+                        Instance,
+                        #[serde(rename = "personal")]
+                        Personal,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+            }
+            pub mod list_options {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Output {
+                    #[serde(default)]
+                    #[serde(rename = "cursor")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub cursor: std::option::Option<std::string::String>,
+                    #[serde(rename = "options")]
+                    pub options: std::vec::Vec<crate::tools::ozone::setting::defs::Option>,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Params {
+                    #[serde(default)]
+                    #[serde(rename = "cursor")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub cursor: std::option::Option<std::string::String>,
+                    #[serde(default)]
+                    #[serde(rename = "keys")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub keys: std::option::Option<std::vec::Vec<atmo_core::Nsid>>,
+                    #[serde(default)]
+                    #[serde(rename = "limit")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub limit: std::option::Option<i64>,
+                    #[serde(default)]
+                    #[serde(rename = "prefix")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub prefix: std::option::Option<std::string::String>,
+                    #[serde(default)]
+                    #[serde(rename = "scope")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub scope: std::option::Option<
+                        crate::tools::ozone::setting::list_options::params::Scope,
+                    >,
+                }
+                pub mod params {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Scope {
+                        #[serde(rename = "instance")]
+                        Instance,
+                        #[serde(rename = "personal")]
+                        Personal,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+            }
+            pub mod remove_options {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Input {
+                    #[serde(rename = "keys")]
+                    pub keys: std::vec::Vec<atmo_core::Nsid>,
+                    #[serde(rename = "scope")]
+                    pub scope: crate::tools::ozone::setting::remove_options::input::Scope,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Output {}
+                pub mod input {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Scope {
+                        #[serde(rename = "instance")]
+                        Instance,
+                        #[serde(rename = "personal")]
+                        Personal,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                }
+            }
+            pub mod upsert_option {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Input {
+                    #[serde(default)]
+                    #[serde(rename = "description")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub description: std::option::Option<std::string::String>,
+                    #[serde(rename = "key")]
+                    pub key: atmo_core::Nsid,
+                    #[serde(default)]
+                    #[serde(rename = "managerRole")]
+                    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+                    pub manager_role: std::option::Option<
+                        crate::tools::ozone::setting::upsert_option::input::ManagerRole,
+                    >,
+                    #[serde(rename = "scope")]
+                    pub scope: crate::tools::ozone::setting::upsert_option::input::Scope,
+                    #[serde(rename = "value")]
+                    pub value: atmo_core::Unknown,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Output {
+                    #[serde(rename = "option")]
+                    pub option: crate::tools::ozone::setting::defs::Option,
+                }
+                pub mod input {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum ManagerRole {
+                        #[serde(rename = "tools.ozone.team.defs#roleModerator")]
+                        ToolsOzoneTeamDefsRoleModerator,
+                        #[serde(rename = "tools.ozone.team.defs#roleTriage")]
+                        ToolsOzoneTeamDefsRoleTriage,
+                        #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
+                        ToolsOzoneTeamDefsRoleAdmin,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Scope {
+                        #[serde(rename = "instance")]
+                        Instance,
+                        #[serde(rename = "personal")]
+                        Personal,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
         }
@@ -12654,6 +13340,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::signature::find_correlation::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::signature::find_correlation::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12672,6 +13359,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::signature::find_related_accounts::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::signature::find_related_accounts::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12690,6 +13378,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::signature::search_accounts::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::signature::search_accounts::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12721,7 +13410,7 @@ pub mod tools {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "dids")]
-                    pub dids: std::vec::Vec<std::string::String>,
+                    pub dids: std::vec::Vec<atmo_core::Did>,
                 }
             }
             pub mod find_related_accounts {
@@ -12791,7 +13480,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for AddMember {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::team::add_member::Input;
-                type Output = crate::tools::ozone::team::defs::Member;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12810,6 +13500,7 @@ pub mod tools {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::team::delete_member::Input;
                 type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12828,6 +13519,7 @@ pub mod tools {
                 type Params = crate::tools::ozone::team::list_members::Params;
                 type Input = atmo_core::xrpc::NoInput;
                 type Output = crate::tools::ozone::team::list_members::Output;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12845,7 +13537,8 @@ pub mod tools {
             impl atmo_core::xrpc::Request for UpdateMember {
                 type Params = atmo_core::xrpc::NoParams;
                 type Input = crate::tools::ozone::team::update_member::Input;
-                type Output = crate::tools::ozone::team::defs::Member;
+                type Output = atmo_core::xrpc::NoOutput;
+                type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12865,21 +13558,22 @@ pub mod tools {
                     #[serde(rename = "did")]
                     pub did: atmo_core::Did,
                     #[serde(rename = "role")]
-                    pub role: crate::tools::ozone::team::add_member::Role,
+                    pub role: crate::tools::ozone::team::add_member::input::Role,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Role {
-                    #[doc = "Admin role. Highest level of access, can perform all actions."]
-                    #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
-                    RoleAdmin,
-                    #[doc = "Moderator role. Can perform most actions."]
-                    #[serde(rename = "tools.ozone.team.defs#roleModerator")]
-                    RoleModerator,
-                    #[doc = "Triage role. Mostly intended for monitoring and escalating issues."]
-                    #[serde(rename = "tools.ozone.team.defs#roleTriage")]
-                    RoleTriage,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod input {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Role {
+                        #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
+                        ToolsOzoneTeamDefsRoleAdmin,
+                        #[serde(rename = "tools.ozone.team.defs#roleModerator")]
+                        ToolsOzoneTeamDefsRoleModerator,
+                        #[serde(rename = "tools.ozone.team.defs#roleTriage")]
+                        ToolsOzoneTeamDefsRoleTriage,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod defs {
@@ -12905,25 +13599,26 @@ pub mod tools {
                     pub profile:
                         std::option::Option<crate::app::bsky::actor::defs::ProfileViewDetailed>,
                     #[serde(rename = "role")]
-                    pub role: crate::tools::ozone::team::defs::Role,
+                    pub role: crate::tools::ozone::team::defs::member::Role,
                     #[serde(default)]
                     #[serde(rename = "updatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub updated_at: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Role {
-                    #[doc = "Admin role. Highest level of access, can perform all actions."]
-                    #[serde(rename = "#roleAdmin")]
-                    RoleAdmin,
-                    #[doc = "Moderator role. Can perform most actions."]
-                    #[serde(rename = "#roleModerator")]
-                    RoleModerator,
-                    #[doc = "Triage role. Mostly intended for monitoring and escalating issues."]
-                    #[serde(rename = "#roleTriage")]
-                    RoleTriage,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod member {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Role {
+                        #[serde(rename = "#roleAdmin")]
+                        RoleAdmin,
+                        #[serde(rename = "#roleModerator")]
+                        RoleModerator,
+                        #[serde(rename = "#roleTriage")]
+                        RoleTriage,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
             pub mod delete_member {
@@ -12967,21 +13662,23 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "role")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub role: std::option::Option<crate::tools::ozone::team::update_member::Role>,
+                    pub role:
+                        std::option::Option<crate::tools::ozone::team::update_member::input::Role>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
-                pub enum Role {
-                    #[doc = "Admin role. Highest level of access, can perform all actions."]
-                    #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
-                    RoleAdmin,
-                    #[doc = "Moderator role. Can perform most actions."]
-                    #[serde(rename = "tools.ozone.team.defs#roleModerator")]
-                    RoleModerator,
-                    #[doc = "Triage role. Mostly intended for monitoring and escalating issues."]
-                    #[serde(rename = "tools.ozone.team.defs#roleTriage")]
-                    RoleTriage,
-                    #[serde(untagged)]
-                    Other(String),
+                pub mod input {
+                    #[derive(
+                        Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize,
+                    )]
+                    pub enum Role {
+                        #[serde(rename = "tools.ozone.team.defs#roleAdmin")]
+                        ToolsOzoneTeamDefsRoleAdmin,
+                        #[serde(rename = "tools.ozone.team.defs#roleModerator")]
+                        ToolsOzoneTeamDefsRoleModerator,
+                        #[serde(rename = "tools.ozone.team.defs#roleTriage")]
+                        ToolsOzoneTeamDefsRoleTriage,
+                        #[serde(untagged)]
+                        Other(String),
+                    }
                 }
             }
         }

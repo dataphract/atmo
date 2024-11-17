@@ -1,11 +1,20 @@
-use std::{fmt, marker::PhantomData};
+//! A crate for interacting with the [AT Protocol].
+//!
+//! [AT Protocol]: https://atproto.com/
+
+use std::fmt;
 
 use atmo_core::xrpc::{self, Request};
 use serde::{de::DeserializeOwned, Serialize};
 use url::Url;
 
-pub use atmo_api as api;
-pub use atmo_core as core;
+pub mod api {
+    pub use atmo_api::*;
+}
+
+pub mod core {
+    pub use atmo_core::*;
+}
 
 pub struct XrpcClient {
     inner: reqwest::Client,
@@ -71,13 +80,13 @@ impl XrpcClient {
 
         let builder = self.inner.request(R::method(), url);
 
-        RequestBuilder { builder, req }
+        RequestBuilder { builder, _req: req }
     }
 }
 
 pub struct RequestBuilder<R> {
     builder: reqwest::RequestBuilder,
-    req: R,
+    _req: R,
 }
 
 impl<R> RequestBuilder<R>
@@ -136,7 +145,7 @@ where
     ///
     /// > _There is also a legacy authentication scheme using HTTP Bearer auth with JWT tokens,_
     /// > _including refresh tokens, described here. Initial login uses the_
-    /// > _`com.atproto.server.createSession endpoint`, including the password and an account_
+    /// > _`com.atproto.server.createSession` endpoint, including the password and an account_
     /// > _identifier (eg, handle or registered email address). This returns a `refreshJwt` (as_
     /// > _well as an initial `accessJwt`)._
     ///

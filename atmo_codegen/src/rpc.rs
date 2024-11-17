@@ -4,20 +4,21 @@ use quote::{quote, ToTokens};
 use crate::module::ItemPath;
 
 #[derive(Debug)]
-pub struct RpcDef {
-    pub ident: syn::Ident,
+pub struct RustRpcDef {
+    pub name: syn::Ident,
     pub ty: RpcType,
     pub nsid: Nsid,
     pub params: Option<ItemPath>,
     pub input: Option<ItemPath>,
     pub output: Option<ItemPath>,
     pub output_encoding: String,
+    pub error: Option<ItemPath>,
 }
 
-impl ToTokens for RpcDef {
+impl ToTokens for RustRpcDef {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_ = crate::crate_name();
-        let ident = &self.ident;
+        let ident = &self.name;
 
         let params = self
             .params
@@ -37,6 +38,12 @@ impl ToTokens for RpcDef {
             .map(|o| o.into_token_stream())
             .unwrap_or(quote! { #crate_::xrpc::NoOutput });
 
+        let error = self
+            .error
+            .as_ref()
+            .map(|e| e.into_token_stream())
+            .unwrap_or(quote! { #crate_::xrpc::Error });
+
         let method = match self.ty {
             RpcType::Query => quote! { http::Method::GET },
             RpcType::Procedure => quote! { http::Method::POST },
@@ -52,6 +59,7 @@ impl ToTokens for RpcDef {
                 type Params = #params;
                 type Input = #input;
                 type Output = #output;
+                type Error = #error;
 
                 #[inline]
                 fn method() -> http::Method {
@@ -73,7 +81,7 @@ impl ToTokens for RpcDef {
     }
 }
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub enum RpcType {
     Query,
     Procedure,

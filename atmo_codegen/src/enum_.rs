@@ -7,13 +7,13 @@ use quote::{quote, ToTokens};
 use crate::module::ItemPath;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct StringEnumDef {
+pub struct RustStringEnumDef {
     pub ident: syn::Ident,
     pub variants: Vec<StringEnumVariant>,
     pub is_open: bool,
 }
 
-impl ToTokens for StringEnumDef {
+impl ToTokens for RustStringEnumDef {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let ident = &self.ident;
         let variants = self.variants.iter();
@@ -59,14 +59,14 @@ impl ToTokens for StringEnumVariant {
 }
 
 #[derive(Debug, PartialEq, Eq)]
-pub struct UnionEnumDef {
+pub struct RustUnionEnumDef {
     pub doc: Option<String>,
     pub ident: syn::Ident,
     pub variants: Vec<UnionEnumVariant>,
     pub is_open: bool,
 }
 
-impl ToTokens for UnionEnumDef {
+impl ToTokens for RustUnionEnumDef {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         let crate_ = crate::crate_name();
         let doc = self.doc.iter();

@@ -38,5 +38,6 @@ fn main() {
         gen.add_lexicon(s.as_str());
     }
 
-    gen.generate();
+    let tokens = gen.generate();
+    println!("{tokens}");
 }
