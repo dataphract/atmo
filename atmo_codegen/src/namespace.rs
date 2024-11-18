@@ -105,6 +105,14 @@ impl NamespaceTree {
                             module.add_item("Output".into(), output).unwrap();
                         }
 
+                        if let Some(error) = rpc
+                            .error
+                            .as_ref()
+                            .map(|e| self.create_rust_string_enum("Error", e))
+                        {
+                            module.add_item("Error".into(), error.into()).unwrap();
+                        }
+
                         let parent_mod = mod_tree.get_or_create_mut(&parent_mod_path);
 
                         let rpc = self.create_rust_rpc(nsid, rpc);
@@ -412,11 +420,14 @@ impl Namespace {
                     ty: self.create_output_def(o),
                 });
 
+                let error = p.errors.as_ref().map(|e| self.create_error_def(e));
+
                 MainDef::Rpc(RpcDef {
                     ty: RpcType::Procedure,
                     params,
                     input,
                     output,
+                    error,
                 })
             }
 
@@ -431,11 +442,14 @@ impl Namespace {
                     ty: self.create_output_def(o),
                 });
 
+                let error = q.errors.as_ref().map(|e| self.create_error_def(e));
+
                 MainDef::Rpc(RpcDef {
                     ty: RpcType::Query,
                     params,
                     input: None,
                     output,
+                    error,
                 })
             }
 
@@ -506,6 +520,14 @@ impl Namespace {
             IoSchema::Object(o) => Some(RpcIoTy::Object(self.create_object_def("output", o))),
             IoSchema::Ref(_) => None,
             IoSchema::Union(u) => Some(RpcIoTy::Union(UnionDef::from_lexicon(u))),
+        }
+    }
+
+    /// Creates a definition for an RPC error enum.
+    fn create_error_def(&self, errors: &[atmo_lexicon::Error]) -> StringEnumDef {
+        StringEnumDef {
+            values: errors.iter().map(|e| e.name.clone()).collect(),
+            is_open: true,
         }
     }
 
@@ -675,6 +697,7 @@ pub struct RpcDef {
     pub params: Option<ObjectDef>,
     pub input: Option<RpcIo>,
     pub output: Option<RpcIo>,
+    pub error: Option<StringEnumDef>,
 }
 
 pub struct RpcIo {

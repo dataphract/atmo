@@ -24,19 +24,19 @@ impl ToTokens for RustRpcDef {
             .params
             .as_ref()
             .map(|p| p.into_token_stream())
-            .unwrap_or(quote! { #crate_::xrpc::NoParams });
+            .unwrap_or(quote! { #crate_::Nothing });
 
         let input = self
             .input
             .as_ref()
             .map(|i| i.into_token_stream())
-            .unwrap_or(quote! { #crate_::xrpc::NoInput });
+            .unwrap_or(quote! { #crate_::Nothing });
 
         let output = self
             .output
             .as_ref()
             .map(|o| o.into_token_stream())
-            .unwrap_or(quote! { #crate_::xrpc::NoOutput });
+            .unwrap_or(quote! { #crate_::Nothing });
 
         let error = self
             .error

@@ -84,14 +84,12 @@
 //!     - If the object appears as the `record` field of a `record` definition, it should be emitted
 //!       with the `PascalCase` equivalent of the record type name.
 
-use atmo_core::nsid::FullReference;
-use atmo_lexicon::{Lexicon, Schema, StringFormat};
-use heck::ToPascalCase;
+use atmo_lexicon::{Lexicon, StringFormat};
 use namespace::{BuiltinTy, NamespaceTree};
 use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 
-use crate::module::{ItemPath, ModulePath};
+use crate::module::ItemPath;
 
 mod enum_;
 mod module;
@@ -243,20 +241,6 @@ impl From<&BuiltinTy> for Type {
                 }
             }
             BuiltinTy::Unknown => Type::Unknown,
-        }
-    }
-}
-
-fn struct_path(r: &FullReference) -> ItemPath {
-    let mod_path = ModulePath::from(r.clone_nsid());
-
-    match r.fragment_name().filter(|&n| n != "main") {
-        Some(n) => mod_path.item_path(n.to_pascal_case()),
-
-        None => {
-            let name = mod_path.name().to_pascal_case();
-            let parent_path = mod_path.parent().unwrap();
-            parent_path.item_path(name)
         }
     }
 }

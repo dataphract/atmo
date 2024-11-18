@@ -4,7 +4,7 @@ pub mod app {
             pub struct GetPreferences;
             impl atmo_core::xrpc::Request for GetPreferences {
                 type Params = crate::app::bsky::actor::get_preferences::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::actor::get_preferences::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -23,8 +23,8 @@ pub mod app {
             pub struct GetProfile;
             impl atmo_core::xrpc::Request for GetProfile {
                 type Params = crate::app::bsky::actor::get_profile::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -42,7 +42,7 @@ pub mod app {
             pub struct GetProfiles;
             impl atmo_core::xrpc::Request for GetProfiles {
                 type Params = crate::app::bsky::actor::get_profiles::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::actor::get_profiles::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -61,7 +61,7 @@ pub mod app {
             pub struct GetSuggestions;
             impl atmo_core::xrpc::Request for GetSuggestions {
                 type Params = crate::app::bsky::actor::get_suggestions::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::actor::get_suggestions::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -115,9 +115,9 @@ pub mod app {
             }
             pub struct PutPreferences;
             impl atmo_core::xrpc::Request for PutPreferences {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::actor::put_preferences::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -135,7 +135,7 @@ pub mod app {
             pub struct SearchActors;
             impl atmo_core::xrpc::Request for SearchActors {
                 type Params = crate::app::bsky::actor::search_actors::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::actor::search_actors::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -154,7 +154,7 @@ pub mod app {
             pub struct SearchActorsTypeahead;
             impl atmo_core::xrpc::Request for SearchActorsTypeahead {
                 type Params = crate::app::bsky::actor::search_actors_typeahead::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::actor::search_actors_typeahead::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1475,8 +1475,8 @@ pub mod app {
         pub mod feed {
             pub struct DescribeFeedGenerator;
             impl atmo_core::xrpc::Request for DescribeFeedGenerator {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::describe_feed_generator::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1525,7 +1525,7 @@ pub mod app {
             pub struct GetActorFeeds;
             impl atmo_core::xrpc::Request for GetActorFeeds {
                 type Params = crate::app::bsky::feed::get_actor_feeds::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_actor_feeds::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1544,7 +1544,7 @@ pub mod app {
             pub struct GetActorLikes;
             impl atmo_core::xrpc::Request for GetActorLikes {
                 type Params = crate::app::bsky::feed::get_actor_likes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_actor_likes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1563,7 +1563,7 @@ pub mod app {
             pub struct GetAuthorFeed;
             impl atmo_core::xrpc::Request for GetAuthorFeed {
                 type Params = crate::app::bsky::feed::get_author_feed::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_author_feed::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1582,7 +1582,7 @@ pub mod app {
             pub struct GetFeed;
             impl atmo_core::xrpc::Request for GetFeed {
                 type Params = crate::app::bsky::feed::get_feed::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_feed::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1601,7 +1601,7 @@ pub mod app {
             pub struct GetFeedGenerator;
             impl atmo_core::xrpc::Request for GetFeedGenerator {
                 type Params = crate::app::bsky::feed::get_feed_generator::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_feed_generator::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1620,7 +1620,7 @@ pub mod app {
             pub struct GetFeedGenerators;
             impl atmo_core::xrpc::Request for GetFeedGenerators {
                 type Params = crate::app::bsky::feed::get_feed_generators::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_feed_generators::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1639,7 +1639,7 @@ pub mod app {
             pub struct GetFeedSkeleton;
             impl atmo_core::xrpc::Request for GetFeedSkeleton {
                 type Params = crate::app::bsky::feed::get_feed_skeleton::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_feed_skeleton::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1658,7 +1658,7 @@ pub mod app {
             pub struct GetLikes;
             impl atmo_core::xrpc::Request for GetLikes {
                 type Params = crate::app::bsky::feed::get_likes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_likes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1677,7 +1677,7 @@ pub mod app {
             pub struct GetListFeed;
             impl atmo_core::xrpc::Request for GetListFeed {
                 type Params = crate::app::bsky::feed::get_list_feed::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_list_feed::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1696,7 +1696,7 @@ pub mod app {
             pub struct GetPostThread;
             impl atmo_core::xrpc::Request for GetPostThread {
                 type Params = crate::app::bsky::feed::get_post_thread::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_post_thread::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1715,7 +1715,7 @@ pub mod app {
             pub struct GetPosts;
             impl atmo_core::xrpc::Request for GetPosts {
                 type Params = crate::app::bsky::feed::get_posts::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_posts::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1734,7 +1734,7 @@ pub mod app {
             pub struct GetQuotes;
             impl atmo_core::xrpc::Request for GetQuotes {
                 type Params = crate::app::bsky::feed::get_quotes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_quotes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1753,7 +1753,7 @@ pub mod app {
             pub struct GetRepostedBy;
             impl atmo_core::xrpc::Request for GetRepostedBy {
                 type Params = crate::app::bsky::feed::get_reposted_by::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_reposted_by::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1772,7 +1772,7 @@ pub mod app {
             pub struct GetSuggestedFeeds;
             impl atmo_core::xrpc::Request for GetSuggestedFeeds {
                 type Params = crate::app::bsky::feed::get_suggested_feeds::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_suggested_feeds::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1791,7 +1791,7 @@ pub mod app {
             pub struct GetTimeline;
             impl atmo_core::xrpc::Request for GetTimeline {
                 type Params = crate::app::bsky::feed::get_timeline::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::get_timeline::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1877,7 +1877,7 @@ pub mod app {
             pub struct SearchPosts;
             impl atmo_core::xrpc::Request for SearchPosts {
                 type Params = crate::app::bsky::feed::search_posts::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::feed::search_posts::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -1895,7 +1895,7 @@ pub mod app {
             }
             pub struct SendInteractions;
             impl atmo_core::xrpc::Request for SendInteractions {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::feed::send_interactions::Input;
                 type Output = crate::app::bsky::feed::send_interactions::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -2825,6 +2825,15 @@ pub mod app {
                 }
             }
             pub mod get_actor_likes {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BlockedActor")]
+                    BlockedActor,
+                    #[serde(rename = "BlockedByActor")]
+                    BlockedByActor,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -2849,6 +2858,15 @@ pub mod app {
                 }
             }
             pub mod get_author_feed {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BlockedActor")]
+                    BlockedActor,
+                    #[serde(rename = "BlockedByActor")]
+                    BlockedByActor,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -2900,6 +2918,13 @@ pub mod app {
                 }
             }
             pub mod get_feed {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "UnknownFeed")]
+                    UnknownFeed,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -2952,6 +2977,13 @@ pub mod app {
                 }
             }
             pub mod get_feed_skeleton {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "UnknownFeed")]
+                    UnknownFeed,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -3019,6 +3051,13 @@ pub mod app {
                 }
             }
             pub mod get_list_feed {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "UnknownList")]
+                    UnknownList,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -3043,6 +3082,13 @@ pub mod app {
                 }
             }
             pub mod get_post_thread {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "NotFound")]
+                    NotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "thread")]
@@ -3513,6 +3559,13 @@ pub mod app {
                 }
             }
             pub mod search_posts {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BadQueryString")]
+                    BadQueryString,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -3672,7 +3725,7 @@ pub mod app {
             pub struct GetActorStarterPacks;
             impl atmo_core::xrpc::Request for GetActorStarterPacks {
                 type Params = crate::app::bsky::graph::get_actor_starter_packs::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_actor_starter_packs::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3691,7 +3744,7 @@ pub mod app {
             pub struct GetBlocks;
             impl atmo_core::xrpc::Request for GetBlocks {
                 type Params = crate::app::bsky::graph::get_blocks::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_blocks::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3710,7 +3763,7 @@ pub mod app {
             pub struct GetFollowers;
             impl atmo_core::xrpc::Request for GetFollowers {
                 type Params = crate::app::bsky::graph::get_followers::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_followers::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3729,7 +3782,7 @@ pub mod app {
             pub struct GetFollows;
             impl atmo_core::xrpc::Request for GetFollows {
                 type Params = crate::app::bsky::graph::get_follows::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_follows::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3748,7 +3801,7 @@ pub mod app {
             pub struct GetKnownFollowers;
             impl atmo_core::xrpc::Request for GetKnownFollowers {
                 type Params = crate::app::bsky::graph::get_known_followers::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_known_followers::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3767,7 +3820,7 @@ pub mod app {
             pub struct GetList;
             impl atmo_core::xrpc::Request for GetList {
                 type Params = crate::app::bsky::graph::get_list::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_list::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3786,7 +3839,7 @@ pub mod app {
             pub struct GetListBlocks;
             impl atmo_core::xrpc::Request for GetListBlocks {
                 type Params = crate::app::bsky::graph::get_list_blocks::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_list_blocks::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3805,7 +3858,7 @@ pub mod app {
             pub struct GetListMutes;
             impl atmo_core::xrpc::Request for GetListMutes {
                 type Params = crate::app::bsky::graph::get_list_mutes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_list_mutes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3824,7 +3877,7 @@ pub mod app {
             pub struct GetLists;
             impl atmo_core::xrpc::Request for GetLists {
                 type Params = crate::app::bsky::graph::get_lists::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_lists::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3843,7 +3896,7 @@ pub mod app {
             pub struct GetMutes;
             impl atmo_core::xrpc::Request for GetMutes {
                 type Params = crate::app::bsky::graph::get_mutes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_mutes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3862,7 +3915,7 @@ pub mod app {
             pub struct GetRelationships;
             impl atmo_core::xrpc::Request for GetRelationships {
                 type Params = crate::app::bsky::graph::get_relationships::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_relationships::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3881,7 +3934,7 @@ pub mod app {
             pub struct GetStarterPack;
             impl atmo_core::xrpc::Request for GetStarterPack {
                 type Params = crate::app::bsky::graph::get_starter_pack::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_starter_pack::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3900,7 +3953,7 @@ pub mod app {
             pub struct GetStarterPacks;
             impl atmo_core::xrpc::Request for GetStarterPacks {
                 type Params = crate::app::bsky::graph::get_starter_packs::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_starter_packs::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3919,7 +3972,7 @@ pub mod app {
             pub struct GetSuggestedFollowsByActor;
             impl atmo_core::xrpc::Request for GetSuggestedFollowsByActor {
                 type Params = crate::app::bsky::graph::get_suggested_follows_by_actor::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::graph::get_suggested_follows_by_actor::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -3979,9 +4032,9 @@ pub mod app {
             }
             pub struct MuteActor;
             impl atmo_core::xrpc::Request for MuteActor {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::graph::mute_actor::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -3998,9 +4051,9 @@ pub mod app {
             }
             pub struct MuteActorList;
             impl atmo_core::xrpc::Request for MuteActorList {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::graph::mute_actor_list::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -4017,9 +4070,9 @@ pub mod app {
             }
             pub struct MuteThread;
             impl atmo_core::xrpc::Request for MuteThread {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::graph::mute_thread::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -4060,9 +4113,9 @@ pub mod app {
             }
             pub struct UnmuteActor;
             impl atmo_core::xrpc::Request for UnmuteActor {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::graph::unmute_actor::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -4079,9 +4132,9 @@ pub mod app {
             }
             pub struct UnmuteActorList;
             impl atmo_core::xrpc::Request for UnmuteActorList {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::graph::unmute_actor_list::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -4098,9 +4151,9 @@ pub mod app {
             }
             pub struct UnmuteThread;
             impl atmo_core::xrpc::Request for UnmuteThread {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::graph::unmute_thread::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -4553,6 +4606,13 @@ pub mod app {
                 }
             }
             pub mod get_relationships {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "ActorNotFound")]
+                    ActorNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -4798,7 +4858,7 @@ pub mod app {
             pub struct GetServices;
             impl atmo_core::xrpc::Request for GetServices {
                 type Params = crate::app::bsky::labeler::get_services::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::labeler::get_services::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5020,7 +5080,7 @@ pub mod app {
             pub struct GetUnreadCount;
             impl atmo_core::xrpc::Request for GetUnreadCount {
                 type Params = crate::app::bsky::notification::get_unread_count::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::notification::get_unread_count::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5039,7 +5099,7 @@ pub mod app {
             pub struct ListNotifications;
             impl atmo_core::xrpc::Request for ListNotifications {
                 type Params = crate::app::bsky::notification::list_notifications::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::notification::list_notifications::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5057,9 +5117,9 @@ pub mod app {
             }
             pub struct PutPreferences;
             impl atmo_core::xrpc::Request for PutPreferences {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::notification::put_preferences::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -5076,9 +5136,9 @@ pub mod app {
             }
             pub struct RegisterPush;
             impl atmo_core::xrpc::Request for RegisterPush {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::notification::register_push::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -5095,9 +5155,9 @@ pub mod app {
             }
             pub struct UpdateSeen;
             impl atmo_core::xrpc::Request for UpdateSeen {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::app::bsky::notification::update_seen::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -5378,8 +5438,8 @@ pub mod app {
         pub mod unspecced {
             pub struct GetConfig;
             impl atmo_core::xrpc::Request for GetConfig {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::unspecced::get_config::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5398,7 +5458,7 @@ pub mod app {
             pub struct GetPopularFeedGenerators;
             impl atmo_core::xrpc::Request for GetPopularFeedGenerators {
                 type Params = crate::app::bsky::unspecced::get_popular_feed_generators::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::unspecced::get_popular_feed_generators::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5417,7 +5477,7 @@ pub mod app {
             pub struct GetSuggestionsSkeleton;
             impl atmo_core::xrpc::Request for GetSuggestionsSkeleton {
                 type Params = crate::app::bsky::unspecced::get_suggestions_skeleton::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::unspecced::get_suggestions_skeleton::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5436,7 +5496,7 @@ pub mod app {
             pub struct GetTaggedSuggestions;
             impl atmo_core::xrpc::Request for GetTaggedSuggestions {
                 type Params = crate::app::bsky::unspecced::get_tagged_suggestions::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::unspecced::get_tagged_suggestions::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5455,7 +5515,7 @@ pub mod app {
             pub struct SearchActorsSkeleton;
             impl atmo_core::xrpc::Request for SearchActorsSkeleton {
                 type Params = crate::app::bsky::unspecced::search_actors_skeleton::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::unspecced::search_actors_skeleton::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5474,7 +5534,7 @@ pub mod app {
             pub struct SearchPostsSkeleton;
             impl atmo_core::xrpc::Request for SearchPostsSkeleton {
                 type Params = crate::app::bsky::unspecced::search_posts_skeleton::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::unspecced::search_posts_skeleton::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5599,6 +5659,13 @@ pub mod app {
                 }
             }
             pub mod search_actors_skeleton {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BadQueryString")]
+                    BadQueryString,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "actors")]
@@ -5636,6 +5703,13 @@ pub mod app {
                 }
             }
             pub mod search_posts_skeleton {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BadQueryString")]
+                    BadQueryString,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -5723,7 +5797,7 @@ pub mod app {
             pub struct GetJobStatus;
             impl atmo_core::xrpc::Request for GetJobStatus {
                 type Params = crate::app::bsky::video::get_job_status::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::video::get_job_status::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5741,8 +5815,8 @@ pub mod app {
             }
             pub struct GetUploadLimits;
             impl atmo_core::xrpc::Request for GetUploadLimits {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::video::get_upload_limits::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5760,8 +5834,8 @@ pub mod app {
             }
             pub struct UploadVideo;
             impl atmo_core::xrpc::Request for UploadVideo {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::app::bsky::video::upload_video::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5872,8 +5946,8 @@ pub mod chat {
             }
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::actor::delete_account::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -5891,9 +5965,9 @@ pub mod chat {
             }
             pub struct ExportAccountData;
             impl atmo_core::xrpc::Request for ExportAccountData {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -5968,9 +6042,9 @@ pub mod chat {
         pub mod convo {
             pub struct DeleteMessageForSelf;
             impl atmo_core::xrpc::Request for DeleteMessageForSelf {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::delete_message_for_self::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -5988,7 +6062,7 @@ pub mod chat {
             pub struct GetConvo;
             impl atmo_core::xrpc::Request for GetConvo {
                 type Params = crate::chat::bsky::convo::get_convo::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::convo::get_convo::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6007,7 +6081,7 @@ pub mod chat {
             pub struct GetConvoForMembers;
             impl atmo_core::xrpc::Request for GetConvoForMembers {
                 type Params = crate::chat::bsky::convo::get_convo_for_members::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::convo::get_convo_for_members::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6026,7 +6100,7 @@ pub mod chat {
             pub struct GetLog;
             impl atmo_core::xrpc::Request for GetLog {
                 type Params = crate::chat::bsky::convo::get_log::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::convo::get_log::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6045,7 +6119,7 @@ pub mod chat {
             pub struct GetMessages;
             impl atmo_core::xrpc::Request for GetMessages {
                 type Params = crate::chat::bsky::convo::get_messages::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::convo::get_messages::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6063,7 +6137,7 @@ pub mod chat {
             }
             pub struct LeaveConvo;
             impl atmo_core::xrpc::Request for LeaveConvo {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::leave_convo::Input;
                 type Output = crate::chat::bsky::convo::leave_convo::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -6083,7 +6157,7 @@ pub mod chat {
             pub struct ListConvos;
             impl atmo_core::xrpc::Request for ListConvos {
                 type Params = crate::chat::bsky::convo::list_convos::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::convo::list_convos::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6101,7 +6175,7 @@ pub mod chat {
             }
             pub struct MuteConvo;
             impl atmo_core::xrpc::Request for MuteConvo {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::mute_convo::Input;
                 type Output = crate::chat::bsky::convo::mute_convo::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -6120,9 +6194,9 @@ pub mod chat {
             }
             pub struct SendMessage;
             impl atmo_core::xrpc::Request for SendMessage {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::send_message::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -6139,7 +6213,7 @@ pub mod chat {
             }
             pub struct SendMessageBatch;
             impl atmo_core::xrpc::Request for SendMessageBatch {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::send_message_batch::Input;
                 type Output = crate::chat::bsky::convo::send_message_batch::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -6158,7 +6232,7 @@ pub mod chat {
             }
             pub struct UnmuteConvo;
             impl atmo_core::xrpc::Request for UnmuteConvo {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::unmute_convo::Input;
                 type Output = crate::chat::bsky::convo::unmute_convo::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -6177,7 +6251,7 @@ pub mod chat {
             }
             pub struct UpdateRead;
             impl atmo_core::xrpc::Request for UpdateRead {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::update_read::Input;
                 type Output = crate::chat::bsky::convo::update_read::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -6818,7 +6892,7 @@ pub mod chat {
             pub struct GetActorMetadata;
             impl atmo_core::xrpc::Request for GetActorMetadata {
                 type Params = crate::chat::bsky::moderation::get_actor_metadata::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::moderation::get_actor_metadata::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6837,7 +6911,7 @@ pub mod chat {
             pub struct GetMessageContext;
             impl atmo_core::xrpc::Request for GetMessageContext {
                 type Params = crate::chat::bsky::moderation::get_message_context::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::chat::bsky::moderation::get_message_context::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -6855,9 +6929,9 @@ pub mod chat {
             }
             pub struct UpdateActorAccess;
             impl atmo_core::xrpc::Request for UpdateActorAccess {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::moderation::update_actor_access::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -6988,9 +7062,9 @@ pub mod com {
         pub mod admin {
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::delete_account::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7007,9 +7081,9 @@ pub mod com {
             }
             pub struct DisableAccountInvites;
             impl atmo_core::xrpc::Request for DisableAccountInvites {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::disable_account_invites::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7026,9 +7100,9 @@ pub mod com {
             }
             pub struct DisableInviteCodes;
             impl atmo_core::xrpc::Request for DisableInviteCodes {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::disable_invite_codes::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7045,9 +7119,9 @@ pub mod com {
             }
             pub struct EnableAccountInvites;
             impl atmo_core::xrpc::Request for EnableAccountInvites {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::enable_account_invites::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7065,8 +7139,8 @@ pub mod com {
             pub struct GetAccountInfo;
             impl atmo_core::xrpc::Request for GetAccountInfo {
                 type Params = crate::com::atproto::admin::get_account_info::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7084,7 +7158,7 @@ pub mod com {
             pub struct GetAccountInfos;
             impl atmo_core::xrpc::Request for GetAccountInfos {
                 type Params = crate::com::atproto::admin::get_account_infos::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::admin::get_account_infos::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -7103,7 +7177,7 @@ pub mod com {
             pub struct GetInviteCodes;
             impl atmo_core::xrpc::Request for GetInviteCodes {
                 type Params = crate::com::atproto::admin::get_invite_codes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::admin::get_invite_codes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -7122,7 +7196,7 @@ pub mod com {
             pub struct GetSubjectStatus;
             impl atmo_core::xrpc::Request for GetSubjectStatus {
                 type Params = crate::com::atproto::admin::get_subject_status::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::admin::get_subject_status::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -7141,7 +7215,7 @@ pub mod com {
             pub struct SearchAccounts;
             impl atmo_core::xrpc::Request for SearchAccounts {
                 type Params = crate::com::atproto::admin::search_accounts::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::admin::search_accounts::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -7159,7 +7233,7 @@ pub mod com {
             }
             pub struct SendEmail;
             impl atmo_core::xrpc::Request for SendEmail {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::send_email::Input;
                 type Output = crate::com::atproto::admin::send_email::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -7178,9 +7252,9 @@ pub mod com {
             }
             pub struct UpdateAccountEmail;
             impl atmo_core::xrpc::Request for UpdateAccountEmail {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::update_account_email::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7197,9 +7271,9 @@ pub mod com {
             }
             pub struct UpdateAccountHandle;
             impl atmo_core::xrpc::Request for UpdateAccountHandle {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::update_account_handle::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7216,9 +7290,9 @@ pub mod com {
             }
             pub struct UpdateAccountPassword;
             impl atmo_core::xrpc::Request for UpdateAccountPassword {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::update_account_password::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7235,7 +7309,7 @@ pub mod com {
             }
             pub struct UpdateSubjectStatus;
             impl atmo_core::xrpc::Request for UpdateSubjectStatus {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::admin::update_subject_status::Input;
                 type Output = crate::com::atproto::admin::update_subject_status::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -7812,8 +7886,8 @@ pub mod com {
         pub mod identity {
             pub struct GetRecommendedDidCredentials;
             impl atmo_core::xrpc::Request for GetRecommendedDidCredentials {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output =
                     crate::com::atproto::identity::get_recommended_did_credentials::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -7832,9 +7906,9 @@ pub mod com {
             }
             pub struct RequestPlcOperationSignature;
             impl atmo_core::xrpc::Request for RequestPlcOperationSignature {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7852,7 +7926,7 @@ pub mod com {
             pub struct ResolveHandle;
             impl atmo_core::xrpc::Request for ResolveHandle {
                 type Params = crate::com::atproto::identity::resolve_handle::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::identity::resolve_handle::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -7870,7 +7944,7 @@ pub mod com {
             }
             pub struct SignPlcOperation;
             impl atmo_core::xrpc::Request for SignPlcOperation {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::identity::sign_plc_operation::Input;
                 type Output = crate::com::atproto::identity::sign_plc_operation::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -7889,9 +7963,9 @@ pub mod com {
             }
             pub struct SubmitPlcOperation;
             impl atmo_core::xrpc::Request for SubmitPlcOperation {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::identity::submit_plc_operation::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7908,9 +7982,9 @@ pub mod com {
             }
             pub struct UpdateHandle;
             impl atmo_core::xrpc::Request for UpdateHandle {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::identity::update_handle::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -8007,7 +8081,7 @@ pub mod com {
             pub struct QueryLabels;
             impl atmo_core::xrpc::Request for QueryLabels {
                 type Params = crate::com::atproto::label::query_labels::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::label::query_labels::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -8229,7 +8303,7 @@ pub mod com {
         pub mod moderation {
             pub struct CreateReport;
             impl atmo_core::xrpc::Request for CreateReport {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::moderation::create_report::Input;
                 type Output = crate::com::atproto::moderation::create_report::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -8433,7 +8507,7 @@ pub mod com {
         pub mod repo {
             pub struct ApplyWrites;
             impl atmo_core::xrpc::Request for ApplyWrites {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::repo::apply_writes::Input;
                 type Output = crate::com::atproto::repo::apply_writes::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -8452,7 +8526,7 @@ pub mod com {
             }
             pub struct CreateRecord;
             impl atmo_core::xrpc::Request for CreateRecord {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::repo::create_record::Input;
                 type Output = crate::com::atproto::repo::create_record::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -8471,7 +8545,7 @@ pub mod com {
             }
             pub struct DeleteRecord;
             impl atmo_core::xrpc::Request for DeleteRecord {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::repo::delete_record::Input;
                 type Output = crate::com::atproto::repo::delete_record::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -8491,7 +8565,7 @@ pub mod com {
             pub struct DescribeRepo;
             impl atmo_core::xrpc::Request for DescribeRepo {
                 type Params = crate::com::atproto::repo::describe_repo::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::repo::describe_repo::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -8510,7 +8584,7 @@ pub mod com {
             pub struct GetRecord;
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::com::atproto::repo::get_record::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::repo::get_record::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -8528,9 +8602,9 @@ pub mod com {
             }
             pub struct ImportRepo;
             impl atmo_core::xrpc::Request for ImportRepo {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -8548,7 +8622,7 @@ pub mod com {
             pub struct ListMissingBlobs;
             impl atmo_core::xrpc::Request for ListMissingBlobs {
                 type Params = crate::com::atproto::repo::list_missing_blobs::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::repo::list_missing_blobs::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -8567,7 +8641,7 @@ pub mod com {
             pub struct ListRecords;
             impl atmo_core::xrpc::Request for ListRecords {
                 type Params = crate::com::atproto::repo::list_records::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::repo::list_records::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -8585,7 +8659,7 @@ pub mod com {
             }
             pub struct PutRecord;
             impl atmo_core::xrpc::Request for PutRecord {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::repo::put_record::Input;
                 type Output = crate::com::atproto::repo::put_record::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -8611,8 +8685,8 @@ pub mod com {
             }
             pub struct UploadBlob;
             impl atmo_core::xrpc::Request for UploadBlob {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::repo::upload_blob::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -8662,6 +8736,13 @@ pub mod com {
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct DeleteResult {}
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "InvalidSwap")]
+                    InvalidSwap,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "repo")]
@@ -8823,6 +8904,13 @@ pub mod com {
                 }
             }
             pub mod create_record {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "InvalidSwap")]
+                    InvalidSwap,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "collection")]
@@ -8885,6 +8973,13 @@ pub mod com {
                 }
             }
             pub mod delete_record {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "InvalidSwap")]
+                    InvalidSwap,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "collection")]
@@ -8931,6 +9026,13 @@ pub mod com {
                 }
             }
             pub mod get_record {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RecordNotFound")]
+                    RecordNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -9034,6 +9136,13 @@ pub mod com {
                 }
             }
             pub mod put_record {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "InvalidSwap")]
+                    InvalidSwap,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "collection")]
@@ -9099,9 +9208,9 @@ pub mod com {
         pub mod server {
             pub struct ActivateAccount;
             impl atmo_core::xrpc::Request for ActivateAccount {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9118,8 +9227,8 @@ pub mod com {
             }
             pub struct CheckAccountStatus;
             impl atmo_core::xrpc::Request for CheckAccountStatus {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::check_account_status::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9137,9 +9246,9 @@ pub mod com {
             }
             pub struct ConfirmEmail;
             impl atmo_core::xrpc::Request for ConfirmEmail {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::confirm_email::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9156,7 +9265,7 @@ pub mod com {
             }
             pub struct CreateAccount;
             impl atmo_core::xrpc::Request for CreateAccount {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::create_account::Input;
                 type Output = crate::com::atproto::server::create_account::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -9175,9 +9284,9 @@ pub mod com {
             }
             pub struct CreateAppPassword;
             impl atmo_core::xrpc::Request for CreateAppPassword {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::create_app_password::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9194,7 +9303,7 @@ pub mod com {
             }
             pub struct CreateInviteCode;
             impl atmo_core::xrpc::Request for CreateInviteCode {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::create_invite_code::Input;
                 type Output = crate::com::atproto::server::create_invite_code::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -9213,7 +9322,7 @@ pub mod com {
             }
             pub struct CreateInviteCodes;
             impl atmo_core::xrpc::Request for CreateInviteCodes {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::create_invite_codes::Input;
                 type Output = crate::com::atproto::server::create_invite_codes::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -9232,7 +9341,7 @@ pub mod com {
             }
             pub struct CreateSession;
             impl atmo_core::xrpc::Request for CreateSession {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::create_session::Input;
                 type Output = crate::com::atproto::server::create_session::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -9251,9 +9360,9 @@ pub mod com {
             }
             pub struct DeactivateAccount;
             impl atmo_core::xrpc::Request for DeactivateAccount {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::deactivate_account::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9270,9 +9379,9 @@ pub mod com {
             }
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::delete_account::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9289,9 +9398,9 @@ pub mod com {
             }
             pub struct DeleteSession;
             impl atmo_core::xrpc::Request for DeleteSession {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9308,8 +9417,8 @@ pub mod com {
             }
             pub struct DescribeServer;
             impl atmo_core::xrpc::Request for DescribeServer {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::describe_server::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9328,7 +9437,7 @@ pub mod com {
             pub struct GetAccountInviteCodes;
             impl atmo_core::xrpc::Request for GetAccountInviteCodes {
                 type Params = crate::com::atproto::server::get_account_invite_codes::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::get_account_invite_codes::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9347,7 +9456,7 @@ pub mod com {
             pub struct GetServiceAuth;
             impl atmo_core::xrpc::Request for GetServiceAuth {
                 type Params = crate::com::atproto::server::get_service_auth::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::get_service_auth::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9365,8 +9474,8 @@ pub mod com {
             }
             pub struct GetSession;
             impl atmo_core::xrpc::Request for GetSession {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::get_session::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9384,8 +9493,8 @@ pub mod com {
             }
             pub struct ListAppPasswords;
             impl atmo_core::xrpc::Request for ListAppPasswords {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::list_app_passwords::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9403,8 +9512,8 @@ pub mod com {
             }
             pub struct RefreshSession;
             impl atmo_core::xrpc::Request for RefreshSession {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::refresh_session::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9422,9 +9531,9 @@ pub mod com {
             }
             pub struct RequestAccountDelete;
             impl atmo_core::xrpc::Request for RequestAccountDelete {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9441,9 +9550,9 @@ pub mod com {
             }
             pub struct RequestEmailConfirmation;
             impl atmo_core::xrpc::Request for RequestEmailConfirmation {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9460,8 +9569,8 @@ pub mod com {
             }
             pub struct RequestEmailUpdate;
             impl atmo_core::xrpc::Request for RequestEmailUpdate {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::server::request_email_update::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -9479,9 +9588,9 @@ pub mod com {
             }
             pub struct RequestPasswordReset;
             impl atmo_core::xrpc::Request for RequestPasswordReset {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::request_password_reset::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9498,7 +9607,7 @@ pub mod com {
             }
             pub struct ReserveSigningKey;
             impl atmo_core::xrpc::Request for ReserveSigningKey {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::reserve_signing_key::Input;
                 type Output = crate::com::atproto::server::reserve_signing_key::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -9517,9 +9626,9 @@ pub mod com {
             }
             pub struct ResetPassword;
             impl atmo_core::xrpc::Request for ResetPassword {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::reset_password::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9536,9 +9645,9 @@ pub mod com {
             }
             pub struct RevokeAppPassword;
             impl atmo_core::xrpc::Request for RevokeAppPassword {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::revoke_app_password::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9555,9 +9664,9 @@ pub mod com {
             }
             pub struct UpdateEmail;
             impl atmo_core::xrpc::Request for UpdateEmail {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::update_email::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9596,6 +9705,19 @@ pub mod com {
                 }
             }
             pub mod confirm_email {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "AccountNotFound")]
+                    AccountNotFound,
+                    #[serde(rename = "ExpiredToken")]
+                    ExpiredToken,
+                    #[serde(rename = "InvalidToken")]
+                    InvalidToken,
+                    #[serde(rename = "InvalidEmail")]
+                    InvalidEmail,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "email")]
@@ -9605,6 +9727,25 @@ pub mod com {
                 }
             }
             pub mod create_account {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "InvalidHandle")]
+                    InvalidHandle,
+                    #[serde(rename = "InvalidPassword")]
+                    InvalidPassword,
+                    #[serde(rename = "InvalidInviteCode")]
+                    InvalidInviteCode,
+                    #[serde(rename = "HandleNotAvailable")]
+                    HandleNotAvailable,
+                    #[serde(rename = "UnsupportedDomain")]
+                    UnsupportedDomain,
+                    #[serde(rename = "UnresolvableDid")]
+                    UnresolvableDid,
+                    #[serde(rename = "IncompatibleDidDoc")]
+                    IncompatibleDidDoc,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
@@ -9672,6 +9813,13 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "AccountTakedown")]
+                    AccountTakedown,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
@@ -9726,6 +9874,15 @@ pub mod com {
                 }
             }
             pub mod create_session {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "AccountTakedown")]
+                    AccountTakedown,
+                    #[serde(rename = "AuthFactorTokenRequired")]
+                    AuthFactorTokenRequired,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
@@ -9826,6 +9983,15 @@ pub mod com {
                 }
             }
             pub mod delete_account {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "ExpiredToken")]
+                    ExpiredToken,
+                    #[serde(rename = "InvalidToken")]
+                    InvalidToken,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
@@ -9882,6 +10048,13 @@ pub mod com {
                 }
             }
             pub mod get_account_invite_codes {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "DuplicateCreate")]
+                    DuplicateCreate,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "codes")]
@@ -9900,6 +10073,13 @@ pub mod com {
                 }
             }
             pub mod get_service_auth {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BadExpiration")]
+                    BadExpiration,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "token")]
@@ -9981,6 +10161,13 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub privileged: std::option::Option<bool>,
                 }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "AccountTakedown")]
+                    AccountTakedown,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "passwords")]
@@ -9989,6 +10176,13 @@ pub mod com {
                 }
             }
             pub mod refresh_session {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "AccountTakedown")]
+                    AccountTakedown,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "accessJwt")]
@@ -10059,6 +10253,15 @@ pub mod com {
                 }
             }
             pub mod reset_password {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "ExpiredToken")]
+                    ExpiredToken,
+                    #[serde(rename = "InvalidToken")]
+                    InvalidToken,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "password")]
@@ -10075,6 +10278,17 @@ pub mod com {
                 }
             }
             pub mod update_email {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "ExpiredToken")]
+                    ExpiredToken,
+                    #[serde(rename = "InvalidToken")]
+                    InvalidToken,
+                    #[serde(rename = "TokenRequired")]
+                    TokenRequired,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "email")]
@@ -10094,8 +10308,8 @@ pub mod com {
             pub struct GetBlob;
             impl atmo_core::xrpc::Request for GetBlob {
                 type Params = crate::com::atproto::sync::get_blob::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10113,8 +10327,8 @@ pub mod com {
             pub struct GetBlocks;
             impl atmo_core::xrpc::Request for GetBlocks {
                 type Params = crate::com::atproto::sync::get_blocks::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10132,8 +10346,8 @@ pub mod com {
             pub struct GetCheckout;
             impl atmo_core::xrpc::Request for GetCheckout {
                 type Params = crate::com::atproto::sync::get_checkout::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10151,7 +10365,7 @@ pub mod com {
             pub struct GetHead;
             impl atmo_core::xrpc::Request for GetHead {
                 type Params = crate::com::atproto::sync::get_head::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::sync::get_head::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10170,7 +10384,7 @@ pub mod com {
             pub struct GetLatestCommit;
             impl atmo_core::xrpc::Request for GetLatestCommit {
                 type Params = crate::com::atproto::sync::get_latest_commit::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::sync::get_latest_commit::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10189,8 +10403,8 @@ pub mod com {
             pub struct GetRecord;
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::com::atproto::sync::get_record::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10208,8 +10422,8 @@ pub mod com {
             pub struct GetRepo;
             impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::com::atproto::sync::get_repo::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10227,7 +10441,7 @@ pub mod com {
             pub struct GetRepoStatus;
             impl atmo_core::xrpc::Request for GetRepoStatus {
                 type Params = crate::com::atproto::sync::get_repo_status::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::sync::get_repo_status::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10246,7 +10460,7 @@ pub mod com {
             pub struct ListBlobs;
             impl atmo_core::xrpc::Request for ListBlobs {
                 type Params = crate::com::atproto::sync::list_blobs::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::sync::list_blobs::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10265,7 +10479,7 @@ pub mod com {
             pub struct ListRepos;
             impl atmo_core::xrpc::Request for ListRepos {
                 type Params = crate::com::atproto::sync::list_repos::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::sync::list_repos::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10283,9 +10497,9 @@ pub mod com {
             }
             pub struct NotifyOfUpdate;
             impl atmo_core::xrpc::Request for NotifyOfUpdate {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::sync::notify_of_update::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10302,9 +10516,9 @@ pub mod com {
             }
             pub struct RequestCrawl;
             impl atmo_core::xrpc::Request for RequestCrawl {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::sync::request_crawl::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10320,6 +10534,21 @@ pub mod com {
                 }
             }
             pub mod get_blob {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BlobNotFound")]
+                    BlobNotFound,
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(rename = "RepoTakendown")]
+                    RepoTakendown,
+                    #[serde(rename = "RepoSuspended")]
+                    RepoSuspended,
+                    #[serde(rename = "RepoDeactivated")]
+                    RepoDeactivated,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "cid")]
@@ -10329,6 +10558,21 @@ pub mod com {
                 }
             }
             pub mod get_blocks {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "BlockNotFound")]
+                    BlockNotFound,
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(rename = "RepoTakendown")]
+                    RepoTakendown,
+                    #[serde(rename = "RepoSuspended")]
+                    RepoSuspended,
+                    #[serde(rename = "RepoDeactivated")]
+                    RepoDeactivated,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "cids")]
@@ -10345,6 +10589,13 @@ pub mod com {
                 }
             }
             pub mod get_head {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "HeadNotFound")]
+                    HeadNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "root")]
@@ -10357,6 +10608,19 @@ pub mod com {
                 }
             }
             pub mod get_latest_commit {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(rename = "RepoTakendown")]
+                    RepoTakendown,
+                    #[serde(rename = "RepoSuspended")]
+                    RepoSuspended,
+                    #[serde(rename = "RepoDeactivated")]
+                    RepoDeactivated,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cid")]
@@ -10371,6 +10635,21 @@ pub mod com {
                 }
             }
             pub mod get_record {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RecordNotFound")]
+                    RecordNotFound,
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(rename = "RepoTakendown")]
+                    RepoTakendown,
+                    #[serde(rename = "RepoSuspended")]
+                    RepoSuspended,
+                    #[serde(rename = "RepoDeactivated")]
+                    RepoDeactivated,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "collection")]
@@ -10386,6 +10665,19 @@ pub mod com {
                 }
             }
             pub mod get_repo {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(rename = "RepoTakendown")]
+                    RepoTakendown,
+                    #[serde(rename = "RepoSuspended")]
+                    RepoSuspended,
+                    #[serde(rename = "RepoDeactivated")]
+                    RepoDeactivated,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
@@ -10397,6 +10689,13 @@ pub mod com {
                 }
             }
             pub mod get_repo_status {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "active")]
@@ -10436,6 +10735,19 @@ pub mod com {
                 }
             }
             pub mod list_blobs {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(rename = "RepoTakendown")]
+                    RepoTakendown,
+                    #[serde(rename = "RepoSuspended")]
+                    RepoSuspended,
+                    #[serde(rename = "RepoDeactivated")]
+                    RepoDeactivated,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "cids")]
@@ -10690,8 +11002,8 @@ pub mod com {
         pub mod temp {
             pub struct CheckSignupQueue;
             impl atmo_core::xrpc::Request for CheckSignupQueue {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::temp::check_signup_queue::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10710,7 +11022,7 @@ pub mod com {
             pub struct FetchLabels;
             impl atmo_core::xrpc::Request for FetchLabels {
                 type Params = crate::com::atproto::temp::fetch_labels::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::com::atproto::temp::fetch_labels::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10728,9 +11040,9 @@ pub mod com {
             }
             pub struct RequestPhoneVerification;
             impl atmo_core::xrpc::Request for RequestPhoneVerification {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::temp::request_phone_verification::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10793,9 +11105,9 @@ pub mod tools {
         pub mod communication {
             pub struct CreateTemplate;
             impl atmo_core::xrpc::Request for CreateTemplate {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::communication::create_template::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10812,9 +11124,9 @@ pub mod tools {
             }
             pub struct DeleteTemplate;
             impl atmo_core::xrpc::Request for DeleteTemplate {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::communication::delete_template::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10831,8 +11143,8 @@ pub mod tools {
             }
             pub struct ListTemplates;
             impl atmo_core::xrpc::Request for ListTemplates {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::communication::list_templates::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -10850,9 +11162,9 @@ pub mod tools {
             }
             pub struct UpdateTemplate;
             impl atmo_core::xrpc::Request for UpdateTemplate {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::communication::update_template::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10868,6 +11180,13 @@ pub mod tools {
                 }
             }
             pub mod create_template {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "DuplicateTemplateName")]
+                    DuplicateTemplateName,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "contentMarkdown")]
@@ -10929,6 +11248,13 @@ pub mod tools {
                 }
             }
             pub mod update_template {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "DuplicateTemplateName")]
+                    DuplicateTemplateName,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(default)]
@@ -10963,9 +11289,9 @@ pub mod tools {
         pub mod moderation {
             pub struct EmitEvent;
             impl atmo_core::xrpc::Request for EmitEvent {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::moderation::emit_event::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -10983,8 +11309,8 @@ pub mod tools {
             pub struct GetEvent;
             impl atmo_core::xrpc::Request for GetEvent {
                 type Params = crate::tools::ozone::moderation::get_event::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11002,8 +11328,8 @@ pub mod tools {
             pub struct GetRecord;
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::tools::ozone::moderation::get_record::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11021,7 +11347,7 @@ pub mod tools {
             pub struct GetRecords;
             impl atmo_core::xrpc::Request for GetRecords {
                 type Params = crate::tools::ozone::moderation::get_records::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::moderation::get_records::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -11040,8 +11366,8 @@ pub mod tools {
             pub struct GetRepo;
             impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::tools::ozone::moderation::get_repo::Params;
-                type Input = atmo_core::xrpc::NoInput;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Input = atmo_core::Nothing;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11059,7 +11385,7 @@ pub mod tools {
             pub struct GetRepos;
             impl atmo_core::xrpc::Request for GetRepos {
                 type Params = crate::tools::ozone::moderation::get_repos::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::moderation::get_repos::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -11078,7 +11404,7 @@ pub mod tools {
             pub struct QueryEvents;
             impl atmo_core::xrpc::Request for QueryEvents {
                 type Params = crate::tools::ozone::moderation::query_events::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::moderation::query_events::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -11097,7 +11423,7 @@ pub mod tools {
             pub struct QueryStatuses;
             impl atmo_core::xrpc::Request for QueryStatuses {
                 type Params = crate::tools::ozone::moderation::query_statuses::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::moderation::query_statuses::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -11116,7 +11442,7 @@ pub mod tools {
             pub struct SearchRepos;
             impl atmo_core::xrpc::Request for SearchRepos {
                 type Params = crate::tools::ozone::moderation::search_repos::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::moderation::search_repos::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -12167,6 +12493,13 @@ pub mod tools {
                 }
             }
             pub mod emit_event {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "SubjectHasAction")]
+                    SubjectHasAction,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "createdBy")]
@@ -12320,6 +12653,13 @@ pub mod tools {
                 }
             }
             pub mod get_record {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RecordNotFound")]
+                    RecordNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(default)]
@@ -12389,6 +12729,13 @@ pub mod tools {
                 }
             }
             pub mod get_repo {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "RepoNotFound")]
+                    RepoNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
                     #[serde(rename = "did")]
@@ -12756,8 +13103,8 @@ pub mod tools {
         pub mod server {
             pub struct GetConfig;
             impl atmo_core::xrpc::Request for GetConfig {
-                type Params = atmo_core::xrpc::NoParams;
-                type Input = atmo_core::xrpc::NoInput;
+                type Params = atmo_core::Nothing;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::server::get_config::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -12838,9 +13185,9 @@ pub mod tools {
         pub mod set {
             pub struct AddValues;
             impl atmo_core::xrpc::Request for AddValues {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::set::add_values::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -12857,7 +13204,7 @@ pub mod tools {
             }
             pub struct DeleteSet;
             impl atmo_core::xrpc::Request for DeleteSet {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::set::delete_set::Input;
                 type Output = crate::tools::ozone::set::delete_set::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -12876,9 +13223,9 @@ pub mod tools {
             }
             pub struct DeleteValues;
             impl atmo_core::xrpc::Request for DeleteValues {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::set::delete_values::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -12896,7 +13243,7 @@ pub mod tools {
             pub struct GetValues;
             impl atmo_core::xrpc::Request for GetValues {
                 type Params = crate::tools::ozone::set::get_values::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::set::get_values::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -12915,7 +13262,7 @@ pub mod tools {
             pub struct QuerySets;
             impl atmo_core::xrpc::Request for QuerySets {
                 type Params = crate::tools::ozone::set::query_sets::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::set::query_sets::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -12933,9 +13280,9 @@ pub mod tools {
             }
             pub struct UpsertSet;
             impl atmo_core::xrpc::Request for UpsertSet {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::set::defs::Set;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -12986,6 +13333,13 @@ pub mod tools {
                 }
             }
             pub mod delete_set {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "SetNotFound")]
+                    SetNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
@@ -12995,6 +13349,13 @@ pub mod tools {
                 pub struct Output {}
             }
             pub mod delete_values {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "SetNotFound")]
+                    SetNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "name")]
@@ -13004,6 +13365,13 @@ pub mod tools {
                 }
             }
             pub mod get_values {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "SetNotFound")]
+                    SetNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(default)]
@@ -13093,7 +13461,7 @@ pub mod tools {
             pub struct ListOptions;
             impl atmo_core::xrpc::Request for ListOptions {
                 type Params = crate::tools::ozone::setting::list_options::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::setting::list_options::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -13111,7 +13479,7 @@ pub mod tools {
             }
             pub struct RemoveOptions;
             impl atmo_core::xrpc::Request for RemoveOptions {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::setting::remove_options::Input;
                 type Output = crate::tools::ozone::setting::remove_options::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -13130,7 +13498,7 @@ pub mod tools {
             }
             pub struct UpsertOption;
             impl atmo_core::xrpc::Request for UpsertOption {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::setting::upsert_option::Input;
                 type Output = crate::tools::ozone::setting::upsert_option::Output;
                 type Error = atmo_core::xrpc::Error;
@@ -13338,7 +13706,7 @@ pub mod tools {
             pub struct FindCorrelation;
             impl atmo_core::xrpc::Request for FindCorrelation {
                 type Params = crate::tools::ozone::signature::find_correlation::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::signature::find_correlation::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -13357,7 +13725,7 @@ pub mod tools {
             pub struct FindRelatedAccounts;
             impl atmo_core::xrpc::Request for FindRelatedAccounts {
                 type Params = crate::tools::ozone::signature::find_related_accounts::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::signature::find_related_accounts::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -13376,7 +13744,7 @@ pub mod tools {
             pub struct SearchAccounts;
             impl atmo_core::xrpc::Request for SearchAccounts {
                 type Params = crate::tools::ozone::signature::search_accounts::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::signature::search_accounts::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -13478,9 +13846,9 @@ pub mod tools {
         pub mod team {
             pub struct AddMember;
             impl atmo_core::xrpc::Request for AddMember {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::team::add_member::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -13497,9 +13865,9 @@ pub mod tools {
             }
             pub struct DeleteMember;
             impl atmo_core::xrpc::Request for DeleteMember {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::team::delete_member::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -13517,7 +13885,7 @@ pub mod tools {
             pub struct ListMembers;
             impl atmo_core::xrpc::Request for ListMembers {
                 type Params = crate::tools::ozone::team::list_members::Params;
-                type Input = atmo_core::xrpc::NoInput;
+                type Input = atmo_core::Nothing;
                 type Output = crate::tools::ozone::team::list_members::Output;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
@@ -13535,9 +13903,9 @@ pub mod tools {
             }
             pub struct UpdateMember;
             impl atmo_core::xrpc::Request for UpdateMember {
-                type Params = atmo_core::xrpc::NoParams;
+                type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::team::update_member::Input;
-                type Output = atmo_core::xrpc::NoOutput;
+                type Output = atmo_core::Nothing;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -13553,6 +13921,13 @@ pub mod tools {
                 }
             }
             pub mod add_member {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "MemberAlreadyExists")]
+                    MemberAlreadyExists,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
@@ -13622,6 +13997,15 @@ pub mod tools {
                 }
             }
             pub mod delete_member {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "MemberNotFound")]
+                    MemberNotFound,
+                    #[serde(rename = "CannotDeleteSelf")]
+                    CannotDeleteSelf,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]
@@ -13651,6 +14035,13 @@ pub mod tools {
                 }
             }
             pub mod update_member {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize, serde :: Deserialize)]
+                pub enum Error {
+                    #[serde(rename = "MemberNotFound")]
+                    MemberNotFound,
+                    #[serde(untagged)]
+                    Other(String),
+                }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "did")]

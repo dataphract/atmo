@@ -43,7 +43,7 @@ pub enum Schema {
     Unknown,
 }
 
-/// A typed schema item.
+/// A schema indicating the type of an object property.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum FieldSchema {
@@ -59,6 +59,7 @@ pub enum FieldSchema {
     Unknown,
 }
 
+/// A schema describing an array type.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 #[serde(deny_unknown_fields)]
@@ -149,6 +150,7 @@ pub struct Output {
     pub schema: Option<IoSchema>,
 }
 
+/// An error value defined by a query, procedure or subscription.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Error {
@@ -156,6 +158,7 @@ pub struct Error {
     pub description: Option<std::string::String>,
 }
 
+/// An RPC that mutates state.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Procedure {
@@ -167,6 +170,7 @@ pub struct Procedure {
     pub errors: Option<Vec<Error>>,
 }
 
+/// An RPC that queries data without mutating state.
 #[derive(Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Query {

@@ -11,10 +11,6 @@ pub trait Request {
     fn output_encoding() -> &'static str;
 }
 
-pub enum NoParams {}
-pub enum NoInput {}
-pub enum NoOutput {}
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Error {
     error: String,

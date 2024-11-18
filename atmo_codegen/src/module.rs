@@ -56,6 +56,12 @@ impl Module {
 #[derive(Debug)]
 pub struct NameCollision(String);
 
+impl fmt::Display for NameCollision {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "multiple items named {:?}", self.0)
+    }
+}
+
 #[derive(Debug)]
 pub enum Item {
     Rpc(RustRpcDef),
@@ -75,6 +81,13 @@ impl From<RustStructDef> for Item {
     #[inline]
     fn from(s: RustStructDef) -> Self {
         Item::Struct(s)
+    }
+}
+
+impl From<RustStringEnumDef> for Item {
+    #[inline]
+    fn from(s: RustStringEnumDef) -> Self {
+        Item::StringEnum(s)
     }
 }
 
