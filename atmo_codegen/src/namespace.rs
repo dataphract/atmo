@@ -518,7 +518,9 @@ impl Namespace {
 
         match schema {
             IoSchema::Object(o) => Some(RpcIoTy::Object(self.create_object_def("output", o))),
-            IoSchema::Ref(_) => None,
+            IoSchema::Ref(r) => Some(RpcIoTy::Ref(
+                self.resolve_ref(&nsid::Reference::from_str(&r.ref_).unwrap()),
+            )),
             IoSchema::Union(u) => Some(RpcIoTy::Union(UnionDef::from_lexicon(u))),
         }
     }

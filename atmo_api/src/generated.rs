@@ -24,7 +24,7 @@ pub mod app {
             impl atmo_core::xrpc::Request for GetProfile {
                 type Params = crate::app::bsky::actor::get_profile::Params;
                 type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
+                type Output = crate::app::bsky::actor::defs::ProfileViewDetailed;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -6044,7 +6044,7 @@ pub mod chat {
             impl atmo_core::xrpc::Request for DeleteMessageForSelf {
                 type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::delete_message_for_self::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::chat::bsky::convo::defs::DeletedMessageView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -6196,7 +6196,7 @@ pub mod chat {
             impl atmo_core::xrpc::Request for SendMessage {
                 type Params = atmo_core::Nothing;
                 type Input = crate::chat::bsky::convo::send_message::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::chat::bsky::convo::defs::MessageView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -7140,7 +7140,7 @@ pub mod com {
             impl atmo_core::xrpc::Request for GetAccountInfo {
                 type Params = crate::com::atproto::admin::get_account_info::Params;
                 type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
+                type Output = crate::com::atproto::admin::defs::AccountView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -9286,7 +9286,7 @@ pub mod com {
             impl atmo_core::xrpc::Request for CreateAppPassword {
                 type Params = atmo_core::Nothing;
                 type Input = crate::com::atproto::server::create_app_password::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::com::atproto::server::create_app_password::AppPassword;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11107,7 +11107,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for CreateTemplate {
                 type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::communication::create_template::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::communication::defs::TemplateView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11164,7 +11164,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for UpdateTemplate {
                 type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::communication::update_template::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::communication::defs::TemplateView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11291,7 +11291,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for EmitEvent {
                 type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::moderation::emit_event::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::moderation::defs::ModEventView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11310,7 +11310,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for GetEvent {
                 type Params = crate::tools::ozone::moderation::get_event::Params;
                 type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::moderation::defs::ModEventViewDetail;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11329,7 +11329,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::tools::ozone::moderation::get_record::Params;
                 type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::moderation::defs::RecordViewDetail;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -11367,7 +11367,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::tools::ozone::moderation::get_repo::Params;
                 type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::moderation::defs::RepoViewDetail;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -13282,7 +13282,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for UpsertSet {
                 type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::set::defs::Set;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::set::defs::SetView;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -13848,7 +13848,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for AddMember {
                 type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::team::add_member::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::team::defs::Member;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
@@ -13905,7 +13905,7 @@ pub mod tools {
             impl atmo_core::xrpc::Request for UpdateMember {
                 type Params = atmo_core::Nothing;
                 type Input = crate::tools::ozone::team::update_member::Input;
-                type Output = atmo_core::Nothing;
+                type Output = crate::tools::ozone::team::defs::Member;
                 type Error = atmo_core::xrpc::Error;
                 #[inline]
                 fn method() -> http::Method {
