@@ -4,13 +4,10 @@
 
 use std::fmt;
 
-use atmo_core::{
-    xrpc::{self, Request},
-    Nothing,
-};
+use atmo_core::xrpc::{self, Request};
 use bytes::Bytes;
 use http_body_util::{BodyExt, Full};
-use serde::{de::DeserializeOwned, Serialize};
+use serde::Serialize;
 use url::Url;
 
 pub mod api {

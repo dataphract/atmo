@@ -16,6 +16,7 @@ pub struct RustStringEnumDef {
 impl ToTokens for RustStringEnumDef {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let ident = &self.ident;
+
         let variants = self.variants.iter();
 
         let other_variant = self.is_open.then(|| {
@@ -25,11 +26,41 @@ impl ToTokens for RustStringEnumDef {
             }
         });
 
+        let variant_branches = self.variants.iter().map(|v| {
+            let ident = &v.ident;
+            let s = &v.string_value;
+            quote! {
+                Self::#ident => #s,
+            }
+        });
+
+        let other_branch = self.is_open.then(|| {
+            quote! {
+                Self::Other(s) => s.as_str(),
+            }
+        });
+
         quote! {
             #[derive(Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
             pub enum #ident {
                 #(#variants,)*
                 #other_variant
+            }
+
+            impl #ident {
+                pub fn as_str(&self) -> &str {
+                    match self {
+                        #(#variant_branches)*
+                        #other_branch
+                    }
+                }
+            }
+
+            impl std::fmt::Display for #ident {
+                #[inline]
+                fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
+                    f.write_str(self.as_str())
+                }
             }
         }
         .to_tokens(tokens)
@@ -48,10 +79,15 @@ impl ToTokens for StringEnumVariant {
         let doc = self.doc.iter();
         let ident = &self.ident;
         let string_value = &self.string_value;
+        let rename_attr = (ident != string_value).then(|| {
+            quote! {
+                #[serde(rename = #string_value)]
+            }
+        });
 
         quote! {
             #(#[doc = #doc])*
-            #[serde(rename = #string_value)]
+            #rename_attr
             #ident
         }
         .to_tokens(tokens)

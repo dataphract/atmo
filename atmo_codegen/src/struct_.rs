@@ -43,7 +43,8 @@ impl ToTokens for RustStructField {
 
         let doc_attr = self.doc.clone().map(FieldAttr::Doc);
         let serde_default = self.is_optional.then_some(FieldAttr::SerdeDefault);
-        let serde_rename = FieldAttr::SerdeRename(self.rename.clone());
+        let serde_rename =
+            (self.name != self.rename).then(|| FieldAttr::SerdeRename(self.rename.clone()));
         let serde_skip_none = self.is_optional.then_some(FieldAttr::SerdeSkipNone);
         let serde_with = match self.inner_ty {
             Type::Bytes => {
@@ -60,7 +61,7 @@ impl ToTokens for RustStructField {
         let attrs = doc_attr
             .iter()
             .chain(serde_default.as_ref())
-            .chain(iter::once(&serde_rename))
+            .chain(serde_rename.as_ref())
             .chain(serde_skip_none.as_ref())
             .chain(serde_with.as_ref());
 

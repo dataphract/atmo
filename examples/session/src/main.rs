@@ -1,6 +1,6 @@
 use atmo::{
     api::{
-        app::bsky::actor::{defs::Preferences, GetPreferences},
+        app::bsky::actor::GetPreferences,
         com::atproto::server::{create_session, CreateSession, DeleteSession},
     },
     core::did::DidDoc,
