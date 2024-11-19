@@ -39,7 +39,17 @@ pub mod xrpc;
 pub(crate) const SEGMENT_LEN_RANGE: RangeInclusive<usize> = 1..=63;
 
 /// Marker type indicating that no value is ever present.
-pub enum Nothing {}
+pub struct Nothing;
+
+impl<'de> Deserialize<'de> for Nothing {
+    #[inline(always)]
+    fn deserialize<D>(_: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        Ok(Nothing)
+    }
+}
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum AtIdentifier {

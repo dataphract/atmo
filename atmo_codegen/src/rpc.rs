@@ -41,8 +41,8 @@ impl ToTokens for RustRpcDef {
         let error = self
             .error
             .as_ref()
-            .map(|e| e.into_token_stream())
-            .unwrap_or(quote! { #crate_::xrpc::Error });
+            .map(|e| quote! { #e })
+            .unwrap_or(quote! { String });
 
         let method = match self.ty {
             RpcType::Query => quote! { http::Method::GET },
@@ -53,6 +53,7 @@ impl ToTokens for RustRpcDef {
         let output_encoding = &self.output_encoding;
 
         quote! {
+            #[derive(Debug)]
             pub struct #ident;
 
             impl #crate_::xrpc::Request for #ident {

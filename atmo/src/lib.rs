@@ -4,7 +4,12 @@
 
 use std::fmt;
 
-use atmo_core::xrpc::{self, Request};
+use atmo_core::{
+    xrpc::{self, Request},
+    Nothing,
+};
+use bytes::Bytes;
+use http_body_util::{BodyExt, Full};
 use serde::{de::DeserializeOwned, Serialize};
 use url::Url;
 
@@ -80,13 +85,13 @@ impl XrpcClient {
 
         let builder = self.inner.request(R::method(), url);
 
-        RequestBuilder { builder, _req: req }
+        RequestBuilder { builder, req }
     }
 }
 
 pub struct RequestBuilder<R> {
     builder: reqwest::RequestBuilder,
-    _req: R,
+    req: R,
 }
 
 impl<R> RequestBuilder<R>
@@ -165,22 +170,90 @@ where
 impl<R> RequestBuilder<R>
 where
     R: Request,
-    R::Output: DeserializeOwned,
 {
-    pub async fn send(self) -> Result<R::Output, reqwest::Error> {
-        let resp = self.builder.send().await?;
+    /// Sends the XRPC request.
+    ///
+    /// This consumes the `RequestBuilder`, returning the response if successful. This method
+    /// returns an error if the request could not be sent, or if an error occurred while receiving
+    /// the response.
+    pub async fn send(self) -> Result<Response<R>, ResponseError> {
+        let resp: http::Response<reqwest::Body> = self
+            .builder
+            .send()
+            .await
+            .map_err(ResponseError::Http)?
+            .into();
 
-        if resp.status().is_client_error() || resp.status().is_server_error() {
-            let error: xrpc::Error = resp.json().await?;
-            panic!("request error: {error:#?}");
+        let (parts, body) = resp.into_parts();
+
+        let bytes = body
+            .collect()
+            .await
+            .map_err(ResponseError::Http)?
+            .to_bytes();
+
+        let status = parts.status;
+        if status.is_client_error() || status.is_server_error() {
+            let rpc_error = serde_json::from_slice(&bytes).map_err(|_| {
+                // Reconstruct the response.
+                let resp = http::Response::from_parts(parts.clone(), Full::new(bytes));
+                ResponseError::InvalidXrpc(resp)
+            })?;
+
+            return Ok(Response {
+                parts,
+                result: Err(rpc_error),
+            });
         }
 
-        let bytes = resp.bytes().await?;
+        let output = serde_json::from_slice(&bytes).map_err(|_| {
+            // Reconstruct the response.
+            let resp = http::Response::from_parts(parts.clone(), Full::new(bytes));
+            ResponseError::InvalidXrpc(resp)
+        })?;
 
-        let s = String::from_utf8(bytes.into()).unwrap();
-
-        let out: R::Output = serde_json::from_str(&s).unwrap();
-
-        Ok(out)
+        Ok(Response {
+            parts,
+            result: Ok(output),
+        })
     }
+}
+
+/// A response to an XRPC request.
+///
+/// A value of this type indicates that the server returned a valid [XRPC] response. The result of
+/// the RPC can be retrieved via [`Response::result`].
+///
+/// [XRPC]: https://atproto.com/specs/xrpc
+pub struct Response<R>
+where
+    R: Request,
+{
+    parts: http::response::Parts,
+    result: Result<R::Output, xrpc::Error<R::Error>>,
+}
+
+impl<R> Response<R>
+where
+    R: Request,
+{
+    #[inline]
+    pub fn http_status(&self) -> http::StatusCode {
+        self.parts.status
+    }
+
+    /// Returns the result of the RPC by reference.
+    #[inline]
+    pub fn result(&self) -> Result<&R::Output, &xrpc::Error<R::Error>> {
+        self.result.as_ref()
+    }
+}
+
+/// An error which occurred during an XRPC call.
+#[derive(Debug)]
+pub enum ResponseError {
+    /// An error occurred in the underlying HTTP request.
+    Http(reqwest::Error),
+    /// The returned HTTP response was not recognized.
+    InvalidXrpc(http::Response<Full<Bytes>>),
 }
