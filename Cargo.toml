@@ -6,7 +6,7 @@ members = [
     "atmo_codegen",
     "atmo_core",
     "atmo_jetstream",
-    "atmo_lexicon",
+    "atmo_lexicon", "examples/jetstream",
 
     "examples/session",
 ]
@@ -16,12 +16,14 @@ members = [
 atmo = { path = "atmo" }
 atmo_api = { path = "atmo_api" }
 atmo_core = { path = "atmo_core" }
+atmo_jetstream = { path = "atmo_jetstream" }
 atmo_lexicon = { path = "atmo_lexicon" }
 
 # Workspace crate dependencies.
 bytes = "1.8.0"
 cid = "0.11.1"
 data-encoding = "2.6.0"
+futures = "0.3.31"
 http = { version = "1.1.0" }
 ipld-core = { version = "0.4.1", features = ["serde"] }
 jiff = "0.1.13"

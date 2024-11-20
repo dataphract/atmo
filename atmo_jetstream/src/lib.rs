@@ -1,8 +1,10 @@
+use std::num::NonZeroU32;
+
 use atmo_api::com::atproto::sync::subscribe_repos::{Account, Identity};
 use atmo_core::{CidString, Did, Nsid, RecordKey, Unknown};
-use serde::{de::Error as _, Deserialize};
+use serde::{de::Error as _, Deserialize, Serialize};
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct Event {
     pub did: Did,
     pub time_us: u64,
@@ -83,6 +85,23 @@ enum OperationTag {
 pub struct CommitData {
     pub record: Unknown,
     pub cid: CidString,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(tag = "type", content = "payload", rename_all = "snake_case")]
+pub enum SubscriberSourcedMessage {
+    OptionsUpdate(OptionsUpdate),
+}
+
+#[derive(Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OptionsUpdate {
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    pub wanted_collections: Vec<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    pub wanted_dids: Vec<Did>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pub max_message_size_bytes: Option<NonZeroU32>,
 }
 
 #[cfg(test)]
@@ -199,5 +218,27 @@ mod tests {
             EventKind::Account(acct) => acct,
             e => panic!("wrong event kind: expected Account, got {e:?}"),
         };
+    }
+
+    #[test]
+    fn example_subscriber_options_update() {
+        let expected = json!({
+            "type": "options_update",
+            "payload": {
+                "wantedCollections": ["app.bsky.feed.post"],
+                "wantedDids": ["did:plc:q6gjnaw2blty4crticxkmujt"],
+                "maxMessageSizeBytes": 1000000
+            }
+        });
+
+        let serialized =
+            serde_json::to_value(SubscriberSourcedMessage::OptionsUpdate(OptionsUpdate {
+                wanted_collections: vec!["app.bsky.feed.post".into()],
+                wanted_dids: vec!["did:plc:q6gjnaw2blty4crticxkmujt".parse().unwrap()],
+                max_message_size_bytes: NonZeroU32::new(1000000),
+            }))
+            .unwrap();
+
+        assert_eq!(expected, serialized);
     }
 }
