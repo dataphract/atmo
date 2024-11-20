@@ -11,3 +11,4 @@ serde_urlencoded = { version = "0.7.1" }
 tokio = { workspace = true, features = ["full"] }
 tokio-tungstenite = { version = "0.24.0", features = ["native-tls", "url"] }
 url = { workspace = true }
+zstd = { version = "0.13.2" }
