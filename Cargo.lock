@@ -81,6 +81,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "atmo_jetstream"
+version = "0.1.0"
+dependencies = [
+ "atmo_api",
+ "atmo_core",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "atmo_lexicon"
 version = "0.1.0"
 dependencies = [

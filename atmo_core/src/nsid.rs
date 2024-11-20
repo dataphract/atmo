@@ -1,9 +1,10 @@
 use std::{fmt, str::FromStr};
 
-use serde::{de::Error as _, Deserialize, Serialize};
+use serde::Serialize;
 
 use crate::{
-    error::ParseError, is_valid_domain_segment, is_valid_nsid_name, is_valid_tld, SEGMENT_LEN_RANGE,
+    error::ParseError, impl_deserialize_via_from_str, is_valid_domain_segment, is_valid_nsid_name,
+    is_valid_tld, SEGMENT_LEN_RANGE,
 };
 
 const MAX_LEN: usize = 317;
@@ -55,16 +56,7 @@ impl TryFrom<&'_ [u8]> for Nsid {
     }
 }
 
-impl<'de> Deserialize<'de> for Nsid {
-    #[inline]
-    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = <&str>::deserialize(des)?;
-        Nsid::from_str(s).map_err(D::Error::custom)
-    }
-}
+impl_deserialize_via_from_str!(Nsid);
 
 impl Serialize for Nsid {
     #[inline]

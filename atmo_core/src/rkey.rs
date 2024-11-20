@@ -1,5 +1,7 @@
 use std::{fmt, ops::RangeInclusive, str::FromStr};
 
+use crate::impl_deserialize_via_from_str;
+
 const LEN_RANGE: RangeInclusive<usize> = 1..=512;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
@@ -22,6 +24,8 @@ impl FromStr for RecordKey {
             .ok_or_else(ParseRecordKeyError::new)
     }
 }
+
+impl_deserialize_via_from_str!(RecordKey);
 
 impl TryFrom<&'_ [u8]> for RecordKey {
     type Error = ParseRecordKeyError;

@@ -5,6 +5,7 @@ members = [
     "atmo_api",
     "atmo_codegen",
     "atmo_core",
+    "atmo_jetstream",
     "atmo_lexicon",
 
     "examples/session",
