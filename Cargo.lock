@@ -721,7 +721,6 @@ dependencies = [
  "atmo_jetstream",
  "futures",
  "serde_json",
- "serde_urlencoded",
  "tokio",
  "tokio-tungstenite",
  "url",
