@@ -9,7 +9,7 @@ const BASE: multibase::Base = multibase::Base::Base32Lower;
 
 /// CID link value, corresponding to the `cid-link` Lexicon type.
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-pub struct CidLink(cid::Cid);
+pub struct CidLink(Box<cid::Cid>);
 
 impl Serialize for CidLink {
     fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
@@ -47,14 +47,14 @@ impl<'de> Deserialize<'de> for CidLink {
             Link::deserialize(des).map(|l| CidLink(l.link.0))
         } else {
             // serde_ipld_dagcbor recognizes this by magic (CID_SERDE_PRIVATE_IDENTIFIER).
-            cid::Cid::deserialize(des).map(CidLink)
+            cid::Cid::deserialize(des).map(|c| CidLink(Box::new(c)))
         }
     }
 }
 
 /// CID string value, corresponding to the `string` Lexicon type with format `cid`.
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-pub struct CidString(cid::Cid);
+pub struct CidString(Box<cid::Cid>);
 
 impl Serialize for CidString {
     #[inline]
@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for CidString {
             return Err(D::Error::custom("unsupported CID version"));
         }
 
-        Ok(CidString(cid))
+        Ok(CidString(Box::new(cid)))
     }
 }
 
