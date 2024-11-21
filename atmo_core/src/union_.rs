@@ -9,8 +9,16 @@ use std::{
 use ipld_core::ipld::Ipld;
 use serde::{
     de::{MapAccess, Visitor},
-    Deserialize,
+    Deserialize, Serialize,
 };
+
+#[derive(Serialize)]
+pub struct UnionSerialize<'a> {
+    #[serde(rename = "$type")]
+    pub ty: &'static str,
+    #[serde(flatten)]
+    pub map: &'a dyn erased_serde::Serialize,
+}
 
 pub struct UnionRef<'a, T> {
     pub ty: Cow<'a, str>,
@@ -127,14 +135,14 @@ mod tests {
     use super::*;
 
     #[test]
-    fn empty_map_json() {
+    fn union_ref_empty_map_json() {
         let map = json!({});
 
         assert!(UnionRef::<&RawValue>::deserialize(map).is_err());
     }
 
     #[test]
-    fn multiple_type_tags_json() {
+    fn union_ref_multiple_type_tags_json() {
         // The json!() macro doesn't keep duplicate fields, so we have to use a string instead.
         let s = r#"{ "$type": "foo", "$type": "bar" }"#;
 
@@ -142,7 +150,7 @@ mod tests {
     }
 
     #[test]
-    fn missing_type_tag_json() {
+    fn union_ref_missing_type_tag_json() {
         let map = json!({
             "foo": 1,
             "bar": [42],
@@ -152,7 +160,7 @@ mod tests {
     }
 
     #[test]
-    fn only_type_tag_json() {
+    fn union_ref_only_type_tag_json() {
         let ty = "com.example.foo.barBaz";
 
         let map = json!({
@@ -163,5 +171,31 @@ mod tests {
 
         assert_eq!(u.ty, ty);
         assert!(u.map.is_empty());
+    }
+
+    #[test]
+    fn union_serialize() {
+        #[derive(Serialize)]
+        struct Example {
+            foo: String,
+            bar: u64,
+        }
+
+        let serialized = serde_json::to_value(UnionSerialize {
+            ty: "com.example.foo.bar",
+            map: &Example {
+                foo: "Hello".into(),
+                bar: 42,
+            },
+        })
+        .unwrap();
+
+        let expected = json!({
+            "$type": "com.example.foo.bar",
+            "foo": "Hello",
+            "bar": 42,
+        });
+
+        assert_eq!(serialized, expected);
     }
 }

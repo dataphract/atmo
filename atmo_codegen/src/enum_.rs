@@ -158,7 +158,8 @@ impl ToTokens for RustUnionEnumDef {
         };
 
         let mut known_tags = Vec::new();
-        let mut match_cases = Vec::new();
+        let mut serialize_cases = Vec::new();
+        let mut deserialize_cases = Vec::new();
 
         for (name, variant) in variant_names.iter() {
             let full_tag = variant.nsid.to_string();
@@ -166,28 +167,37 @@ impl ToTokens for RustUnionEnumDef {
 
             known_tags.push(tag.to_owned());
 
-            let ident = quote::format_ident!("{name}");
+            let variant_ident = quote::format_ident!("{name}");
             let inner = &variant.path;
 
             let map_fn = if variant.needs_boxed {
-                quote! { |val| Self::#ident(std::boxed::Box::new(val)) }
+                quote! { |val| Self::#variant_ident(std::boxed::Box::new(val)) }
             } else {
-                quote! { Self::#ident }
+                quote! { Self::#variant_ident }
             };
 
-            match_cases.push(quote! {
+            serialize_cases.push(quote! {
+                #ident::#variant_ident(value) => (#tag, value),
+            });
+
+            deserialize_cases.push(quote! {
                 #tag => #inner::deserialize(map_des).map(#map_fn)
             });
         }
 
         let other_variant = self.is_open.then(|| {
             quote! {
-                #[serde(untagged)]
                 Other(#crate_::Unknown)
             }
         });
 
-        let other_case = if self.is_open {
+        let serialize_other_case = self.is_open.then(|| {
+            quote! {
+                #ident::Other(unknown) => return unknown.serialize(ser)
+            }
+        });
+
+        let deserialize_other_case = if self.is_open {
             quote! {
                 _ => #crate_::Unknown::deserialize(map_des).map(Self::Other)
             }
@@ -201,10 +211,24 @@ impl ToTokens for RustUnionEnumDef {
 
         quote! {
             #(#[doc = #doc])*
-            #[derive(Clone, Debug, PartialEq, Eq, serde::Serialize)]
+            #[derive(Clone, Debug, PartialEq, Eq)]
             pub enum #ident {
                 #(#variants,)*
                 #other_variant
+            }
+
+            impl serde::Serialize for #ident {
+                fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                where
+                    S: serde::Serializer,
+                {
+                    let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                        #(#serialize_cases)*
+                        #serialize_other_case
+                    };
+
+                    #crate_::union_::UnionSerialize { ty, map }.serialize(ser)
+                }
             }
 
             impl<'de> serde::Deserialize<'de> for #ident {
@@ -221,8 +245,8 @@ impl ToTokens for RustUnionEnumDef {
                         let map_des = #union_into_des_json;
 
                         let res = match union_.ty.as_ref() {
-                            #(#match_cases,)*
-                            #other_case,
+                            #(#deserialize_cases,)*
+                            #deserialize_other_case,
                         };
 
                         res.map_err(D::Error::custom)
@@ -233,8 +257,8 @@ impl ToTokens for RustUnionEnumDef {
                         let map_des = #union_into_des_cbor;
 
                         let res = match union_.ty.as_ref() {
-                            #(#match_cases,)*
-                            #other_case,
+                            #(#deserialize_cases,)*
+                            #deserialize_other_case,
                         };
 
                         res.map_err(D::Error::custom)

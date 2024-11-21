@@ -10,6 +10,7 @@ default = []
 bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }
 data-encoding = { workspace = true }
+erased-serde = { workspace = true }
 ipld-core = { workspace = true }
 jiff = { workspace = true }
 http = { workspace = true }

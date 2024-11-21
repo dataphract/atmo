@@ -316,7 +316,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub birth_date: std::option::Option<atmo_core::DateTimeString>,
                 }
-                #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                #[derive(Clone, Debug, PartialEq, Eq)]
                 pub enum Preferences {
                     AdultContentPref(crate::app::bsky::actor::defs::AdultContentPref),
                     BskyAppStatePref(crate::app::bsky::actor::defs::BskyAppStatePref),
@@ -330,8 +330,54 @@ pub mod app {
                     SavedFeedsPref(crate::app::bsky::actor::defs::SavedFeedsPref),
                     SavedFeedsPrefV2(crate::app::bsky::actor::defs::SavedFeedsPrefV2),
                     ThreadViewPref(crate::app::bsky::actor::defs::ThreadViewPref),
-                    #[serde(untagged)]
                     Other(atmo_core::Unknown),
+                }
+                impl serde::Serialize for Preferences {
+                    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                    where
+                        S: serde::Serializer,
+                    {
+                        let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                            Preferences::AdultContentPref(value) => {
+                                ("app.bsky.actor.defs#adultContentPref", value)
+                            }
+                            Preferences::BskyAppStatePref(value) => {
+                                ("app.bsky.actor.defs#bskyAppStatePref", value)
+                            }
+                            Preferences::ContentLabelPref(value) => {
+                                ("app.bsky.actor.defs#contentLabelPref", value)
+                            }
+                            Preferences::FeedViewPref(value) => {
+                                ("app.bsky.actor.defs#feedViewPref", value)
+                            }
+                            Preferences::HiddenPostsPref(value) => {
+                                ("app.bsky.actor.defs#hiddenPostsPref", value)
+                            }
+                            Preferences::InterestsPref(value) => {
+                                ("app.bsky.actor.defs#interestsPref", value)
+                            }
+                            Preferences::LabelersPref(value) => {
+                                ("app.bsky.actor.defs#labelersPref", value)
+                            }
+                            Preferences::MutedWordsPref(value) => {
+                                ("app.bsky.actor.defs#mutedWordsPref", value)
+                            }
+                            Preferences::PersonalDetailsPref(value) => {
+                                ("app.bsky.actor.defs#personalDetailsPref", value)
+                            }
+                            Preferences::SavedFeedsPref(value) => {
+                                ("app.bsky.actor.defs#savedFeedsPref", value)
+                            }
+                            Preferences::SavedFeedsPrefV2(value) => {
+                                ("app.bsky.actor.defs#savedFeedsPrefV2", value)
+                            }
+                            Preferences::ThreadViewPref(value) => {
+                                ("app.bsky.actor.defs#threadViewPref", value)
+                            }
+                            Preferences::Other(unknown) => return unknown.serialize(ser),
+                        };
+                        atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                    }
                 }
                 impl<'de> serde::Deserialize<'de> for Preferences {
                     fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -928,11 +974,24 @@ pub mod app {
             }
             pub mod profile {
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Labels {
                         SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Labels {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Labels::SelfLabels(value) => {
+                                    ("com.atproto.label.defs#selfLabels", value)
+                                }
+                                Labels::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Labels {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -1182,7 +1241,7 @@ pub mod app {
                     pub value: atmo_core::Unknown,
                 }
                 pub mod view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Record {
                         GeneratorView(crate::app::bsky::feed::defs::GeneratorView),
                         LabelerView(crate::app::bsky::labeler::defs::LabelerView),
@@ -1192,8 +1251,40 @@ pub mod app {
                         ViewDetached(crate::app::bsky::embed::record::ViewDetached),
                         ViewNotFound(crate::app::bsky::embed::record::ViewNotFound),
                         ViewRecord(crate::app::bsky::embed::record::ViewRecord),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Record {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Record::GeneratorView(value) => {
+                                    ("app.bsky.feed.defs#generatorView", value)
+                                }
+                                Record::LabelerView(value) => {
+                                    ("app.bsky.labeler.defs#labelerView", value)
+                                }
+                                Record::ListView(value) => ("app.bsky.graph.defs#listView", value),
+                                Record::StarterPackViewBasic(value) => {
+                                    ("app.bsky.graph.defs#starterPackViewBasic", value)
+                                }
+                                Record::ViewBlocked(value) => {
+                                    ("app.bsky.embed.record#viewBlocked", value)
+                                }
+                                Record::ViewDetached(value) => {
+                                    ("app.bsky.embed.record#viewDetached", value)
+                                }
+                                Record::ViewNotFound(value) => {
+                                    ("app.bsky.embed.record#viewNotFound", value)
+                                }
+                                Record::ViewRecord(value) => {
+                                    ("app.bsky.embed.record#viewRecord", value)
+                                }
+                                Record::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Record {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -1230,15 +1321,34 @@ pub mod app {
                     }
                 }
                 pub mod view_record {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Embeds {
                         ExternalView(crate::app::bsky::embed::external::View),
                         ImagesView(crate::app::bsky::embed::images::View),
                         RecordView(crate::app::bsky::embed::record::View),
                         RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
                         VideoView(crate::app::bsky::embed::video::View),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Embeds {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Embeds::ExternalView(value) => {
+                                    ("app.bsky.embed.external#view", value)
+                                }
+                                Embeds::ImagesView(value) => ("app.bsky.embed.images#view", value),
+                                Embeds::RecordView(value) => ("app.bsky.embed.record#view", value),
+                                Embeds::RecordWithMediaView(value) => {
+                                    ("app.bsky.embed.recordWithMedia#view", value)
+                                }
+                                Embeds::VideoView(value) => ("app.bsky.embed.video#view", value),
+                                Embeds::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Embeds {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -1282,13 +1392,26 @@ pub mod app {
                     pub record: crate::app::bsky::embed::record::View,
                 }
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Media {
                         External(crate::app::bsky::embed::External),
                         Images(crate::app::bsky::embed::Images),
                         Video(crate::app::bsky::embed::Video),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Media {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Media::External(value) => ("app.bsky.embed.external", value),
+                                Media::Images(value) => ("app.bsky.embed.images", value),
+                                Media::Video(value) => ("app.bsky.embed.video", value),
+                                Media::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Media {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -1353,13 +1476,28 @@ pub mod app {
                     }
                 }
                 pub mod view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Media {
                         ExternalView(crate::app::bsky::embed::external::View),
                         ImagesView(crate::app::bsky::embed::images::View),
                         VideoView(crate::app::bsky::embed::video::View),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Media {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Media::ExternalView(value) => {
+                                    ("app.bsky.embed.external#view", value)
+                                }
+                                Media::ImagesView(value) => ("app.bsky.embed.images#view", value),
+                                Media::VideoView(value) => ("app.bsky.embed.video#view", value),
+                                Media::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Media {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2134,12 +2272,26 @@ pub mod app {
                     pub thread_muted: std::option::Option<bool>,
                 }
                 pub mod feed_view_post {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Reason {
                         ReasonPin(crate::app::bsky::feed::defs::ReasonPin),
                         ReasonRepost(crate::app::bsky::feed::defs::ReasonRepost),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Reason {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Reason::ReasonPin(value) => ("app.bsky.feed.defs#reasonPin", value),
+                                Reason::ReasonRepost(value) => {
+                                    ("app.bsky.feed.defs#reasonRepost", value)
+                                }
+                                Reason::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Reason {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2286,15 +2438,34 @@ pub mod app {
                     }
                 }
                 pub mod post_view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Embed {
                         ExternalView(crate::app::bsky::embed::external::View),
                         ImagesView(crate::app::bsky::embed::images::View),
                         RecordView(crate::app::bsky::embed::record::View),
                         RecordWithMediaView(crate::app::bsky::embed::record_with_media::View),
                         VideoView(crate::app::bsky::embed::video::View),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Embed {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Embed::ExternalView(value) => {
+                                    ("app.bsky.embed.external#view", value)
+                                }
+                                Embed::ImagesView(value) => ("app.bsky.embed.images#view", value),
+                                Embed::RecordView(value) => ("app.bsky.embed.record#view", value),
+                                Embed::RecordWithMediaView(value) => {
+                                    ("app.bsky.embed.recordWithMedia#view", value)
+                                }
+                                Embed::VideoView(value) => ("app.bsky.embed.video#view", value),
+                                Embed::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Embed {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2331,13 +2502,30 @@ pub mod app {
                     }
                 }
                 pub mod reply_ref {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Parent {
                         BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                         NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                         PostView(crate::app::bsky::feed::defs::PostView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Parent {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Parent::BlockedPost(value) => {
+                                    ("app.bsky.feed.defs#blockedPost", value)
+                                }
+                                Parent::NotFoundPost(value) => {
+                                    ("app.bsky.feed.defs#notFoundPost", value)
+                                }
+                                Parent::PostView(value) => ("app.bsky.feed.defs#postView", value),
+                                Parent::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Parent {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2408,13 +2596,30 @@ pub mod app {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Root {
                         BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                         NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                         PostView(crate::app::bsky::feed::defs::PostView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Root {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Root::BlockedPost(value) => {
+                                    ("app.bsky.feed.defs#blockedPost", value)
+                                }
+                                Root::NotFoundPost(value) => {
+                                    ("app.bsky.feed.defs#notFoundPost", value)
+                                }
+                                Root::PostView(value) => ("app.bsky.feed.defs#postView", value),
+                                Root::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Root {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2487,12 +2692,28 @@ pub mod app {
                     }
                 }
                 pub mod skeleton_feed_post {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Reason {
                         SkeletonReasonPin(crate::app::bsky::feed::defs::SkeletonReasonPin),
                         SkeletonReasonRepost(crate::app::bsky::feed::defs::SkeletonReasonRepost),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Reason {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Reason::SkeletonReasonPin(value) => {
+                                    ("app.bsky.feed.defs#skeletonReasonPin", value)
+                                }
+                                Reason::SkeletonReasonRepost(value) => {
+                                    ("app.bsky.feed.defs#skeletonReasonRepost", value)
+                                }
+                                Reason::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Reason {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2529,15 +2750,34 @@ pub mod app {
                     }
                 }
                 pub mod thread_view_post {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Parent {
                         BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                         NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                         ThreadViewPost(
                             std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>,
                         ),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Parent {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Parent::BlockedPost(value) => {
+                                    ("app.bsky.feed.defs#blockedPost", value)
+                                }
+                                Parent::NotFoundPost(value) => {
+                                    ("app.bsky.feed.defs#notFoundPost", value)
+                                }
+                                Parent::ThreadViewPost(value) => {
+                                    ("app.bsky.feed.defs#threadViewPost", value)
+                                }
+                                Parent::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Parent {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2612,15 +2852,34 @@ pub mod app {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Replies {
                         BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                         NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                         ThreadViewPost(
                             std::boxed::Box<crate::app::bsky::feed::defs::ThreadViewPost>,
                         ),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Replies {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Replies::BlockedPost(value) => {
+                                    ("app.bsky.feed.defs#blockedPost", value)
+                                }
+                                Replies::NotFoundPost(value) => {
+                                    ("app.bsky.feed.defs#notFoundPost", value)
+                                }
+                                Replies::ThreadViewPost(value) => {
+                                    ("app.bsky.feed.defs#threadViewPost", value)
+                                }
+                                Replies::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Replies {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -2725,11 +2984,24 @@ pub mod app {
             }
             pub mod generator {
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Labels {
                         SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Labels {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Labels::SelfLabels(value) => {
+                                    ("com.atproto.label.defs#selfLabels", value)
+                                }
+                                Labels::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Labels {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -3142,13 +3414,32 @@ pub mod app {
                     pub uri: atmo_core::AtUri,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Thread {
                         BlockedPost(crate::app::bsky::feed::defs::BlockedPost),
                         NotFoundPost(crate::app::bsky::feed::defs::NotFoundPost),
                         ThreadViewPost(crate::app::bsky::feed::defs::ThreadViewPost),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Thread {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Thread::BlockedPost(value) => {
+                                    ("app.bsky.feed.defs#blockedPost", value)
+                                }
+                                Thread::NotFoundPost(value) => {
+                                    ("app.bsky.feed.defs#notFoundPost", value)
+                                }
+                                Thread::ThreadViewPost(value) => {
+                                    ("app.bsky.feed.defs#threadViewPost", value)
+                                }
+                                Thread::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Thread {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -3346,15 +3637,32 @@ pub mod app {
                     pub start: i64,
                 }
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Embed {
                         External(crate::app::bsky::embed::External),
                         Images(crate::app::bsky::embed::Images),
                         Record(crate::app::bsky::embed::Record),
                         RecordWithMedia(crate::app::bsky::embed::RecordWithMedia),
                         Video(crate::app::bsky::embed::Video),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Embed {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Embed::External(value) => ("app.bsky.embed.external", value),
+                                Embed::Images(value) => ("app.bsky.embed.images", value),
+                                Embed::Record(value) => ("app.bsky.embed.record", value),
+                                Embed::RecordWithMedia(value) => {
+                                    ("app.bsky.embed.recordWithMedia", value)
+                                }
+                                Embed::Video(value) => ("app.bsky.embed.video", value),
+                                Embed::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Embed {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -3437,11 +3745,24 @@ pub mod app {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Labels {
                         SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Labels {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Labels::SelfLabels(value) => {
+                                    ("com.atproto.label.defs#selfLabels", value)
+                                }
+                                Labels::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Labels {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -3498,11 +3819,24 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct DisableRule {}
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum EmbeddingRules {
                         DisableRule(crate::app::bsky::feed::postgate::DisableRule),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for EmbeddingRules {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                EmbeddingRules::DisableRule(value) => {
+                                    ("app.bsky.feed.postgate#disableRule", value)
+                                }
+                                EmbeddingRules::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for EmbeddingRules {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -3672,13 +4006,32 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct MentionRule {}
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Allow {
                         FollowingRule(crate::app::bsky::feed::threadgate::FollowingRule),
                         ListRule(crate::app::bsky::feed::threadgate::ListRule),
                         MentionRule(crate::app::bsky::feed::threadgate::MentionRule),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Allow {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Allow::FollowingRule(value) => {
+                                    ("app.bsky.feed.threadgate#followingRule", value)
+                                }
+                                Allow::ListRule(value) => {
+                                    ("app.bsky.feed.threadgate#listRule", value)
+                                }
+                                Allow::MentionRule(value) => {
+                                    ("app.bsky.feed.threadgate#mentionRule", value)
+                                }
+                                Allow::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Allow {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -4612,12 +4965,28 @@ pub mod app {
                     pub others: std::option::Option<std::vec::Vec<atmo_core::AtIdentifier>>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Relationships {
                         NotFoundActor(crate::app::bsky::graph::defs::NotFoundActor),
                         Relationship(crate::app::bsky::graph::defs::Relationship),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Relationships {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Relationships::NotFoundActor(value) => {
+                                    ("app.bsky.graph.defs#notFoundActor", value)
+                                }
+                                Relationships::Relationship(value) => {
+                                    ("app.bsky.graph.defs#relationship", value)
+                                }
+                                Relationships::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Relationships {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -4722,11 +5091,24 @@ pub mod app {
             }
             pub mod list {
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Labels {
                         SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Labels {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Labels::SelfLabels(value) => {
+                                    ("com.atproto.label.defs#selfLabels", value)
+                                }
+                                Labels::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Labels {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -4947,12 +5329,28 @@ pub mod app {
                     pub dids: std::vec::Vec<atmo_core::Did>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Views {
                         LabelerView(crate::app::bsky::labeler::defs::LabelerView),
                         LabelerViewDetailed(crate::app::bsky::labeler::defs::LabelerViewDetailed),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Views {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Views::LabelerView(value) => {
+                                    ("app.bsky.labeler.defs#labelerView", value)
+                                }
+                                Views::LabelerViewDetailed(value) => {
+                                    ("app.bsky.labeler.defs#labelerViewDetailed", value)
+                                }
+                                Views::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Views {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -4991,11 +5389,24 @@ pub mod app {
             }
             pub mod service {
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Labels {
                         SelfLabels(crate::com::atproto::label::defs::SelfLabels),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Labels {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Labels::SelfLabels(value) => {
+                                    ("com.atproto.label.defs#selfLabels", value)
+                                }
+                                Labels::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Labels {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -5347,13 +5758,28 @@ pub mod app {
                     pub tag: std::string::String,
                 }
                 pub mod main {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Features {
                         Link(crate::app::bsky::richtext::facet::Link),
                         Mention(crate::app::bsky::richtext::facet::Mention),
                         Tag(crate::app::bsky::richtext::facet::Tag),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Features {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Features::Link(value) => ("app.bsky.richtext.facet#link", value),
+                                Features::Mention(value) => {
+                                    ("app.bsky.richtext.facet#mention", value)
+                                }
+                                Features::Tag(value) => ("app.bsky.richtext.facet#tag", value),
+                                Features::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Features {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6488,12 +6914,28 @@ pub mod chat {
                     pub did: atmo_core::Did,
                 }
                 pub mod convo_view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum LastMessage {
                         DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                         MessageView(crate::chat::bsky::convo::defs::MessageView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for LastMessage {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                LastMessage::DeletedMessageView(value) => {
+                                    ("chat.bsky.convo.defs#deletedMessageView", value)
+                                }
+                                LastMessage::MessageView(value) => {
+                                    ("chat.bsky.convo.defs#messageView", value)
+                                }
+                                LastMessage::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for LastMessage {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6530,12 +6972,28 @@ pub mod chat {
                     }
                 }
                 pub mod log_create_message {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Message {
                         DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                         MessageView(crate::chat::bsky::convo::defs::MessageView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Message {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Message::DeletedMessageView(value) => {
+                                    ("chat.bsky.convo.defs#deletedMessageView", value)
+                                }
+                                Message::MessageView(value) => {
+                                    ("chat.bsky.convo.defs#messageView", value)
+                                }
+                                Message::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Message {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6572,12 +7030,28 @@ pub mod chat {
                     }
                 }
                 pub mod log_delete_message {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Message {
                         DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                         MessageView(crate::chat::bsky::convo::defs::MessageView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Message {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Message::DeletedMessageView(value) => {
+                                    ("chat.bsky.convo.defs#deletedMessageView", value)
+                                }
+                                Message::MessageView(value) => {
+                                    ("chat.bsky.convo.defs#messageView", value)
+                                }
+                                Message::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Message {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6614,11 +7088,22 @@ pub mod chat {
                     }
                 }
                 pub mod message_input {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Embed {
                         Record(crate::app::bsky::embed::Record),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Embed {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Embed::Record(value) => ("app.bsky.embed.record", value),
+                                Embed::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Embed {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6667,11 +7152,22 @@ pub mod chat {
                     }
                 }
                 pub mod message_view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Embed {
                         View(crate::app::bsky::embed::record::View),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Embed {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Embed::View(value) => ("app.bsky.embed.record#view", value),
+                                Embed::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Embed {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6765,14 +7261,36 @@ pub mod chat {
                     pub cursor: std::option::Option<std::string::String>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Logs {
                         LogBeginConvo(crate::chat::bsky::convo::defs::LogBeginConvo),
                         LogCreateMessage(crate::chat::bsky::convo::defs::LogCreateMessage),
                         LogDeleteMessage(crate::chat::bsky::convo::defs::LogDeleteMessage),
                         LogLeaveConvo(crate::chat::bsky::convo::defs::LogLeaveConvo),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Logs {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Logs::LogBeginConvo(value) => {
+                                    ("chat.bsky.convo.defs#logBeginConvo", value)
+                                }
+                                Logs::LogCreateMessage(value) => {
+                                    ("chat.bsky.convo.defs#logCreateMessage", value)
+                                }
+                                Logs::LogDeleteMessage(value) => {
+                                    ("chat.bsky.convo.defs#logDeleteMessage", value)
+                                }
+                                Logs::LogLeaveConvo(value) => {
+                                    ("chat.bsky.convo.defs#logLeaveConvo", value)
+                                }
+                                Logs::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Logs {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -6830,12 +7348,28 @@ pub mod chat {
                     pub limit: std::option::Option<i64>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Messages {
                         DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                         MessageView(crate::chat::bsky::convo::defs::MessageView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Messages {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Messages::DeletedMessageView(value) => {
+                                    ("chat.bsky.convo.defs#deletedMessageView", value)
+                                }
+                                Messages::MessageView(value) => {
+                                    ("chat.bsky.convo.defs#messageView", value)
+                                }
+                                Messages::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Messages {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -7072,12 +7606,28 @@ pub mod chat {
                     pub message_id: std::string::String,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Messages {
                         DeletedMessageView(crate::chat::bsky::convo::defs::DeletedMessageView),
                         MessageView(crate::chat::bsky::convo::defs::MessageView),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Messages {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Messages::DeletedMessageView(value) => {
+                                    ("chat.bsky.convo.defs#deletedMessageView", value)
+                                }
+                                Messages::MessageView(value) => {
+                                    ("chat.bsky.convo.defs#messageView", value)
+                                }
+                                Messages::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Messages {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -7613,13 +8163,30 @@ pub mod com {
                     pub uri: std::option::Option<atmo_core::AtUri>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoBlobRef(value) => {
+                                    ("com.atproto.admin.defs#repoBlobRef", value)
+                                }
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -7774,13 +8341,30 @@ pub mod com {
                     pub takedown: std::option::Option<crate::com::atproto::admin::defs::StatusAttr>,
                 }
                 pub mod input {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoBlobRef(value) => {
+                                    ("com.atproto.admin.defs#repoBlobRef", value)
+                                }
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -7853,13 +8437,30 @@ pub mod com {
                     }
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoBlobRef(crate::com::atproto::admin::defs::RepoBlobRef),
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoBlobRef(value) => {
+                                    ("com.atproto.admin.defs#repoBlobRef", value)
+                                }
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -8453,12 +9054,26 @@ pub mod com {
                     pub subject: crate::com::atproto::moderation::create_report::output::Subject,
                 }
                 pub mod input {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -8519,12 +9134,26 @@ pub mod com {
                     }
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -8964,11 +9593,30 @@ pub mod com {
                     }
                 }
                 pub mod input {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Writes {
                         Create(crate::com::atproto::repo::apply_writes::Create),
                         Delete(crate::com::atproto::repo::apply_writes::Delete),
                         Update(crate::com::atproto::repo::apply_writes::Update),
+                    }
+                    impl serde::Serialize for Writes {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Writes::Create(value) => {
+                                    ("com.atproto.repo.applyWrites#create", value)
+                                }
+                                Writes::Delete(value) => {
+                                    ("com.atproto.repo.applyWrites#delete", value)
+                                }
+                                Writes::Update(value) => {
+                                    ("com.atproto.repo.applyWrites#update", value)
+                                }
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Writes {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -9005,11 +9653,30 @@ pub mod com {
                     }
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Results {
                         CreateResult(crate::com::atproto::repo::apply_writes::CreateResult),
                         DeleteResult(crate::com::atproto::repo::apply_writes::DeleteResult),
                         UpdateResult(crate::com::atproto::repo::apply_writes::UpdateResult),
+                    }
+                    impl serde::Serialize for Results {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Results::CreateResult(value) => {
+                                    ("com.atproto.repo.applyWrites#createResult", value)
+                                }
+                                Results::DeleteResult(value) => {
+                                    ("com.atproto.repo.applyWrites#deleteResult", value)
+                                }
+                                Results::UpdateResult(value) => {
+                                    ("com.atproto.repo.applyWrites#updateResult", value)
+                                }
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Results {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12541,12 +13208,28 @@ pub mod tools {
                     }
                 }
                 pub mod blob_view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Details {
                         ImageDetails(crate::tools::ozone::moderation::defs::ImageDetails),
                         VideoDetails(crate::tools::ozone::moderation::defs::VideoDetails),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Details {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Details::ImageDetails(value) => {
+                                    ("tools.ozone.moderation.defs#imageDetails", value)
+                                }
+                                Details::VideoDetails(value) => {
+                                    ("tools.ozone.moderation.defs#videoDetails", value)
+                                }
+                                Details::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Details {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12583,7 +13266,7 @@ pub mod tools {
                     }
                 }
                 pub mod mod_event_view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Event {
                         AccountEvent(crate::tools::ozone::moderation::defs::AccountEvent),
                         IdentityEvent(crate::tools::ozone::moderation::defs::IdentityEvent),
@@ -12613,8 +13296,72 @@ pub mod tools {
                             crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
                         ),
                         RecordEvent(crate::tools::ozone::moderation::defs::RecordEvent),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Event {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Event::AccountEvent(value) => {
+                                    ("tools.ozone.moderation.defs#accountEvent", value)
+                                }
+                                Event::IdentityEvent(value) => {
+                                    ("tools.ozone.moderation.defs#identityEvent", value)
+                                }
+                                Event::ModEventAcknowledge(value) => {
+                                    ("tools.ozone.moderation.defs#modEventAcknowledge", value)
+                                }
+                                Event::ModEventComment(value) => {
+                                    ("tools.ozone.moderation.defs#modEventComment", value)
+                                }
+                                Event::ModEventDivert(value) => {
+                                    ("tools.ozone.moderation.defs#modEventDivert", value)
+                                }
+                                Event::ModEventEmail(value) => {
+                                    ("tools.ozone.moderation.defs#modEventEmail", value)
+                                }
+                                Event::ModEventEscalate(value) => {
+                                    ("tools.ozone.moderation.defs#modEventEscalate", value)
+                                }
+                                Event::ModEventLabel(value) => {
+                                    ("tools.ozone.moderation.defs#modEventLabel", value)
+                                }
+                                Event::ModEventMute(value) => {
+                                    ("tools.ozone.moderation.defs#modEventMute", value)
+                                }
+                                Event::ModEventMuteReporter(value) => {
+                                    ("tools.ozone.moderation.defs#modEventMuteReporter", value)
+                                }
+                                Event::ModEventReport(value) => {
+                                    ("tools.ozone.moderation.defs#modEventReport", value)
+                                }
+                                Event::ModEventResolveAppeal(value) => {
+                                    ("tools.ozone.moderation.defs#modEventResolveAppeal", value)
+                                }
+                                Event::ModEventReverseTakedown(value) => {
+                                    ("tools.ozone.moderation.defs#modEventReverseTakedown", value)
+                                }
+                                Event::ModEventTag(value) => {
+                                    ("tools.ozone.moderation.defs#modEventTag", value)
+                                }
+                                Event::ModEventTakedown(value) => {
+                                    ("tools.ozone.moderation.defs#modEventTakedown", value)
+                                }
+                                Event::ModEventUnmute(value) => {
+                                    ("tools.ozone.moderation.defs#modEventUnmute", value)
+                                }
+                                Event::ModEventUnmuteReporter(value) => {
+                                    ("tools.ozone.moderation.defs#modEventUnmuteReporter", value)
+                                }
+                                Event::RecordEvent(value) => {
+                                    ("tools.ozone.moderation.defs#recordEvent", value)
+                                }
+                                Event::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Event {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12649,13 +13396,30 @@ pub mod tools {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         MessageRef(crate::chat::bsky::convo::defs::MessageRef),
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::MessageRef(value) => {
+                                    ("chat.bsky.convo.defs#messageRef", value)
+                                }
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12728,7 +13492,7 @@ pub mod tools {
                     }
                 }
                 pub mod mod_event_view_detail {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Event {
                         AccountEvent(crate::tools::ozone::moderation::defs::AccountEvent),
                         IdentityEvent(crate::tools::ozone::moderation::defs::IdentityEvent),
@@ -12758,8 +13522,72 @@ pub mod tools {
                             crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
                         ),
                         RecordEvent(crate::tools::ozone::moderation::defs::RecordEvent),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Event {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Event::AccountEvent(value) => {
+                                    ("tools.ozone.moderation.defs#accountEvent", value)
+                                }
+                                Event::IdentityEvent(value) => {
+                                    ("tools.ozone.moderation.defs#identityEvent", value)
+                                }
+                                Event::ModEventAcknowledge(value) => {
+                                    ("tools.ozone.moderation.defs#modEventAcknowledge", value)
+                                }
+                                Event::ModEventComment(value) => {
+                                    ("tools.ozone.moderation.defs#modEventComment", value)
+                                }
+                                Event::ModEventDivert(value) => {
+                                    ("tools.ozone.moderation.defs#modEventDivert", value)
+                                }
+                                Event::ModEventEmail(value) => {
+                                    ("tools.ozone.moderation.defs#modEventEmail", value)
+                                }
+                                Event::ModEventEscalate(value) => {
+                                    ("tools.ozone.moderation.defs#modEventEscalate", value)
+                                }
+                                Event::ModEventLabel(value) => {
+                                    ("tools.ozone.moderation.defs#modEventLabel", value)
+                                }
+                                Event::ModEventMute(value) => {
+                                    ("tools.ozone.moderation.defs#modEventMute", value)
+                                }
+                                Event::ModEventMuteReporter(value) => {
+                                    ("tools.ozone.moderation.defs#modEventMuteReporter", value)
+                                }
+                                Event::ModEventReport(value) => {
+                                    ("tools.ozone.moderation.defs#modEventReport", value)
+                                }
+                                Event::ModEventResolveAppeal(value) => {
+                                    ("tools.ozone.moderation.defs#modEventResolveAppeal", value)
+                                }
+                                Event::ModEventReverseTakedown(value) => {
+                                    ("tools.ozone.moderation.defs#modEventReverseTakedown", value)
+                                }
+                                Event::ModEventTag(value) => {
+                                    ("tools.ozone.moderation.defs#modEventTag", value)
+                                }
+                                Event::ModEventTakedown(value) => {
+                                    ("tools.ozone.moderation.defs#modEventTakedown", value)
+                                }
+                                Event::ModEventUnmute(value) => {
+                                    ("tools.ozone.moderation.defs#modEventUnmute", value)
+                                }
+                                Event::ModEventUnmuteReporter(value) => {
+                                    ("tools.ozone.moderation.defs#modEventUnmuteReporter", value)
+                                }
+                                Event::RecordEvent(value) => {
+                                    ("tools.ozone.moderation.defs#recordEvent", value)
+                                }
+                                Event::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Event {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12794,7 +13622,7 @@ pub mod tools {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RecordView(crate::tools::ozone::moderation::defs::RecordView),
                         RecordViewNotFound(
@@ -12802,8 +13630,30 @@ pub mod tools {
                         ),
                         RepoView(crate::tools::ozone::moderation::defs::RepoView),
                         RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RecordView(value) => {
+                                    ("tools.ozone.moderation.defs#recordView", value)
+                                }
+                                Subject::RecordViewNotFound(value) => {
+                                    ("tools.ozone.moderation.defs#recordViewNotFound", value)
+                                }
+                                Subject::RepoView(value) => {
+                                    ("tools.ozone.moderation.defs#repoView", value)
+                                }
+                                Subject::RepoViewNotFound(value) => {
+                                    ("tools.ozone.moderation.defs#repoViewNotFound", value)
+                                }
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12899,12 +13749,28 @@ pub mod tools {
                     }
                 }
                 pub mod subject_status_view {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Hosting {
                         AccountHosting(crate::tools::ozone::moderation::defs::AccountHosting),
                         RecordHosting(crate::tools::ozone::moderation::defs::RecordHosting),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Hosting {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Hosting::AccountHosting(value) => {
+                                    ("tools.ozone.moderation.defs#accountHosting", value)
+                                }
+                                Hosting::RecordHosting(value) => {
+                                    ("tools.ozone.moderation.defs#recordHosting", value)
+                                }
+                                Hosting::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Hosting {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -12939,12 +13805,26 @@ pub mod tools {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -13038,7 +13918,7 @@ pub mod tools {
                     pub subject_blob_cids: std::option::Option<std::vec::Vec<atmo_core::CidString>>,
                 }
                 pub mod input {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Event {
                         AccountEvent(crate::tools::ozone::moderation::defs::AccountEvent),
                         IdentityEvent(crate::tools::ozone::moderation::defs::IdentityEvent),
@@ -13067,8 +13947,69 @@ pub mod tools {
                             crate::tools::ozone::moderation::defs::ModEventUnmuteReporter,
                         ),
                         RecordEvent(crate::tools::ozone::moderation::defs::RecordEvent),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Event {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Event::AccountEvent(value) => {
+                                    ("tools.ozone.moderation.defs#accountEvent", value)
+                                }
+                                Event::IdentityEvent(value) => {
+                                    ("tools.ozone.moderation.defs#identityEvent", value)
+                                }
+                                Event::ModEventAcknowledge(value) => {
+                                    ("tools.ozone.moderation.defs#modEventAcknowledge", value)
+                                }
+                                Event::ModEventComment(value) => {
+                                    ("tools.ozone.moderation.defs#modEventComment", value)
+                                }
+                                Event::ModEventEmail(value) => {
+                                    ("tools.ozone.moderation.defs#modEventEmail", value)
+                                }
+                                Event::ModEventEscalate(value) => {
+                                    ("tools.ozone.moderation.defs#modEventEscalate", value)
+                                }
+                                Event::ModEventLabel(value) => {
+                                    ("tools.ozone.moderation.defs#modEventLabel", value)
+                                }
+                                Event::ModEventMute(value) => {
+                                    ("tools.ozone.moderation.defs#modEventMute", value)
+                                }
+                                Event::ModEventMuteReporter(value) => {
+                                    ("tools.ozone.moderation.defs#modEventMuteReporter", value)
+                                }
+                                Event::ModEventReport(value) => {
+                                    ("tools.ozone.moderation.defs#modEventReport", value)
+                                }
+                                Event::ModEventResolveAppeal(value) => {
+                                    ("tools.ozone.moderation.defs#modEventResolveAppeal", value)
+                                }
+                                Event::ModEventReverseTakedown(value) => {
+                                    ("tools.ozone.moderation.defs#modEventReverseTakedown", value)
+                                }
+                                Event::ModEventTag(value) => {
+                                    ("tools.ozone.moderation.defs#modEventTag", value)
+                                }
+                                Event::ModEventTakedown(value) => {
+                                    ("tools.ozone.moderation.defs#modEventTakedown", value)
+                                }
+                                Event::ModEventUnmute(value) => {
+                                    ("tools.ozone.moderation.defs#modEventUnmute", value)
+                                }
+                                Event::ModEventUnmuteReporter(value) => {
+                                    ("tools.ozone.moderation.defs#modEventUnmuteReporter", value)
+                                }
+                                Event::RecordEvent(value) => {
+                                    ("tools.ozone.moderation.defs#recordEvent", value)
+                                }
+                                Event::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Event {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -13103,12 +14044,26 @@ pub mod tools {
                             }
                         }
                     }
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Subject {
                         RepoRef(crate::com::atproto::admin::defs::RepoRef),
                         StrongRef(crate::com::atproto::repo::StrongRef),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Subject {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Subject::RepoRef(value) => {
+                                    ("com.atproto.admin.defs#repoRef", value)
+                                }
+                                Subject::StrongRef(value) => ("com.atproto.repo.strongRef", value),
+                                Subject::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Subject {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -13216,14 +14171,30 @@ pub mod tools {
                     pub uris: std::vec::Vec<atmo_core::AtUri>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Records {
                         RecordViewDetail(crate::tools::ozone::moderation::defs::RecordViewDetail),
                         RecordViewNotFound(
                             crate::tools::ozone::moderation::defs::RecordViewNotFound,
                         ),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Records {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Records::RecordViewDetail(value) => {
+                                    ("tools.ozone.moderation.defs#recordViewDetail", value)
+                                }
+                                Records::RecordViewNotFound(value) => {
+                                    ("tools.ozone.moderation.defs#recordViewNotFound", value)
+                                }
+                                Records::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Records {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
@@ -13297,12 +14268,28 @@ pub mod tools {
                     pub dids: std::vec::Vec<atmo_core::Did>,
                 }
                 pub mod output {
-                    #[derive(Clone, Debug, PartialEq, Eq, serde :: Serialize)]
+                    #[derive(Clone, Debug, PartialEq, Eq)]
                     pub enum Repos {
                         RepoViewDetail(crate::tools::ozone::moderation::defs::RepoViewDetail),
                         RepoViewNotFound(crate::tools::ozone::moderation::defs::RepoViewNotFound),
-                        #[serde(untagged)]
                         Other(atmo_core::Unknown),
+                    }
+                    impl serde::Serialize for Repos {
+                        fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                        where
+                            S: serde::Serializer,
+                        {
+                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                                Repos::RepoViewDetail(value) => {
+                                    ("tools.ozone.moderation.defs#repoViewDetail", value)
+                                }
+                                Repos::RepoViewNotFound(value) => {
+                                    ("tools.ozone.moderation.defs#repoViewNotFound", value)
+                                }
+                                Repos::Other(unknown) => return unknown.serialize(ser),
+                            };
+                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
+                        }
                     }
                     impl<'de> serde::Deserialize<'de> for Repos {
                         fn deserialize<D>(des: D) -> Result<Self, D::Error>
