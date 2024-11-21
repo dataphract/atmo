@@ -3,8 +3,23 @@ name = "atmo_jetstream"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = ["native-tls"]
+
+native-tls = ["tokio-tungstenite/native-tls"]
+
 [dependencies]
 atmo_api = { workspace = true }
 atmo_core = { workspace = true }
+futures = { workspace = true }
+http = { workspace = true }
+http-body-util = { workspace = true }
+hyper = { version = "1.5.1" }
+hyper-util = { version = "0.1.10" }
 serde = { workspace = true }
 serde_json = { workspace = true }
+tracing = { workspace = true }
+tokio-tungstenite = { version = "0.24.0", features = ["url"] }
+tokio = { workspace = true, features = ["net"] }
+url = { workspace = true }
+zstd = { workspace = true }

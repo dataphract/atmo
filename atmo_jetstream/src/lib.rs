@@ -1,13 +1,116 @@
-use std::num::NonZeroU32;
+use std::{
+    num::NonZeroU32,
+    pin::Pin,
+    task::{ready, Poll},
+};
 
 use atmo_api::com::atproto::sync::subscribe_repos::{Account, Identity};
 use atmo_core::{CidString, Did, Nsid, RecordKey, Unknown};
+use futures::{SinkExt, Stream, StreamExt};
+use http::{uri::InvalidUri, Uri};
 use serde::{de::Error as _, Deserialize, Serialize};
+use tokio::net::TcpStream;
+use tokio_tungstenite::{
+    tungstenite::{self, Message},
+    MaybeTlsStream,
+};
+
+mod error;
+
+pub use error::Error;
+
+const DEFAULT_DECOMPRESS_LIMIT: usize = 65536;
+static ZSTD_DICT: &[u8] = include_bytes!("../zstd_dictionary");
+
+/// A Jetstream subscriber.
+///
+/// This type wraps a WebSocket and deserializes [`Event`]s sent from the Jetstream server.
+pub struct Subscriber {
+    ws: tokio_tungstenite::WebSocketStream<MaybeTlsStream<TcpStream>>,
+    decode: zstd::bulk::Decompressor<'static>,
+    // Store URI for reconnects (TODO).
+    _uri: Uri,
+}
+
+impl Subscriber {
+    #[tracing::instrument(skip(uri))]
+    pub async fn new<U>(uri: U, opts: Options) -> Result<Self, Error>
+    where
+        Uri: TryFrom<U, Error = InvalidUri>,
+    {
+        let decode = zstd::bulk::Decompressor::with_dictionary(ZSTD_DICT).unwrap();
+
+        let uri = Uri::try_from(uri).map_err(|e| tungstenite::Error::HttpFormat(e.into()))?;
+        let uri = http::uri::Builder::from(uri)
+            .scheme("wss")
+            .path_and_query("/subscribe?requireHello=true&compress=true")
+            .build()
+            .map_err(tungstenite::Error::from)?;
+
+        let (mut ws, _resp) = tokio_tungstenite::connect_async(&uri).await?;
+
+        let msg = SubscriberSourcedMessage::OptionsUpdate(opts);
+        let msg_s = serde_json::to_string(&msg).expect("serialization should not fail");
+
+        ws.send(Message::Text(msg_s)).await?;
+
+        Ok(Self {
+            ws,
+            decode,
+            _uri: uri,
+        })
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub async fn update_options(&mut self, new_opts: Options) -> Result<(), Error> {
+        let msg = SubscriberSourcedMessage::OptionsUpdate(new_opts);
+        let msg_s = serde_json::to_string(&msg).expect("serialization should not fail");
+
+        self.ws.send(Message::Text(msg_s)).await?;
+
+        Ok(())
+    }
+}
+
+impl Stream for Subscriber {
+    type Item = Result<Event, Error>;
+
+    fn poll_next(
+        mut self: Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> Poll<Option<Self::Item>> {
+        let msg = match ready!(self.ws.poll_next_unpin(cx)) {
+            Some(Ok(msg)) => msg,
+            Some(Err(e)) => return Poll::Ready(Some(Err(Error::WebSocket(e)))),
+            None => return Poll::Ready(None),
+        };
+
+        let bytes = match msg {
+            Message::Binary(b) => self
+                .decode
+                .decompress(&b, DEFAULT_DECOMPRESS_LIMIT)
+                .unwrap(),
+
+            _ => {
+                tracing::debug!("unexpected non-Binary message type");
+                cx.waker().wake_by_ref();
+                return Poll::Pending;
+            }
+        };
+
+        let event = serde_json::from_slice(&bytes).unwrap();
+
+        Poll::Ready(Some(Ok(event)))
+    }
+}
 
 #[derive(Debug, Deserialize)]
 pub struct Event {
+    /// The DID of the repo where the event occurred.
     pub did: Did,
+    /// The Unix timestamp of the event in microseconds.
     pub time_us: u64,
+    /// The event kind.
     #[serde(flatten)]
     pub kind: EventKind,
 }
@@ -15,8 +118,11 @@ pub struct Event {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum EventKind {
+    /// A commit of a record to a repo.
     Commit(Commit),
+    /// An identity update.
     Identity(Identity),
+    /// An account status update.
     Account(Account),
 }
 
@@ -90,12 +196,12 @@ pub struct CommitData {
 #[derive(Debug, Serialize)]
 #[serde(tag = "type", content = "payload", rename_all = "snake_case")]
 pub enum SubscriberSourcedMessage {
-    OptionsUpdate(OptionsUpdate),
+    OptionsUpdate(Options),
 }
 
 #[derive(Debug, Default, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct OptionsUpdate {
+pub struct Options {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     pub wanted_collections: Vec<String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
@@ -231,13 +337,12 @@ mod tests {
             }
         });
 
-        let serialized =
-            serde_json::to_value(SubscriberSourcedMessage::OptionsUpdate(OptionsUpdate {
-                wanted_collections: vec!["app.bsky.feed.post".into()],
-                wanted_dids: vec!["did:plc:q6gjnaw2blty4crticxkmujt".parse().unwrap()],
-                max_message_size_bytes: NonZeroU32::new(1000000),
-            }))
-            .unwrap();
+        let serialized = serde_json::to_value(SubscriberSourcedMessage::OptionsUpdate(Options {
+            wanted_collections: vec!["app.bsky.feed.post".into()],
+            wanted_dids: vec!["did:plc:q6gjnaw2blty4crticxkmujt".parse().unwrap()],
+            max_message_size_bytes: NonZeroU32::new(1000000),
+        }))
+        .unwrap();
 
         assert_eq!(expected, serialized);
     }

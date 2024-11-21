@@ -9,7 +9,7 @@ use atmo_core::{
 };
 use atmo_lexicon::{
     Blob, Boolean, Bytes, FieldSchema, Input, Integer, IoSchema, Lexicon, Object, Output, Ref,
-    Schema, Subscription, Union,
+    Schema, Union,
 };
 use heck::{ToPascalCase, ToSnakeCase};
 
@@ -119,11 +119,6 @@ impl NamespaceTree {
                         parent_mod
                             .add_item(nsid.name().to_pascal_case(), rpc.into())
                             .unwrap();
-                    }
-
-                    MainDef::Subscription(_s) => {
-                        // TODO
-                        eprintln!("subscriptions not handled");
                     }
                 }
             }
@@ -583,7 +578,6 @@ impl Namespace {
 pub enum MainDef {
     Object(ObjectDef),
     Rpc(RpcDef),
-    Subscription(Subscription),
 }
 
 pub struct OtherDef {

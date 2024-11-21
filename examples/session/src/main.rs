@@ -38,6 +38,7 @@ async fn main() {
     let session = session_resp.result().unwrap();
 
     let did_doc: DidDoc = session.did_doc.as_ref().unwrap().downcast().unwrap();
+    println!("DID doc: {did_doc:?}");
 
     let prefs_resp = cl
         .request(&url, GetPreferences)
