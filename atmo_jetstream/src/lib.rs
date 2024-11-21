@@ -91,8 +91,10 @@ impl Stream for Subscriber {
                 .decompress(&b, DEFAULT_DECOMPRESS_LIMIT)
                 .unwrap(),
 
+            Message::Close(c) => return Poll::Ready(Some(Err(Error::Closed(c)))),
+
             _ => {
-                tracing::debug!("unexpected non-Binary message type");
+                tracing::debug!("unexpected message type");
                 cx.waker().wake_by_ref();
                 return Poll::Pending;
             }
