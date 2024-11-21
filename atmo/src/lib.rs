@@ -82,13 +82,13 @@ impl XrpcClient {
 
         let builder = self.inner.request(R::method(), url);
 
-        RequestBuilder { builder, req }
+        RequestBuilder { builder, _req: req }
     }
 }
 
 pub struct RequestBuilder<R> {
     builder: reqwest::RequestBuilder,
-    req: R,
+    _req: R,
 }
 
 impl<R> RequestBuilder<R>
