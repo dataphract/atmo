@@ -11,6 +11,11 @@ members = [
     "examples/session",
 ]
 
+[workspace.metadata.release]
+# Version all crates in lockstep.
+shared-version = true
+tag-name = "v{{version}}"
+
 [workspace.dependencies]
 # Workspace crates.
 atmo = { path = "atmo" }
