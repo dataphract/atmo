@@ -1,4 +1,3 @@
-use bytes::Bytes;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
 /// A trait for types which represent an XRPC method.
