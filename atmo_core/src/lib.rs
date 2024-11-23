@@ -1,3 +1,10 @@
+//! The core of the atproto data model.
+//!
+//! This crate implements parsing, serialization and deserialization for the basic datatypes of the
+//! atproto [data model].
+//!
+//! [data model]: https://atproto.com/specs/data-model
+
 use std::{ops::RangeInclusive, str::FromStr};
 
 use serde::{de::Error as _, Deserialize, Serialize};
@@ -18,8 +25,9 @@ pub use crate::{
     unknown::Unknown,
 };
 
-pub mod at_uri;
+mod at_uri;
 mod blob;
+#[doc(hidden)]
 pub mod bytes;
 mod cid;
 pub mod datetime;

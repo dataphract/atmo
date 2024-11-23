@@ -1,3 +1,5 @@
+//! ATProto-specific URI support.
+
 use std::{num::NonZeroU16, ops::RangeInclusive, str::FromStr};
 
 use serde::{de::Error as _, Deserialize, Serialize};

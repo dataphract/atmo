@@ -1,13 +1,24 @@
+use bytes::Bytes;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
+/// A trait for types which represent an XRPC method.
 pub trait Request {
+    /// Query parameters used when making the request.
     type Params;
+    /// The type of the request body.
     type Input;
+    /// The type of the response body returned after a successful request.
     type Output: DeserializeOwned;
+    /// The type of the response error code returned after an errored request.
     type Error: DeserializeOwned;
 
+    /// The HTTP request method used when invoking the XRPC method.
     fn method() -> http::Method;
+
+    /// The unique NSID of the XRPC method.
     fn nsid() -> &'static str;
+
+    /// The media type (MIME) of the response body.
     fn output_encoding() -> &'static str;
 }
 

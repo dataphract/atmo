@@ -1,4 +1,10 @@
-/// Module for serialization and deserialization of `Bytes` adhering to ATProto.
+//! Support for ATProto byte strings.
+
+/// [`Serialize`] and [`Deserialize`] implementations for [`Bytes`].
+///
+/// [`Serialize`]: ::serde::Serialize
+/// [`Deserialize`]: ::serde::Deserialize
+/// [`Bytes`]: bytes::Bytes
 pub mod serde {
     use std::borrow::Cow;
 

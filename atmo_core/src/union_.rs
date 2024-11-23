@@ -1,4 +1,4 @@
-//! Support for deserializing ATProto unions.
+//! Support for serializing and deserializing ATProto unions.
 
 use std::{
     borrow::Cow,
@@ -12,6 +12,7 @@ use serde::{
     Deserialize, Serialize,
 };
 
+/// Serialization wrapper for an ATProto union value.
 #[derive(Serialize)]
 pub struct UnionSerialize<'a> {
     #[serde(rename = "$type")]
@@ -20,6 +21,7 @@ pub struct UnionSerialize<'a> {
     pub map: &'a dyn erased_serde::Serialize,
 }
 
+/// Deserialization helper for ATProto unions.
 pub struct UnionRef<'a, T> {
     pub ty: Cow<'a, str>,
     pub map: BTreeMap<Cow<'a, str>, T>,
@@ -37,6 +39,7 @@ where
     }
 }
 
+/// [`Visitor`] implementation for [`UnionRef`].
 pub struct UnionVisitor<'a, T> {
     ty: Option<Cow<'a, str>>,
     pairs: BTreeMap<Cow<'a, str>, T>,
