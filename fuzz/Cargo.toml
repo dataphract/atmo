@@ -1,0 +1,49 @@
+[package]
+name = "atmo-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.atmo_core]
+path = "../atmo_core"
+
+[[bin]]
+name = "did"
+path = "fuzz_targets/did.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "at_uri"
+path = "fuzz_targets/at_uri.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "handle"
+path = "fuzz_targets/handle.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "rkey"
+path = "fuzz_targets/rkey.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "tid"
+path = "fuzz_targets/tid.rs"
+test = false
+doc = false
+bench = false

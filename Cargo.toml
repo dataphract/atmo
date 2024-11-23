@@ -9,6 +9,7 @@ members = [
     "atmo_lexicon", "examples/jetstream",
 
     "examples/session",
+    "fuzz",
 ]
 
 [workspace.metadata.release]

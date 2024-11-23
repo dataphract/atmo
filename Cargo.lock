@@ -48,6 +48,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "atmo-fuzz"
+version = "0.0.0"
+dependencies = [
+ "atmo_core",
+ "libfuzzer-sys",
+]
+
+[[package]]
 name = "atmo_api"
 version = "0.1.0"
 dependencies = [
@@ -826,6 +834,16 @@ name = "libc"
 version = "0.2.161"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8e9489c2807c139ffd9c1794f4af0ebe86a828db53ecdc7fea2111d0fed085d1"
+
+[[package]]
+name = "libfuzzer-sys"
+version = "0.4.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b9569d2f74e257076d8c6bfa73fb505b46b851e51ddaecc825944aa3bed17fa"
+dependencies = [
+ "arbitrary",
+ "cc",
+]
 
 [[package]]
 name = "libm"

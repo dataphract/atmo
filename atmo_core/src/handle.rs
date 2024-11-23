@@ -70,6 +70,14 @@ impl FromStr for Handle {
     }
 }
 
+impl TryFrom<&[u8]> for Handle {
+    type Error = ParseError;
+
+    fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
+        validate_handle(bytes).map(|()| Handle(std::str::from_utf8(bytes).unwrap().into()))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

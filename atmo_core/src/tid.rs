@@ -58,19 +58,27 @@ impl FromStr for Tid {
     type Err = ParseTidError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s.len() != LEN {
+        Tid::try_from(s.as_bytes())
+    }
+}
+
+impl TryFrom<&[u8]> for Tid {
+    type Error = ParseTidError;
+
+    fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
+        if bytes.len() != LEN {
             return Err(ParseTidError::new());
         }
 
-        let mut bytes = s.bytes();
+        let mut it = bytes.iter().copied();
+        let first = it.next().unwrap();
 
-        let first = bytes.next().unwrap();
         if first > b'b' {
             return Err(ParseTidError::new());
         }
 
         let mut value: u64 = LUT[first as usize].into();
-        for byte in s.bytes() {
+        for byte in it {
             let bits = LUT[byte as usize];
 
             if bits > 0b11111 {
@@ -179,6 +187,7 @@ mod tests {
     fn limits() {
         assert_eq!(Tid::from_str("2222222222222").unwrap(), Tid::ZERO);
         assert_eq!(Tid::from_str("bzzzzzzzzzzzz").unwrap(), Tid::MAX);
+        assert!(Tid::from_str("c222222222222").is_err());
         assert!(Tid::from_str("czzzzzzzzzzzz").is_err());
     }
 
