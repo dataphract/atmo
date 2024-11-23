@@ -1,11 +1,19 @@
-use std::{cmp::Ordering, fmt, str::FromStr};
+use std::{cmp::Ordering, fmt, str::FromStr, sync::LazyLock};
 
-use jiff::{fmt::strtime::BrokenDownTime, tz::Offset, Timestamp};
+use jiff::{
+    fmt::{strtime::BrokenDownTime, temporal::DateTimePrinter},
+    tz::Offset,
+    Timestamp,
+};
 use serde::{de::Error, Deserialize, Serialize};
 
 use crate::error::ParseError;
 
-const SUBSEC_PRECISION: usize = 9;
+const PRINT_SUBSEC_PRECISION: u8 = 6;
+const STORED_SUBSEC_PRECISION: usize = 9;
+
+static PRINTER: LazyLock<DateTimePrinter> =
+    LazyLock::new(|| DateTimePrinter::new().precision(Some(PRINT_SUBSEC_PRECISION)));
 
 /// A parsed string representing a `DateTime`.
 ///
@@ -44,6 +52,13 @@ impl PartialEq for DateTimeString {
 impl Eq for DateTimeString {}
 
 impl DateTimeString {
+    pub fn from_unix_seconds(seconds: i64) -> Option<Self> {
+        let parsed = jiff::Timestamp::from_second(seconds).ok()?;
+
+        let original = PRINTER.timestamp_to_string(&parsed);
+        Some(DateTimeString { original, parsed })
+    }
+
     /// Returns the string representation of the `DateTime` as originally parsed.
     #[inline]
     pub fn as_str(&self) -> &str {
@@ -53,6 +68,16 @@ impl DateTimeString {
     #[inline]
     pub fn timestamp(&self) -> jiff::Timestamp {
         self.parsed
+    }
+}
+
+impl From<jiff::Timestamp> for DateTimeString {
+    #[inline]
+    fn from(timestamp: jiff::Timestamp) -> Self {
+        DateTimeString {
+            original: PRINTER.timestamp_to_string(&timestamp),
+            parsed: timestamp,
+        }
     }
 }
 
@@ -156,11 +181,12 @@ fn parse(input: &str) -> Option<Timestamp> {
                 }
 
                 // Safe cast: String cannot be longer than isize::MAX.
-                let relative_precision = SUBSEC_PRECISION as isize - digits.len() as isize;
+                let relative_precision = STORED_SUBSEC_PRECISION as isize - digits.len() as isize;
 
                 match relative_precision.cmp(&0) {
                     Ordering::Less => {
-                        let (nanos, _truncated) = digits.split_at_checked(SUBSEC_PRECISION)?;
+                        let (nanos, _truncated) =
+                            digits.split_at_checked(STORED_SUBSEC_PRECISION)?;
                         let nanos = nanos.parse().ok()?;
 
                         (nanos, input)
