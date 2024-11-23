@@ -12,7 +12,16 @@ use crate::{
 };
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct Did(String);
+#[cfg_attr(test, derive(proptest_derive::Arbitrary))]
+pub struct Did(
+    #[cfg_attr(
+        test,
+        proptest(
+            regex = r#"did:[a-z]+:([0-9A-Za-z._:-]|%[[:xdigit:]]{2})*([a-zA-Z0-9._-]|%[[:xdigit:]]{2})"#
+        )
+    )]
+    String,
+);
 
 impl Did {
     pub fn new(did: &[u8]) -> Option<Did> {
@@ -338,6 +347,8 @@ pub struct Service {
 
 #[cfg(test)]
 mod tests {
+    use proptest::prelude::*;
+
     use crate::test::{test_invalid, test_valid};
 
     use super::*;
@@ -368,5 +379,15 @@ mod tests {
             "did:method:val?two",
             "did:method:val#two",
         ]);
+    }
+
+    proptest! {
+        #[test]
+        fn proptest_did_roundtrip(did: Did) {
+            let serialized = serde_json::to_string(&did).unwrap();
+            let deserialized: Did = serde_json::from_str(&serialized).unwrap();
+
+            assert_eq!(did, deserialized);
+        }
     }
 }

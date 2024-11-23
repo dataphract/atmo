@@ -19,3 +19,8 @@ serde = { workspace = true }
 serde_json = { workspace = true, features = ["raw_value"] }
 serde_ipld_dagcbor = { workspace = true }
 url = { workspace = true }
+
+[dev-dependencies]
+cid = { workspace = true, features = ["arb"] }
+proptest = { workspace = true }
+proptest-derive = { workspace = true }

@@ -29,7 +29,8 @@ const LUT: [u8; 256] = [
 ];
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Tid(u64);
+#[cfg_attr(test, derive(proptest_derive::Arbitrary))]
+pub struct Tid(#[cfg_attr(test, proptest(strategy = "Tid::ZERO.0..=Tid::MAX.0"))] u64);
 
 impl Tid {
     pub const ZERO: Self = Tid(0);
@@ -185,5 +186,14 @@ mod tests {
     fn display() {
         assert_eq!(Tid::ZERO.to_string(), "2222222222222");
         assert_eq!(Tid::MAX.to_string(), "bzzzzzzzzzzzz");
+    }
+
+    proptest::proptest! {
+        #[test]
+        fn proptest_tid_roundtrip(tid: Tid) {
+            let serialized = serde_json::to_string(&tid).unwrap();
+            let deserialized = serde_json::from_str(&serialized).unwrap();
+            assert_eq!(tid, deserialized);
+        }
     }
 }

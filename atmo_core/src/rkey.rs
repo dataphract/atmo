@@ -1,11 +1,15 @@
 use std::{fmt, ops::RangeInclusive, str::FromStr};
 
+use serde::Serialize;
+
 use crate::impl_deserialize_via_from_str;
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=512;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-pub struct RecordKey(String);
+#[cfg_attr(test, derive(proptest_derive::Arbitrary))]
+#[cfg_attr(test, proptest(filter = r#"|rkey| rkey.0 != "." && rkey.0 != "..""#))]
+pub struct RecordKey(#[cfg_attr(test, proptest(regex = "[0-9A-Za-z._:~-]{1,512}"))] String);
 
 impl RecordKey {
     #[inline]
@@ -22,6 +26,16 @@ impl FromStr for RecordKey {
         is_valid_record_key(s.as_bytes())
             .then(|| RecordKey(s.into()))
             .ok_or_else(ParseRecordKeyError::new)
+    }
+}
+
+impl Serialize for RecordKey {
+    #[inline]
+    fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.0.serialize(ser)
     }
 }
 
@@ -97,5 +111,15 @@ mod tests {
             "\"quote\"",
             "dHJ1ZQ==",
         ]);
+    }
+
+    proptest::proptest! {
+        #[test]
+        fn proptest_rkey_roundtrip(rkey: RecordKey) {
+            let serialized = serde_json::to_string(&rkey).unwrap();
+            let deserialized: RecordKey = serde_json::from_str(&serialized).unwrap();
+
+            assert_eq!(rkey, deserialized);
+        }
     }
 }

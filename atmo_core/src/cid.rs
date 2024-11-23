@@ -102,8 +102,32 @@ mod tests {
     use std::iter;
 
     use cid::multihash::Multihash;
+    use proptest::prelude::*;
 
     use super::*;
+
+    // These are bare-bones implementations of Arbitrary to allow deriving Arbitrary on generated
+    // types. In the future, it would be good to make them actually do something.
+
+    impl Arbitrary for CidLink {
+        type Parameters = ();
+        type Strategy = Just<CidLink>;
+
+        #[inline]
+        fn arbitrary_with(_: ()) -> Self::Strategy {
+            Just(CidLink(Box::new(gen_cid(Codec::Raw))))
+        }
+    }
+
+    impl Arbitrary for CidString {
+        type Parameters = ();
+        type Strategy = Just<CidString>;
+
+        #[inline]
+        fn arbitrary_with(_: ()) -> Self::Strategy {
+            Just(CidString(Box::new(gen_cid(Codec::Raw))))
+        }
+    }
 
     // TODO(dp): expose
     enum Codec {
@@ -111,7 +135,7 @@ mod tests {
         // DagCbor = 0x71,
     }
 
-    fn gen_cid_string(codec: Codec, base: multibase::Base) -> String {
+    fn gen_cid(codec: Codec) -> cid::CidGeneric<64> {
         let mut bytes = Vec::new();
         bytes.push(0x12); // sha2-256
         bytes.push(0x20); // 256-bit digest
@@ -119,9 +143,11 @@ mod tests {
 
         let multihash = Multihash::from_bytes(&bytes).unwrap();
 
-        cid::CidGeneric::<32>::new_v1(codec as u64, multihash)
-            .to_string_of_base(base)
-            .unwrap()
+        cid::CidGeneric::<64>::new_v1(codec as u64, multihash)
+    }
+
+    fn gen_cid_string(codec: Codec, base: multibase::Base) -> String {
+        gen_cid(codec).to_string_of_base(base).unwrap()
     }
 
     #[test]

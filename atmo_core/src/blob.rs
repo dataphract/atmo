@@ -8,6 +8,7 @@ use serde::{
 use crate::cid::CidLink;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
+#[cfg_attr(test, derive(proptest_derive::Arbitrary))]
 pub struct Blob {
     pub ref_: CidLink,
     pub mime_type: String,
@@ -70,5 +71,20 @@ impl<'de> Deserialize<'de> for Blob {
             mime_type: db.mime_type,
             size: db.size,
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    proptest::proptest! {
+        #[test]
+        fn proptest_blob_roundtrip(blob: Blob) {
+            let serialized = serde_json::to_string(&blob).unwrap();
+            let deserialized = serde_json::from_str(&serialized).unwrap();
+
+            assert_eq!(blob, deserialized);
+        }
     }
 }
