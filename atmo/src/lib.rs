@@ -2,12 +2,11 @@
 //!
 //! [AT Protocol]: https://atproto.com/
 
-use std::fmt;
+use std::{error::Error, fmt};
 
 use atmo_core::xrpc::{self, Request};
 use bytes::Bytes;
 use http_body_util::{BodyExt, Full};
-use serde::Serialize;
 use url::Url;
 
 pub mod api {
@@ -64,6 +63,7 @@ impl XrpcClient {
     ///         password: "password".into(),
     ///         auth_factor_token: None,
     ///     })
+    ///     .unwrap()
     ///     .send()
     ///     .await;
     /// # }
@@ -82,43 +82,48 @@ impl XrpcClient {
 
         let builder = self.inner.request(R::method(), url);
 
-        RequestBuilder { builder, _req: req }
+        RequestBuilder {
+            builder,
+            query: None,
+            _req: req,
+        }
     }
 }
 
 pub struct RequestBuilder<R> {
     builder: reqwest::RequestBuilder,
+    query: Option<String>,
     _req: R,
 }
 
 impl<R> RequestBuilder<R>
 where
     R: Request,
-    R::Params: Serialize,
 {
+    pub fn params(mut self, params: &R::Params) -> Result<Self, serde_urlencoded_xrpc::ser::Error> {
+        self.query = Some(R::serialize_params(params)?);
+        Ok(self)
+    }
+
+    pub fn input(mut self, input: &R::Input) -> Result<Self, R::InputError> {
+        self.builder = self.builder.body(R::serialize_input(input)?);
+
+        if let Some(enc) = R::input_content_type() {
+            self.builder = self.builder.header(http::header::CONTENT_TYPE, enc);
+        }
+
+        Ok(self)
+    }
+
+    /// Sets the value of the `Content-Type` header for the request.
     #[inline]
-    pub fn params(mut self, params: &R::Params) -> Self {
-        self.builder = self.builder.query(params);
+    pub fn content_type(mut self, content_type: &str) -> Self {
+        self.builder = self
+            .builder
+            .header(http::header::CONTENT_TYPE, content_type);
         self
     }
-}
 
-impl<R> RequestBuilder<R>
-where
-    R: Request,
-    R::Input: Serialize,
-{
-    #[inline]
-    pub fn input(mut self, input: &R::Input) -> Self {
-        self.builder = self.builder.json(input);
-        self
-    }
-}
-
-impl<R> RequestBuilder<R>
-where
-    R: Request,
-{
     /// Applies XRPC admin authorization to this request.
     ///
     /// From the ATProto specification:
@@ -162,25 +167,19 @@ where
         self.builder = self.builder.bearer_auth(token);
         self
     }
-}
 
-impl<R> RequestBuilder<R>
-where
-    R: Request,
-{
     /// Sends the XRPC request.
     ///
     /// This consumes the `RequestBuilder`, returning the response if successful. This method
     /// returns an error if the request could not be sent, or if an error occurred while receiving
     /// the response.
     pub async fn send(self) -> Result<Response<R>, ResponseError> {
-        let resp: http::Response<reqwest::Body> = self
-            .builder
-            .send()
-            .await
-            .map_err(ResponseError::Http)?
-            .into();
+        let (cl, req) = self.builder.build_split();
 
+        let mut req = req.unwrap();
+        req.url_mut().set_query(self.query.as_deref());
+
+        let resp: http::Response<_> = cl.execute(req).await.map_err(ResponseError::Http)?.into();
         let (parts, body) = resp.into_parts();
 
         let bytes = body
@@ -191,10 +190,13 @@ where
 
         let status = parts.status;
         if status.is_client_error() || status.is_server_error() {
-            let rpc_error = serde_json::from_slice(&bytes).map_err(|_| {
+            let rpc_error = serde_json::from_slice(&bytes).map_err(|error| {
                 // Reconstruct the response.
-                let resp = http::Response::from_parts(parts.clone(), Full::new(bytes));
-                ResponseError::InvalidXrpc(resp)
+                let response = http::Response::from_parts(parts.clone(), Full::new(bytes));
+                ResponseError::InvalidXrpc(InvalidXrpcError {
+                    error: Box::new(error),
+                    response,
+                })
             })?;
 
             return Ok(Response {
@@ -203,10 +205,13 @@ where
             });
         }
 
-        let output = serde_json::from_slice(&bytes).map_err(|_| {
+        let output = R::deserialize_output(&bytes).map_err(|error| {
             // Reconstruct the response.
-            let resp = http::Response::from_parts(parts.clone(), Full::new(bytes));
-            ResponseError::InvalidXrpc(resp)
+            let response = http::Response::from_parts(parts.clone(), Full::new(bytes));
+            ResponseError::InvalidXrpc(InvalidXrpcError {
+                error: Box::new(error),
+                response,
+            })
         })?;
 
         Ok(Response {
@@ -227,7 +232,7 @@ where
     R: Request,
 {
     parts: http::response::Parts,
-    result: Result<R::Output, xrpc::Error<R::Error>>,
+    result: Result<R::Output, xrpc::Error<R::RpcError>>,
 }
 
 impl<R> Response<R>
@@ -241,7 +246,7 @@ where
 
     /// Returns the result of the RPC by reference.
     #[inline]
-    pub fn result(&self) -> Result<&R::Output, &xrpc::Error<R::Error>> {
+    pub fn result(&self) -> Result<&R::Output, &xrpc::Error<R::RpcError>> {
         self.result.as_ref()
     }
 }
@@ -252,5 +257,14 @@ pub enum ResponseError {
     /// An error occurred in the underlying HTTP request.
     Http(reqwest::Error),
     /// The returned HTTP response was not recognized.
-    InvalidXrpc(http::Response<Full<Bytes>>),
+    InvalidXrpc(InvalidXrpcError),
+}
+
+/// An error produced when an XRPC response body could not be deserialized.
+#[derive(Debug)]
+pub struct InvalidXrpcError {
+    /// The error produced by deserialization.
+    pub error: Box<dyn Error>,
+    /// The invalid XRPC response.
+    pub response: http::Response<Full<Bytes>>,
 }

@@ -12,4 +12,5 @@ http-body-util = { workspace = true }
 reqwest = { version = "0.12.8", features = ["json"] }
 serde = { workspace = true }
 serde_json = { workspace = true }
+serde_urlencoded_xrpc = { workspace = true }
 url = { workspace = true }

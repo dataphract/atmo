@@ -15,8 +15,8 @@ use heck::{ToPascalCase, ToSnakeCase};
 
 use crate::{
     enum_::{RustStringEnumDef, RustUnionEnumDef, StringEnumVariant, UnionEnumVariant},
-    module::{Item, ItemPath, ModulePath, ModuleTree},
-    rpc::{RpcType, RustRpcDef},
+    module::{Item, ItemPath, ItemTy, ModulePath, ModuleTree},
+    rpc::{RpcType, RustRpcDef, RustRpcIo},
     struct_::{RustStructDef, RustStructField},
     Type,
 };
@@ -51,11 +51,10 @@ impl NamespaceTree {
                 match main_def {
                     MainDef::Object(obj) => {
                         let rs = self.create_rust_struct(nsid, "main", obj);
+                        let name = rs.name.to_string();
                         // TODO(dp): the name should probably not be stored in the struct def
                         let parent_mod = mod_tree.get_or_create_mut(&parent_mod_path);
-                        parent_mod
-                            .add_item(rs.name.to_string(), Item::Struct(rs))
-                            .unwrap();
+                        parent_mod.add_item(name, Item::new(rs.into())).unwrap();
                     }
 
                     MainDef::Rpc(rpc) => {
@@ -67,38 +66,27 @@ impl NamespaceTree {
                             .as_ref()
                             .map(|p| self.create_rust_struct(nsid, "params", p))
                         {
-                            module.add_item("Params".into(), params.into()).unwrap();
+                            module
+                                .add_item("Params".into(), Item::new(params.into()))
+                                .unwrap();
                         }
 
-                        let input_def = rpc.input.as_ref().and_then(|io| io.ty.as_ref()).and_then(
-                            |i| match i {
-                                RpcIoTy::Object(o) => {
-                                    Some(self.create_rust_struct(nsid, "input", o).into())
-                                }
-                                RpcIoTy::Ref(_) => None,
-                                RpcIoTy::Union(u) => {
-                                    Some(self.create_rust_union_enum(nsid, None, "Input", u).into())
-                                }
-                            },
-                        );
+                        let input_def = rpc
+                            .input
+                            .as_ref()
+                            .and_then(|io| io.ty.as_ref())
+                            .and_then(|i| self.create_input(nsid, i));
 
                         // Emit input type, if any.
                         if let Some(input) = input_def {
                             module.add_item("Input".into(), input).unwrap();
                         }
 
-                        let output_def =
-                            rpc.output.as_ref().and_then(|io| io.ty.as_ref()).and_then(
-                                |o| match o {
-                                    RpcIoTy::Object(o) => {
-                                        Some(self.create_rust_struct(nsid, "output", o).into())
-                                    }
-                                    RpcIoTy::Ref(_) => None,
-                                    RpcIoTy::Union(u) => Some(
-                                        self.create_rust_union_enum(nsid, None, "Output", u).into(),
-                                    ),
-                                },
-                            );
+                        let output_def = rpc
+                            .output
+                            .as_ref()
+                            .and_then(|io| io.ty.as_ref())
+                            .and_then(|o| self.create_output(nsid, o));
 
                         // Emit output type, if any.
                         if let Some(output) = output_def {
@@ -110,14 +98,16 @@ impl NamespaceTree {
                             .as_ref()
                             .map(|e| self.create_rust_string_enum("Error", e))
                         {
-                            module.add_item("Error".into(), error.into()).unwrap();
+                            module
+                                .add_item("Error".into(), Item::new(error.into()))
+                                .unwrap();
                         }
 
                         let parent_mod = mod_tree.get_or_create_mut(&parent_mod_path);
 
                         let rpc = self.create_rust_rpc(nsid, rpc);
                         parent_mod
-                            .add_item(nsid.name().to_pascal_case(), rpc.into())
+                            .add_item(nsid.name().to_pascal_case(), Item::new(rpc.into()))
                             .unwrap();
                     }
                 }
@@ -129,19 +119,15 @@ impl NamespaceTree {
             for (def_name, other_def) in &namespace.other_defs {
                 let name = def_name.to_pascal_case();
 
-                let item = match &other_def.ty {
-                    OtherDefTy::Object(obj) => {
-                        Item::Struct(self.create_rust_struct(nsid, def_name, obj))
-                    }
-                    OtherDefTy::StringEnum(s) => {
-                        Item::StringEnum(self.create_rust_string_enum(&name, s))
-                    }
-                    OtherDefTy::Union(u) => {
-                        Item::UnionEnum(self.create_rust_union_enum(nsid, Some(def_name), &name, u))
-                    }
+                let ty: ItemTy = match &other_def.ty {
+                    OtherDefTy::Object(obj) => self.create_rust_struct(nsid, def_name, obj).into(),
+                    OtherDefTy::StringEnum(s) => self.create_rust_string_enum(&name, s).into(),
+                    OtherDefTy::Union(u) => self
+                        .create_rust_union_enum(nsid, Some(def_name), &name, u)
+                        .into(),
                 };
 
-                module.add_item(name, item).unwrap();
+                module.add_item(name, Item::new(ty)).unwrap();
             }
 
             // Create types for all anonymous types defined in object properties.
@@ -154,9 +140,9 @@ impl NamespaceTree {
 
                 let item = match prop_def {
                     PropDef::StringEnum(s) => {
-                        Item::StringEnum(self.create_rust_string_enum(&name, s))
+                        ItemTy::StringEnum(self.create_rust_string_enum(&name, s))
                     }
-                    PropDef::Union(u) => Item::UnionEnum(self.create_rust_union_enum(
+                    PropDef::Union(u) => ItemTy::UnionEnum(self.create_rust_union_enum(
                         nsid,
                         Some(&prop_name.def_name),
                         &name,
@@ -164,7 +150,7 @@ impl NamespaceTree {
                     )),
                 };
 
-                submodule.add_item(name, item).unwrap();
+                submodule.add_item(name, Item::new(item)).unwrap();
             }
         }
 
@@ -182,8 +168,11 @@ impl NamespaceTree {
             .as_ref()
             .and_then(|i| i.ty.as_ref())
             .map(|ty| match ty {
-                RpcIoTy::Ref(r) => r.into(),
-                RpcIoTy::Object(_) | RpcIoTy::Union(_) => mod_path.item_path("Input".into()),
+                RpcIoTy::Bytes => RustRpcIo::Bytes,
+                RpcIoTy::Ref(r) => RustRpcIo::Ref(r.into()),
+                RpcIoTy::Object(_) | RpcIoTy::Union(_) => {
+                    RustRpcIo::Def(mod_path.item_path("Input".into()))
+                }
             });
 
         let output = rpc
@@ -191,8 +180,11 @@ impl NamespaceTree {
             .as_ref()
             .and_then(|o| o.ty.as_ref())
             .map(|ty| match ty {
-                RpcIoTy::Ref(r) => r.into(),
-                RpcIoTy::Object(_) | RpcIoTy::Union(_) => mod_path.item_path("Output".into()),
+                RpcIoTy::Bytes => RustRpcIo::Bytes,
+                RpcIoTy::Ref(r) => RustRpcIo::Ref(r.into()),
+                RpcIoTy::Object(_) | RpcIoTy::Union(_) => {
+                    RustRpcIo::Def(mod_path.item_path("Output".into()))
+                }
             });
 
         let name = quote::format_ident!("{}", nsid.name().to_pascal_case());
@@ -204,13 +196,28 @@ impl NamespaceTree {
             params,
             input,
             output,
-            output_encoding: rpc
-                .output
-                .as_ref()
-                .map(|o| o.encoding.clone())
-                .unwrap_or("*/*".into()),
             error: None,
         }
+    }
+
+    fn create_input(&self, ns: &Nsid, ty: &RpcIoTy) -> Option<Item> {
+        let ty = match ty {
+            RpcIoTy::Object(o) => Some(self.create_rust_struct(ns, "input", o).into()),
+            RpcIoTy::Union(u) => Some(self.create_rust_union_enum(ns, None, "Input", u).into()),
+            RpcIoTy::Bytes | RpcIoTy::Ref(_) => None,
+        };
+
+        ty.map(Item::new)
+    }
+
+    fn create_output(&self, ns: &Nsid, ty: &RpcIoTy) -> Option<Item> {
+        let ty = match ty {
+            RpcIoTy::Object(o) => Some(self.create_rust_struct(ns, "output", o).into()),
+            RpcIoTy::Union(u) => Some(self.create_rust_union_enum(ns, None, "Output", u).into()),
+            RpcIoTy::Bytes | RpcIoTy::Ref(_) => None,
+        };
+
+        ty.map(Item::new)
     }
 
     fn create_rust_struct(&self, ns: &Nsid, def_name: &str, obj: &ObjectDef) -> RustStructDef {
@@ -406,12 +413,10 @@ impl Namespace {
                     .map(|p| self.create_object_def("params", p));
 
                 let input = p.input.as_ref().map(|i| RpcIo {
-                    encoding: i.encoding.clone(),
                     ty: self.create_input_def(i),
                 });
 
                 let output = p.output.as_ref().map(|o| RpcIo {
-                    encoding: o.encoding.clone(),
                     ty: self.create_output_def(o),
                 });
 
@@ -433,7 +438,6 @@ impl Namespace {
                     .map(|p| self.create_object_def("params", p));
 
                 let output = q.output.as_ref().map(|o| RpcIo {
-                    encoding: o.encoding.clone(),
                     ty: self.create_output_def(o),
                 });
 
@@ -495,7 +499,9 @@ impl Namespace {
 
     /// Creates a definition for an RPC input type.
     fn create_input_def(&mut self, input: &Input) -> Option<RpcIoTy> {
-        let schema = input.schema.as_ref()?;
+        let Some(schema) = input.schema.as_ref() else {
+            return Some(RpcIoTy::Bytes);
+        };
 
         match schema {
             IoSchema::Object(o) => Some(RpcIoTy::Object(self.create_object_def("input", o))),
@@ -509,7 +515,9 @@ impl Namespace {
 
     /// Creates a definition for an RPC output type.
     fn create_output_def(&mut self, output: &Output) -> Option<RpcIoTy> {
-        let schema = output.schema.as_ref()?;
+        let Some(schema) = output.schema.as_ref() else {
+            return Some(RpcIoTy::Bytes);
+        };
 
         match schema {
             IoSchema::Object(o) => Some(RpcIoTy::Object(self.create_object_def("output", o))),
@@ -594,6 +602,7 @@ pub enum OtherDefTy {
 
 /// An RPC I/O item definition.
 pub enum RpcIoTy {
+    Bytes,
     Object(ObjectDef),
     Ref(nsid::FullReference),
     Union(UnionDef),
@@ -697,7 +706,6 @@ pub struct RpcDef {
 }
 
 pub struct RpcIo {
-    pub encoding: String,
     pub ty: Option<RpcIoTy>,
 }
 

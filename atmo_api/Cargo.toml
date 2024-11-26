@@ -13,4 +13,5 @@ ipld-core = { workspace = true, features = ["serde"] }
 jiff = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["raw_value"] }
+serde_urlencoded_xrpc = { workspace = true }
 url = { workspace = true }

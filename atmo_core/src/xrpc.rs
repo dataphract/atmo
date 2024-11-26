@@ -1,26 +1,53 @@
+use std::error::Error as StdError;
+
+use bytes::Bytes;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 
 /// A trait for types which represent an XRPC method.
 pub trait Request {
-    /// Query parameters used when making the request.
     type Params;
-    /// The type of the request body.
+
     type Input;
-    /// The type of the response body returned after a successful request.
-    type Output: DeserializeOwned;
+    type InputError: StdError + 'static;
+
+    type Output;
+    type OutputError: StdError + 'static;
+
     /// The type of the response error code returned after an errored request.
-    type Error: DeserializeOwned;
+    type RpcError: DeserializeOwned;
 
     /// The HTTP request method used when invoking the XRPC method.
+    ///
+    /// This is `GET` for queries and `POST` for procedures.
     fn method() -> http::Method;
 
     /// The unique NSID of the XRPC method.
     fn nsid() -> &'static str;
 
-    /// The media type (MIME) of the response body.
-    fn output_encoding() -> &'static str;
+    /// Serializes this RPC's query parameters to a query string.
+    fn serialize_params(params: &Self::Params)
+        -> Result<String, serde_urlencoded_xrpc::ser::Error>;
+
+    /// Deserializes this RPC's query parameters from a query string.
+    fn deserialize_params(query: &str) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error>;
+
+    /// Returns the media (MIME) type of the request body.
+    fn input_content_type() -> Option<&'static str>;
+
+    /// Serializes this RPC's input to a byte buffer.
+    fn serialize_input(input: &Self::Input) -> Result<Bytes, Self::InputError>;
+
+    /// Deserializes this RPC's input from a byte buffer.
+    fn deserialize_input(bytes: &Bytes) -> Result<Self::Input, Self::InputError>;
+
+    /// Serializes this RPC's output to a byte buffer.
+    fn serialize_output(output: &Self::Output) -> Result<Bytes, Self::OutputError>;
+
+    /// Deserializes this RPC's output from a byte buffer.
+    fn deserialize_output(bytes: &Bytes) -> Result<Self::Output, Self::OutputError>;
 }
 
+/// A generic XRPC error.
 #[derive(Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct Error<E> {
     pub error: E,

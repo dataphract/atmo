@@ -5,9 +5,11 @@ pub mod app {
             pub struct GetPreferences;
             impl atmo_core::xrpc::Request for GetPreferences {
                 type Params = crate::app::bsky::actor::get_preferences::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::actor::get_preferences::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -16,18 +18,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.getPreferences"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetProfile;
             impl atmo_core::xrpc::Request for GetProfile {
                 type Params = crate::app::bsky::actor::get_profile::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::actor::defs::ProfileViewDetailed;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -36,18 +69,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.getProfile"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetProfiles;
             impl atmo_core::xrpc::Request for GetProfiles {
                 type Params = crate::app::bsky::actor::get_profiles::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::actor::get_profiles::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -56,18 +120,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.getProfiles"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetSuggestions;
             impl atmo_core::xrpc::Request for GetSuggestions {
                 type Params = crate::app::bsky::actor::get_suggestions::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::actor::get_suggestions::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -76,9 +171,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.getSuggestions"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -116,10 +240,12 @@ pub mod app {
             #[derive(Debug)]
             pub struct PutPreferences;
             impl atmo_core::xrpc::Request for PutPreferences {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::actor::put_preferences::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -128,18 +254,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.putPreferences"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct SearchActors;
             impl atmo_core::xrpc::Request for SearchActors {
                 type Params = crate::app::bsky::actor::search_actors::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::actor::search_actors::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -148,18 +307,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.searchActors"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchActorsTypeahead;
             impl atmo_core::xrpc::Request for SearchActorsTypeahead {
                 type Params = crate::app::bsky::actor::search_actors_typeahead::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::actor::search_actors_typeahead::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -168,9 +358,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.actor.searchActorsTypeahead"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -908,6 +1127,8 @@ pub mod app {
                         MostLikes,
                         #[serde(rename = "random")]
                         Random,
+                        #[serde(rename = "hotness")]
+                        Hotness,
                         #[serde(untagged)]
                         Other(String),
                     }
@@ -918,6 +1139,7 @@ pub mod app {
                                 Self::Newest => "newest",
                                 Self::MostLikes => "most-likes",
                                 Self::Random => "random",
+                                Self::Hotness => "hotness",
                                 Self::Other(s) => s.as_str(),
                             }
                         }
@@ -1594,10 +1816,12 @@ pub mod app {
             #[derive(Debug)]
             pub struct DescribeFeedGenerator;
             impl atmo_core::xrpc::Request for DescribeFeedGenerator {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::describe_feed_generator::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1606,9 +1830,40 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.describeFeedGenerator"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -1641,9 +1896,11 @@ pub mod app {
             pub struct GetActorFeeds;
             impl atmo_core::xrpc::Request for GetActorFeeds {
                 type Params = crate::app::bsky::feed::get_actor_feeds::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_actor_feeds::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1652,18 +1909,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getActorFeeds"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetActorLikes;
             impl atmo_core::xrpc::Request for GetActorLikes {
                 type Params = crate::app::bsky::feed::get_actor_likes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_actor_likes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1672,18 +1960,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getActorLikes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetAuthorFeed;
             impl atmo_core::xrpc::Request for GetAuthorFeed {
                 type Params = crate::app::bsky::feed::get_author_feed::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_author_feed::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1692,18 +2011,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getAuthorFeed"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetFeed;
             impl atmo_core::xrpc::Request for GetFeed {
                 type Params = crate::app::bsky::feed::get_feed::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_feed::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1712,18 +2062,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getFeed"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetFeedGenerator;
             impl atmo_core::xrpc::Request for GetFeedGenerator {
                 type Params = crate::app::bsky::feed::get_feed_generator::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_feed_generator::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1732,18 +2113,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getFeedGenerator"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetFeedGenerators;
             impl atmo_core::xrpc::Request for GetFeedGenerators {
                 type Params = crate::app::bsky::feed::get_feed_generators::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_feed_generators::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1752,18 +2164,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getFeedGenerators"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetFeedSkeleton;
             impl atmo_core::xrpc::Request for GetFeedSkeleton {
                 type Params = crate::app::bsky::feed::get_feed_skeleton::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_feed_skeleton::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1772,18 +2215,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getFeedSkeleton"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetLikes;
             impl atmo_core::xrpc::Request for GetLikes {
                 type Params = crate::app::bsky::feed::get_likes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_likes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1792,18 +2266,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getLikes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetListFeed;
             impl atmo_core::xrpc::Request for GetListFeed {
                 type Params = crate::app::bsky::feed::get_list_feed::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_list_feed::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1812,18 +2317,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getListFeed"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetPostThread;
             impl atmo_core::xrpc::Request for GetPostThread {
                 type Params = crate::app::bsky::feed::get_post_thread::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_post_thread::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1832,18 +2368,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getPostThread"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetPosts;
             impl atmo_core::xrpc::Request for GetPosts {
                 type Params = crate::app::bsky::feed::get_posts::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_posts::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1852,18 +2419,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getPosts"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetQuotes;
             impl atmo_core::xrpc::Request for GetQuotes {
                 type Params = crate::app::bsky::feed::get_quotes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_quotes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1872,18 +2470,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getQuotes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRepostedBy;
             impl atmo_core::xrpc::Request for GetRepostedBy {
                 type Params = crate::app::bsky::feed::get_reposted_by::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_reposted_by::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1892,18 +2521,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getRepostedBy"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetSuggestedFeeds;
             impl atmo_core::xrpc::Request for GetSuggestedFeeds {
                 type Params = crate::app::bsky::feed::get_suggested_feeds::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_suggested_feeds::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1912,18 +2572,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getSuggestedFeeds"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetTimeline;
             impl atmo_core::xrpc::Request for GetTimeline {
                 type Params = crate::app::bsky::feed::get_timeline::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::get_timeline::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -1932,9 +2623,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.getTimeline"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -1997,9 +2717,11 @@ pub mod app {
             pub struct SearchPosts;
             impl atmo_core::xrpc::Request for SearchPosts {
                 type Params = crate::app::bsky::feed::search_posts::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::feed::search_posts::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -2008,18 +2730,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.searchPosts"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SendInteractions;
             impl atmo_core::xrpc::Request for SendInteractions {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::feed::send_interactions::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::app::bsky::feed::send_interactions::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -2028,9 +2781,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.feed.sendInteractions"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -4086,9 +4868,11 @@ pub mod app {
             pub struct GetActorStarterPacks;
             impl atmo_core::xrpc::Request for GetActorStarterPacks {
                 type Params = crate::app::bsky::graph::get_actor_starter_packs::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_actor_starter_packs::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4097,18 +4881,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getActorStarterPacks"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetBlocks;
             impl atmo_core::xrpc::Request for GetBlocks {
                 type Params = crate::app::bsky::graph::get_blocks::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_blocks::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4117,18 +4932,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getBlocks"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetFollowers;
             impl atmo_core::xrpc::Request for GetFollowers {
                 type Params = crate::app::bsky::graph::get_followers::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_followers::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4137,18 +4983,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getFollowers"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetFollows;
             impl atmo_core::xrpc::Request for GetFollows {
                 type Params = crate::app::bsky::graph::get_follows::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_follows::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4157,18 +5034,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getFollows"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetKnownFollowers;
             impl atmo_core::xrpc::Request for GetKnownFollowers {
                 type Params = crate::app::bsky::graph::get_known_followers::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_known_followers::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4177,18 +5085,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getKnownFollowers"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetList;
             impl atmo_core::xrpc::Request for GetList {
                 type Params = crate::app::bsky::graph::get_list::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_list::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4197,18 +5136,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getList"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetListBlocks;
             impl atmo_core::xrpc::Request for GetListBlocks {
                 type Params = crate::app::bsky::graph::get_list_blocks::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_list_blocks::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4217,18 +5187,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getListBlocks"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetListMutes;
             impl atmo_core::xrpc::Request for GetListMutes {
                 type Params = crate::app::bsky::graph::get_list_mutes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_list_mutes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4237,18 +5238,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getListMutes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetLists;
             impl atmo_core::xrpc::Request for GetLists {
                 type Params = crate::app::bsky::graph::get_lists::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_lists::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4257,18 +5289,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getLists"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetMutes;
             impl atmo_core::xrpc::Request for GetMutes {
                 type Params = crate::app::bsky::graph::get_mutes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_mutes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4277,18 +5340,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getMutes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRelationships;
             impl atmo_core::xrpc::Request for GetRelationships {
                 type Params = crate::app::bsky::graph::get_relationships::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_relationships::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4297,18 +5391,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getRelationships"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetStarterPack;
             impl atmo_core::xrpc::Request for GetStarterPack {
                 type Params = crate::app::bsky::graph::get_starter_pack::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_starter_pack::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4317,18 +5442,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getStarterPack"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetStarterPacks;
             impl atmo_core::xrpc::Request for GetStarterPacks {
                 type Params = crate::app::bsky::graph::get_starter_packs::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_starter_packs::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4337,18 +5493,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getStarterPacks"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetSuggestedFollowsByActor;
             impl atmo_core::xrpc::Request for GetSuggestedFollowsByActor {
                 type Params = crate::app::bsky::graph::get_suggested_follows_by_actor::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::get_suggested_follows_by_actor::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4357,9 +5544,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.getSuggestedFollowsByActor"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -4399,10 +5615,12 @@ pub mod app {
             #[derive(Debug)]
             pub struct MuteActor;
             impl atmo_core::xrpc::Request for MuteActor {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::graph::mute_actor::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4411,18 +5629,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.muteActor"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct MuteActorList;
             impl atmo_core::xrpc::Request for MuteActorList {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::graph::mute_actor_list::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4431,18 +5682,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.muteActorList"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct MuteThread;
             impl atmo_core::xrpc::Request for MuteThread {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::graph::mute_thread::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4451,18 +5735,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.muteThread"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct SearchStarterPacks;
             impl atmo_core::xrpc::Request for SearchStarterPacks {
                 type Params = crate::app::bsky::graph::search_starter_packs::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::graph::search_starter_packs::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -4471,9 +5788,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.searchStarterPacks"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -4499,10 +5845,12 @@ pub mod app {
             #[derive(Debug)]
             pub struct UnmuteActor;
             impl atmo_core::xrpc::Request for UnmuteActor {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::graph::unmute_actor::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4511,18 +5859,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.unmuteActor"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UnmuteActorList;
             impl atmo_core::xrpc::Request for UnmuteActorList {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::graph::unmute_actor_list::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4531,18 +5912,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.unmuteActorList"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UnmuteThread;
             impl atmo_core::xrpc::Request for UnmuteThread {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::graph::unmute_thread::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -4551,9 +5965,40 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.graph.unmuteThread"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             pub mod defs {
@@ -5230,9 +6675,11 @@ pub mod app {
             pub struct GetServices;
             impl atmo_core::xrpc::Request for GetServices {
                 type Params = crate::app::bsky::labeler::get_services::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::labeler::get_services::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5241,9 +6688,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.labeler.getServices"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -5465,9 +6941,11 @@ pub mod app {
             pub struct GetUnreadCount;
             impl atmo_core::xrpc::Request for GetUnreadCount {
                 type Params = crate::app::bsky::notification::get_unread_count::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::notification::get_unread_count::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5476,18 +6954,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.notification.getUnreadCount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ListNotifications;
             impl atmo_core::xrpc::Request for ListNotifications {
                 type Params = crate::app::bsky::notification::list_notifications::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::notification::list_notifications::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5496,18 +7005,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.notification.listNotifications"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct PutPreferences;
             impl atmo_core::xrpc::Request for PutPreferences {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::notification::put_preferences::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5516,18 +7056,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.notification.putPreferences"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct RegisterPush;
             impl atmo_core::xrpc::Request for RegisterPush {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::notification::register_push::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5536,18 +7109,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.notification.registerPush"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UpdateSeen;
             impl atmo_core::xrpc::Request for UpdateSeen {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::app::bsky::notification::update_seen::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -5556,9 +7162,40 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.notification.updateSeen"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             pub mod get_unread_count {
@@ -5857,10 +7494,12 @@ pub mod app {
             #[derive(Debug)]
             pub struct GetConfig;
             impl atmo_core::xrpc::Request for GetConfig {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::get_config::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5869,18 +7508,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.getConfig"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetPopularFeedGenerators;
             impl atmo_core::xrpc::Request for GetPopularFeedGenerators {
                 type Params = crate::app::bsky::unspecced::get_popular_feed_generators::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::get_popular_feed_generators::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5889,18 +7561,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.getPopularFeedGenerators"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetSuggestionsSkeleton;
             impl atmo_core::xrpc::Request for GetSuggestionsSkeleton {
                 type Params = crate::app::bsky::unspecced::get_suggestions_skeleton::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::get_suggestions_skeleton::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5909,18 +7612,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.getSuggestionsSkeleton"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetTaggedSuggestions;
             impl atmo_core::xrpc::Request for GetTaggedSuggestions {
                 type Params = crate::app::bsky::unspecced::get_tagged_suggestions::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::get_tagged_suggestions::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5929,18 +7663,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.getTaggedSuggestions"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchActorsSkeleton;
             impl atmo_core::xrpc::Request for SearchActorsSkeleton {
                 type Params = crate::app::bsky::unspecced::search_actors_skeleton::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::search_actors_skeleton::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5949,18 +7714,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.searchActorsSkeleton"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchPostsSkeleton;
             impl atmo_core::xrpc::Request for SearchPostsSkeleton {
                 type Params = crate::app::bsky::unspecced::search_posts_skeleton::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::search_posts_skeleton::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5969,18 +7765,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.searchPostsSkeleton"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchStarterPacksSkeleton;
             impl atmo_core::xrpc::Request for SearchStarterPacksSkeleton {
                 type Params = crate::app::bsky::unspecced::search_starter_packs_skeleton::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::unspecced::search_starter_packs_skeleton::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -5989,9 +7816,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.unspecced.searchStarterPacksSkeleton"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -6315,9 +8171,11 @@ pub mod app {
             pub struct GetJobStatus;
             impl atmo_core::xrpc::Request for GetJobStatus {
                 type Params = crate::app::bsky::video::get_job_status::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::video::get_job_status::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6326,18 +8184,49 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.video.getJobStatus"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetUploadLimits;
             impl atmo_core::xrpc::Request for GetUploadLimits {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::video::get_upload_limits::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6346,18 +8235,51 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.video.getUploadLimits"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UploadVideo;
             impl atmo_core::xrpc::Request for UploadVideo {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = bytes::Bytes;
+                type InputError = std::convert::Infallible;
                 type Output = crate::app::bsky::video::upload_video::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6366,9 +8288,38 @@ pub mod app {
                 fn nsid() -> &'static str {
                     "app.bsky.video.uploadVideo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    Ok(input.clone())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    Ok(bytes.clone())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -6474,10 +8425,12 @@ pub mod chat {
             #[derive(Debug)]
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::actor::delete_account::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6486,18 +8439,51 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.actor.deleteAccount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ExportAccountData;
             impl atmo_core::xrpc::Request for ExportAccountData {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = bytes::Bytes;
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6506,9 +8492,40 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.actor.exportAccountData"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/jsonl"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    Ok(output.clone())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    Ok(bytes.clone())
                 }
             }
             pub mod declaration {
@@ -6582,10 +8599,12 @@ pub mod chat {
             #[derive(Debug)]
             pub struct DeleteMessageForSelf;
             impl atmo_core::xrpc::Request for DeleteMessageForSelf {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::delete_message_for_self::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::defs::DeletedMessageView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6594,18 +8613,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.deleteMessageForSelf"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetConvo;
             impl atmo_core::xrpc::Request for GetConvo {
                 type Params = crate::chat::bsky::convo::get_convo::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::convo::get_convo::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6614,18 +8664,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.getConvo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetConvoForMembers;
             impl atmo_core::xrpc::Request for GetConvoForMembers {
                 type Params = crate::chat::bsky::convo::get_convo_for_members::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::convo::get_convo_for_members::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6634,18 +8715,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.getConvoForMembers"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetLog;
             impl atmo_core::xrpc::Request for GetLog {
                 type Params = crate::chat::bsky::convo::get_log::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::convo::get_log::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6654,18 +8766,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.getLog"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetMessages;
             impl atmo_core::xrpc::Request for GetMessages {
                 type Params = crate::chat::bsky::convo::get_messages::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::convo::get_messages::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6674,18 +8817,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.getMessages"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct LeaveConvo;
             impl atmo_core::xrpc::Request for LeaveConvo {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::leave_convo::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::leave_convo::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6694,18 +8868,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.leaveConvo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ListConvos;
             impl atmo_core::xrpc::Request for ListConvos {
                 type Params = crate::chat::bsky::convo::list_convos::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::convo::list_convos::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -6714,18 +8919,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.listConvos"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct MuteConvo;
             impl atmo_core::xrpc::Request for MuteConvo {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::mute_convo::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::mute_convo::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6734,18 +8970,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.muteConvo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SendMessage;
             impl atmo_core::xrpc::Request for SendMessage {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::send_message::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::defs::MessageView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6754,18 +9021,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.sendMessage"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SendMessageBatch;
             impl atmo_core::xrpc::Request for SendMessageBatch {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::send_message_batch::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::send_message_batch::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6774,18 +9072,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.sendMessageBatch"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UnmuteConvo;
             impl atmo_core::xrpc::Request for UnmuteConvo {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::unmute_convo::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::unmute_convo::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6794,18 +9123,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.unmuteConvo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpdateRead;
             impl atmo_core::xrpc::Request for UpdateRead {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::convo::update_read::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::chat::bsky::convo::update_read::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -6814,9 +9174,38 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.convo.updateRead"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -7505,9 +9894,11 @@ pub mod chat {
             pub struct GetActorMetadata;
             impl atmo_core::xrpc::Request for GetActorMetadata {
                 type Params = crate::chat::bsky::moderation::get_actor_metadata::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::moderation::get_actor_metadata::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7516,18 +9907,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.moderation.getActorMetadata"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetMessageContext;
             impl atmo_core::xrpc::Request for GetMessageContext {
                 type Params = crate::chat::bsky::moderation::get_message_context::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::chat::bsky::moderation::get_message_context::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7536,18 +9958,49 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.moderation.getMessageContext"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpdateActorAccess;
             impl atmo_core::xrpc::Request for UpdateActorAccess {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::chat::bsky::moderation::update_actor_access::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7556,9 +10009,40 @@ pub mod chat {
                 fn nsid() -> &'static str {
                     "chat.bsky.moderation.updateActorAccess"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             pub mod get_actor_metadata {
@@ -7685,10 +10169,12 @@ pub mod com {
             #[derive(Debug)]
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::delete_account::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7697,18 +10183,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.deleteAccount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct DisableAccountInvites;
             impl atmo_core::xrpc::Request for DisableAccountInvites {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::disable_account_invites::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7717,18 +10236,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.disableAccountInvites"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct DisableInviteCodes;
             impl atmo_core::xrpc::Request for DisableInviteCodes {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::disable_invite_codes::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7737,18 +10289,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.disableInviteCodes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct EnableAccountInvites;
             impl atmo_core::xrpc::Request for EnableAccountInvites {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::enable_account_invites::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7757,18 +10342,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.enableAccountInvites"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct GetAccountInfo;
             impl atmo_core::xrpc::Request for GetAccountInfo {
                 type Params = crate::com::atproto::admin::get_account_info::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::admin::defs::AccountView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7777,18 +10395,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.getAccountInfo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetAccountInfos;
             impl atmo_core::xrpc::Request for GetAccountInfos {
                 type Params = crate::com::atproto::admin::get_account_infos::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::admin::get_account_infos::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7797,18 +10446,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.getAccountInfos"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetInviteCodes;
             impl atmo_core::xrpc::Request for GetInviteCodes {
                 type Params = crate::com::atproto::admin::get_invite_codes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::admin::get_invite_codes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7817,18 +10497,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.getInviteCodes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetSubjectStatus;
             impl atmo_core::xrpc::Request for GetSubjectStatus {
                 type Params = crate::com::atproto::admin::get_subject_status::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::admin::get_subject_status::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7837,18 +10548,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.getSubjectStatus"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchAccounts;
             impl atmo_core::xrpc::Request for SearchAccounts {
                 type Params = crate::com::atproto::admin::search_accounts::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::admin::search_accounts::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -7857,18 +10599,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.searchAccounts"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SendEmail;
             impl atmo_core::xrpc::Request for SendEmail {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::send_email::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::admin::send_email::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7877,18 +10650,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.sendEmail"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpdateAccountEmail;
             impl atmo_core::xrpc::Request for UpdateAccountEmail {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::update_account_email::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7897,18 +10701,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.updateAccountEmail"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UpdateAccountHandle;
             impl atmo_core::xrpc::Request for UpdateAccountHandle {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::update_account_handle::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7917,18 +10754,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.updateAccountHandle"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UpdateAccountPassword;
             impl atmo_core::xrpc::Request for UpdateAccountPassword {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::update_account_password::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7937,18 +10807,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.updateAccountPassword"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UpdateSubjectStatus;
             impl atmo_core::xrpc::Request for UpdateSubjectStatus {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::admin::update_subject_status::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::admin::update_subject_status::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -7957,9 +10860,38 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.admin.updateSubjectStatus"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -8538,11 +11470,13 @@ pub mod com {
             #[derive(Debug)]
             pub struct GetRecommendedDidCredentials;
             impl atmo_core::xrpc::Request for GetRecommendedDidCredentials {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output =
                     crate::com::atproto::identity::get_recommended_did_credentials::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8551,18 +11485,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.identity.getRecommendedDidCredentials"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct RequestPlcOperationSignature;
             impl atmo_core::xrpc::Request for RequestPlcOperationSignature {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8571,18 +11538,53 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.identity.requestPlcOperationSignature"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct ResolveHandle;
             impl atmo_core::xrpc::Request for ResolveHandle {
                 type Params = crate::com::atproto::identity::resolve_handle::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::identity::resolve_handle::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8591,18 +11593,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.identity.resolveHandle"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SignPlcOperation;
             impl atmo_core::xrpc::Request for SignPlcOperation {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::identity::sign_plc_operation::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::identity::sign_plc_operation::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8611,18 +11644,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.identity.signPlcOperation"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SubmitPlcOperation;
             impl atmo_core::xrpc::Request for SubmitPlcOperation {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::identity::submit_plc_operation::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8631,18 +11695,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.identity.submitPlcOperation"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UpdateHandle;
             impl atmo_core::xrpc::Request for UpdateHandle {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::identity::update_handle::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -8651,9 +11748,40 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.identity.updateHandle"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             pub mod get_recommended_did_credentials {
@@ -8731,9 +11859,11 @@ pub mod com {
             pub struct QueryLabels;
             impl atmo_core::xrpc::Request for QueryLabels {
                 type Params = crate::com::atproto::label::query_labels::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::label::query_labels::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -8742,9 +11872,38 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.label.queryLabels"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -9012,10 +12171,12 @@ pub mod com {
             #[derive(Debug)]
             pub struct CreateReport;
             impl atmo_core::xrpc::Request for CreateReport {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::moderation::create_report::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::moderation::create_report::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9024,9 +12185,38 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.moderation.createReport"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod create_report {
@@ -9274,10 +12464,12 @@ pub mod com {
             #[derive(Debug)]
             pub struct ApplyWrites;
             impl atmo_core::xrpc::Request for ApplyWrites {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::repo::apply_writes::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::repo::apply_writes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9286,18 +12478,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.applyWrites"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct CreateRecord;
             impl atmo_core::xrpc::Request for CreateRecord {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::repo::create_record::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::repo::create_record::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9306,18 +12529,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.createRecord"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct DeleteRecord;
             impl atmo_core::xrpc::Request for DeleteRecord {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::repo::delete_record::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::repo::delete_record::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9326,18 +12580,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.deleteRecord"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct DescribeRepo;
             impl atmo_core::xrpc::Request for DescribeRepo {
                 type Params = crate::com::atproto::repo::describe_repo::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::repo::describe_repo::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9346,18 +12631,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.describeRepo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRecord;
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::com::atproto::repo::get_record::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::repo::get_record::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9366,18 +12682,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.getRecord"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ImportRepo;
             impl atmo_core::xrpc::Request for ImportRepo {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = bytes::Bytes;
+                type InputError = std::convert::Infallible;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9386,18 +12733,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.importRepo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    Ok(input.clone())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    Ok(bytes.clone())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct ListMissingBlobs;
             impl atmo_core::xrpc::Request for ListMissingBlobs {
                 type Params = crate::com::atproto::repo::list_missing_blobs::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::repo::list_missing_blobs::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9406,18 +12786,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.listMissingBlobs"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ListRecords;
             impl atmo_core::xrpc::Request for ListRecords {
                 type Params = crate::com::atproto::repo::list_records::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::repo::list_records::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -9426,18 +12837,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.listRecords"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct PutRecord;
             impl atmo_core::xrpc::Request for PutRecord {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::repo::put_record::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::repo::put_record::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9446,9 +12888,38 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.putRecord"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -9459,10 +12930,12 @@ pub mod com {
             #[derive(Debug)]
             pub struct UploadBlob;
             impl atmo_core::xrpc::Request for UploadBlob {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = bytes::Bytes;
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::repo::upload_blob::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -9471,9 +12944,38 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.repo.uploadBlob"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    Ok(input.clone())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    Ok(bytes.clone())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod apply_writes {
@@ -10080,10 +13582,12 @@ pub mod com {
             #[derive(Debug)]
             pub struct ActivateAccount;
             impl atmo_core::xrpc::Request for ActivateAccount {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10092,18 +13596,53 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.activateAccount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct CheckAccountStatus;
             impl atmo_core::xrpc::Request for CheckAccountStatus {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::check_account_status::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10112,18 +13651,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.checkAccountStatus"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ConfirmEmail;
             impl atmo_core::xrpc::Request for ConfirmEmail {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::confirm_email::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10132,18 +13704,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.confirmEmail"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct CreateAccount;
             impl atmo_core::xrpc::Request for CreateAccount {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::create_account::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::server::create_account::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10152,18 +13757,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.createAccount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct CreateAppPassword;
             impl atmo_core::xrpc::Request for CreateAppPassword {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::create_app_password::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::server::create_app_password::AppPassword;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10172,18 +13808,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.createAppPassword"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct CreateInviteCode;
             impl atmo_core::xrpc::Request for CreateInviteCode {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::create_invite_code::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::server::create_invite_code::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10192,18 +13859,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.createInviteCode"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct CreateInviteCodes;
             impl atmo_core::xrpc::Request for CreateInviteCodes {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::create_invite_codes::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::server::create_invite_codes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10212,18 +13910,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.createInviteCodes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct CreateSession;
             impl atmo_core::xrpc::Request for CreateSession {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::create_session::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::server::create_session::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10232,18 +13961,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.createSession"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct DeactivateAccount;
             impl atmo_core::xrpc::Request for DeactivateAccount {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::deactivate_account::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10252,18 +14012,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.deactivateAccount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct DeleteAccount;
             impl atmo_core::xrpc::Request for DeleteAccount {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::delete_account::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10272,18 +14065,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.deleteAccount"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct DeleteSession;
             impl atmo_core::xrpc::Request for DeleteSession {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10292,18 +14118,53 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.deleteSession"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct DescribeServer;
             impl atmo_core::xrpc::Request for DescribeServer {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::describe_server::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10312,18 +14173,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.describeServer"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetAccountInviteCodes;
             impl atmo_core::xrpc::Request for GetAccountInviteCodes {
                 type Params = crate::com::atproto::server::get_account_invite_codes::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::get_account_invite_codes::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10332,18 +14226,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.getAccountInviteCodes"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetServiceAuth;
             impl atmo_core::xrpc::Request for GetServiceAuth {
                 type Params = crate::com::atproto::server::get_service_auth::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::get_service_auth::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10352,18 +14277,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.getServiceAuth"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetSession;
             impl atmo_core::xrpc::Request for GetSession {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::get_session::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10372,18 +14328,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.getSession"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ListAppPasswords;
             impl atmo_core::xrpc::Request for ListAppPasswords {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::list_app_passwords::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -10392,18 +14381,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.listAppPasswords"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct RefreshSession;
             impl atmo_core::xrpc::Request for RefreshSession {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::refresh_session::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10412,18 +14434,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.refreshSession"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct RequestAccountDelete;
             impl atmo_core::xrpc::Request for RequestAccountDelete {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10432,18 +14487,53 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.requestAccountDelete"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct RequestEmailConfirmation;
             impl atmo_core::xrpc::Request for RequestEmailConfirmation {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10452,18 +14542,53 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.requestEmailConfirmation"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct RequestEmailUpdate;
             impl atmo_core::xrpc::Request for RequestEmailUpdate {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::server::request_email_update::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10472,18 +14597,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.requestEmailUpdate"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct RequestPasswordReset;
             impl atmo_core::xrpc::Request for RequestPasswordReset {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::request_password_reset::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10492,18 +14650,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.requestPasswordReset"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct ReserveSigningKey;
             impl atmo_core::xrpc::Request for ReserveSigningKey {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::reserve_signing_key::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::com::atproto::server::reserve_signing_key::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10512,18 +14703,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.reserveSigningKey"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ResetPassword;
             impl atmo_core::xrpc::Request for ResetPassword {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::reset_password::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10532,18 +14754,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.resetPassword"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct RevokeAppPassword;
             impl atmo_core::xrpc::Request for RevokeAppPassword {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::revoke_app_password::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10552,18 +14807,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.revokeAppPassword"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct UpdateEmail;
             impl atmo_core::xrpc::Request for UpdateEmail {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::server::update_email::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -10572,9 +14860,40 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.server.updateEmail"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             pub mod check_account_status {
@@ -11336,9 +15655,11 @@ pub mod com {
             pub struct GetBlob;
             impl atmo_core::xrpc::Request for GetBlob {
                 type Params = crate::com::atproto::sync::get_blob::Params;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = bytes::Bytes;
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11347,18 +15668,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getBlob"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    Ok(output.clone())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    Ok(bytes.clone())
                 }
             }
             #[derive(Debug)]
             pub struct GetBlocks;
             impl atmo_core::xrpc::Request for GetBlocks {
                 type Params = crate::com::atproto::sync::get_blocks::Params;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = bytes::Bytes;
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11367,18 +15719,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getBlocks"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/vnd.ipld.car"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    Ok(output.clone())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    Ok(bytes.clone())
                 }
             }
             #[derive(Debug)]
             pub struct GetCheckout;
             impl atmo_core::xrpc::Request for GetCheckout {
                 type Params = crate::com::atproto::sync::get_checkout::Params;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = bytes::Bytes;
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11387,18 +15770,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getCheckout"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/vnd.ipld.car"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    Ok(output.clone())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    Ok(bytes.clone())
                 }
             }
             #[derive(Debug)]
             pub struct GetHead;
             impl atmo_core::xrpc::Request for GetHead {
                 type Params = crate::com::atproto::sync::get_head::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::sync::get_head::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11407,18 +15821,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getHead"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetLatestCommit;
             impl atmo_core::xrpc::Request for GetLatestCommit {
                 type Params = crate::com::atproto::sync::get_latest_commit::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::sync::get_latest_commit::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11427,18 +15872,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getLatestCommit"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRecord;
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::com::atproto::sync::get_record::Params;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = bytes::Bytes;
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11447,18 +15923,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getRecord"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/vnd.ipld.car"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    Ok(output.clone())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    Ok(bytes.clone())
                 }
             }
             #[derive(Debug)]
             pub struct GetRepo;
             impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::com::atproto::sync::get_repo::Params;
-                type Input = atmo_core::Nothing;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type Input = ();
+                type InputError = std::convert::Infallible;
+                type Output = bytes::Bytes;
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11467,18 +15974,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getRepo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/vnd.ipld.car"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    Ok(output.clone())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    Ok(bytes.clone())
                 }
             }
             #[derive(Debug)]
             pub struct GetRepoStatus;
             impl atmo_core::xrpc::Request for GetRepoStatus {
                 type Params = crate::com::atproto::sync::get_repo_status::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::sync::get_repo_status::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11487,18 +16025,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.getRepoStatus"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ListBlobs;
             impl atmo_core::xrpc::Request for ListBlobs {
                 type Params = crate::com::atproto::sync::list_blobs::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::sync::list_blobs::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11507,18 +16076,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.listBlobs"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct ListRepos;
             impl atmo_core::xrpc::Request for ListRepos {
                 type Params = crate::com::atproto::sync::list_repos::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::sync::list_repos::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -11527,18 +16127,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.listRepos"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct NotifyOfUpdate;
             impl atmo_core::xrpc::Request for NotifyOfUpdate {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::sync::notify_of_update::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -11547,18 +16178,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.notifyOfUpdate"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct RequestCrawl;
             impl atmo_core::xrpc::Request for RequestCrawl {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::sync::request_crawl::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -11567,9 +16231,40 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.sync.requestCrawl"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             pub mod get_blob {
@@ -12149,12 +16844,65 @@ pub mod com {
         }
         pub mod temp {
             #[derive(Debug)]
+            pub struct AddReservedHandle;
+            impl atmo_core::xrpc::Request for AddReservedHandle {
+                type Params = ();
+                type Input = crate::com::atproto::temp::add_reserved_handle::Input;
+                type InputError = serde_json::Error;
+                type Output = crate::com::atproto::temp::add_reserved_handle::Output;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
+                #[inline]
+                fn method() -> http::Method {
+                    http::Method::POST
+                }
+                #[inline]
+                fn nsid() -> &'static str {
+                    "com.atproto.temp.addReservedHandle"
+                }
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
+                }
+            }
+            #[derive(Debug)]
             pub struct CheckSignupQueue;
             impl atmo_core::xrpc::Request for CheckSignupQueue {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::temp::check_signup_queue::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12163,18 +16911,51 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.temp.checkSignupQueue"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct FetchLabels;
             impl atmo_core::xrpc::Request for FetchLabels {
                 type Params = crate::com::atproto::temp::fetch_labels::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::com::atproto::temp::fetch_labels::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12183,18 +16964,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.temp.fetchLabels"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct RequestPhoneVerification;
             impl atmo_core::xrpc::Request for RequestPhoneVerification {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::com::atproto::temp::request_phone_verification::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12203,10 +17015,49 @@ pub mod com {
                 fn nsid() -> &'static str {
                     "com.atproto.temp.requestPhoneVerification"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
                 }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+            }
+            pub mod add_reserved_handle {
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Input {
+                    pub handle: std::string::String,
+                }
+                #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
+                pub struct Output {}
             }
             pub mod check_signup_queue {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -12253,10 +17104,12 @@ pub mod tools {
             #[derive(Debug)]
             pub struct CreateTemplate;
             impl atmo_core::xrpc::Request for CreateTemplate {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::communication::create_template::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::communication::defs::TemplateView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12265,18 +17118,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.communication.createTemplate"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct DeleteTemplate;
             impl atmo_core::xrpc::Request for DeleteTemplate {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::communication::delete_template::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12285,18 +17169,51 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.communication.deleteTemplate"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct ListTemplates;
             impl atmo_core::xrpc::Request for ListTemplates {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::communication::list_templates::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12305,18 +17222,51 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.communication.listTemplates"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpdateTemplate;
             impl atmo_core::xrpc::Request for UpdateTemplate {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::communication::update_template::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::communication::defs::TemplateView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12325,9 +17275,38 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.communication.updateTemplate"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod create_template {
@@ -12453,10 +17432,12 @@ pub mod tools {
             #[derive(Debug)]
             pub struct EmitEvent;
             impl atmo_core::xrpc::Request for EmitEvent {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::moderation::emit_event::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::moderation::defs::ModEventView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -12465,18 +17446,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.emitEvent"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetEvent;
             impl atmo_core::xrpc::Request for GetEvent {
                 type Params = crate::tools::ozone::moderation::get_event::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::defs::ModEventViewDetail;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12485,18 +17497,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.getEvent"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRecord;
             impl atmo_core::xrpc::Request for GetRecord {
                 type Params = crate::tools::ozone::moderation::get_record::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::defs::RecordViewDetail;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12505,18 +17548,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.getRecord"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRecords;
             impl atmo_core::xrpc::Request for GetRecords {
                 type Params = crate::tools::ozone::moderation::get_records::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::get_records::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12525,18 +17599,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.getRecords"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRepo;
             impl atmo_core::xrpc::Request for GetRepo {
                 type Params = crate::tools::ozone::moderation::get_repo::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::defs::RepoViewDetail;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12545,18 +17650,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.getRepo"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct GetRepos;
             impl atmo_core::xrpc::Request for GetRepos {
                 type Params = crate::tools::ozone::moderation::get_repos::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::get_repos::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12565,18 +17701,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.getRepos"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct QueryEvents;
             impl atmo_core::xrpc::Request for QueryEvents {
                 type Params = crate::tools::ozone::moderation::query_events::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::query_events::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12585,18 +17752,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.queryEvents"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct QueryStatuses;
             impl atmo_core::xrpc::Request for QueryStatuses {
                 type Params = crate::tools::ozone::moderation::query_statuses::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::query_statuses::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12605,18 +17803,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.queryStatuses"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchRepos;
             impl atmo_core::xrpc::Request for SearchRepos {
                 type Params = crate::tools::ozone::moderation::search_repos::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::moderation::search_repos::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -12625,9 +17854,38 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.moderation.searchRepos"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -14682,10 +19940,12 @@ pub mod tools {
             #[derive(Debug)]
             pub struct GetConfig;
             impl atmo_core::xrpc::Request for GetConfig {
-                type Params = atmo_core::Nothing;
-                type Input = atmo_core::Nothing;
+                type Params = ();
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::server::get_config::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -14694,9 +19954,40 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.server.getConfig"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod get_config {
@@ -14781,10 +20072,12 @@ pub mod tools {
             #[derive(Debug)]
             pub struct AddValues;
             impl atmo_core::xrpc::Request for AddValues {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::set::add_values::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -14793,18 +20086,51 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.set.addValues"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct DeleteSet;
             impl atmo_core::xrpc::Request for DeleteSet {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::set::delete_set::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::set::delete_set::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -14813,18 +20139,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.set.deleteSet"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct DeleteValues;
             impl atmo_core::xrpc::Request for DeleteValues {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::set::delete_values::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -14833,18 +20190,51 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.set.deleteValues"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct GetValues;
             impl atmo_core::xrpc::Request for GetValues {
                 type Params = crate::tools::ozone::set::get_values::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::set::get_values::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -14853,18 +20243,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.set.getValues"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct QuerySets;
             impl atmo_core::xrpc::Request for QuerySets {
                 type Params = crate::tools::ozone::set::query_sets::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::set::query_sets::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -14873,18 +20294,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.set.querySets"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpsertSet;
             impl atmo_core::xrpc::Request for UpsertSet {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::set::defs::Set;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::set::defs::SetView;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -14893,9 +20345,38 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.set.upsertSet"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod add_values {
@@ -15112,9 +20593,11 @@ pub mod tools {
             pub struct ListOptions;
             impl atmo_core::xrpc::Request for ListOptions {
                 type Params = crate::tools::ozone::setting::list_options::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::setting::list_options::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -15123,18 +20606,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.setting.listOptions"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct RemoveOptions;
             impl atmo_core::xrpc::Request for RemoveOptions {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::setting::remove_options::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::setting::remove_options::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -15143,18 +20657,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.setting.removeOptions"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpsertOption;
             impl atmo_core::xrpc::Request for UpsertOption {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::setting::upsert_option::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::setting::upsert_option::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -15163,9 +20708,38 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.setting.upsertOption"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -15445,9 +21019,11 @@ pub mod tools {
             pub struct FindCorrelation;
             impl atmo_core::xrpc::Request for FindCorrelation {
                 type Params = crate::tools::ozone::signature::find_correlation::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::signature::find_correlation::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -15456,18 +21032,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.signature.findCorrelation"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct FindRelatedAccounts;
             impl atmo_core::xrpc::Request for FindRelatedAccounts {
                 type Params = crate::tools::ozone::signature::find_related_accounts::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::signature::find_related_accounts::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -15476,18 +21083,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.signature.findRelatedAccounts"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct SearchAccounts;
             impl atmo_core::xrpc::Request for SearchAccounts {
                 type Params = crate::tools::ozone::signature::search_accounts::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::signature::search_accounts::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -15496,9 +21134,38 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.signature.searchAccounts"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod defs {
@@ -15572,10 +21239,12 @@ pub mod tools {
             #[derive(Debug)]
             pub struct AddMember;
             impl atmo_core::xrpc::Request for AddMember {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::team::add_member::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::team::defs::Member;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -15584,18 +21253,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.team.addMember"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct DeleteMember;
             impl atmo_core::xrpc::Request for DeleteMember {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::team::delete_member::Input;
-                type Output = atmo_core::Nothing;
-                type Error = String;
+                type InputError = serde_json::Error;
+                type Output = ();
+                type OutputError = std::convert::Infallible;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -15604,18 +21304,51 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.team.deleteMember"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "*/*"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    let _ = output;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    let _ = bytes;
+                    Ok(())
                 }
             }
             #[derive(Debug)]
             pub struct ListMembers;
             impl atmo_core::xrpc::Request for ListMembers {
                 type Params = crate::tools::ozone::team::list_members::Params;
-                type Input = atmo_core::Nothing;
+                type Input = ();
+                type InputError = std::convert::Infallible;
                 type Output = crate::tools::ozone::team::list_members::Output;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::GET
@@ -15624,18 +21357,49 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.team.listMembers"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    serde_urlencoded_xrpc::to_string(params)
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    serde_urlencoded_xrpc::from_str(query)
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    None
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    let _ = input;
+                    Ok(bytes::Bytes::new())
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    let _ = bytes;
+                    Ok(())
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             #[derive(Debug)]
             pub struct UpdateMember;
             impl atmo_core::xrpc::Request for UpdateMember {
-                type Params = atmo_core::Nothing;
+                type Params = ();
                 type Input = crate::tools::ozone::team::update_member::Input;
+                type InputError = serde_json::Error;
                 type Output = crate::tools::ozone::team::defs::Member;
-                type Error = String;
+                type OutputError = serde_json::Error;
+                type RpcError = String;
                 #[inline]
                 fn method() -> http::Method {
                     http::Method::POST
@@ -15644,9 +21408,38 @@ pub mod tools {
                 fn nsid() -> &'static str {
                     "tools.ozone.team.updateMember"
                 }
-                #[inline]
-                fn output_encoding() -> &'static str {
-                    "application/json"
+                fn serialize_params(
+                    params: &Self::Params,
+                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                    let _ = params;
+                    Ok(String::new())
+                }
+                fn deserialize_params(
+                    query: &str,
+                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                    let _ = query;
+                    Ok(())
+                }
+                fn input_content_type() -> Option<&'static str> {
+                    Some("application/json")
+                }
+                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                    serde_json::to_vec(input).map(bytes::Bytes::from)
+                }
+                fn deserialize_input(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Input, Self::InputError> {
+                    serde_json::from_slice(bytes)
+                }
+                fn serialize_output(
+                    output: &Self::Output,
+                ) -> Result<bytes::Bytes, Self::OutputError> {
+                    serde_json::to_vec(output).map(bytes::Bytes::from)
+                }
+                fn deserialize_output(
+                    bytes: &bytes::Bytes,
+                ) -> Result<Self::Output, Self::OutputError> {
+                    serde_json::from_slice(bytes)
                 }
             }
             pub mod add_member {

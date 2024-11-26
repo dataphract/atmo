@@ -26,8 +26,8 @@ pub struct Module {
 impl Module {
     pub fn add_item(&mut self, name: String, item: Item) -> Result<(), NameCollision> {
         if let Some(existing) = self.items.get(&name) {
-            match (existing, &item) {
-                (Item::StringEnum(s1), Item::StringEnum(s2)) => {
+            match (&existing.ty, &item.ty) {
+                (ItemTy::StringEnum(s1), ItemTy::StringEnum(s2)) => {
                     if s1 != s2 {
                         return Err(NameCollision(name));
                     } else {
@@ -35,7 +35,7 @@ impl Module {
                     }
                 }
 
-                (Item::UnionEnum(u1), Item::UnionEnum(u2)) => {
+                (ItemTy::UnionEnum(u1), ItemTy::UnionEnum(u2)) => {
                     if u1 != u2 {
                         return Err(NameCollision(name));
                     } else {
@@ -63,48 +63,70 @@ impl fmt::Display for NameCollision {
 }
 
 #[derive(Debug)]
-pub enum Item {
+pub struct Item {
+    pub ty: ItemTy,
+}
+
+impl Item {
+    pub fn new(ty: ItemTy) -> Self {
+        Item { ty }
+    }
+}
+
+impl ToTokens for Item {
+    fn to_tokens(&self, tokens: &mut TokenStream) {
+        let ty = &self.ty;
+
+        quote! {
+            #ty
+        }
+        .to_tokens(tokens)
+    }
+}
+
+#[derive(Debug)]
+pub enum ItemTy {
     Rpc(RustRpcDef),
     Struct(RustStructDef),
     StringEnum(RustStringEnumDef),
     UnionEnum(RustUnionEnumDef),
 }
 
-impl From<RustRpcDef> for Item {
+impl From<RustRpcDef> for ItemTy {
     #[inline]
     fn from(rpc: RustRpcDef) -> Self {
-        Item::Rpc(rpc)
+        ItemTy::Rpc(rpc)
     }
 }
 
-impl From<RustStructDef> for Item {
+impl From<RustStructDef> for ItemTy {
     #[inline]
     fn from(s: RustStructDef) -> Self {
-        Item::Struct(s)
+        ItemTy::Struct(s)
     }
 }
 
-impl From<RustStringEnumDef> for Item {
+impl From<RustStringEnumDef> for ItemTy {
     #[inline]
     fn from(s: RustStringEnumDef) -> Self {
-        Item::StringEnum(s)
+        ItemTy::StringEnum(s)
     }
 }
 
-impl From<RustUnionEnumDef> for Item {
+impl From<RustUnionEnumDef> for ItemTy {
     #[inline]
     fn from(u: RustUnionEnumDef) -> Self {
-        Item::UnionEnum(u)
+        ItemTy::UnionEnum(u)
     }
 }
 
-impl ToTokens for Item {
+impl ToTokens for ItemTy {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match &self {
-            Item::Rpc(r) => r.to_tokens(tokens),
-            Item::Struct(s) => s.to_tokens(tokens),
-            Item::StringEnum(e) => e.to_tokens(tokens),
-            Item::UnionEnum(e) => e.to_tokens(tokens),
+            ItemTy::Rpc(r) => r.to_tokens(tokens),
+            ItemTy::Struct(s) => s.to_tokens(tokens),
+            ItemTy::StringEnum(e) => e.to_tokens(tokens),
+            ItemTy::UnionEnum(e) => e.to_tokens(tokens),
         }
     }
 }

@@ -31,6 +31,7 @@ async fn main() {
             password,
             auth_factor_token: None,
         })
+        .unwrap()
         .send()
         .await
         .unwrap();

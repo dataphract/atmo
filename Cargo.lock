@@ -44,6 +44,7 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
+ "serde_urlencoded_xrpc",
  "url",
 ]
 
@@ -68,6 +69,7 @@ dependencies = [
  "jiff",
  "serde",
  "serde_json",
+ "serde_urlencoded_xrpc",
  "url",
 ]
 
@@ -103,6 +105,7 @@ dependencies = [
  "serde",
  "serde_ipld_dagcbor",
  "serde_json",
+ "serde_urlencoded_xrpc",
  "url",
 ]
 
@@ -1465,6 +1468,18 @@ name = "serde_urlencoded"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d3491c14715ca2294c4d6a88f15e84739788c1d030eed8c110436aafdaa2f3fd"
+dependencies = [
+ "form_urlencoded",
+ "itoa",
+ "ryu",
+ "serde",
+]
+
+[[package]]
+name = "serde_urlencoded_xrpc"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "278ce76d9a423c48204a032031624ebd5d25c06048a592e96c68846d94d246bc"
 dependencies = [
  "form_urlencoded",
  "itoa",

@@ -1,4 +1,4 @@
-use atmo_jetstream::{EventKind, Options, Subscriber};
+use atmo_jetstream::{Options, Subscriber};
 use futures::StreamExt;
 
 #[tokio::main]
@@ -19,12 +19,7 @@ async fn main() {
             }
         };
 
-        let acct = match evt.kind {
-            EventKind::Account(acct) => acct,
-            _ => continue,
-        };
-
-        println!("{acct:?}");
+        println!("{evt:?}");
     }
 
     eprintln!("WebSocket closed");
