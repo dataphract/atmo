@@ -53,6 +53,12 @@ impl ParseError {
             while_parsing: "NSID fragment",
         }
     }
+
+    pub(crate) fn rkey() -> Self {
+        ParseError {
+            while_parsing: "Record key",
+        }
+    }
 }
 
 impl fmt::Display for ParseError {

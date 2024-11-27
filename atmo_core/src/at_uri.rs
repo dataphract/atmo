@@ -2,10 +2,11 @@
 
 use std::{num::NonZeroU16, ops::RangeInclusive, str::FromStr};
 
-use serde::{de::Error as _, Deserialize, Serialize};
+use serde::Serialize;
 
 use crate::{
-    did::Did, error::ParseError, handle::Handle, nsid::Nsid, parse::subslice_range, rkey::RecordKey,
+    error::ParseError, handle::Handle, impl_deserialize_via_from_str, nsid::Nsid,
+    parse::subslice_range, rkey::RecordKey,
 };
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=(8 * 1024);
@@ -19,72 +20,18 @@ const LEN_RANGE: RangeInclusive<usize> = 1..=(8 * 1024);
 /// ```
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct AtUri {
-    // The full text of the AT-URI.
     text: String,
-    // Start index of the path segment.
-    collection_start: Option<NonZeroU16>,
-    // Start index of the rkey segment.
-    rkey_start: Option<NonZeroU16>,
+    segments: Segments,
 }
 
 impl AtUri {
     const SCHEME: &[u8] = b"at://";
 
-    pub fn new(uri: String) -> Option<AtUri> {
-        if !LEN_RANGE.contains(&uri.len()) {
-            return None;
-        }
-
-        // Strip scheme.
-        let all_bytes = uri.as_bytes();
-        let bytes = all_bytes.strip_prefix(Self::SCHEME)?;
-
-        let mut it = bytes.split(|&c| c == b'/');
-
-        let authority = it.next()?;
-        if authority.starts_with(b"did:") {
-            Did::try_from(authority).ok()?;
-        } else {
-            Handle::new(std::str::from_utf8(authority).unwrap())?;
-        }
-
-        let Some(collection) = it.next() else {
-            return Some(AtUri {
-                collection_start: None,
-                rkey_start: None,
-                text: uri,
-            });
-        };
-
-        Nsid::try_from(collection).ok()?;
-
-        let cr = subslice_range(all_bytes, collection).unwrap();
-        let collection_start = NonZeroU16::new(cr.start as u16);
-
-        let Some(rkey) = it.next() else {
-            return Some(AtUri {
-                collection_start,
-                rkey_start: None,
-                text: uri,
-            });
-        };
-
-        let rr = subslice_range(all_bytes, rkey).unwrap();
-        let rkey_start = NonZeroU16::new(rr.start as u16);
-
-        RecordKey::try_from(rkey).ok()?;
-
-        Some(AtUri {
-            collection_start,
-            rkey_start,
-            text: uri,
-        })
-    }
-
+    /// Returns the authority segment of the AT-URI.
     pub fn authority(&self) -> &str {
         let start = Self::SCHEME.len();
 
-        let Some(coll_start) = self.collection_start else {
+        let Some(coll_start) = self.segments.collection_start else {
             return &self.text[start..];
         };
 
@@ -92,36 +39,41 @@ impl AtUri {
         &self.text[start..end]
     }
 
+    /// Returns the collection segment of the AT-URI, if any.
     pub fn collection(&self) -> Option<&str> {
-        let coll_start: usize = self.collection_start?.get().into();
+        let coll_start: usize = self.segments.collection_start?.get().into();
 
-        let coll_end = match self.rkey_start {
+        let coll_end = match self.segments.rkey_start {
             Some(idx) => usize::from(idx.get()) - 1,
             None => self.text.len(),
         };
 
         Some(&self.text[coll_start..coll_end])
     }
+
+    /// Returns the record key segment of the AT-URI, if any.
+    pub fn rkey(&self) -> Option<&str> {
+        let rkey_start: usize = self.segments.rkey_start?.get().into();
+
+        Some(&self.text[rkey_start..])
+    }
 }
 
 impl FromStr for AtUri {
     type Err = ParseError;
 
+    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        AtUri::new(s.to_string()).ok_or_else(ParseError::at_uri)
+        let segments = Segments::from_str(s)?;
+
+        Ok(AtUri {
+            text: s.into(),
+            segments,
+        })
     }
 }
 
-impl<'de> Deserialize<'de> for AtUri {
-    #[inline]
-    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = <&str>::deserialize(des)?;
-        AtUri::from_str(s).map_err(D::Error::custom)
-    }
-}
+impl_deserialize_via_from_str!(AtUri);
 
 impl Serialize for AtUri {
     #[inline]
@@ -130,6 +82,67 @@ impl Serialize for AtUri {
         S: serde::Serializer,
     {
         self.text.serialize(ser)
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct Segments {
+    collection_start: Option<NonZeroU16>,
+    rkey_start: Option<NonZeroU16>,
+}
+
+impl FromStr for Segments {
+    type Err = ParseError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let all_bytes = s.as_bytes();
+
+        if !LEN_RANGE.contains(&all_bytes.len()) {
+            return Err(ParseError::at_uri());
+        }
+
+        // Strip scheme.
+        let bytes = all_bytes
+            .strip_prefix(AtUri::SCHEME)
+            .ok_or_else(ParseError::at_uri)?;
+
+        let mut it = bytes.split(|&c| c == b'/');
+
+        let authority = it.next().ok_or_else(ParseError::at_uri)?;
+        if authority.starts_with(b"did:") {
+            crate::did::validate_did(authority)?;
+        } else {
+            Handle::new(std::str::from_utf8(authority).unwrap()).ok_or_else(ParseError::at_uri)?;
+        }
+
+        let Some(collection) = it.next() else {
+            return Ok(Segments {
+                collection_start: None,
+                rkey_start: None,
+            });
+        };
+
+        Nsid::try_from(collection)?;
+
+        let cr = subslice_range(all_bytes, collection).unwrap();
+        let collection_start = NonZeroU16::new(cr.start as u16);
+
+        let Some(rkey) = it.next() else {
+            return Ok(Segments {
+                collection_start,
+                rkey_start: None,
+            });
+        };
+
+        let rr = subslice_range(all_bytes, rkey).unwrap();
+        let rkey_start = NonZeroU16::new(rr.start as u16);
+
+        RecordKey::try_from(rkey)?;
+
+        Ok(Segments {
+            collection_start,
+            rkey_start,
+        })
     }
 }
 
@@ -157,5 +170,20 @@ mod tests {
             "at://foo.com/",          // trailing slash
             "at://user:pass@foo.com", // userinfo not currently supported
         ])
+    }
+
+    #[test]
+    fn segment_getters() {
+        let uri: AtUri = "at://example.com".parse().unwrap();
+        assert_eq!(uri.collection(), None);
+        assert_eq!(uri.rkey(), None);
+
+        let uri: AtUri = "at://example.com/com.example.foo".parse().unwrap();
+        assert_eq!(uri.collection(), Some("com.example.foo"));
+        assert_eq!(uri.rkey(), None);
+
+        let uri: AtUri = "at://example.com/com.example.foo/9001".parse().unwrap();
+        assert_eq!(uri.collection(), Some("com.example.foo"));
+        assert_eq!(uri.rkey(), Some("9001"));
     }
 }

@@ -1,8 +1,8 @@
-use std::{fmt, ops::RangeInclusive, str::FromStr};
+use std::{ops::RangeInclusive, str::FromStr};
 
 use serde::Serialize;
 
-use crate::impl_deserialize_via_from_str;
+use crate::{error::ParseError, impl_deserialize_via_from_str};
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=512;
 
@@ -19,13 +19,13 @@ impl RecordKey {
 }
 
 impl FromStr for RecordKey {
-    type Err = ParseRecordKeyError;
+    type Err = ParseError;
 
     #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         is_valid_record_key(s.as_bytes())
             .then(|| RecordKey(s.into()))
-            .ok_or_else(ParseRecordKeyError::new)
+            .ok_or_else(ParseError::rkey)
     }
 }
 
@@ -42,13 +42,13 @@ impl Serialize for RecordKey {
 impl_deserialize_via_from_str!(RecordKey);
 
 impl TryFrom<&'_ [u8]> for RecordKey {
-    type Error = ParseRecordKeyError;
+    type Error = ParseError;
 
     #[inline]
     fn try_from(bytes: &'_ [u8]) -> Result<Self, Self::Error> {
         is_valid_record_key(bytes)
             .then(|| RecordKey(String::from_utf8(bytes.into()).unwrap()))
-            .ok_or_else(ParseRecordKeyError::new)
+            .ok_or_else(ParseError::rkey)
     }
 }
 
@@ -60,23 +60,6 @@ fn is_valid_record_key(bytes: &[u8]) -> bool {
             .iter()
             .copied()
             .all(|c| crate::parse::is_uri_unreserved(c) || c == b':')
-}
-
-#[derive(Debug)]
-pub struct ParseRecordKeyError {
-    _dummy: (),
-}
-
-impl ParseRecordKeyError {
-    fn new() -> Self {
-        Self { _dummy: () }
-    }
-}
-
-impl fmt::Display for ParseRecordKeyError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("invalid RecordKey string")
-    }
 }
 
 #[cfg(test)]

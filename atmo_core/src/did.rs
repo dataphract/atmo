@@ -70,7 +70,7 @@ impl Serialize for Did {
     }
 }
 
-fn validate_did(input: &[u8]) -> Result<(), ParseError> {
+pub(crate) fn validate_did(input: &[u8]) -> Result<(), ParseError> {
     let Some(input) = input.strip_prefix(b"did:") else {
         return Err(ParseError::did());
     };
