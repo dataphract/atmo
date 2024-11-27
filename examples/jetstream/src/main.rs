@@ -1,14 +1,11 @@
-use atmo_jetstream::{Options, Subscriber};
+use atmo_jetstream::Subscriber;
 use futures::StreamExt;
 
 #[tokio::main]
 async fn main() {
     let url = "jetstream2.us-east.bsky.network";
-    let opts = Options {
-        ..Default::default()
-    };
 
-    let mut subscriber = Subscriber::new(url, opts).await.unwrap();
+    let mut subscriber = Subscriber::builder(url).connect().await.unwrap();
 
     while let Some(res) = subscriber.next().await {
         let evt = match res {

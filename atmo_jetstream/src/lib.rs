@@ -25,6 +25,45 @@ pub use error::Error;
 const DEFAULT_DECOMPRESS_LIMIT: usize = 65536;
 static ZSTD_DICT: &[u8] = include_bytes!("../zstd_dictionary");
 
+/// A builder for a [`Subscriber`].
+pub struct SubscriberBuilder {
+    uri: Result<Uri, InvalidUri>,
+    cursor: Option<u64>,
+    opts: Options,
+}
+
+impl SubscriberBuilder {
+    #[inline]
+    pub fn cursor(mut self, unix_micros: u64) -> Self {
+        self.cursor = Some(unix_micros);
+        self
+    }
+
+    /// Configures the set of collections that the [`Subscriber`] should receive events about.
+    #[inline]
+    pub fn wanted_collections(mut self, wanted: Vec<String>) -> Self {
+        self.opts.wanted_collections = wanted;
+        self
+    }
+
+    /// Configures the set of repository [`Did`]s that the [`Subscriber`] should receive events
+    /// about.
+    #[inline]
+    pub fn wanted_dids(mut self, wanted: Vec<Did>) -> Self {
+        self.opts.wanted_dids = wanted;
+        self
+    }
+
+    /// Creates a `Subscriber` with the configured options.
+    pub async fn connect(self) -> Result<Subscriber, Error> {
+        let SubscriberBuilder { uri, cursor, opts } = self;
+
+        let uri = uri.map_err(|e| Error::Http(e.into()))?;
+
+        Subscriber::new(uri, cursor, opts).await
+    }
+}
+
 /// A Jetstream subscriber.
 ///
 /// This type wraps a WebSocket and deserializes [`Event`]s sent from the Jetstream server.
@@ -36,21 +75,36 @@ pub struct Subscriber {
 }
 
 impl Subscriber {
+    /// Creates a new [`SubscriberBuilder`] with the default configuration.
+    #[inline]
+    pub fn builder<U>(uri: U) -> SubscriberBuilder
+    where
+        Uri: TryFrom<U, Error = InvalidUri>,
+    {
+        SubscriberBuilder {
+            uri: uri.try_into(),
+            opts: Default::default(),
+            cursor: Default::default(),
+        }
+    }
+
     /// Creates a new `Subscriber`.
     ///
     /// This connects to the Jetstream server at `uri` and sets the initial subscription options to
     /// `opts`.
     #[tracing::instrument(skip(uri))]
-    pub async fn new<U>(uri: U, opts: Options) -> Result<Self, Error>
-    where
-        Uri: TryFrom<U, Error = InvalidUri>,
-    {
+    async fn new(uri: Uri, cursor: Option<u64>, opts: Options) -> Result<Self, Error> {
         let decode = zstd::bulk::Decompressor::with_dictionary(ZSTD_DICT).unwrap();
 
-        let uri = Uri::try_from(uri).map_err(|e| tungstenite::Error::HttpFormat(e.into()))?;
+        let mut path_and_query: String = "/subscribe?requireHello=true&compress=true{}".into();
+        if let Some(c) = cursor {
+            use std::fmt::Write;
+            write!(&mut path_and_query, "&cursor={c}").unwrap();
+        }
+
         let uri = http::uri::Builder::from(uri)
             .scheme("wss")
-            .path_and_query("/subscribe?requireHello=true&compress=true")
+            .path_and_query(&path_and_query)
             .build()
             .map_err(tungstenite::Error::from)?;
 
