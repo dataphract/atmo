@@ -1,3 +1,6 @@
+//! AT protocol [Jetstream] subscriber.
+//!
+//! [Jetstream]: https://github.com/bluesky-social/jetstream
 use std::{
     num::NonZeroU32,
     pin::Pin,
@@ -33,6 +36,10 @@ pub struct Subscriber {
 }
 
 impl Subscriber {
+    /// Creates a new `Subscriber`.
+    ///
+    /// This connects to the Jetstream server at `uri` and sets the initial subscription options to
+    /// `opts`.
     #[tracing::instrument(skip(uri))]
     pub async fn new<U>(uri: U, opts: Options) -> Result<Self, Error>
     where
@@ -61,6 +68,7 @@ impl Subscriber {
         })
     }
 
+    /// Updates the subscription options for this subscriber.
     #[tracing::instrument(skip(self))]
     pub async fn update_options(&mut self, new_opts: Options) -> Result<(), Error> {
         let msg = SubscriberSourcedMessage::OptionsUpdate(new_opts);
@@ -106,6 +114,7 @@ impl Stream for Subscriber {
     }
 }
 
+/// A Jetstream event.
 #[derive(Debug, Deserialize)]
 pub struct Event {
     /// The DID of the repo where the event occurred.
@@ -117,6 +126,7 @@ pub struct Event {
     pub kind: EventKind,
 }
 
+/// An enumeration of Jetstream event kinds.
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum EventKind {
@@ -128,6 +138,7 @@ pub enum EventKind {
     Account(Account),
 }
 
+/// An event representing a commit of a record to a repo.
 #[derive(Debug)]
 pub struct Commit {
     pub rev: String,
@@ -164,6 +175,7 @@ impl<'de> Deserialize<'de> for Commit {
     }
 }
 
+/// An enumeration of commit operations.
 #[derive(Debug)]
 pub enum Operation {
     Create(CommitData),
@@ -189,18 +201,21 @@ enum OperationTag {
     Delete,
 }
 
+/// The commit data associated with a `Create` or `Update` operation.
 #[derive(Debug, Deserialize)]
 pub struct CommitData {
     pub record: Unknown,
     pub cid: CidString,
 }
 
+/// A message sent from a subscriber to the Jetstream server.
 #[derive(Debug, Serialize)]
 #[serde(tag = "type", content = "payload", rename_all = "snake_case")]
 pub enum SubscriberSourcedMessage {
     OptionsUpdate(Options),
 }
 
+/// Subscription options for a subscriber.
 #[derive(Debug, Default, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Options {
