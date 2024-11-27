@@ -11,6 +11,7 @@ use crate::{
     split_once, Handle,
 };
 
+/// A Decentralized Identifier, or DID.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(test, derive(proptest_derive::Arbitrary))]
 pub struct Did(
@@ -24,10 +25,6 @@ pub struct Did(
 );
 
 impl Did {
-    pub fn new(did: &[u8]) -> Option<Did> {
-        is_valid_did(did).then(|| Did(String::from_utf8(did.into()).unwrap()))
-    }
-
     pub fn as_str(&self) -> &str {
         self.0.as_str()
     }
@@ -45,7 +42,9 @@ impl FromStr for Did {
 
     #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Self::try_from(s.as_bytes())
+        validate_did(s.as_bytes())?;
+
+        Ok(Did(s.into()))
     }
 }
 
@@ -54,9 +53,9 @@ impl TryFrom<&[u8]> for Did {
 
     #[inline]
     fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
-        is_valid_did(bytes)
-            .then(|| Did(String::from_utf8(bytes.into()).unwrap()))
-            .ok_or_else(ParseError::did)
+        validate_did(bytes)?;
+
+        Ok(Did(String::from_utf8(bytes.into()).unwrap()))
     }
 }
 
@@ -71,16 +70,20 @@ impl Serialize for Did {
     }
 }
 
-fn is_valid_did(input: &[u8]) -> bool {
+fn validate_did(input: &[u8]) -> Result<(), ParseError> {
     let Some(input) = input.strip_prefix(b"did:") else {
-        return false;
+        return Err(ParseError::did());
     };
 
     let Some((method, ident)) = split_once(input, |&c| c == b':') else {
-        return false;
+        return Err(ParseError::did());
     };
 
-    is_valid_did_method(method) && is_valid_did_ident(ident)
+    if !is_valid_did_method(method) || !is_valid_did_ident(ident) {
+        return Err(ParseError::did());
+    }
+
+    Ok(())
 }
 
 #[inline]

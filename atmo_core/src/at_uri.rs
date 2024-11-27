@@ -43,7 +43,7 @@ impl AtUri {
 
         let authority = it.next()?;
         if authority.starts_with(b"did:") {
-            Did::new(authority)?;
+            Did::try_from(authority).ok()?;
         } else {
             Handle::new(std::str::from_utf8(authority).unwrap())?;
         }
@@ -113,6 +113,7 @@ impl FromStr for AtUri {
 }
 
 impl<'de> Deserialize<'de> for AtUri {
+    #[inline]
     fn deserialize<D>(des: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
@@ -123,6 +124,7 @@ impl<'de> Deserialize<'de> for AtUri {
 }
 
 impl Serialize for AtUri {
+    #[inline]
     fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,

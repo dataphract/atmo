@@ -11,6 +11,7 @@ use serde::{de::Error as _, Deserialize, Serialize};
 
 use crate::error::ParseError;
 
+#[doc(inline)]
 pub use crate::{
     at_uri::AtUri,
     blob::Blob,
