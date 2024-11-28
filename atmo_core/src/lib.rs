@@ -1,13 +1,13 @@
-//! The core of the atproto data model.
+//! The core of the ATProto data model.
 //!
 //! This crate implements parsing, serialization and deserialization for the basic datatypes of the
-//! atproto [data model].
+//! ATProto [data model].
 //!
 //! [data model]: https://atproto.com/specs/data-model
 
 use std::{ops::RangeInclusive, str::FromStr};
 
-use serde::{de::Error as _, Deserialize, Serialize};
+use serde::Serialize;
 
 use crate::error::ParseError;
 
@@ -34,7 +34,6 @@ mod cid;
 pub mod datetime;
 pub mod did;
 pub mod error;
-pub mod event;
 pub mod handle;
 pub mod nsid;
 mod nullable;
@@ -48,6 +47,7 @@ pub mod xrpc;
 
 pub(crate) const SEGMENT_LEN_RANGE: RangeInclusive<usize> = 1..=63;
 
+/// An ATProtocol identifier, corresponding to the Lexicon `at-identifier` string type.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum AtIdentifier {
     Did(Did),
@@ -65,16 +65,7 @@ impl FromStr for AtIdentifier {
     }
 }
 
-impl<'de> Deserialize<'de> for AtIdentifier {
-    #[inline]
-    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = <&str>::deserialize(des)?;
-        AtIdentifier::from_str(s).map_err(D::Error::custom)
-    }
-}
+impl_deserialize_via_from_str!(AtIdentifier);
 
 impl Serialize for AtIdentifier {
     #[inline]
