@@ -34,11 +34,11 @@ mod cid;
 mod datetime;
 pub mod did;
 pub mod error;
-pub mod handle;
+mod handle;
 pub mod nsid;
 mod nullable;
 mod parse;
-pub mod rkey;
+mod rkey;
 mod tid;
 #[doc(hidden)]
 pub mod union_;

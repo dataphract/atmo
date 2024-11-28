@@ -112,7 +112,8 @@ impl FromStr for Segments {
         if authority.starts_with(b"did:") {
             crate::did::validate_did(authority)?;
         } else {
-            Handle::new(std::str::from_utf8(authority).unwrap()).ok_or_else(ParseError::at_uri)?;
+            Handle::from_str(std::str::from_utf8(authority).unwrap())
+                .map_err(|_| ParseError::at_uri())?;
         }
 
         let Some(collection) = it.next() else {

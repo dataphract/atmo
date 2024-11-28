@@ -2,7 +2,6 @@ use std::process::exit;
 
 use atmo::{
     api::com::atproto::identity::{resolve_handle, ResolveHandle},
-    core::Handle,
     jetstream::Subscriber,
 };
 use futures::StreamExt;
@@ -16,7 +15,7 @@ async fn main() {
     let resp = cl
         .request(&url, ResolveHandle)
         .params(&resolve_handle::Params {
-            handle: Handle::new(handle).unwrap(),
+            handle: handle.parse().unwrap(),
         })
         .expect("serializing params failed")
         .send()

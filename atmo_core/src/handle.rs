@@ -8,15 +8,11 @@ use crate::{
 
 const LEN_RANGE: RangeInclusive<usize> = 1..=253;
 
+/// A human-friendly, less-permanent unique account identifier.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Handle(String);
 
 impl Handle {
-    pub fn new(handle: &str) -> Option<Handle> {
-        validate_handle(handle.as_bytes()).ok()?;
-        Some(Handle(handle.to_ascii_lowercase()))
-    }
-
     pub fn as_str(&self) -> &str {
         self.0.as_str()
     }
@@ -80,31 +76,13 @@ impl TryFrom<&[u8]> for Handle {
 
 #[cfg(test)]
 mod tests {
+    use crate::test::{test_invalid, test_valid};
+
     use super::*;
-
-    macro_rules! valid {
-        ($($input:literal),* $(,)?) => {
-            $(
-                if Handle::new($input.into()).is_none() {
-                    panic!("valid Handle rejected: {}", $input);
-                }
-            )*
-        };
-    }
-
-    macro_rules! invalid {
-        ($($input:literal),* $(,)?) => {
-            $(
-                if Handle::new($input.into()).is_some() {
-                    panic!("invalid Handle accepted: {}", $input);
-                }
-            )*
-        };
-    }
 
     #[test]
     fn valid_examples() {
-        valid![
+        test_valid::<Handle>([
             "jay.bsky.social",
             "8.cn",
             "name.t--t",
@@ -114,12 +92,12 @@ mod tests {
             "xn--fiqa61au8b7zsevnm8ak20mc4a87e.xn--fiqs8s",
             "xn--ls8h.test",
             "example.t",
-        ];
+        ]);
     }
 
     #[test]
     fn invalid_examples() {
-        invalid![
+        test_invalid::<Handle>([
             "",
             "jo@hn.test",
             "💩.test",
@@ -130,6 +108,6 @@ mod tests {
             "www.masełkowski.pl.com",
             "org",
             "name.org.",
-        ];
+        ]);
     }
 }
