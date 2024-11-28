@@ -7,11 +7,19 @@ use serde::{
 
 use crate::cid::CidLink;
 
+/// A reference to an ATProto blob.
+///
+/// See the [ATProto blob specification].
+///
+/// [ATProto blob specification]: https://atproto.com/specs/data-model#blob-type
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(test, derive(proptest_derive::Arbitrary))]
 pub struct Blob {
+    /// CID link to the associated blob.
     pub ref_: CidLink,
+    /// Media type of the associated blob.
     pub mime_type: String,
+    /// Size in bytes of the associated blob.
     pub size: NonZeroU64,
 }
 
