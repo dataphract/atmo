@@ -3,7 +3,9 @@ use std::{
     str::FromStr,
 };
 
-use serde::{de::Error as _, Deserialize, Serialize};
+use serde::Serialize;
+
+use crate::{impl_deserialize_via_from_str, ParseError};
 
 const CHARSET: &[u8; 32] = b"234567abcdefghijklmnopqrstuvwxyz";
 const LEN: usize = 13;
@@ -28,34 +30,50 @@ const LUT: [u8; 256] = [
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 ];
 
+/// A timestamp identifier.
+///
+/// The TID format is described by the ATProto [Record Key] specification.
+///
+/// [Record Key]: https://atproto.com/specs/record-key
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(test, derive(proptest_derive::Arbitrary))]
 pub struct Tid(#[cfg_attr(test, proptest(strategy = "Tid::ZERO.0..=Tid::MAX.0"))] u64);
 
 impl Tid {
-    pub const ZERO: Self = Tid(0);
-    pub const MAX: Self = Tid((1 << 63) - 1);
+    #[cfg(test)]
+    const ZERO: Self = Tid(0);
+    #[cfg(test)]
+    const MAX: Self = Tid((1 << 63) - 1);
 
+    /// Constructs a new `Tid` given a microsecond timestamp and a clock identifier.
+    ///
+    /// The timestamp value must be less than 2<sup>53</sup>, and the clock ID must be less than
+    /// 2<sup>10</sup>. If either value is out of range, this function returns `None`.
     pub fn new(unix_timestamp_micros: u64, clock_id: u16) -> Option<Tid> {
         (unix_timestamp_micros < (1 << 53) && clock_id < (1 << 10))
             .then_some(Tid(unix_timestamp_micros << 10 | u64::from(clock_id)))
     }
 
+    /// Constructs a `Tid` from the bits of a `u64`.
+    ///
+    /// If `bits` is not a valid `Tid` value, returns `None`.
     pub fn from_bits(bits: u64) -> Option<Tid> {
         (bits < (1 << 63)).then_some(Tid(bits))
     }
 
+    /// Returns the encoded clock identifier.
     pub fn clock_id(self) -> u16 {
         (self.0 & ((1 << 10) - 1)) as u16
     }
 
+    /// Returns the encoded microsecond timestamp.
     pub fn unix_timestamp_micros(self) -> u64 {
         self.0 >> 10
     }
 }
 
 impl FromStr for Tid {
-    type Err = ParseTidError;
+    type Err = ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Tid::try_from(s.as_bytes())
@@ -63,18 +81,18 @@ impl FromStr for Tid {
 }
 
 impl TryFrom<&[u8]> for Tid {
-    type Error = ParseTidError;
+    type Error = ParseError;
 
     fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
         if bytes.len() != LEN {
-            return Err(ParseTidError::new());
+            return Err(ParseError::tid());
         }
 
         let mut it = bytes.iter().copied();
         let first = it.next().unwrap();
 
         if first > b'b' {
-            return Err(ParseTidError::new());
+            return Err(ParseError::tid());
         }
 
         let mut value: u64 = LUT[first as usize].into();
@@ -82,7 +100,7 @@ impl TryFrom<&[u8]> for Tid {
             let bits = LUT[byte as usize];
 
             if bits > 0b11111 {
-                return Err(ParseTidError::new());
+                return Err(ParseError::tid());
             }
 
             value = value << 5 | u64::from(bits);
@@ -117,37 +135,7 @@ impl Serialize for Tid {
     }
 }
 
-impl<'de> Deserialize<'de> for Tid {
-    fn deserialize<D>(des: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = String::deserialize(des)?;
-        Tid::from_str(s.as_str()).map_err(|_| {
-            D::Error::invalid_value(
-                serde::de::Unexpected::Str(s.as_str()),
-                &"a valid TID string",
-            )
-        })
-    }
-}
-
-#[derive(Debug)]
-pub struct ParseTidError {
-    _dummy: (),
-}
-
-impl ParseTidError {
-    fn new() -> ParseTidError {
-        ParseTidError { _dummy: () }
-    }
-}
-
-impl fmt::Display for ParseTidError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("invalid TID string")
-    }
-}
+impl_deserialize_via_from_str!(Tid);
 
 #[cfg(test)]
 mod tests {

@@ -59,6 +59,12 @@ impl ParseError {
             while_parsing: "Record key",
         }
     }
+
+    pub(crate) fn tid() -> Self {
+        ParseError {
+            while_parsing: "TID",
+        }
+    }
 }
 
 impl fmt::Display for ParseError {
