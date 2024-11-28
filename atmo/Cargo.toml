@@ -3,9 +3,15 @@ name = "atmo"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = []
+
+jetstream = ["atmo_jetstream"]
+
 [dependencies]
 atmo_api = { workspace = true }
 atmo_core = { workspace = true }
+atmo_jetstream = { workspace = true, optional = true }
 bytes = { workspace = true }
 http = { workspace = true }
 http-body-util = { workspace = true }

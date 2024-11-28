@@ -38,6 +38,7 @@ version = "0.1.0"
 dependencies = [
  "atmo_api",
  "atmo_core",
+ "atmo_jetstream",
  "bytes",
  "http",
  "http-body-util",

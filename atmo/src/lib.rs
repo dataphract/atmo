@@ -17,6 +17,10 @@ pub mod core {
     pub use atmo_core::*;
 }
 
+#[cfg(feature = "jetstream")]
+#[doc(inline)]
+pub use atmo_jetstream as jetstream;
+
 pub struct XrpcClient {
     inner: reqwest::Client,
 }
