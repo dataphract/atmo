@@ -283,6 +283,7 @@ pub struct Options {
 
 #[cfg(test)]
 mod tests {
+    use serde::de::IntoDeserializer;
     use serde_json::json;
 
     use super::*;
@@ -323,10 +324,8 @@ mod tests {
         };
 
         use atmo_api::app::bsky::feed::Like;
-        let _like = create
-            .record
-            .downcast::<Like>()
-            .expect("couldn't downcast to Like");
+        let _like = Like::deserialize(create.record.into_deserializer())
+            .expect("couldn't deserialize Like");
     }
 
     #[test]

@@ -6,6 +6,7 @@ use atmo::{
     core::did::DidDoc,
     XrpcClient,
 };
+use serde::{de::IntoDeserializer, Deserialize};
 use url::Url;
 
 #[tokio::main]
@@ -38,7 +39,8 @@ async fn main() {
 
     let session = session_resp.result().unwrap();
 
-    let did_doc: DidDoc = session.did_doc.as_ref().unwrap().downcast().unwrap();
+    let did_doc_unk = session.did_doc.as_ref().unwrap();
+    let did_doc = DidDoc::deserialize(did_doc_unk.into_deserializer()).unwrap();
     println!("DID doc: {did_doc:?}");
 
     let prefs_resp = cl

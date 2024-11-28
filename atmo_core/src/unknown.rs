@@ -1,7 +1,8 @@
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde::{de::IntoDeserializer, Deserialize, Serialize};
 
 use crate::Nsid;
 
+/// A dynamically typed ATProto object.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Unknown {
     #[serde(default, rename = "$type")]
@@ -11,15 +12,17 @@ pub struct Unknown {
 }
 
 impl Unknown {
+    /// Returns the type tag of this value, if it has one.
     pub fn ty(&self) -> Option<&Nsid> {
         self.ty.as_ref()
     }
+}
 
-    pub fn downcast<T>(&self) -> Result<T, serde_json::Error>
-    where
-        T: DeserializeOwned,
-    {
-        T::deserialize(&self.inner)
+impl<'de> IntoDeserializer<'de, serde_json::Error> for &'de Unknown {
+    type Deserializer = &'de serde_json::Map<String, serde_json::Value>;
+
+    fn into_deserializer(self) -> Self::Deserializer {
+        &self.inner
     }
 }
 

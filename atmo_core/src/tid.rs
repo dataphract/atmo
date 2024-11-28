@@ -96,6 +96,10 @@ impl TryFrom<&[u8]> for Tid {
         }
 
         let mut value: u64 = LUT[first as usize].into();
+        if value > 0b11111 {
+            return Err(ParseError::tid());
+        }
+
         for byte in it {
             let bits = LUT[byte as usize];
 

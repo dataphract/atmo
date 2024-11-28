@@ -40,7 +40,8 @@ pub mod nsid;
 mod nullable;
 mod parse;
 pub mod rkey;
-pub mod tid;
+mod tid;
+#[doc(hidden)]
 pub mod union_;
 mod unknown;
 pub mod xrpc;
