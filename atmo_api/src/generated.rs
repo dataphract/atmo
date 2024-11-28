@@ -216,7 +216,7 @@ pub mod app {
                 #[serde(default)]
                 #[serde(rename = "createdAt")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                pub created_at: std::option::Option<atmo_core::DateTime>,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub description: std::option::Option<std::string::String>,
@@ -481,7 +481,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "expiresAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub expires_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub expires_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub id: std::option::Option<std::string::String>,
@@ -525,7 +525,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "expiresAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub expires_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub expires_at: std::option::Option<atmo_core::DateTime>,
                     pub id: std::string::String,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -533,7 +533,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "birthDate")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub birth_date: std::option::Option<atmo_core::DateTimeString>,
+                    pub birth_date: std::option::Option<atmo_core::DateTime>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq)]
                 pub enum Preferences {
@@ -816,7 +816,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
@@ -829,7 +829,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "indexedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub indexed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub indexed_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -850,7 +850,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(rename = "displayName")]
@@ -880,7 +880,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
@@ -901,7 +901,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "indexedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub indexed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub indexed_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "joinedViaStarterPack")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1438,7 +1438,7 @@ pub mod app {
                         std::vec::Vec<crate::app::bsky::embed::record::view_record::Embeds>,
                     >,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -1876,7 +1876,7 @@ pub mod app {
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub avatar: std::option::Option<atmo_core::Blob>,
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub description: std::option::Option<std::string::String>,
@@ -2660,13 +2660,13 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Like {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 pub subject: crate::com::atproto::repo::StrongRef,
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Post {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub embed: std::option::Option<crate::app::bsky::feed::post::main::Embed>,
@@ -2694,7 +2694,7 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Postgate {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(rename = "detachedEmbeddingUris")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2710,7 +2710,7 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Repost {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 pub subject: crate::com::atproto::repo::StrongRef,
             }
             #[derive(Debug)]
@@ -2823,7 +2823,7 @@ pub mod app {
                     std::vec::Vec<crate::app::bsky::feed::threadgate::main::Allow>,
                 >,
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(rename = "hiddenReplies")]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2882,7 +2882,7 @@ pub mod app {
                     #[serde(rename = "displayName")]
                     pub display_name: std::string::String,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -2931,7 +2931,7 @@ pub mod app {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub embed: std::option::Option<crate::app::bsky::feed::defs::post_view::Embed>,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -2968,7 +2968,7 @@ pub mod app {
                 pub struct ReasonRepost {
                     pub by: crate::app::bsky::actor::defs::ProfileViewBasic,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ReplyRef {
@@ -4087,9 +4087,9 @@ pub mod app {
                 pub struct Like {
                     pub actor: crate::app::bsky::actor::defs::ProfileView,
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
@@ -4855,13 +4855,13 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Block {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 pub subject: atmo_core::Did,
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Follow {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 pub subject: atmo_core::Did,
             }
             #[derive(Debug)]
@@ -5584,7 +5584,7 @@ pub mod app {
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub avatar: std::option::Option<atmo_core::Blob>,
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub description: std::option::Option<std::string::String>,
@@ -5602,13 +5602,13 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Listblock {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 pub subject: atmo_core::AtUri,
             }
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Listitem {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 pub list: atmo_core::AtUri,
                 pub subject: atmo_core::Did,
             }
@@ -5825,7 +5825,7 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Starterpack {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub description: std::option::Option<std::string::String>,
@@ -6052,7 +6052,7 @@ pub mod app {
                     pub description_facets:
                         std::option::Option<std::vec::Vec<crate::app::bsky::richtext::Facet>>,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -6077,7 +6077,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "indexedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub indexed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub indexed_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -6129,7 +6129,7 @@ pub mod app {
                         std::vec::Vec<crate::app::bsky::feed::defs::GeneratorView>,
                     >,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(rename = "joinedAllTimeCount")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6159,7 +6159,7 @@ pub mod app {
                     pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileViewBasic,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(rename = "joinedAllTimeCount")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6725,7 +6725,7 @@ pub mod app {
             #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
             pub struct Service {
                 #[serde(rename = "createdAt")]
-                pub created_at: atmo_core::DateTimeString,
+                pub created_at: atmo_core::DateTime,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub labels: std::option::Option<crate::app::bsky::labeler::service::main::Labels>,
@@ -6748,7 +6748,7 @@ pub mod app {
                     pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -6768,7 +6768,7 @@ pub mod app {
                     pub cid: atmo_core::CidString,
                     pub creator: crate::app::bsky::actor::defs::ProfileView,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -7211,7 +7211,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "seenAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub seen_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub seen_at: std::option::Option<atmo_core::DateTime>,
                 }
             }
             pub mod list_notifications {
@@ -7220,7 +7220,7 @@ pub mod app {
                     pub author: crate::app::bsky::actor::defs::ProfileView,
                     pub cid: atmo_core::CidString,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(rename = "isRead")]
                     pub is_read: bool,
                     #[serde(default)]
@@ -7250,7 +7250,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "seenAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub seen_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub seen_at: std::option::Option<atmo_core::DateTime>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Params {
@@ -7266,7 +7266,7 @@ pub mod app {
                     #[serde(default)]
                     #[serde(rename = "seenAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub seen_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub seen_at: std::option::Option<atmo_core::DateTime>,
                 }
                 pub mod notification {
                     #[derive(
@@ -7364,7 +7364,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Input {
                     #[serde(rename = "seenAt")]
-                    pub seen_at: atmo_core::DateTimeString,
+                    pub seen_at: atmo_core::DateTime,
                 }
             }
         }
@@ -9233,7 +9233,7 @@ pub mod chat {
                     pub rev: std::string::String,
                     pub sender: crate::chat::bsky::convo::defs::MessageViewSender,
                     #[serde(rename = "sentAt")]
-                    pub sent_at: atmo_core::DateTimeString,
+                    pub sent_at: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LogBeginConvo {
@@ -9295,7 +9295,7 @@ pub mod chat {
                     pub rev: std::string::String,
                     pub sender: crate::chat::bsky::convo::defs::MessageViewSender,
                     #[serde(rename = "sentAt")]
-                    pub sent_at: atmo_core::DateTimeString,
+                    pub sent_at: atmo_core::DateTime,
                     pub text: std::string::String,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -10900,7 +10900,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTime>,
                     pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -10908,10 +10908,10 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "emailConfirmedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub email_confirmed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub email_confirmed_at: std::option::Option<atmo_core::DateTime>,
                     pub handle: atmo_core::Handle,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(rename = "inviteNote")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -11912,10 +11912,10 @@ pub mod com {
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub cid: std::option::Option<atmo_core::CidString>,
-                    pub cts: atmo_core::DateTimeString,
+                    pub cts: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub exp: std::option::Option<atmo_core::DateTimeString>,
+                    pub exp: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub neg: std::option::Option<bool>,
@@ -12232,7 +12232,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Output {
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     pub id: i64,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -15035,7 +15035,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AppPassword {
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     pub name: std::string::String,
                     pub password: std::string::String,
                     #[serde(default)]
@@ -15211,7 +15211,7 @@ pub mod com {
                     #[serde(default)]
                     #[serde(rename = "deleteAfter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub delete_after: std::option::Option<atmo_core::DateTimeString>,
+                    pub delete_after: std::option::Option<atmo_core::DateTime>,
                 }
             }
             pub mod defs {
@@ -15220,7 +15220,7 @@ pub mod com {
                     pub available: i64,
                     pub code: std::string::String,
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(rename = "createdBy")]
                     pub created_by: std::string::String,
                     pub disabled: bool,
@@ -15231,7 +15231,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct InviteCodeUse {
                     #[serde(rename = "usedAt")]
-                    pub used_at: atmo_core::DateTimeString,
+                    pub used_at: atmo_core::DateTime,
                     #[serde(rename = "usedBy")]
                     pub used_by: atmo_core::Did,
                 }
@@ -15445,7 +15445,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AppPassword {
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     pub name: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -16687,7 +16687,7 @@ pub mod com {
                     pub status: std::option::Option<
                         crate::com::atproto::sync::subscribe_repos::account::Status,
                     >,
-                    pub time: atmo_core::DateTimeString,
+                    pub time: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Commit {
@@ -16704,7 +16704,7 @@ pub mod com {
                     pub rev: std::string::String,
                     pub seq: i64,
                     pub since: atmo_core::Nullable<std::string::String>,
-                    pub time: atmo_core::DateTimeString,
+                    pub time: atmo_core::DateTime,
                     #[serde(rename = "tooBig")]
                     pub too_big: bool,
                 }
@@ -16713,7 +16713,7 @@ pub mod com {
                     pub did: atmo_core::Did,
                     pub handle: atmo_core::Handle,
                     pub seq: i64,
-                    pub time: atmo_core::DateTimeString,
+                    pub time: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Identity {
@@ -16722,7 +16722,7 @@ pub mod com {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub handle: std::option::Option<atmo_core::Handle>,
                     pub seq: i64,
-                    pub time: atmo_core::DateTimeString,
+                    pub time: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Info {
@@ -16737,7 +16737,7 @@ pub mod com {
                     #[serde(rename = "migrateTo")]
                     pub migrate_to: atmo_core::Nullable<std::string::String>,
                     pub seq: i64,
-                    pub time: atmo_core::DateTimeString,
+                    pub time: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RepoOp {
@@ -16749,7 +16749,7 @@ pub mod com {
                 pub struct Tombstone {
                     pub did: atmo_core::Did,
                     pub seq: i64,
-                    pub time: atmo_core::DateTimeString,
+                    pub time: atmo_core::DateTime,
                 }
                 pub mod account {
                     #[derive(
@@ -17351,7 +17351,7 @@ pub mod tools {
                     #[serde(rename = "contentMarkdown")]
                     pub content_markdown: std::string::String,
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     pub disabled: bool,
                     pub id: std::string::String,
                     #[serde(default)]
@@ -17364,7 +17364,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub subject: std::option::Option<std::string::String>,
                     #[serde(rename = "updatedAt")]
-                    pub updated_at: atmo_core::DateTimeString,
+                    pub updated_at: atmo_core::DateTime,
                 }
             }
             pub mod delete_template {
@@ -17900,37 +17900,37 @@ pub mod tools {
                     pub status: std::option::Option<
                         crate::tools::ozone::moderation::defs::account_event::Status,
                     >,
-                    pub timestamp: atmo_core::DateTimeString,
+                    pub timestamp: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct AccountHosting {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "deletedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deleted_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub deleted_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "reactivatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub reactivated_at: std::option::Option<atmo_core::DateTime>,
                     pub status: crate::tools::ozone::moderation::defs::account_hosting::Status,
                     #[serde(default)]
                     #[serde(rename = "updatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub updated_at: std::option::Option<atmo_core::DateTime>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct BlobView {
                     pub cid: atmo_core::CidString,
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub details: std::option::Option<
@@ -17956,7 +17956,7 @@ pub mod tools {
                     #[serde(rename = "pdsHost")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub pds_host: std::option::Option<url::Url>,
-                    pub timestamp: atmo_core::DateTimeString,
+                    pub timestamp: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tombstone: std::option::Option<bool>,
@@ -18091,7 +18091,7 @@ pub mod tools {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventView {
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(rename = "createdBy")]
                     pub created_by: atmo_core::Did,
                     #[serde(default)]
@@ -18111,7 +18111,7 @@ pub mod tools {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct ModEventViewDetail {
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(rename = "createdBy")]
                     pub created_by: atmo_core::Did,
                     pub event: crate::tools::ozone::moderation::defs::mod_event_view_detail::Event,
@@ -18149,23 +18149,23 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     pub op: crate::tools::ozone::moderation::defs::record_event::Op,
-                    pub timestamp: atmo_core::DateTimeString,
+                    pub timestamp: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordHosting {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "deletedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deleted_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub deleted_at: std::option::Option<atmo_core::DateTime>,
                     pub status: crate::tools::ozone::moderation::defs::record_hosting::Status,
                     #[serde(default)]
                     #[serde(rename = "updatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub updated_at: std::option::Option<atmo_core::DateTime>,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct RecordView {
@@ -18173,7 +18173,7 @@ pub mod tools {
                     pub blob_cids: std::vec::Vec<atmo_core::CidString>,
                     pub cid: atmo_core::CidString,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     pub moderation: crate::tools::ozone::moderation::defs::Moderation,
                     pub repo: crate::tools::ozone::moderation::defs::RepoView,
                     pub uri: atmo_core::AtUri,
@@ -18184,7 +18184,7 @@ pub mod tools {
                     pub blobs: std::vec::Vec<crate::tools::ozone::moderation::defs::BlobView>,
                     pub cid: atmo_core::CidString,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub labels:
@@ -18203,14 +18203,14 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTime>,
                     pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub email: std::option::Option<std::string::String>,
                     pub handle: atmo_core::Handle,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(rename = "inviteNote")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18239,7 +18239,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "deactivatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub deactivated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub deactivated_at: std::option::Option<atmo_core::DateTime>,
                     pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18247,10 +18247,10 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "emailConfirmedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub email_confirmed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub email_confirmed_at: std::option::Option<atmo_core::DateTime>,
                     pub handle: atmo_core::Handle,
                     #[serde(rename = "indexedAt")]
-                    pub indexed_at: atmo_core::DateTimeString,
+                    pub indexed_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(rename = "inviteNote")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18326,7 +18326,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub comment: std::option::Option<std::string::String>,
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub hosting: std::option::Option<
@@ -18336,15 +18336,15 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "lastAppealedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_appealed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub last_appealed_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "lastReportedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_reported_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub last_reported_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "lastReviewedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub last_reviewed_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub last_reviewed_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "lastReviewedBy")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18352,11 +18352,11 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "muteReportingUntil")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub mute_reporting_until: std::option::Option<atmo_core::DateTimeString>,
+                    pub mute_reporting_until: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "muteUntil")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub mute_until: std::option::Option<atmo_core::DateTimeString>,
+                    pub mute_until: std::option::Option<atmo_core::DateTime>,
                     #[serde(rename = "reviewState")]
                     pub review_state: crate::tools::ozone::moderation::defs::SubjectReviewState,
                     pub subject:
@@ -18372,7 +18372,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "suspendUntil")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub suspend_until: std::option::Option<atmo_core::DateTimeString>,
+                    pub suspend_until: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub tags: std::option::Option<std::vec::Vec<std::string::String>>,
@@ -18380,7 +18380,7 @@ pub mod tools {
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub takendown: std::option::Option<bool>,
                     #[serde(rename = "updatedAt")]
-                    pub updated_at: atmo_core::DateTimeString,
+                    pub updated_at: atmo_core::DateTime,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct VideoDetails {
@@ -19611,11 +19611,11 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "createdAfter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_after: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_after: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "createdBefore")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_before: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_before: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "createdBy")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19748,11 +19748,11 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "hostingDeletedAfter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub hosting_deleted_after: std::option::Option<atmo_core::DateTimeString>,
+                    pub hosting_deleted_after: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "hostingDeletedBefore")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub hosting_deleted_before: std::option::Option<atmo_core::DateTimeString>,
+                    pub hosting_deleted_before: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "hostingStatuses")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19760,11 +19760,11 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "hostingUpdatedAfter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub hosting_updated_after: std::option::Option<atmo_core::DateTimeString>,
+                    pub hosting_updated_after: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "hostingUpdatedBefore")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub hosting_updated_before: std::option::Option<atmo_core::DateTimeString>,
+                    pub hosting_updated_before: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "ignoreSubjects")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19791,11 +19791,11 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "reportedAfter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reported_after: std::option::Option<atmo_core::DateTimeString>,
+                    pub reported_after: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "reportedBefore")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reported_before: std::option::Option<atmo_core::DateTimeString>,
+                    pub reported_before: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "reviewState")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19803,11 +19803,11 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "reviewedAfter")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reviewed_after: std::option::Option<atmo_core::DateTimeString>,
+                    pub reviewed_after: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "reviewedBefore")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub reviewed_before: std::option::Option<atmo_core::DateTimeString>,
+                    pub reviewed_before: std::option::Option<atmo_core::DateTime>,
                     #[serde(default)]
                     #[serde(rename = "sortDirection")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20397,7 +20397,7 @@ pub mod tools {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct SetView {
                     #[serde(rename = "createdAt")]
-                    pub created_at: atmo_core::DateTimeString,
+                    pub created_at: atmo_core::DateTime,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub description: std::option::Option<std::string::String>,
@@ -20405,7 +20405,7 @@ pub mod tools {
                     #[serde(rename = "setSize")]
                     pub set_size: i64,
                     #[serde(rename = "updatedAt")]
-                    pub updated_at: atmo_core::DateTimeString,
+                    pub updated_at: atmo_core::DateTime,
                 }
             }
             pub mod delete_set {
@@ -20748,7 +20748,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     #[serde(rename = "createdBy")]
                     pub created_by: atmo_core::Did,
                     #[serde(default)]
@@ -20768,7 +20768,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "updatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub updated_at: std::option::Option<atmo_core::DateTime>,
                     pub value: atmo_core::Unknown,
                 }
                 pub mod option {
@@ -21512,7 +21512,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "createdAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub created_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub created_at: std::option::Option<atmo_core::DateTime>,
                     pub did: atmo_core::Did,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21529,7 +21529,7 @@ pub mod tools {
                     #[serde(default)]
                     #[serde(rename = "updatedAt")]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub updated_at: std::option::Option<atmo_core::DateTimeString>,
+                    pub updated_at: std::option::Option<atmo_core::DateTime>,
                 }
                 pub mod member {
                     #[derive(

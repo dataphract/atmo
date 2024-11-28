@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, fmt, str::FromStr, sync::LazyLock};
+use std::{cmp::Ordering, str::FromStr, sync::LazyLock};
 
 use jiff::{
     fmt::{strtime::BrokenDownTime, temporal::DateTimePrinter},
@@ -9,13 +9,16 @@ use serde::{de::Error, Deserialize, Serialize};
 
 use crate::error::ParseError;
 
-const PRINT_SUBSEC_PRECISION: u8 = 6;
+// Bluesky's Golang implementation uses millisecond precision when printing.
+const PRINT_SUBSEC_PRECISION: u8 = 3;
+
+// jiff uses nanosecond precision for subseconds.
 const STORED_SUBSEC_PRECISION: usize = 9;
 
 static PRINTER: LazyLock<DateTimePrinter> =
     LazyLock::new(|| DateTimePrinter::new().precision(Some(PRINT_SUBSEC_PRECISION)));
 
-/// A parsed string representing a `DateTime`.
+/// A date and time with an associated string representation.
 ///
 /// # Serialization and Deserialization
 ///
@@ -28,35 +31,47 @@ static PRINTER: LazyLock<DateTimePrinter> =
 /// > _round-trip re-serialization._
 ///
 /// To that end, this type stores the original parsed string and exposes it via
-/// [`DateTimeString::as_str`].
+/// [`DateTime::as_str`].
 ///
 /// # Comparison
 ///
 /// The `Eq` implementation for this type compares the underlying `String` representation, rather
 /// than comparing the timestamp. As such, two `DateTimeStrings` representing the same numeric date
-/// and time may compare unequal.
+/// and time may compare unequal. For example:
+///
+/// ```
+/// use atmo_core::DateTime;
+///
+/// let d1: DateTime = "2024-01-01T12:00:00.000Z".parse().unwrap();
+/// let d2: DateTime = "2024-01-01T12:00:00.000000Z".parse().unwrap();
+///
+/// assert_eq!(d1.timestamp(), d2.timestamp());
+/// assert_ne!(d1, d2);
+/// ```
+///
+/// These dates have equal timestamps, but unequal string representations.
 #[derive(Clone, Debug)]
-pub struct DateTimeString {
+pub struct DateTime {
     // Keep the original representation to allow round-tripping, hashing, etc.
     original: String,
     parsed: Timestamp,
 }
 
-impl PartialEq for DateTimeString {
+impl PartialEq for DateTime {
     #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.original == other.original
     }
 }
 
-impl Eq for DateTimeString {}
+impl Eq for DateTime {}
 
-impl DateTimeString {
+impl DateTime {
     pub fn from_unix_seconds(seconds: i64) -> Option<Self> {
         let parsed = jiff::Timestamp::from_second(seconds).ok()?;
 
         let original = PRINTER.timestamp_to_string(&parsed);
-        Some(DateTimeString { original, parsed })
+        Some(DateTime { original, parsed })
     }
 
     /// Returns the string representation of the `DateTime` as originally parsed.
@@ -71,28 +86,28 @@ impl DateTimeString {
     }
 }
 
-impl From<jiff::Timestamp> for DateTimeString {
+impl From<jiff::Timestamp> for DateTime {
     #[inline]
     fn from(timestamp: jiff::Timestamp) -> Self {
-        DateTimeString {
+        DateTime {
             original: PRINTER.timestamp_to_string(&timestamp),
             parsed: timestamp,
         }
     }
 }
 
-impl FromStr for DateTimeString {
+impl FromStr for DateTime {
     type Err = ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let original = s.to_owned();
         let parsed = parse(s).ok_or_else(ParseError::datetime)?;
 
-        Ok(DateTimeString { original, parsed })
+        Ok(DateTime { original, parsed })
     }
 }
 
-impl<'de> Deserialize<'de> for DateTimeString {
+impl<'de> Deserialize<'de> for DateTime {
     fn deserialize<D>(des: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
@@ -100,11 +115,11 @@ impl<'de> Deserialize<'de> for DateTimeString {
         let original = String::deserialize(des)?;
         let parsed = parse(&original).ok_or_else(|| D::Error::custom("invalid DateTime string"))?;
 
-        Ok(DateTimeString { original, parsed })
+        Ok(DateTime { original, parsed })
     }
 }
 
-impl Serialize for DateTimeString {
+impl Serialize for DateTime {
     fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
@@ -256,25 +271,13 @@ fn parse(input: &str) -> Option<Timestamp> {
     time.to_timestamp().ok()
 }
 
-#[derive(Debug)]
-pub struct ParseDateTimeError {
-    // Dummy field to allow fields to be added without breaking semver.
-    _dummy: (),
-}
-
-impl fmt::Display for ParseDateTimeError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("invalid DateTime")
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn valid_examples() {
-        crate::test::test_valid::<DateTimeString>([
+        crate::test::test_valid::<DateTime>([
             // valid
             "1985-04-12T23:20:50.123Z",
             "1985-04-12T23:20:50.123456Z",
@@ -293,7 +296,7 @@ mod tests {
 
     #[test]
     fn invalid_examples() {
-        crate::test::test_invalid::<DateTimeString>([
+        crate::test::test_invalid::<DateTime>([
             "1985-04-12",
             "1985-04-12T23:20Z",
             "1985-04-12T23:20:5Z",

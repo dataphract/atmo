@@ -16,7 +16,7 @@ pub use crate::{
     at_uri::AtUri,
     blob::Blob,
     cid::{CidLink, CidString},
-    datetime::DateTimeString,
+    datetime::DateTime,
     did::Did,
     handle::Handle,
     nsid::Nsid,
@@ -31,7 +31,7 @@ mod blob;
 #[doc(hidden)]
 pub mod bytes;
 mod cid;
-pub mod datetime;
+mod datetime;
 pub mod did;
 pub mod error;
 pub mod handle;

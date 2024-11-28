@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use atmo_core::DateTimeString;
+use atmo_core::DateTime;
 
 use crate::app::bsky::actor::{
     defs::{PersonalDetailsPref, Preferences},
@@ -10,7 +10,7 @@ use crate::app::bsky::actor::{
 #[test]
 fn get_preferences_output() {
     let birthday_str = "1979-05-25T14:30:00.123456Z";
-    let birth_date = DateTimeString::from_str(birthday_str).unwrap();
+    let birth_date = DateTime::from_str(birthday_str).unwrap();
 
     let output = Output {
         preferences: vec![Preferences::PersonalDetailsPref(PersonalDetailsPref {
