@@ -40,12 +40,14 @@ dependencies = [
  "atmo_core",
  "atmo_jetstream",
  "bytes",
+ "futures",
  "http",
  "http-body-util",
  "reqwest",
  "serde",
  "serde_json",
  "serde_urlencoded_xrpc",
+ "tokio",
  "url",
 ]
 
@@ -775,7 +777,7 @@ checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
 name = "jetstream"
 version = "0.1.0"
 dependencies = [
- "atmo_jetstream",
+ "atmo",
  "futures",
  "serde_json",
  "tokio",
@@ -1671,9 +1673,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.41.0"
+version = "1.41.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "145f3413504347a2be84393cc8a7d2fb4d863b375909ea59f2158261aa258bbb"
+checksum = "22cfb5bee7a6a52939ca9224d6ac897bb669134078daa8735560897f69de4d33"
 dependencies = [
  "backtrace",
  "bytes",

@@ -1,6 +1,6 @@
 # Atmo
 
-A library for interacting with the [AT Protocol] in Rust.
+A Rust SDK for the [AT Protocol].
 
 ## Overview
 

@@ -20,3 +20,7 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 serde_urlencoded_xrpc = { workspace = true }
 url = { workspace = true }
+
+[dev-dependencies]
+futures = "0.3.31"
+tokio = { version = "1.41.1", features = ["full"] }

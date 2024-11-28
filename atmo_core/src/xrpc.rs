@@ -1,4 +1,4 @@
-use std::error::Error as StdError;
+use std::{error::Error as StdError, fmt};
 
 use bytes::Bytes;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
@@ -53,6 +53,18 @@ pub struct Error<E> {
     pub error: E,
     #[serde(default, skip_serializing_if = "std::option::Option::is_none")]
     pub message: Option<String>,
+}
+
+impl<E> fmt::Display for Error<E>
+where
+    E: fmt::Display,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self.message.as_ref() {
+            Some(msg) => f.write_str(msg.as_str()),
+            None => fmt::Display::fmt(&self.error, f),
+        }
+    }
 }
 
 #[cfg(test)]

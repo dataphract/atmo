@@ -11,10 +11,12 @@ const MAX_LEN: usize = 317;
 const MAX_AUTHORITY_LEN: usize = 253;
 const MIN_SEGMENTS: usize = 3;
 
+/// An ATProto namespaced identifier, or NSID.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Nsid(String);
 
 impl Nsid {
+    /// Returns the NSID, viewed as a string slice.
     pub fn as_str(&self) -> &str {
         self.0.as_str()
     }
@@ -23,6 +25,7 @@ impl Nsid {
         self.segments().next_back().unwrap()
     }
 
+    /// Returns an iterator over the segments of the NSID.
     pub fn segments(&self) -> impl DoubleEndedIterator<Item = &str> {
         self.0.split('.')
     }

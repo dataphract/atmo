@@ -1,4 +1,4 @@
-//! A crate for interacting with the [AT Protocol].
+//! A Rust SDK for the [AT Protocol].
 //!
 //! [AT Protocol]: https://atproto.com/
 
@@ -9,13 +9,15 @@ use bytes::Bytes;
 use http_body_util::{BodyExt, Full};
 use url::Url;
 
-pub mod api {
-    pub use atmo_api::*;
-}
+#[cfg(doctest)]
+#[doc = include_str!("../../README.md")]
+pub struct ReadmeDoctest;
 
-pub mod core {
-    pub use atmo_core::*;
-}
+#[doc(inline)]
+pub use atmo_api as api;
+
+#[doc(inline)]
+pub use atmo_core as core;
 
 #[cfg(feature = "jetstream")]
 #[doc(inline)]
