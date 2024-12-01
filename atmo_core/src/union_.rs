@@ -123,7 +123,7 @@ where
 
 pub struct IpldIntoDeserializer(pub Ipld);
 
-impl<'de> serde::de::IntoDeserializer<'de, ipld_core::serde::SerdeError> for IpldIntoDeserializer {
+impl serde::de::IntoDeserializer<'_, ipld_core::serde::SerdeError> for IpldIntoDeserializer {
     type Deserializer = Ipld;
 
     fn into_deserializer(self) -> Self::Deserializer {

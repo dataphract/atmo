@@ -1,4 +1,4 @@
-use std::{fmt, str::FromStr};
+use std::{borrow::Cow, fmt, str::FromStr};
 
 use serde::Serialize;
 
@@ -13,12 +13,17 @@ const MIN_SEGMENTS: usize = 3;
 
 /// An ATProto namespaced identifier, or NSID.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Nsid(String);
+pub struct Nsid(Cow<'static, str>);
 
 impl Nsid {
+    #[doc(hidden)]
+    pub const fn from_static_unchecked(s: &'static str) -> Self {
+        Nsid(Cow::Borrowed(s))
+    }
+
     /// Returns the NSID, viewed as a string slice.
     pub fn as_str(&self) -> &str {
-        self.0.as_str()
+        self.0.as_ref()
     }
 
     pub fn name(&self) -> &str {
@@ -36,8 +41,9 @@ impl Nsid {
 }
 
 impl fmt::Display for Nsid {
+    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(self.0.as_str())
+        f.write_str(self.as_str())
     }
 }
 
@@ -46,7 +52,9 @@ impl FromStr for Nsid {
 
     #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        validate_nsid(s.as_bytes()).map(|()| Nsid(s.into()))
+        validate_nsid(s.as_bytes())?;
+
+        Ok(Nsid(String::from(s).into()))
     }
 }
 
@@ -55,7 +63,10 @@ impl TryFrom<&'_ [u8]> for Nsid {
 
     #[inline]
     fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
-        validate_nsid(bytes).map(|()| Nsid(String::from_utf8(bytes.into()).unwrap()))
+        validate_nsid(bytes)?;
+
+        let string = String::from_utf8(bytes.into()).unwrap();
+        Ok(Nsid(string.into()))
     }
 }
 
@@ -189,7 +200,7 @@ pub struct FullReference {
 
 impl FullReference {
     pub fn clone_nsid(&self) -> Nsid {
-        Nsid(self.text[..self.frag_start].to_string())
+        Nsid(self.text[..self.frag_start].to_string().into())
     }
 
     #[inline]
@@ -213,7 +224,7 @@ impl From<Nsid> for FullReference {
     fn from(nsid: Nsid) -> Self {
         FullReference {
             frag_start: nsid.0.len(),
-            text: nsid.0,
+            text: nsid.to_string(),
         }
     }
 }
