@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, BTreeSet},
+    collections::{btree_map::Entry, BTreeMap, BTreeSet},
     fmt,
 };
 
@@ -25,29 +25,12 @@ pub struct Module {
 
 impl Module {
     pub fn add_item(&mut self, name: String, item: Item) -> Result<(), NameCollision> {
-        if let Some(existing) = self.items.get(&name) {
-            match (&existing.ty, &item.ty) {
-                (ItemTy::StringEnum(s1), ItemTy::StringEnum(s2)) => {
-                    if s1 != s2 {
-                        return Err(NameCollision(name));
-                    } else {
-                        return Ok(());
-                    }
-                }
+        let v = match self.items.entry(name) {
+            Entry::Vacant(v) => v,
+            Entry::Occupied(o) => panic!("name collision: {}", o.key()),
+        };
 
-                (ItemTy::UnionEnum(u1), ItemTy::UnionEnum(u2)) => {
-                    if u1 != u2 {
-                        return Err(NameCollision(name));
-                    } else {
-                        return Ok(());
-                    }
-                }
-
-                _ => return Err(NameCollision(name)),
-            }
-        }
-
-        self.items.insert(name, item);
+        v.insert(item);
 
         Ok(())
     }
