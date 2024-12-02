@@ -9,8 +9,10 @@ bytes = { workspace = true, features = ["serde"] }
 cid = { workspace = true }
 erased-serde = { workspace = true }
 http = { workspace = true }
+http-body-util = { workspace = true }
 ipld-core = { workspace = true, features = ["serde"] }
 jiff = { workspace = true }
+reqwest = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["raw_value"] }
 serde_urlencoded_xrpc = { workspace = true }

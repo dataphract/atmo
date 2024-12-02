@@ -8,7 +8,7 @@ use futures::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let cl = atmo::XrpcClient::new();
+    let cl = atmo::api::XrpcClient::new();
 
     let handle = "bsky.app";
     let url = "https://bsky.social".try_into().unwrap();

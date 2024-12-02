@@ -2,9 +2,9 @@ use atmo::{
     api::{
         app::bsky::actor::GetPreferences,
         com::atproto::server::{create_session, CreateSession, DeleteSession},
+        XrpcClient,
     },
     core::did::DidDoc,
-    XrpcClient,
 };
 use serde::{de::IntoDeserializer, Deserialize};
 use url::Url;
