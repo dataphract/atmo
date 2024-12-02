@@ -45,7 +45,7 @@ pub struct UnionVisitor<'a, T> {
     pairs: BTreeMap<Cow<'a, str>, T>,
 }
 
-impl<'a, T> Default for UnionVisitor<'a, T> {
+impl<T> Default for UnionVisitor<'_, T> {
     #[inline]
     fn default() -> Self {
         Self {
