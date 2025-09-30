@@ -167,6 +167,8 @@ where
     }
 
     /// Sets the value of the `Content-Type` header for the request.
+    ///
+    /// This is required for RPCs which allow more than one `Content-Type` for the request body.
     #[inline]
     pub fn content_type(mut self, content_type: &str) -> Self {
         self.builder = self

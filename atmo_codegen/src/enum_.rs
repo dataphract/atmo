@@ -58,7 +58,7 @@ impl ToTokens for RustStringEnumDef {
 
             impl std::fmt::Display for #ident {
                 #[inline]
-                fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
+                fn fmt(&self, f: &mut std::fmt::Formatter) -> core::result::Result<(), std::fmt::Error> {
                     f.write_str(self.as_str())
                 }
             }
@@ -218,7 +218,7 @@ impl ToTokens for RustUnionEnumDef {
             }
 
             impl serde::Serialize for #ident {
-                fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+                fn serialize<S>(&self, ser: S) -> core::result::Result<S::Ok, S::Error>
                 where
                     S: serde::Serializer,
                 {
@@ -232,7 +232,7 @@ impl ToTokens for RustUnionEnumDef {
             }
 
             impl<'de> serde::Deserialize<'de> for #ident {
-                fn deserialize<D>(des: D) -> Result<Self, D::Error>
+                fn deserialize<D>(des: D) -> core::result::Result<Self, D::Error>
                 where
                     D: serde::Deserializer<'de>,
                 {

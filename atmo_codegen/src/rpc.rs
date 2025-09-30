@@ -173,13 +173,13 @@ impl ToTokens for RustRpcDef {
 
                 fn serialize_params(
                     params: &Self::Params,
-                ) -> Result<String, serde_urlencoded_xrpc::ser::Error> {
+                ) -> core::result::Result<String, serde_urlencoded_xrpc::ser::Error> {
                     #serialize_params
                 }
 
                 fn deserialize_params(
                     query: &str,
-                ) -> Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
+                ) -> core::result::Result<Self::Params, serde_urlencoded_xrpc::de::Error> {
                     #deserialize_params
                 }
 
@@ -187,19 +187,19 @@ impl ToTokens for RustRpcDef {
                     #input_content_type
                 }
 
-                fn serialize_input(input: &Self::Input) -> Result<bytes::Bytes, Self::InputError> {
+                fn serialize_input(input: &Self::Input) -> core::result::Result<bytes::Bytes, Self::InputError> {
                     #serialize_input
                 }
 
-                fn deserialize_input(bytes: &bytes::Bytes) -> Result<Self::Input, Self::InputError> {
+                fn deserialize_input(bytes: &bytes::Bytes) -> core::result::Result<Self::Input, Self::InputError> {
                     #deserialize_input
                 }
 
-                fn serialize_output(output: &Self::Output) -> Result<bytes::Bytes, Self::OutputError> {
+                fn serialize_output(output: &Self::Output) -> core::result::Result<bytes::Bytes, Self::OutputError> {
                     #serialize_output
                 }
 
-                fn deserialize_output(bytes: &bytes::Bytes) -> Result<Self::Output, Self::OutputError> {
+                fn deserialize_output(bytes: &bytes::Bytes) -> core::result::Result<Self::Output, Self::OutputError> {
                     #deserialize_output
                 }
             }

@@ -378,7 +378,12 @@ pub struct Namespace {
 
 impl Namespace {
     pub fn from_lexicon(lexicon: &Lexicon) -> Self {
-        let nsid = Nsid::from_str(&lexicon.id).unwrap();
+        let nsid = match Nsid::from_str(&lexicon.id) {
+            Ok(n) => n,
+            Err(e) => {
+                panic!("{e}: `{}`", &lexicon.id);
+            }
+        };
 
         let mut ns = Namespace {
             nsid,

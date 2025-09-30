@@ -112,7 +112,7 @@ pub(crate) fn is_valid_nsid_name(s: &[u8]) -> bool {
     SEGMENT_LEN_RANGE.contains(&s.len())
         && s[0] != b'-'
         && s[s.len() - 1] != b'-'
-        && s.iter().all(|b| b.is_ascii_alphabetic())
+        && s.iter().all(|b| b.is_ascii_alphanumeric())
 }
 
 macro_rules! impl_deserialize_via_from_str {
