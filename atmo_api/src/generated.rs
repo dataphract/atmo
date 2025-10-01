@@ -18467,7 +18467,7 @@ pub mod com {
                                 let map_des = serde::de::value::MapDeserializer::new(
                                     union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
                                 );
-                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#create" => crate :: com :: atproto :: repo :: apply_writes :: Create :: deserialize (map_des) . map (Self :: Create) , "com.atproto.repo.applyWrites#delete" => crate :: com :: atproto :: repo :: apply_writes :: Delete :: deserialize (map_des) . map (Self :: Delete) , "com.atproto.repo.applyWrites#update" => crate :: com :: atproto :: repo :: apply_writes :: Update :: deserialize (map_des) . map (Self :: Update) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#create" , "com.atproto.repo.applyWrites#delete" , "com.atproto.repo.applyWrites#update" ,])) , } ;
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#create" => crate :: com :: atproto :: repo :: apply_writes :: Create :: deserialize (map_des) . map (Self :: Create) , "com.atproto.repo.applyWrites#delete" => crate :: com :: atproto :: repo :: apply_writes :: Delete :: deserialize (map_des) . map (Self :: Delete) , "com.atproto.repo.applyWrites#update" => crate :: com :: atproto :: repo :: apply_writes :: Update :: deserialize (map_des) . map (Self :: Update) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#create" , "com.atproto.repo.applyWrites#delete" , "com.atproto.repo.applyWrites#update" ,])) } ;
                                 res.map_err(D::Error::custom)
                             } else {
                                 let visitor: atmo_core::union_::UnionVisitor<
@@ -18482,7 +18482,7 @@ pub mod com {
                                         )
                                     }),
                                 );
-                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#create" => crate :: com :: atproto :: repo :: apply_writes :: Create :: deserialize (map_des) . map (Self :: Create) , "com.atproto.repo.applyWrites#delete" => crate :: com :: atproto :: repo :: apply_writes :: Delete :: deserialize (map_des) . map (Self :: Delete) , "com.atproto.repo.applyWrites#update" => crate :: com :: atproto :: repo :: apply_writes :: Update :: deserialize (map_des) . map (Self :: Update) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#create" , "com.atproto.repo.applyWrites#delete" , "com.atproto.repo.applyWrites#update" ,])) , } ;
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#create" => crate :: com :: atproto :: repo :: apply_writes :: Create :: deserialize (map_des) . map (Self :: Create) , "com.atproto.repo.applyWrites#delete" => crate :: com :: atproto :: repo :: apply_writes :: Delete :: deserialize (map_des) . map (Self :: Delete) , "com.atproto.repo.applyWrites#update" => crate :: com :: atproto :: repo :: apply_writes :: Update :: deserialize (map_des) . map (Self :: Update) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#create" , "com.atproto.repo.applyWrites#delete" , "com.atproto.repo.applyWrites#update" ,])) } ;
                                 res.map_err(D::Error::custom)
                             }
                         }
@@ -18527,7 +18527,7 @@ pub mod com {
                                 let map_des = serde::de::value::MapDeserializer::new(
                                     union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
                                 );
-                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) , } ;
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) } ;
                                 res.map_err(D::Error::custom)
                             } else {
                                 let visitor: atmo_core::union_::UnionVisitor<
@@ -18542,7 +18542,7 @@ pub mod com {
                                         )
                                     }),
                                 );
-                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) , } ;
+                                let res = match union_ . ty . as_ref () { "com.atproto.repo.applyWrites#createResult" => crate :: com :: atproto :: repo :: apply_writes :: CreateResult :: deserialize (map_des) . map (Self :: CreateResult) , "com.atproto.repo.applyWrites#deleteResult" => crate :: com :: atproto :: repo :: apply_writes :: DeleteResult :: deserialize (map_des) . map (Self :: DeleteResult) , "com.atproto.repo.applyWrites#updateResult" => crate :: com :: atproto :: repo :: apply_writes :: UpdateResult :: deserialize (map_des) . map (Self :: UpdateResult) , other => return Err (D :: Error :: unknown_variant (other , & ["com.atproto.repo.applyWrites#createResult" , "com.atproto.repo.applyWrites#deleteResult" , "com.atproto.repo.applyWrites#updateResult" ,])) } ;
                                 res.map_err(D::Error::custom)
                             }
                         }
@@ -26198,8 +26198,8 @@ pub mod tools {
                             S: serde::Serializer,
                         {
                             match self {
-                                Profile::Other(unknown) => return unknown.serialize(ser),
-                            };
+                                Profile::Other(unknown) => unknown.serialize(ser),
+                            }
                         }
                     }
                     impl<'de> serde::Deserialize<'de> for Profile {
@@ -26215,10 +26215,9 @@ pub mod tools {
                                 let map_des = serde::de::value::MapDeserializer::new(
                                     union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
                                 );
-                                let res = match union_.ty.as_ref() {
-                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                                };
-                                res.map_err(D::Error::custom)
+                                atmo_core::Unknown::deserialize(map_des)
+                                    .map(Self::Other)
+                                    .map_err(D::Error::custom)
                             } else {
                                 let visitor: atmo_core::union_::UnionVisitor<
                                     ipld_core::ipld::Ipld,
@@ -26232,10 +26231,9 @@ pub mod tools {
                                         )
                                     }),
                                 );
-                                let res = match union_.ty.as_ref() {
-                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                                };
-                                res.map_err(D::Error::custom)
+                                atmo_core::Unknown::deserialize(map_des)
+                                    .map(Self::Other)
+                                    .map_err(D::Error::custom)
                             }
                         }
                     }
@@ -30566,8 +30564,8 @@ pub mod tools {
                             S: serde::Serializer,
                         {
                             match self {
-                                IssuerProfile::Other(unknown) => return unknown.serialize(ser),
-                            };
+                                IssuerProfile::Other(unknown) => unknown.serialize(ser),
+                            }
                         }
                     }
                     impl<'de> serde::Deserialize<'de> for IssuerProfile {
@@ -30583,10 +30581,9 @@ pub mod tools {
                                 let map_des = serde::de::value::MapDeserializer::new(
                                     union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
                                 );
-                                let res = match union_.ty.as_ref() {
-                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                                };
-                                res.map_err(D::Error::custom)
+                                atmo_core::Unknown::deserialize(map_des)
+                                    .map(Self::Other)
+                                    .map_err(D::Error::custom)
                             } else {
                                 let visitor: atmo_core::union_::UnionVisitor<
                                     ipld_core::ipld::Ipld,
@@ -30600,10 +30597,9 @@ pub mod tools {
                                         )
                                     }),
                                 );
-                                let res = match union_.ty.as_ref() {
-                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                                };
-                                res.map_err(D::Error::custom)
+                                atmo_core::Unknown::deserialize(map_des)
+                                    .map(Self::Other)
+                                    .map_err(D::Error::custom)
                             }
                         }
                     }
@@ -30673,8 +30669,8 @@ pub mod tools {
                             S: serde::Serializer,
                         {
                             match self {
-                                SubjectProfile::Other(unknown) => return unknown.serialize(ser),
-                            };
+                                SubjectProfile::Other(unknown) => unknown.serialize(ser),
+                            }
                         }
                     }
                     impl<'de> serde::Deserialize<'de> for SubjectProfile {
@@ -30690,10 +30686,9 @@ pub mod tools {
                                 let map_des = serde::de::value::MapDeserializer::new(
                                     union_.map.iter().map(|(k, v)| (k.as_ref(), v)),
                                 );
-                                let res = match union_.ty.as_ref() {
-                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                                };
-                                res.map_err(D::Error::custom)
+                                atmo_core::Unknown::deserialize(map_des)
+                                    .map(Self::Other)
+                                    .map_err(D::Error::custom)
                             } else {
                                 let visitor: atmo_core::union_::UnionVisitor<
                                     ipld_core::ipld::Ipld,
@@ -30707,10 +30702,9 @@ pub mod tools {
                                         )
                                     }),
                                 );
-                                let res = match union_.ty.as_ref() {
-                                    _ => atmo_core::Unknown::deserialize(map_des).map(Self::Other),
-                                };
-                                res.map_err(D::Error::custom)
+                                atmo_core::Unknown::deserialize(map_des)
+                                    .map(Self::Other)
+                                    .map_err(D::Error::custom)
                             }
                         }
                     }

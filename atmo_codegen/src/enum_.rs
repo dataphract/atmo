@@ -191,35 +191,52 @@ impl ToTokens for RustUnionEnumDef {
             }
         });
 
-        let serialize_other_case = self.is_open.then(|| {
+        let deserialize_body = if deserialize_cases.is_empty() {
             quote! {
-                #ident::Other(unknown) => return unknown.serialize(ser)
-            }
-        });
-
-        let deserialize_other_case = if self.is_open {
-            quote! {
-                _ => #crate_::Unknown::deserialize(map_des).map(Self::Other)
+                #crate_::Unknown::deserialize(map_des)
+                    .map(Self::Other)
+                    .map_err(D::Error::custom)
             }
         } else {
+            let other_case = if self.is_open {
+                quote! {
+                    _ => #crate_::Unknown::deserialize(map_des).map(Self::Other),
+                }
+            } else {
+                quote! {
+                    other => return Err(D::Error::unknown_variant(other, &[
+                        #(#known_tags,)*
+                    ]))
+                }
+            };
+
             quote! {
-                other => return Err(D::Error::unknown_variant(other, &[
-                    #(#known_tags,)*
-                ]))
+                let res = match union_.ty.as_ref() {
+                    #(#deserialize_cases,)*
+                    #other_case
+                };
+
+                res.map_err(D::Error::custom)
             }
         };
 
         let serialize_body = if serialize_cases.is_empty() {
             quote! {
                 match self {
-                    #serialize_other_case
-                };
+                    #ident::Other(unknown) => unknown.serialize(ser)
+                }
             }
         } else {
+            let other_case = self.is_open.then(|| {
+                quote! {
+                    #ident::Other(unknown) => return unknown.serialize(ser)
+                }
+            });
+
             quote! {
                 let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
                     #(#serialize_cases)*
-                    #serialize_other_case
+                    #other_case
                 };
 
                 #crate_::union_::UnionSerialize { ty, map }.serialize(ser)
@@ -256,24 +273,14 @@ impl ToTokens for RustUnionEnumDef {
                         let union_ = des.deserialize_map(visitor)?;
                         let map_des = #union_into_des_json;
 
-                        let res = match union_.ty.as_ref() {
-                            #(#deserialize_cases,)*
-                            #deserialize_other_case,
-                        };
-
-                        res.map_err(D::Error::custom)
+                        #deserialize_body
                     } else {
                         // Deserialize CBOR field values to Ipld.
                         let visitor: #crate_::union_::UnionVisitor<ipld_core::ipld::Ipld> = Default::default();
                         let union_ = des.deserialize_map(visitor)?;
                         let map_des = #union_into_des_cbor;
 
-                        let res = match union_.ty.as_ref() {
-                            #(#deserialize_cases,)*
-                            #deserialize_other_case,
-                        };
-
-                        res.map_err(D::Error::custom)
+                        #deserialize_body
                     }
                 }
             }
