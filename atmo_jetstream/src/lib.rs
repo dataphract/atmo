@@ -113,7 +113,7 @@ impl Subscriber {
         let msg = SubscriberSourcedMessage::OptionsUpdate(opts);
         let msg_s = serde_json::to_string(&msg).expect("serialization should not fail");
 
-        ws.send(Message::Text(msg_s)).await?;
+        ws.send(Message::Text(msg_s.into())).await?;
 
         Ok(Self {
             ws,
@@ -128,7 +128,7 @@ impl Subscriber {
         let msg = SubscriberSourcedMessage::OptionsUpdate(new_opts);
         let msg_s = serde_json::to_string(&msg).expect("serialization should not fail");
 
-        self.ws.send(Message::Text(msg_s)).await?;
+        self.ws.send(Message::Text(msg_s.into())).await?;
 
         Ok(())
     }
@@ -147,24 +147,30 @@ impl Stream for Subscriber {
             None => return Poll::Ready(None),
         };
 
-        let bytes = match msg {
-            Message::Binary(b) => self
-                .decode
-                .decompress(&b, DEFAULT_DECOMPRESS_LIMIT)
-                .unwrap(),
+        tracing::debug!("got a message");
 
+        let res = match msg {
             Message::Close(c) => return Poll::Ready(Some(Err(Error::Closed(c)))),
 
+            Message::Binary(b) => {
+                let bytes = self
+                    .decode
+                    .decompress(&b, DEFAULT_DECOMPRESS_LIMIT)
+                    .unwrap();
+
+                serde_json::from_slice(&bytes)
+            }
+
+            Message::Text(t) => serde_json::from_str(t.as_str()),
+
             _ => {
-                tracing::debug!("unexpected message type");
+                tracing::warn!("unexpected message type");
                 cx.waker().wake_by_ref();
                 return Poll::Pending;
             }
         };
 
-        let event = serde_json::from_slice(&bytes).unwrap();
-
-        Poll::Ready(Some(Ok(event)))
+        Poll::Ready(Some(res.map_err(Error::Json)))
     }
 }
 

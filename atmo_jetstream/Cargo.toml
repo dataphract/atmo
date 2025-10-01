@@ -19,7 +19,7 @@ hyper-util = { version = "0.1.10" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tracing = { workspace = true }
-tokio-tungstenite = { version = "0.24.0", features = ["url"] }
+tokio-tungstenite = { version = "0.28.0", features = ["url"] }
 tokio = { workspace = true, features = ["net"] }
 url = { workspace = true }
 zstd = { workspace = true }

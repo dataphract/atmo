@@ -31,6 +31,7 @@ async fn main() {
             identifier,
             password,
             auth_factor_token: None,
+            allow_takendown: None,
         })
         .unwrap()
         .send()

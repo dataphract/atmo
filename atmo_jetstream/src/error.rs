@@ -6,7 +6,7 @@ use tokio_tungstenite::tungstenite::{self, protocol::CloseFrame};
 #[derive(Debug)]
 pub enum Error {
     /// The underlying WebSocket was closed by the remote peer.
-    Closed(Option<CloseFrame<'static>>),
+    Closed(Option<CloseFrame>),
     /// An HTTP protocol error occurred.
     Http(http::Error),
     /// An error occurred during JSON serialization or deserialization.

@@ -8,6 +8,8 @@ use futures::StreamExt;
 
 #[tokio::main]
 async fn main() {
+    pretty_env_logger::init();
+
     let cl = atmo::api::XrpcClient::new();
 
     let handle = "bsky.app";
@@ -35,8 +37,8 @@ async fn main() {
     let url = "jetstream2.us-east.bsky.network";
 
     let mut subscriber = Subscriber::builder(url)
-        .wanted_collections(vec!["app.bsky.feed.post".into()])
-        .wanted_dids(vec![did])
+        .wanted_collections(vec!["app.bsky.feed.like".into()])
+        .wanted_dids(vec![])
         .connect()
         .await
         .unwrap();
