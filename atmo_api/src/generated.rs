@@ -26197,10 +26197,9 @@ pub mod tools {
                         where
                             S: serde::Serializer,
                         {
-                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                            match self {
                                 Profile::Other(unknown) => return unknown.serialize(ser),
                             };
-                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
                         }
                     }
                     impl<'de> serde::Deserialize<'de> for Profile {
@@ -30566,10 +30565,9 @@ pub mod tools {
                         where
                             S: serde::Serializer,
                         {
-                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                            match self {
                                 IssuerProfile::Other(unknown) => return unknown.serialize(ser),
                             };
-                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
                         }
                     }
                     impl<'de> serde::Deserialize<'de> for IssuerProfile {
@@ -30674,10 +30672,9 @@ pub mod tools {
                         where
                             S: serde::Serializer,
                         {
-                            let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                            match self {
                                 SubjectProfile::Other(unknown) => return unknown.serialize(ser),
                             };
-                            atmo_core::union_::UnionSerialize { ty, map }.serialize(ser)
                         }
                     }
                     impl<'de> serde::Deserialize<'de> for SubjectProfile {

@@ -209,6 +209,23 @@ impl ToTokens for RustUnionEnumDef {
             }
         };
 
+        let serialize_body = if serialize_cases.is_empty() {
+            quote! {
+                match self {
+                    #serialize_other_case
+                };
+            }
+        } else {
+            quote! {
+                let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
+                    #(#serialize_cases)*
+                    #serialize_other_case
+                };
+
+                #crate_::union_::UnionSerialize { ty, map }.serialize(ser)
+            }
+        };
+
         quote! {
             #(#[doc = #doc])*
             #[derive(Clone, Debug, PartialEq, Eq)]
@@ -222,12 +239,7 @@ impl ToTokens for RustUnionEnumDef {
                 where
                     S: serde::Serializer,
                 {
-                    let (ty, map): (&str, &dyn erased_serde::Serialize) = match self {
-                        #(#serialize_cases)*
-                        #serialize_other_case
-                    };
-
-                    #crate_::union_::UnionSerialize { ty, map }.serialize(ser)
+                    #serialize_body
                 }
             }
 

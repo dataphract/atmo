@@ -63,6 +63,7 @@ impl XrpcClient {
     ///         identifier: "username".into(),
     ///         password: "password".into(),
     ///         auth_factor_token: None,
+    ///         allow_takendown: Some(false),
     ///     })
     ///     .unwrap()
     ///     .send()

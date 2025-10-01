@@ -11,6 +11,7 @@ fn create_session_input() {
         identifier: "me@example.com".into(),
         password: "hunter2".into(),
         auth_factor_token: None,
+        allow_takendown: None,
     };
 
     let expected = json!({
