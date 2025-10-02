@@ -187,10 +187,7 @@ impl ToTokens for Type {
                 i.to_tokens(tokens);
                 return;
             }
-            Type::Language => {
-                eprintln!("language tags not implemented yet");
-                quote! { std::string::String }
-            }
+            Type::Language => quote! { language_tags::LanguageTag },
             Type::Nsid => quote! { #crate_::Nsid },
             Type::Nullable(t) => quote! { #crate_::Nullable<#t> },
             Type::Option(t) => quote! { std::option::Option<#t> },

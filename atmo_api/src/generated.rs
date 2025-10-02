@@ -2599,7 +2599,7 @@ pub mod app {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct Caption {
                     pub file: atmo_core::Blob,
-                    pub lang: std::string::String,
+                    pub lang: language_tags::LanguageTag,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct View {
@@ -3561,7 +3561,7 @@ pub mod app {
                 pub labels: std::option::Option<crate::app::bsky::feed::post::main::Labels>,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                pub langs: std::option::Option<std::vec::Vec<std::string::String>>,
+                pub langs: std::option::Option<std::vec::Vec<language_tags::LanguageTag>>,
                 #[serde(default)]
                 #[serde(skip_serializing_if = "std::option::Option::is_none")]
                 pub reply: std::option::Option<crate::app::bsky::feed::post::ReplyRef>,
@@ -5747,7 +5747,7 @@ pub mod app {
                     pub domain: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub lang: std::option::Option<std::string::String>,
+                    pub lang: std::option::Option<language_tags::LanguageTag>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -11659,7 +11659,7 @@ pub mod app {
                     pub domain: std::option::Option<std::string::String>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub lang: std::option::Option<std::string::String>,
+                    pub lang: std::option::Option<language_tags::LanguageTag>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub limit: std::option::Option<i64>,
@@ -16999,7 +16999,7 @@ pub mod com {
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
                 pub struct LabelValueDefinitionStrings {
                     pub description: std::string::String,
-                    pub lang: std::string::String,
+                    pub lang: language_tags::LanguageTag,
                     pub name: std::string::String,
                 }
                 #[derive(Clone, Debug, PartialEq, Eq, serde :: Deserialize, serde :: Serialize)]
@@ -23618,7 +23618,7 @@ pub mod tools {
                     pub created_by: std::option::Option<atmo_core::Did>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub lang: std::option::Option<std::string::String>,
+                    pub lang: std::option::Option<language_tags::LanguageTag>,
                     pub name: std::string::String,
                     pub subject: std::string::String,
                 }
@@ -23634,7 +23634,7 @@ pub mod tools {
                     pub id: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub lang: std::option::Option<std::string::String>,
+                    pub lang: std::option::Option<language_tags::LanguageTag>,
                     #[serde(rename = "lastUpdatedBy")]
                     pub last_updated_by: atmo_core::Did,
                     pub name: std::string::String,
@@ -23695,7 +23695,7 @@ pub mod tools {
                     pub id: std::string::String,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-                    pub lang: std::option::Option<std::string::String>,
+                    pub lang: std::option::Option<language_tags::LanguageTag>,
                     #[serde(default)]
                     #[serde(skip_serializing_if = "std::option::Option::is_none")]
                     pub name: std::option::Option<std::string::String>,
